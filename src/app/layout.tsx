@@ -7,8 +7,8 @@ import UnderConstruction from "../../components/UnderConstruction/UnderConstruct
 
 export const metadata: Metadata = {
   robots: "noindex, nofollow",
-  /*title: "Atkinson Art",
-  description: "Art Studio of Linda Atkinson",*/
+  title: "Atkinson Art",
+  description: "Art Studio of Linda Atkinson",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

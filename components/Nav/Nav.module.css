@@ -1,0 +1,149 @@
+/* Default styling for larger screens */
+.nav {
+    background-color: white;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .leftNav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .title {
+    font-weight: 800;
+    font-size: 40px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+  
+  .linkContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+  }
+  
+  .linkList {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .linkList li {
+    margin-right: 20px;
+  }
+  
+  .link {
+    cursor: pointer;
+    color: darkcyan;
+    text-decoration: none;
+    font-size: 28px;
+  }
+  
+  .link:hover {
+    color: chartreuse;
+    font-size: 29px;
+  }
+  
+  /* Hamburger menu */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 11;
+  }
+  
+  .hamburger span {
+    height: 3px;
+    width: 25px;
+    background: darkcyan;
+    position: absolute;
+    transition: all 0.3s ease;
+  }
+  
+  .hamburger span:nth-child(1) {
+    top: 8px;
+  }
+  
+  .hamburger span:nth-child(2) {
+    top: 15px;
+  }
+  
+  .hamburger span:nth-child(3) {
+    top: 22px;
+  }
+  
+  /* When hamburger is open */
+  .hamburger.open span:nth-child(1) {
+    top: 15px;
+    transform: rotate(45deg);
+    background: darkcyan;
+  }
+  
+  .hamburger.open span:nth-child(2) {
+    background: darkcyan;
+    opacity: 0;
+  }
+  
+  .hamburger.open span:nth-child(3) {
+    top: 15px;
+    transform: rotate(-45deg);
+    background: darkcyan;
+  }
+  
+  /* Mobile Styles */
+  @media only screen and (max-width: 1000px) {
+    .linkContainer {
+      display: none; /* Hide by default */
+      flex-direction: column;
+      width: 100%;
+      background: white;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .linkContainer.open {
+      display: flex; /* Show when menu is open */
+    }
+  
+    .hamburger {
+      display: flex;
+    }
+  
+    .nav {
+      padding: 20px;
+    }
+  
+    .title {
+      font-size: 30px;
+    }
+  
+    .linkList {
+      flex-direction: column;
+    }
+  
+    .linkList li {
+      margin-bottom: 15px;
+    }
+  }
+  
