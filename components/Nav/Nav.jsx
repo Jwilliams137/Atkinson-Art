@@ -3,13 +3,12 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import styles from './Nav.module.css';  // Import the CSS module
+import styles from './Nav.module.css';
 
 export default function Nav() {
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Listen for user state change
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -18,7 +17,6 @@ export default function Nav() {
     return () => unsubscribe();
   }, []);
 
-  // Toggle the menu on or off
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
@@ -44,28 +42,67 @@ export default function Nav() {
         <span></span>
       </div>
 
-      {/* Full-screen menu when open */}
-      <div className={`${styles.nav} ${isMenuOpen ? styles.fullscreen : ''}`}>
+      {/* Full-screen overlay menu (only visible on mobile) */}
+      {isMenuOpen && (
+        <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ''}`}>
+          <div className={styles.leftNav}>
+            <Link href="/" className={styles.title} onClick={closeMenu}>
+              Linda Atkinson
+            </Link>
+
+            <div className={styles.linkContainer}>
+              <ul className={styles.linkList}>
+                <li>
+                  <Link href="/artwork" className={styles.link} onClick={closeMenu}>
+                    Artwork
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className={styles.link} onClick={closeMenu}>
+                    About
+                  </Link>
+                </li>
+                {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
+                  <li>
+                    <Link href="/admin" className={styles.link} onClick={closeMenu}>
+                      Admin
+                    </Link>
+                  </li>
+                )}
+                {user && (
+                  <li>
+                    <p onClick={handleLogout} className={styles.link}>
+                      Logout
+                    </p>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Menu */}
+      <div className={styles.nav}>
         <div className={styles.leftNav}>
-          <Link href="/" className={styles.title} onClick={closeMenu}>
+          <Link href="/" className={styles.title}>
             Linda Atkinson
           </Link>
-
-          <div className={`${styles.linkContainer} ${isMenuOpen ? styles.open : ''}`}>
+          <div className={styles.linkContainer}>
             <ul className={styles.linkList}>
               <li>
-                <Link href="/artwork" className={styles.link} onClick={closeMenu}>
+                <Link href="/artwork" className={styles.link}>
                   Artwork
                 </Link>
               </li>
               <li>
-                <Link href="/about" className={styles.link} onClick={closeMenu}>
+                <Link href="/about" className={styles.link}>
                   About
                 </Link>
               </li>
               {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
                 <li>
-                  <Link href="/admin" className={styles.link} onClick={closeMenu}>
+                  <Link href="/admin" className={styles.link}>
                     Admin
                   </Link>
                 </li>
