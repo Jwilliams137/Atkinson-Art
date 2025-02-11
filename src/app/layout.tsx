@@ -3,6 +3,7 @@ import "./globals.css";
 import styles from './layout.module.css';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
+import UnderConstruction from "../../components/UnderConstruction/UnderConstruction"
 
 export const metadata: Metadata = {
   robots: "noindex, nofollow",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={styles.wrapper}>
         <Nav />
+        <UnderConstruction />
         <div className={styles.children_container}>
           {children}
         </div>
