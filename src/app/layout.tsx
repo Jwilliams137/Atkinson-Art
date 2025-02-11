@@ -5,9 +5,9 @@ import Nav from '../../components/Nav/Nav'
 import Footer from '../../components/Footer/Footer'
 
 export const metadata: Metadata = {
-  title: "Atkinson Art",
-  description: "Art Studio of Linda Atkinson",
   robots: "noindex, nofollow",
+  title: "Atkinson Art",
+  description: "Art Studio of Linda Atkinson",  
 };
 
 export default function RootLayout({
