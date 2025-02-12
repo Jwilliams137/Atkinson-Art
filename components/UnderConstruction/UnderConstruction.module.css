@@ -20,9 +20,12 @@
     font-size: 1.2rem;
     color: #bbb;
   }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
+
+  @media only screen and (max-width: 1000px) {
+    .container {
+      margin: 0px auto 20px;
+    }
+
     .title {
       font-size: 1.8rem;
     }

@@ -163,6 +163,10 @@
 
 /* Mobile Menu */
 @media only screen and (max-width: 1000px) {
+.nav {
+  padding: 12px 20px;
+}
+
   .title {
     font-size: 35px;
   }
