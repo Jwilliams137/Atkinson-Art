@@ -5,57 +5,59 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch; /* Ensure the nav container takes full width */
     position: relative;
     z-index: 10;
-}
-
-.leftNav {
+  }
+  
+  .leftNav {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-}
-
-.title {
+  }
+  
+  .title {
     font-weight: 800;
     font-size: 40px;
     text-decoration: none;
     letter-spacing: 0.5px;
     margin-bottom: 20px;
-}
-
-.linkContainer {
+  }
+  
+  .linkContainer {
     display: flex;
-    flex-direction: row;
-    gap: 30px;
-}
-
-.linkList {
+    justify-content: space-between; /* Spread the items across the width */
+    width: 100%; /* Ensure the container takes up the full width */
+  }
+  
+  .linkList {
     display: flex;
     flex-direction: row;
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-.linkList li {
+    width: 100%; /* Ensure it takes up the full width */
+  }
+  
+  .linkList li {
     margin-right: 20px;
-}
-
-.link {
+    flex-grow: 1; /* Allow items to grow and take space */
+  }
+  
+  .link {
     cursor: pointer;
-    color: darkcyan;
+    color: rgb(46, 44, 46);
     text-decoration: none;
     font-size: 28px;
-}
-
-.link:hover {
-    color: chartreuse;
+  }
+  
+  .link:hover {
+    color: rgb(104, 10, 128);
     font-size: 29px;
-}
-
-/* Hamburger menu */
-.hamburger {
+  }
+  
+  /* Hamburger menu */
+  .hamburger {
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -66,92 +68,93 @@
     top: 20px;
     right: 20px;
     z-index: 1101;
-}
-
-.hamburger span {
+  }
+  
+  .hamburger span {
     height: 3px;
     width: 25px;
-    background: darkcyan;
+    background: rgb(46, 44, 46);
     position: absolute;
     transition: all 0.3s ease;
-}
-
-.hamburger span:nth-child(1) {
+  }
+  
+  .hamburger span:nth-child(1) {
     top: 8px;
-}
-
-.hamburger span:nth-child(2) {
+  }
+  
+  .hamburger span:nth-child(2) {
     top: 15px;
-}
-
-.hamburger span:nth-child(3) {
+  }
+  
+  .hamburger span:nth-child(3) {
     top: 22px;
-}
-
-.hamburger.open {
+  }
+  
+  .hamburger.open {
     display: flex;
     position: fixed;
     top: 20px;
     right: 20px;
-}
-
-.hamburger.open span:nth-child(1) {
+  }
+  
+  .hamburger.open span:nth-child(1) {
     top: 15px;
     transform: rotate(45deg);
-}
-
-.hamburger.open span:nth-child(2) {
+  }
+  
+  .hamburger.open span:nth-child(2) {
     opacity: 0;
-}
-
-.hamburger.open span:nth-child(3) {
+  }
+  
+  .hamburger.open span:nth-child(3) {
     top: 15px;
     transform: rotate(-45deg);
-}
-
-/* Mobile Menu */
-@media only screen and (max-width: 1000px) {
+  }
+  
+  /* Mobile Menu */
+  @media only screen and (max-width: 1000px) {
     .linkContainer {
-        display: none;
+      display: none;
     }
-
+  
     .hamburger {
-        display: flex;
+      display: flex;
     }
-
+  
     .fullscreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: white;
-        opacity: 1;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 1;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
+  
     .fullscreen.open {
-        display: flex;
+      display: flex;
     }
-
+  
     .fullscreen .linkList {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 20px; /* Ensures consistent spacing */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px; /* Ensures consistent spacing */
     }
-
+  
     .fullscreen .linkList li {
-        width: 100%;
-        text-align: center;
+      width: 100%;
+      text-align: center;
     }
-
+  
     .fullscreen .link {
-        font-size: 32px;
-        display: block;
+      font-size: 32px;
+      display: block;
     }
-}
+  }
+  
