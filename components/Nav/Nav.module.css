@@ -20,8 +20,9 @@
     font-weight: 800;
     font-size: 40px;
     text-decoration: none;
-    letter-spacing: 0.5px;
-    margin-bottom: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    color: rgb(104, 10, 128)
   }
   
   .linkContainer {
