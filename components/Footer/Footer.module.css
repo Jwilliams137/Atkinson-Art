@@ -1,0 +1,28 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    text-align: center;
+    color: rgb(46, 44, 46);
+}
+
+.links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.link {
+    color: rgb(46, 44, 46);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: rgb(104, 10, 128);
+}
+
+.copyright {
+    font-size: 18px;
+}
