@@ -1,14 +1,19 @@
-import React from 'react'
-import styles from "./page.module.css"
-import Sidebar from '../../../components/Sidebar/Sidebar'
+import React from 'react';
+import styles from './page.module.css';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 
-function page() {
+function ArtworkPage() {
+    const subpages = [
+        { label: 'Sculpture', href: '/artwork/sculpture' },
+        { label: 'Paintings', href: '/artwork/paintings' },
+        { label: 'Drawings', href: '/artwork/drawings' },
+    ];
+
     return (
         <div className={styles.main}>
-            <h2>Artwork</h2>
-            <Sidebar />
+            <Sidebar subpages={subpages} />
         </div>
-    )
+    );
 }
 
-export default page
+export default ArtworkPage;

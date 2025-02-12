@@ -4,24 +4,20 @@
   0% {
     opacity: 0;
     transform: translateY(20px);
-    /* Start from below */
   }
 
   100% {
     opacity: 1;
     transform: translateY(0);
-    /* Move to the normal position */
   }
 }
 
 .nav {
-  background-color: white;
   padding: 20px 50px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  /* Ensure the nav container takes full width */
   position: relative;
   z-index: 10;
 }
@@ -34,13 +30,11 @@
 
 .title {
   font-family: 'Oswald', sans-serif;
-  /* Oswald font */
   font-weight: 600;
   font-size: 72px;
-  text-decoration: none;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   margin-bottom: 40px;
-  color: rgb(104, 10, 128);
+  color: var(--hover-text);
   display: inline-block;
   overflow: hidden;
 }
@@ -57,50 +51,45 @@
 
 .title span:nth-child(2) {
   animation-delay: 0.1s;
-  color: rgb(202, 34, 12);
+  color: var(--accent);
 }
 
 .title span:nth-child(3) {
   animation-delay: 0.2s;
 }
 
+.title span:nth-child(5) {
+  margin-right: 20px;
+}
+
 .linkContainer {
   display: flex;
   justify-content: space-between;
-  /* Spread the items across the width */
   width: 100%;
-  /* Ensure the container takes up the full width */
 }
 
 .linkList {
   display: flex;
   flex-direction: row;
-  list-style: none;
   margin: 0;
   padding: 0;
   width: 100%;
-  /* Ensure it takes up the full width */
 }
 
 .linkList li {
-  margin-right: 20px;
   flex-grow: 1;
-  /* Allow items to grow and take space */
 }
 
 .link {
   cursor: pointer;
-  color: #2e2c2e;
-  text-decoration: none;
-  font-size: 28px;
+  font-size: 30px;
 }
 
 .link:hover {
-  color: #680a80;
-  font-size: 29px;
+  color: var(--hover-text);
+  font-size: 31px;
 }
 
-/* Hamburger menu */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -117,7 +106,7 @@
 .hamburger span {
   height: 3px;
   width: 25px;
-  background: rgb(46, 44, 46);
+  background: var(--primary-text);
   position: absolute;
   transition: all 0.3s ease;
 }
@@ -155,20 +144,14 @@
   transform: rotate(-45deg);
 }
 
-.title span:nth-child(5) {
-  margin-right: 20px;
-  /* Adjust the space as needed */
-}
-
-
-/* Mobile Menu */
 @media only screen and (max-width: 1000px) {
-.nav {
-  padding: 8px 20px;
-}
+  .nav {
+    padding: 8px 20px;
+  }
 
   .title {
     font-size: 50px;
+    margin-bottom: 20px;
   }
 
   .linkContainer {
@@ -185,7 +168,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: white;
     opacity: 1;
     z-index: 1000;
     display: flex;
@@ -203,7 +185,6 @@
     align-items: center;
     text-align: center;
     gap: 20px;
-    /* Ensures consistent spacing */
   }
 
   .fullscreen .linkList li {
@@ -224,11 +205,11 @@
 }
 
 @media only screen and (max-width: 400px) {
-  .title {
-    font-size: 30px;
-  }
-
   .nav {
     padding: 9px 20px;
+  }
+
+  .title {
+    font-size: 30px;
   }
 }

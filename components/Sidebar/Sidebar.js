@@ -1,24 +1,18 @@
-
 import Link from 'next/link';
+import styles from './Sidebar.module.css';
 
-const Sidebar = () => {
+const Sidebar = ({ subpages }) => {
     return (
-        <div className="sidebar">
+        <div className={styles.sidebar}>
             <nav>
-                <ul>
-                    <li>
-                        <Link href="/artwork">Artwork</Link>
-                    </li>
-                    <li>
-                        <Link href="/artwork/sculpture">Sculpture</Link>
-                    </li>
-                    <li>
-                        <Link href="/artwork/paintings">Paintings</Link>
-                    </li>
-                    <li>
-                        <Link href="/artwork/drawings">Drawings</Link>
-                    </li>
-
+                <ul className={styles.navList}>
+                    {subpages.map((page) => (
+                        <li key={page.href} className={styles.navItem}>
+                            <Link href={page.href} className={styles.navLink}>
+                                {page.label}
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
             </nav>
         </div>
@@ -26,3 +20,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+

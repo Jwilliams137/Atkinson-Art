@@ -5,13 +5,12 @@ import styles from "./page.module.css"
 function page() {
   return (
     <div className={styles.main}>
-        <h2>About</h2>
         <Image
-        src="/linda.jpg"  // Path to your image
+        src="/linda.jpg"
         alt="Linda Atkinson"
-        width={428}                    // Desired width
-        height={450}                   // Desired height
-        layout="intrinsic"             // Use "intrinsic" for responsive images
+        width={428}
+        height={450}
+        layout="intrinsic"
       />
     </div>
     

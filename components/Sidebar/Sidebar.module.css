@@ -1,36 +1,35 @@
-/* styles/globals.css or create a Sidebar.module.css */
+/* Sidebar.module.css */
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
     height: 100%;
     width: 250px;
-    background-color: #333;
-    color: white;
-    padding: 20px;
     display: block;
     z-index: 10;
     overflow-y: auto;
- }
- 
- .sidebar nav ul {
-    list-style-type: none;
-    padding: 0;
- }
- 
- .sidebar nav ul li {
+}
+
+.navList {
+    margin-left: 40;
+    text-align: left;
+}
+
+.navItem {
     margin: 10px 0;
- }
- 
- .sidebar nav ul li a {
-    color: white;
+}
+
+.navLink {
     text-decoration: none;
-    font-size: 18px;
+    font-size: 22px;
     transition: background-color 0.3s ease;
- }
- 
- .sidebar nav ul li a:hover {
-    background-color: #555;
-    padding: 5px;
- }
- 
+    display: block;
+    padding: 5px 0;
+}
+
+.navLink:hover {
+    color: var(--hover-text);
+}
+
+@media only screen and (max-width: 1000px) {
+    .sidebar {
+        display: none;
+    }
+}

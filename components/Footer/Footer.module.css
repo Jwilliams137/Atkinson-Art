@@ -1,45 +1,38 @@
 .footer {
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 20px 0;
     text-align: center;
-    background-color: white;
-    color: rgb(46, 44, 46);
-  }
-  
-  .links {
-    display: flex;
-    justify-content: center; /* Center the icons horizontally */
-    gap: 20px; /* Add some space between the icons */
-    margin-bottom: 20px;
-  }
-  
-  .navlink {
-    color: #2e2c2e; /* Link color */
-    text-decoration: none;
-    display: inline-block; /* Ensures icons are treated as inline-block elements */
-    transition: color 0.3s ease;
-  }
-  
-  .socialLink {
-    font-size: 45px; /* Set a more reasonable icon size */
-    display: inline-block;
-  }
-  
-  .navlink:hover .socialLink {
-    color: #680a80; /* Change icon color on hover */
-  }
-  
-  .copyright {
-    font-size: 20px;
-    margin-top: 10px; /* Add some space above the copyright text */
-    color: #888;
-  }
+}
 
-  @media only screen and (max-width: 413px) {
-    .copyright{
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.navlink {    
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.socialLink {
+    font-size: 45px;
+    display: inline-block;
+}
+
+.navlink:hover .socialLink {
+    color: var(--hover-text);   
+}
+
+.copyright {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 450px) {
+    .copyright {
         font-size: 16px;
     }
-  }
-  
+}
