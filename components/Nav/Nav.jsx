@@ -72,6 +72,11 @@ export default function Nav() {
                 About
               </Link>
             </li>
+            <li>
+              <Link href="/contact" className={styles.link} onClick={closeMenu}>
+                Contact
+              </Link>
+            </li>
             {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
               <li>
                 <Link href="/admin" className={styles.link} onClick={closeMenu}>
@@ -106,6 +111,11 @@ export default function Nav() {
               <li>
                 <Link href="/about" className={styles.link}>
                   About
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className={styles.link}>
+                  Contact
                 </Link>
               </li>
               {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
