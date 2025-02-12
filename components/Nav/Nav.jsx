@@ -1,9 +1,10 @@
-'use client';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { auth } from '../../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import styles from './Nav.module.css';
+"use client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { auth } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import styles from "./Nav.module.css";
+import navLinks from "./navLinks.json"; // Import nav links from JSON file
 
 export default function Nav() {
   const [user, setUser] = useState(null);
@@ -32,8 +33,8 @@ export default function Nav() {
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleLogout = async () => {
@@ -41,17 +42,18 @@ export default function Nav() {
     setIsMenuOpen(false);
   };
 
-  // Function to split the title into spans for chunked animation
   const splitTitle = (text) => {
     return text.split("").map((letter, index) => (
-      <span key={index} className={styles.chunkedLetter}>{letter}</span>
+      <span key={index} className={styles.chunkedLetter}>
+        {letter}
+      </span>
     ));
   };
 
   return (
     <>
       {/* Hamburger menu */}
-      <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>
+      <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>
@@ -59,35 +61,20 @@ export default function Nav() {
 
       {/* Full-screen overlay menu (only visible on mobile) */}
       {isMenuOpen && (
-        <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ''}`}>
+        <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ""}`}>
           <ul className={styles.linkList}>
-            <li>
-              <Link href="/" className={styles.link} onClick={closeMenu}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/artwork" className={styles.link} onClick={closeMenu}>
-                Artwork
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className={styles.link} onClick={closeMenu}>
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className={styles.link} onClick={closeMenu}>
-                Contact
-              </Link>
-            </li>
-            {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
-              <li>
-                <Link href="/admin" className={styles.link} onClick={closeMenu}>
-                  Admin
-                </Link>
-              </li>
-            )}
+            {navLinks.map((link) => {
+              if (link.restricted && (!user || (user.email !== "jwilliams137.036@gmail.com" && user.email !== "linda.atkinson111@gmail.com"))) {
+                return null;
+              }
+              return (
+                <li key={link.path}>
+                  <Link href={link.path} className={styles.link} onClick={closeMenu}>
+                    {link.name}
+                  </Link>
+                </li>
+              );
+            })}
             {user && (
               <li>
                 <p onClick={handleLogout} className={styles.link}>
@@ -107,28 +94,18 @@ export default function Nav() {
           </Link>
           <div className={styles.linkContainer}>
             <ul className={styles.linkList}>
-              <li>
-                <Link href="/artwork" className={styles.link}>
-                  ARTWORK
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className={styles.link}>
-                  ABOUT
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className={styles.link}>
-                  CONTACT
-                </Link>
-              </li>
-              {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
-                <li>
-                  <Link href="/admin" className={styles.link}>
-                    ADMIN
-                  </Link>
-                </li>
-              )}
+              {navLinks.map((link) => {
+                if (link.restricted && (!user || (user.email !== "jwilliams137.036@gmail.com" && user.email !== "linda.atkinson111@gmail.com"))) {
+                  return null;
+                }
+                return (
+                  <li key={link.path}>
+                    <Link href={link.path} className={styles.link}>
+                      {link.name.toUpperCase()}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
