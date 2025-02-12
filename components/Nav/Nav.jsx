@@ -25,6 +25,18 @@ export default function Nav() {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    // Close the hamburger menu if screen is resized to a larger size
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleLogout = async () => {
     await auth.signOut();
     setIsMenuOpen(false);
@@ -46,8 +58,8 @@ export default function Nav() {
       {isMenuOpen && (
         <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ''}`}>
           <div className={styles.leftNav}>
-            <Link href="/" className={styles.title} onClick={closeMenu}>
-              Linda Atkinson
+            <Link href="/" className={styles.link} onClick={closeMenu}>
+              Home
             </Link>
 
             <div className={styles.linkContainer}>
