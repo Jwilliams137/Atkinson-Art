@@ -26,7 +26,6 @@ export default function Nav() {
   };
 
   useEffect(() => {
-    // Close the hamburger menu if screen is resized to a larger size
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setIsMenuOpen(false);
@@ -57,40 +56,37 @@ export default function Nav() {
       {/* Full-screen overlay menu (only visible on mobile) */}
       {isMenuOpen && (
         <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ''}`}>
-          <div className={styles.leftNav}>
-            <Link href="/" className={styles.link} onClick={closeMenu}>
-              Home
-            </Link>
-
-            <div className={styles.linkContainer}>
-              <ul className={styles.linkList}>
-                <li>
-                  <Link href="/artwork" className={styles.link} onClick={closeMenu}>
-                    Artwork
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className={styles.link} onClick={closeMenu}>
-                    About
-                  </Link>
-                </li>
-                {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
-                  <li>
-                    <Link href="/admin" className={styles.link} onClick={closeMenu}>
-                      Admin
-                    </Link>
-                  </li>
-                )}
-                {user && (
-                  <li>
-                    <p onClick={handleLogout} className={styles.link}>
-                      Logout
-                    </p>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
+          <ul className={styles.linkList}>
+            <li>
+              <Link href="/" className={styles.link} onClick={closeMenu}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/artwork" className={styles.link} onClick={closeMenu}>
+                Artwork
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className={styles.link} onClick={closeMenu}>
+                About
+              </Link>
+            </li>
+            {user && (user.email === "jwilliams137.036@gmail.com" || user.email === "linda.atkinson111@gmail.com") && (
+              <li>
+                <Link href="/admin" className={styles.link} onClick={closeMenu}>
+                  Admin
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li>
+                <p onClick={handleLogout} className={styles.link}>
+                  Logout
+                </p>
+              </li>
+            )}
+          </ul>
         </div>
       )}
 
