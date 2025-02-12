@@ -90,13 +90,13 @@
 
 .link {
   cursor: pointer;
-  color: rgb(46, 44, 46);
+  color: #2e2c2e;
   text-decoration: none;
   font-size: 28px;
 }
 
 .link:hover {
-  color: rgb(104, 10, 128);
+  color: #680a80;
   font-size: 29px;
 }
 

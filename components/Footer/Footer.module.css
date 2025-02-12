@@ -4,25 +4,36 @@
     align-items: center;
     padding: 20px 0;
     text-align: center;
+    background-color: white;
     color: rgb(46, 44, 46);
-}
-
-.links {
+  }
+  
+  .links {
     display: flex;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.link {
-    color: rgb(46, 44, 46);
+    justify-content: center; /* Center the icons horizontally */
+    gap: 20px; /* Add some space between the icons */
+    margin-bottom: 20px;
+  }
+  
+  .navlink {
+    color: #2e2c2e; /* Link color */
     text-decoration: none;
+    display: inline-block; /* Ensures icons are treated as inline-block elements */
     transition: color 0.3s ease;
-}
-
-.link:hover {
-    color: rgb(104, 10, 128);
-}
-
-.copyright {
-    font-size: 18px;
-}
+  }
+  
+  .socialLink {
+    font-size: 45px; /* Set a more reasonable icon size */
+    display: inline-block;
+  }
+  
+  .navlink:hover .socialLink {
+    color: #680a80; /* Change icon color on hover */
+  }
+  
+  .copyright {
+    font-size: 20px;
+    margin-top: 10px; /* Add some space above the copyright text */
+    color: #888;
+  }
+  
