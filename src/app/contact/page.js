@@ -1,8 +1,11 @@
 import React from 'react'
+import styles from "./page.module.css"
 
 function page() {
   return (
-    <div>Contact</div>
+    <div className={styles.main}>
+        <h2>Contact</h2>
+    </div>
   )
 }
 
