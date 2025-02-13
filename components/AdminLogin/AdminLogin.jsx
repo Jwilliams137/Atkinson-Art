@@ -3,6 +3,7 @@ import { signInWithGoogle } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
+import allowedEmailsData from "./adminLogin.json";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
@@ -10,11 +11,7 @@ export default function AdminLogin() {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      setUser(user || null);
     });
     return () => unsubscribe();
   }, []);
@@ -24,12 +21,9 @@ export default function AdminLogin() {
 
     try {
       const user = await signInWithGoogle();
-      const allowedEmails = [
-        "jwilliams137.036@gmail.com",
-        "linda.atkinson111@gmail.com"
-      ];
-      
-      if (allowedEmails.includes(user.email)) {
+      const { email } = user;
+
+      if (allowedEmailsData.allowedEmails.includes(email)) {
         setUser(user);
       } else {
         setError("You are not authorized to access this page.");
@@ -48,19 +42,26 @@ export default function AdminLogin() {
     }
   };
 
+  const renderAuthButtons = () => (
+    <div>
+      <button onClick={handleGoogleLogin}>Sign in with Google</button>
+      {error && <p>{error}</p>}
+    </div>
+  );
+
+  const renderUserGreeting = () => {
+    const { displayName, email } = user || {};
+    return (
+      <div>
+        <p>Welcome {displayName || email}!</p>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+    );
+  };
+
   return (
     <div>
-      {!user ? (
-        <>
-          <button onClick={handleGoogleLogin}>Sign in with Google</button>
-          {error && <p>{error}</p>}
-        </>
-      ) : (
-        <>
-          <p>Welcome {user.displayName || user.email}!</p>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      )}
+      {!user ? renderAuthButtons() : renderUserGreeting()}
     </div>
   );
 }
