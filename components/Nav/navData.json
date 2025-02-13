@@ -29,11 +29,11 @@
       "subLinks": [
         {
           "name": "Bio",
-          "path": "/artwork/bio"
+          "path": "/about/bio"
         },
         {
           "name": "Exhibitions",
-          "path": "/artwork/exhibitions"
+          "path": "/about/exhibitions"
         }
       ]
     },

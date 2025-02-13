@@ -84,16 +84,16 @@ export default function Nav() {
 
       {isBurgerMenuOpen && (
         <div className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""}`}>
-
-          <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>{splitTitle(title)}</Link>
+          <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
+            {splitTitle(title)}
+          </Link>
           <ul className={styles.linkList}>
-            
             {navLinks.map((link) => {
               if (link.restricted && !isUserAllowed) {
                 return null;
               }
               return (
-                <li key={link.path}>
+                <li key={link.path} className={styles.burgerItem}>
                   <Link href={link.path} className={styles.link} onClick={closeBurgerMenu}>
                     {link.name}
                   </Link>
