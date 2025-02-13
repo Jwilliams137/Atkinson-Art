@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import styles from "./Nav.module.css";
-import navLinks from "./navLinks.json"; // Import nav links from JSON file
+import navData from "./navData.json";
 
 export default function Nav() {
   const [user, setUser] = useState(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+  const { title, restrictedUsers, navLinks } = navData;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -18,29 +19,24 @@ export default function Nav() {
     return () => unsubscribe();
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prevState) => !prevState);
+  const toggleBurgerMenu = () => {
+    setIsBurgerMenuOpen((prevState) => !prevState);
   };
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
+  const closeBurgerMenu = () => {
+    setIsBurgerMenuOpen(false);
   };
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1000) {
-        setIsMenuOpen(false);
+        setIsBurgerMenuOpen(false);
       }
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const handleLogout = async () => {
-    await auth.signOut();
-    setIsMenuOpen(false);
-  };
 
   const splitTitle = (text) => {
     return text.split("").map((letter, index) => (
@@ -50,46 +46,19 @@ export default function Nav() {
     ));
   };
 
+  const isUserAllowed = user && restrictedUsers.includes(user.email);
+
   return (
     <>
-      {/* Hamburger menu */}
-      <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`} onClick={toggleMenu}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      {/* Full-screen overlay menu (only visible on mobile) */}
-      {isMenuOpen && (
-        <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ""}`}>
-          <div className={styles.mobileTitle}>{splitTitle("Linda Atkinson")}</div>
-          <ul className={styles.linkList}>
-            {navLinks.map((link) => {
-              if (link.restricted && (!user || (user.email !== "jwilliams137.036@gmail.com" && user.email !== "linda.atkinson111@gmail.com"))) {
-                return null;
-              }
-              return (
-                <li key={link.path}>
-                  <Link href={link.path} className={styles.link} onClick={closeMenu}>
-                    {link.name}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-
-      {/* Desktop Menu */}
-      <div className={styles.nav}>
+<div className={styles.nav}>
         <div className={styles.leftNav}>
           <Link href="/" className={styles.title}>
-            {splitTitle("Linda Atkinson")}
+            {splitTitle(title)}
           </Link>
           <div className={styles.linkContainer}>
             <ul className={styles.linkList}>
               {navLinks.map((link) => {
-                if (link.restricted && (!user || (user.email !== "jwilliams137.036@gmail.com" && user.email !== "linda.atkinson111@gmail.com"))) {
+                if (link.restricted && !isUserAllowed) {
                   return null;
                 }
                 return (
@@ -104,6 +73,37 @@ export default function Nav() {
           </div>
         </div>
       </div>
+
+      <div
+        className={`${styles.hamburgerIcon} ${isBurgerMenuOpen && styles.open}`}
+        onClick={toggleBurgerMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      {isBurgerMenuOpen && (
+        <div className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""}`}>
+          <div className={styles.mobileTitle}>{splitTitle(title)}</div>
+          <ul className={styles.linkList}>
+            {navLinks.map((link) => {
+              if (link.restricted && !isUserAllowed) {
+                return null;
+              }
+              return (
+                <li key={link.path}>
+                  <Link href={link.path} className={styles.link} onClick={closeBurgerMenu}>
+                    {link.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+
+      
     </>
   );
 }

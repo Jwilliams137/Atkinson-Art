@@ -90,7 +90,7 @@
   font-size: 31px;
 }
 
-.hamburger {
+.hamburgerIcon {
   display: none;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +103,7 @@
   z-index: 1101;
 }
 
-.hamburger span {
+.hamburgerIcon span {
   height: 3px;
   width: 25px;
   background: var(--primary-text);
@@ -111,35 +111,35 @@
   transition: all 0.3s ease;
 }
 
-.hamburger span:nth-child(1) {
+.hamburgerIcon span:nth-child(1) {
   top: 8px;
 }
 
-.hamburger span:nth-child(2) {
+.hamburgerIcon span:nth-child(2) {
   top: 15px;
 }
 
-.hamburger span:nth-child(3) {
+.hamburgerIcon span:nth-child(3) {
   top: 22px;
 }
 
-.hamburger.open {
+.hamburgerIcon.open {
   display: flex;
   position: fixed;
   top: 20px;
   right: 20px;
 }
 
-.hamburger.open span:nth-child(1) {
+.hamburgerIcon.open span:nth-child(1) {
   top: 15px;
   transform: rotate(45deg);
 }
 
-.hamburger.open span:nth-child(2) {
+.hamburgerIcon.open span:nth-child(2) {
   opacity: 0;
 }
 
-.hamburger.open span:nth-child(3) {
+.hamburgerIcon.open span:nth-child(3) {
   top: 15px;
   transform: rotate(-45deg);
 }
@@ -163,39 +163,39 @@
     display: inline-block;
     overflow: hidden;
   }
-  
+
   .mobileTitle span {
     display: inline-block;
     opacity: 0;
     animation: chunkedFadeIn 1s ease-out forwards;
   }
-  
+
   .mobileTitle span:nth-child(1) {
     animation-delay: 0s;
   }
-  
+
   .mobileTitle span:nth-child(2) {
     animation-delay: 0.1s;
     color: var(--accent);
   }
-  
+
   .mobileTitle span:nth-child(3) {
     animation-delay: 0.2s;
   }
 
   .mobileTitle span:nth-child(5) {
     margin-right: 20px;
-  }  
+  }
 
   .linkContainer {
     display: none;
   }
 
-  .hamburger {
+  .hamburgerIcon {
     display: flex;
   }
 
-  .fullscreen {
+  .burgerMenu {
     position: fixed;
     top: 0;
     left: 0;
@@ -211,11 +211,11 @@
     background-color: white;
   }
 
-  .fullscreen.open {
+  .burgerMenu.open {
     display: flex;
   }
 
-  .fullscreen .linkList {
+  .burgerMenu .linkList {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -224,12 +224,12 @@
     margin-top: 50px;
   }
 
-  .fullscreen .linkList li {
+  .burgerMenu .linkList li {
     width: 100%;
     text-align: center;
   }
 
-  .fullscreen .link {
+  .burgerMenu .link {
     font-size: 32px;
     display: block;
   }
@@ -254,7 +254,7 @@
     font-size: 30px;
   }
 
-  .fullscreen {
+  .burgerMenu {
     padding: 9px 20px;
   }
 
