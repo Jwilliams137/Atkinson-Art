@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import styles from './Sidebar.module.css';
+import sidebarData from './sidebarData.json';
 
-const Sidebar = ({ subpages }) => {
+const Sidebar = ({ pageKey }) => {
+    const subpages = sidebarData[pageKey] || [];
+
     return (
         <div className={styles.sidebar}>
             <nav>
@@ -20,4 +23,3 @@ const Sidebar = ({ subpages }) => {
 };
 
 export default Sidebar;
-

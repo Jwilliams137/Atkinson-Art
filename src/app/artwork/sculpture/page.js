@@ -1,17 +1,10 @@
 import React from 'react'
-import Sidebar from '../../../../components/Sidebar/Sidebar'
 import styles from './page.module.css'
 
-function page() {
-    const subpages = [
-        { label: 'Sculpture', href: '/artwork/sculpture' },
-        { label: 'Paintings', href: '/artwork/paintings' },
-        { label: 'Drawings', href: '/artwork/drawings' },
-    ];
+function page() {    
   return (
     <div className={styles.main}>
-        <h2>Sculpture</h2>
-        <Sidebar subpages={subpages} />
+        <h2>Sculpture</h2>        
     </div>
   )
 }
