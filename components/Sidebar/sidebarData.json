@@ -1,13 +1,26 @@
 {
     "artwork": [
-      { "label": "Sculpture", "href": "/artwork/sculpture" },
-      { "label": "Paintings", "href": "/artwork/paintings" },
-      { "label": "Drawings", "href": "/artwork/drawings" }
+        {
+            "label": "Sculpture",
+            "href": "/artwork/sculpture"
+        },
+        {
+            "label": "Paintings",
+            "href": "/artwork/paintings"
+        },
+        {
+            "label": "Drawings",
+            "href": "/artwork/drawings"
+        }
     ],
     "about": [
-      { "label": "Galleries", "href": "/about/galleries" },
-      { "label": "Bio", "href": "/about/bio" },
-      { "label": "Exhibitions", "href": "/about/exhibitions" }
+        {
+            "label": "Bio",
+            "href": "/about/bio"
+        },
+        {
+            "label": "Exhibitions",
+            "href": "/about/exhibitions"
+        }
     ]
-  }
-  
+}

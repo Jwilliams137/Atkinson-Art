@@ -1,14 +1,50 @@
 {
-    "title": "Linda Atkinson",
-    "restrictedUsers": [
-      "jwilliams137.036@gmail.com",
-      "linda.atkinson111@gmail.com"
-    ],
-    "navLinks": [
-      { "name": "Artwork", "path": "/artwork" },
-      { "name": "About", "path": "/about" },
-      { "name": "Contact", "path": "/contact" },
-      { "name": "Admin", "path": "/admin", "restricted": true }
-    ]
-  }
-  
+  "title": "Linda Atkinson",
+  "restrictedUsers": [
+    "jwilliams137.036@gmail.com",
+    "linda.atkinson111@gmail.com"
+  ],
+  "navLinks": [
+    {
+      "name": "Artwork",
+      "path": "/artwork",
+      "subLinks": [
+        {
+          "name": "Paintings",
+          "path": "/artwork/paintings"
+        },
+        {
+          "name": "Drawings",
+          "path": "/artwork/drawings"
+        },
+        {
+          "name": "Sculpture",
+          "path": "/artwork/sculpture"
+        }
+      ]
+    },
+    {
+      "name": "About",
+      "path": "/about",
+      "subLinks": [
+        {
+          "name": "Bio",
+          "path": "/artwork/bio"
+        },
+        {
+          "name": "Exhibitions",
+          "path": "/artwork/exhibitions"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "path": "/contact"
+    },
+    {
+      "name": "Admin",
+      "path": "/admin",
+      "restricted": true
+    }
+  ]
+}
