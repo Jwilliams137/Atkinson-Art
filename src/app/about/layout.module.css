@@ -1,6 +1,7 @@
 .container {
     display: flex;
     min-height: 100vh;
+    flex-direction: row;
 }
 
 .sidebar {
@@ -12,4 +13,19 @@
     flex-grow: 1;
     padding: 20px;
     overflow: auto;
+}
+
+@media (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .main {
+        padding: 10px;
+    }
 }

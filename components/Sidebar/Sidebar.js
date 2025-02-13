@@ -6,7 +6,6 @@ import sidebarData from "./sidebarData.json";
 
 const Sidebar = ({ pageKey }) => {
     const [isMobile, setIsMobile] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
     const subpages = sidebarData[pageKey] || [];
 
     useEffect(() => {
@@ -21,25 +20,16 @@ const Sidebar = ({ pageKey }) => {
 
     return (
         <>
-            {/* Mobile Sidebar */}
-            <div className={`${styles.mobileSidebar} ${isMobile ? styles.showMobile : styles.hideMobile}`}>
-                <button className={styles.mobileToggle} onClick={() => setIsOpen(!isOpen)}>
-                    {isOpen ? "▲ Hide Menu" : "▼ Show Menu"}
-                </button>
-                {isOpen && (
-                    <nav className={styles.mobileNav}>
-                        <ul className={styles.navList}>
-                            {subpages.map((page) => (
-                                <li key={page.href} className={styles.navItem}>
-                                    <Link href={page.href} className={styles.navLink} onClick={() => setIsOpen(false)}>
-                                        {page.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                )}
-            </div>
+            {/* Mobile Display */}
+            {isMobile && (
+                <div className={styles.mobileLinks}>
+                    {subpages.map((page) => (
+                        <Link key={page.href} href={page.href} className={styles.mobileLink}>
+                            {page.label}
+                        </Link>
+                    ))}
+                </div>
+            )}
 
             {/* Desktop Sidebar */}
             <div className={`${styles.sidebar} ${isMobile ? styles.hideDesktop : styles.showDesktop}`}>
