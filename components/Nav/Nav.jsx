@@ -28,7 +28,7 @@ export default function Nav() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1000) {
         setIsMenuOpen(false);
       }
     };
@@ -62,6 +62,7 @@ export default function Nav() {
       {/* Full-screen overlay menu (only visible on mobile) */}
       {isMenuOpen && (
         <div className={`${styles.fullscreen} ${isMenuOpen ? styles.open : ""}`}>
+          <div className={styles.mobileTitle}>{splitTitle("Linda Atkinson")}</div>
           <ul className={styles.linkList}>
             {navLinks.map((link) => {
               if (link.restricted && (!user || (user.email !== "jwilliams137.036@gmail.com" && user.email !== "linda.atkinson111@gmail.com"))) {
@@ -75,13 +76,6 @@ export default function Nav() {
                 </li>
               );
             })}
-            {user && (
-              <li>
-                <p onClick={handleLogout} className={styles.link}>
-                  Logout
-                </p>
-              </li>
-            )}
           </ul>
         </div>
       )}
