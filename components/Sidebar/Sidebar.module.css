@@ -40,7 +40,6 @@
 .mobileToggle {
     width: 100%;
     background-color: var(--primary-color);
-    color: white;
     border: none;
     padding: 10px;
     font-size: 18px;
