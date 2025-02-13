@@ -1,0 +1,12 @@
+{
+    "allowedEmails": [
+      "jwilliams137.036@gmail.com",
+      "linda.atkinson111@gmail.com"
+    ],
+    "errorMessages": {
+      "notAuthorized": "You are not authorized to access this page.",
+      "loginFailed": "Login failed. Please try again.",
+      "logoutFailed": "Logout failed. Please try again."
+    }
+  }
+  

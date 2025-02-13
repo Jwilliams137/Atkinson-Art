@@ -1,14 +1,12 @@
 "use client";
 import { signInWithGoogle } from "../../firebase";
 import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

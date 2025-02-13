@@ -3,23 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import styles from './Footer.module.css';
+import footerData from './footerData.json';
+
+const iconMapping = {
+  faFacebook: faFacebook,
+  faInstagram: faInstagram
+};
 
 function Footer() {
-  const getCurrentYear = () => {
-    return new Date().getFullYear();
-  }
-
-  const copyrightStatement = `© ${getCurrentYear()} Linda Atkinson. All rights reserved.`;
-
-  const socialLinks = [
-    { href: "https://www.facebook.com/artistlindaatkinson", icon: faFacebook },
-    { href: "https://www.instagram.com/linda.atkinson111/", icon: faInstagram },
-  ];
-
   return (
     <footer className={styles.footer}>
       <div className={styles.links}>
-        {socialLinks.map(({ href, icon }) => (
+        {footerData.socialLinks.map(({ href, icon }) => (
           <a
             key={href}
             href={href}
@@ -29,15 +24,13 @@ function Footer() {
           >
             <FontAwesomeIcon
               className={styles.socialLink}
-              color="#2e2c2e"
-              icon={icon}
+              icon={iconMapping[icon]}
               size="xl"
             />
           </a>
         ))}
       </div>
-
-      <span className={styles.copyright}>{copyrightStatement}</span>
+      <span className={styles.copyright}>{footerData.copyright.replace("{year}", new Date().getFullYear())}</span>
     </footer>
   );
 }
