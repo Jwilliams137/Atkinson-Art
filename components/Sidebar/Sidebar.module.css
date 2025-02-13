@@ -1,3 +1,4 @@
+/* Desktop Sidebar */
 .sidebar {
     height: 100%;
     width: 250px;
@@ -27,24 +28,9 @@
     color: var(--hover-text);
 }
 
-
-
-/* Ensure mobileSidebar is visible on small screens */
-@media only screen and (max-width: 1000px) {
-    .mobileSidebar {
-        display: block !important;
-    }
-}
-
-/* Hide desktop sidebar on small screens */
-@media only screen and (max-width: 1000px) {
-    .sidebar {
-        display: none;
-    }
-}
-
-/* Mobile Sidebar Styles */
+/* Mobile Sidebar */
 .mobileSidebar {
+    display: none;
     width: 100%;
     text-align: center;
     background-color: var(--background);
@@ -84,4 +70,21 @@
     font-size: 18px;
     padding: 8px 0;
     display: block;
+}
+
+/* Responsive Display Fixes */
+.showMobile {
+    display: block !important;
+}
+
+.hideMobile {
+    display: none !important;
+}
+
+.showDesktop {
+    display: block !important;
+}
+
+.hideDesktop {
+    display: none !important;
 }

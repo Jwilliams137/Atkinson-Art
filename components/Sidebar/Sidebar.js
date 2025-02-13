@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./Sidebar.module.css";
@@ -10,63 +10,52 @@ const Sidebar = ({ pageKey }) => {
     const subpages = sidebarData[pageKey] || [];
 
     useEffect(() => {
-        const handleResize = () => {
-            const mobile = window.innerWidth <= 1000;
-            setIsMobile(mobile);
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 1000);
         };
 
-        handleResize(); // Set initial state
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    const toggleMenu = () => {
-        setIsOpen((prev) => !prev);
-    };
-
-    console.log("isMobile:", isMobile, "isOpen:", isOpen); // Debugging log
-
     return (
-        <div>
+        <>
             {/* Mobile Sidebar */}
-            {isMobile && (
-                <div className={styles.mobileSidebar}>
-                    <button className={styles.mobileToggle} onClick={toggleMenu}>
-                        {isOpen ? "▲ Hide Menu" : "▼ Show Menu"}
-                    </button>
-                    {isOpen && (
-                        <nav className={styles.mobileNav}>
-                            <ul className={styles.navList}>
-                                {subpages.map((page) => (
-                                    <li key={page.href} className={styles.navItem}>
-                                        <Link href={page.href} className={styles.navLink} onClick={() => setIsOpen(false)}>
-                                            {page.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                    )}
-                </div>
-            )}
-
-            {/* Desktop Sidebar */}
-            {!isMobile && (
-                <div className={styles.sidebar}>
-                    <nav>
+            <div className={`${styles.mobileSidebar} ${isMobile ? styles.showMobile : styles.hideMobile}`}>
+                <button className={styles.mobileToggle} onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen ? "▲ Hide Menu" : "▼ Show Menu"}
+                </button>
+                {isOpen && (
+                    <nav className={styles.mobileNav}>
                         <ul className={styles.navList}>
                             {subpages.map((page) => (
                                 <li key={page.href} className={styles.navItem}>
-                                    <Link href={page.href} className={styles.navLink}>
+                                    <Link href={page.href} className={styles.navLink} onClick={() => setIsOpen(false)}>
                                         {page.label}
                                     </Link>
                                 </li>
                             ))}
                         </ul>
                     </nav>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+
+            {/* Desktop Sidebar */}
+            <div className={`${styles.sidebar} ${isMobile ? styles.hideDesktop : styles.showDesktop}`}>
+                <nav>
+                    <ul className={styles.navList}>
+                        {subpages.map((page) => (
+                            <li key={page.href} className={styles.navItem}>
+                                <Link href={page.href} className={styles.navLink}>
+                                    {page.label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
+        </>
     );
 };
 
