@@ -10,6 +10,7 @@ export default function Nav() {
   const [user, setUser] = useState(null);
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const { title, restrictedUsers, navLinks } = navData;
+  const isUserAllowed = user && restrictedUsers.includes(user.email);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -18,14 +19,6 @@ export default function Nav() {
 
     return () => unsubscribe();
   }, []);
-
-  const toggleBurgerMenu = () => {
-    setIsBurgerMenuOpen((prevState) => !prevState);
-  };
-
-  const closeBurgerMenu = () => {
-    setIsBurgerMenuOpen(false);
-  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,6 +31,14 @@ export default function Nav() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const toggleBurgerMenu = () => {
+    setIsBurgerMenuOpen((prevState) => !prevState);
+  };
+
+  const closeBurgerMenu = () => {
+    setIsBurgerMenuOpen(false);
+  };
+
   const splitTitle = (text) => {
     return text.split("").map((letter, index) => (
       <span key={index} className={styles.chunkedLetter}>
@@ -46,11 +47,9 @@ export default function Nav() {
     ));
   };
 
-  const isUserAllowed = user && restrictedUsers.includes(user.email);
-
   return (
     <>
-<div className={styles.nav}>
+      <div className={styles.nav}>
         <div className={styles.leftNav}>
           <Link href="/" className={styles.title}>
             {splitTitle(title)}
@@ -85,8 +84,10 @@ export default function Nav() {
 
       {isBurgerMenuOpen && (
         <div className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""}`}>
-          <div className={styles.mobileTitle}>{splitTitle(title)}</div>
+
+          <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>{splitTitle(title)}</Link>
           <ul className={styles.linkList}>
+            
             {navLinks.map((link) => {
               if (link.restricted && !isUserAllowed) {
                 return null;
@@ -102,8 +103,6 @@ export default function Nav() {
           </ul>
         </div>
       )}
-
-      
     </>
   );
 }

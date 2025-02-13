@@ -247,7 +247,7 @@
 
 @media only screen and (max-width: 400px) {
   .nav {
-    padding: 9px 20px;
+    padding: 9px 10px;
   }
 
   .title {
@@ -255,7 +255,7 @@
   }
 
   .burgerMenu {
-    padding: 9px 20px;
+    padding: 9px 10px;
   }
 
   .mobileTitle {
