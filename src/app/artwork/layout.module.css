@@ -12,6 +12,7 @@
 .main {
     flex-grow: 1;    
     overflow: auto;
+    padding: 20 0 0;
 }
 
 @media (max-width: 1000px) {
