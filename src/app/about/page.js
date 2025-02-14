@@ -12,8 +12,7 @@ function page() {
         height={450}
         layout="intrinsic"
       />
-    </div>
-    
+    </div>    
   )
 }
 
