@@ -12,7 +12,6 @@
 .main {
     flex-grow: 1;    
     overflow: auto;
-    margin-top: 20;
 }
 
 @media (max-width: 1000px) {
