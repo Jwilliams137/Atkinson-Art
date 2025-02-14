@@ -20,7 +20,6 @@ const Sidebar = ({ pageKey }) => {
 
     return (
         <>
-            {/* Mobile Display */}
             {isMobile && (
                 <div className={styles.mobileLinks}>
                     {subpages.map((page) => (
@@ -30,8 +29,6 @@ const Sidebar = ({ pageKey }) => {
                     ))}
                 </div>
             )}
-
-            {/* Desktop Sidebar */}
             <div className={`${styles.sidebar} ${isMobile ? styles.hideDesktop : styles.showDesktop}`}>
                 <nav>
                     <ul className={styles.navList}>
