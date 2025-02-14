@@ -10,8 +10,7 @@
 }
 
 .main {
-    flex-grow: 1;
-    padding: 20px;
+    flex-grow: 1;    
     overflow: auto;
 }
 
@@ -22,10 +21,6 @@
 
     .sidebar {
         width: 100%;
-        padding: 10px 20px;
-    }
-
-    .main {
-        padding: 10px;
+        padding: 0;
     }
 }
