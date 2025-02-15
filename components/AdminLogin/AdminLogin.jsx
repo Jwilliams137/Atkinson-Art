@@ -1,13 +1,18 @@
 "use client";
-import { signInWithGoogle } from "../../firebase";
+import { signInWithGoogle } from "../../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { auth } from "../../firebase";
-import allowedEmailsData from "./adminLogin.json";
+import { auth } from "../../utils/firebase";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+
+  // Store the allowed emails
+  const allowedEmails = [
+    process.env.ADMIN_EMAIL_1,
+    process.env.ADMIN_EMAIL_2
+  ];
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -23,7 +28,8 @@ export default function AdminLogin() {
       const user = await signInWithGoogle();
       const { email } = user;
 
-      if (allowedEmailsData.allowedEmails.includes(email)) {
+      // Check if the email is in the allowedEmails array
+      if (allowedEmails.includes(email)) {
         setUser(user);
       } else {
         setError("You are not authorized to access this page.");
