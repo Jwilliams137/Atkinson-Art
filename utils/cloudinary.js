@@ -1,19 +1,18 @@
-import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, // Public
+  api_key: process.env.CLOUDINARY_API_KEY, // Private
+  api_secret: process.env.CLOUDINARY_API_SECRET, // Private
 });
 
-export const uploadImage = (file) => {
-  return new Promise((resolve, reject) => {
-    cloudinary.v2.uploader.upload(file, { resource_type: "auto" }, (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
-      }
+export const uploadImage = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      resource_type: "auto",
     });
-  });
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
