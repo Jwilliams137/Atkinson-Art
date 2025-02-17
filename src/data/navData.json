@@ -8,9 +8,11 @@
       "artwork": {
         "label": "Artwork",
         "subPages": [
-          { "label": "Paintings", "href": "/artwork/paintings" },
-          { "label": "Drawings", "href": "/artwork/drawings" },
-          { "label": "Sculpture", "href": "/artwork/sculpture" }
+          { "label": "New Work", "href": "/artwork/new-work" },
+          { "label": "Houses", "href": "/artwork/houses" },
+          { "label": "Constructions", "href": "/artwork/constructions" },
+          { "label": "Collage", "href": "/artwork/collage" },
+          { "label": "Earlier Work", "href": "/artwork/earlier-work" }
         ]
       },
       "about": {

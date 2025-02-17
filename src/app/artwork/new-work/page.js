@@ -4,7 +4,7 @@ import styles from './page.module.css'
 function page() {   
   return (
     <div className={styles.main}>
-        <h2>Paintings</h2>
+        <h2>New Work</h2>
     </div>
   )
 }

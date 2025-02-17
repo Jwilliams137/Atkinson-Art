@@ -1,8 +1,8 @@
 {
     "sections": [
-      { "key": "artwork", "label": "Artwork Upload" },
-      { "key": "sculptures", "label": "Sculpture Upload" },
-      { "key": "paintings", "label": "Painting Upload" }
+      { "key": "artwork", "label": "Artwork Home" },
+      { "key": "sculptures", "label": "Sculpture" },
+      { "key": "paintings", "label": "Painting" }
     ],
     "fieldsForPage": {
       "artwork": [
