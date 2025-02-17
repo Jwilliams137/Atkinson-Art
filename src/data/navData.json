@@ -1,0 +1,26 @@
+{
+    "title": "Linda Atkinson",
+    "restrictedUsers": [
+      "jwilliams137.036@gmail.com",
+      "linda.atkinson111@gmail.com"
+    ],
+    "pages": {
+      "artwork": {
+        "label": "Artwork",
+        "subPages": [
+          { "label": "Paintings", "href": "/artwork/paintings" },
+          { "label": "Drawings", "href": "/artwork/drawings" },
+          { "label": "Sculpture", "href": "/artwork/sculpture" }
+        ]
+      },
+      "about": {
+        "label": "About",
+        "subPages": [
+          { "label": "Bio", "href": "/about/bio" },
+          { "label": "Exhibitions", "href": "/about/exhibitions" }
+        ]
+      },
+      "contact": { "label": "Contact", "href": "/contact" },
+      "admin": { "label": "Admin", "href": "/admin", "restricted": true }
+    }
+  }  

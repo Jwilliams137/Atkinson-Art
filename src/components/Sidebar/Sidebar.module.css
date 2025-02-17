@@ -12,7 +12,7 @@
 }
 
 .navItem {
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 .navLink {
@@ -43,21 +43,17 @@
 }
 
 .showMobile {
-    display: block !important;
+    display: block;
 }
 
 .hideMobile {
-    display: none !important;
+    display: none;
 }
 
 .showDesktop {
-    display: block !important;
+    display: block;
 }
 
 .hideDesktop {
-    display: none !important;
-}
-
-@media (max-width: 1000px) {
-
+    display: none;
 }

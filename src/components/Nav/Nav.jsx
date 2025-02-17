@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { auth } from "../../../utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import styles from "./Nav.module.css";
-import navData from "./navData.json";
+import navData from "../../data/navData.json";
 
 export default function Nav() {
   const [user, setUser] = useState(null);
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
-  const { title, restrictedUsers, navLinks } = navData;
+  const { title, restrictedUsers, pages } = navData;
   const isUserAllowed = user && restrictedUsers.includes(user.email);
 
   useEffect(() => {
@@ -56,14 +56,13 @@ export default function Nav() {
           </Link>
           <div className={styles.linkContainer}>
             <ul className={styles.linkList}>
-              {navLinks.map((link) => {
-                if (link.restricted && !isUserAllowed) {
-                  return null;
-                }
+              {Object.keys(pages).map((key) => {
+                const page = pages[key];
+                if (page.restricted && !isUserAllowed) return null;
                 return (
-                  <li key={link.path}>
-                    <Link href={link.path} className={styles.link}>
-                      {link.name.toUpperCase()}
+                  <li key={key}>
+                    <Link href={page.href || `/${key}`} className={styles.link}>
+                      {page.label.toUpperCase()}
                     </Link>
                   </li>
                 );
@@ -88,14 +87,13 @@ export default function Nav() {
             {splitTitle(title)}
           </Link>
           <ul className={styles.linkList}>
-            {navLinks.map((link) => {
-              if (link.restricted && !isUserAllowed) {
-                return null;
-              }
+            {Object.keys(pages).map((key) => {
+              const page = pages[key];
+              if (page.restricted && !isUserAllowed) return null;
               return (
-                <li key={link.path} className={styles.burgerItem}>
-                  <Link href={link.path} className={styles.link} onClick={closeBurgerMenu}>
-                    {link.name}
+                <li key={key} className={styles.burgerItem}>
+                  <Link href={page.href || `/${key}`} className={styles.link} onClick={closeBurgerMenu}>
+                    {page.label}
                   </Link>
                 </li>
               );

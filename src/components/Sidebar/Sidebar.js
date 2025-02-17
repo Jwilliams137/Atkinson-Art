@@ -1,12 +1,12 @@
-'use client';
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./Sidebar.module.css";
-import sidebarData from "./sidebarData.json";
+import navData from "../../data/navData.json";
 
 const Sidebar = ({ pageKey }) => {
     const [isMobile, setIsMobile] = useState(false);
-    const subpages = sidebarData[pageKey] || [];
+    const subpages = navData.pages[pageKey]?.subPages || [];
 
     useEffect(() => {
         const checkMobile = () => {
