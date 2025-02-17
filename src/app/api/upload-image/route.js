@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server";
 import cloudinary from "cloudinary";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { app } from "../../../../utils/firebase"; // Adjust path as needed
+import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
 
-const db = getFirestore(app);
+// Initialize Firebase Admin SDK if not already initialized
+if (!getApps().length) {
+  initializeApp({
+    credential: cert({
+      projectId: process.env.NEXT_PUBLIC_PROJECTID,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+  });
+}
+
+const db = getFirestore();
 
 cloudinary.v2.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -13,6 +25,26 @@ cloudinary.v2.config({
 
 export async function POST(req) {
   try {
+    const authHeader = req.headers.get("Authorization");
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const token = authHeader.split("Bearer ")[1];
+
+    // Verify Firebase Auth Token
+    const decodedToken = await getAuth().verifyIdToken(token);
+    const userEmail = decodedToken.email;
+
+    // Check if the user is an allowed admin
+    const allowedAdmins = [process.env.ADMIN_EMAIL_1, process.env.ADMIN_EMAIL_2];
+
+    if (!allowedAdmins.includes(userEmail)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Continue processing the upload
     const formData = await req.formData();
     const file = formData.get("file");
     const title = formData.get("title");
@@ -32,7 +64,7 @@ export async function POST(req) {
     console.log("Uploaded to Cloudinary:", uploadResponse.secure_url);
 
     // Save image info to Firestore
-    const docRef = await addDoc(collection(db, "artworks"), {
+    const docRef = await db.collection("artworks").add({
       title: title || "Untitled",
       imageUrl: uploadResponse.secure_url,
       createdAt: new Date(),

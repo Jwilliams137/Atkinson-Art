@@ -1,0 +1,12 @@
+{
+    "artwork": [
+      { "name": "file", "type": "file", "label": "Upload Artwork Image" }
+    ],
+    "gallery": [
+      { "name": "file", "type": "file", "label": "Upload Image" },
+      { "name": "title", "type": "text", "label": "Title" },
+      { "name": "description", "type": "text", "label": "Description" },
+      { "name": "price", "type": "number", "label": "Price" }
+    ]
+  }
+  

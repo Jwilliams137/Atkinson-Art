@@ -1,0 +1,26 @@
+{
+    "sections": [
+      { "key": "artwork", "label": "Artwork Upload" },
+      { "key": "sculptures", "label": "Sculpture Upload" },
+      { "key": "paintings", "label": "Painting Upload" }
+    ],
+    "fieldsForPage": {
+      "artwork": [
+        { "name": "file", "label": "Upload Artwork Image", "type": "file" },
+        { "name": "title", "label": "Artwork Title", "type": "text" }
+      ],
+      "sculptures": [
+        { "name": "file", "label": "Upload Sculpture Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "paintings": [
+        { "name": "file", "label": "Upload Painting Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ]
+    }
+  }
+  

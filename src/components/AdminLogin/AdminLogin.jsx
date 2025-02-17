@@ -1,8 +1,8 @@
 "use client";
-import { signInWithGoogle } from "../../utils/firebase";
+import { signInWithGoogle } from "../../../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { auth } from "../../utils/firebase";
+import { auth } from "../../../utils/firebase";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");

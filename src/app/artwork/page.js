@@ -1,24 +1,23 @@
-"use client";
-import React, { useEffect, useState } from "react";
+'use client'
+import { useEffect, useState } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { app } from "../../../utils/firebase"; // Adjust path based on your setup
-import styles from "./page.module.css";
+import { app } from "../../../utils/firebase";
+import styles from "./page.module.css"; // Import the CSS module
 
 const db = getFirestore(app);
 
-function ArtworkPage() {
+const ArtworkPage = () => {
   const [artworks, setArtworks] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "artworks"));
-        const artList = querySnapshot.docs.map((doc) => ({
+        const artworkData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setArtworks(artList);
+        setArtworks(artworkData);
       } catch (error) {
         console.error("Error fetching artworks:", error);
       }
@@ -28,20 +27,18 @@ function ArtworkPage() {
   }, []);
 
   return (
-    <div className={styles.main}>
-      <div className={styles.grid}>
-        {artworks.map((art) => (
-          <div key={art.id} className={styles.card}>
-            <img src={art.imageUrl} alt={art.title} className={styles.image} />
-            <p>{art.title}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* The file input is removed since it's only handled by the admin */}
-      {loading && <p>Uploading...</p>}
+    <div className={styles.artworkContainer}>
+      {artworks.map((artwork) => (
+        <div key={artwork.id} className={styles.artworkCard}>
+          <img
+            className={styles.artworkImage}
+            src={artwork.imageUrl}
+            alt={artwork.title}
+          />
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default ArtworkPage;

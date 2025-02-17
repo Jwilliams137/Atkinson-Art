@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { auth } from "../../utils/firebase";
+import { auth } from "../../../utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import styles from "./Nav.module.css";
 import navData from "./navData.json";

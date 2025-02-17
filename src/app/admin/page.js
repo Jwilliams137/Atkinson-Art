@@ -1,58 +1,46 @@
 "use client";
-
 import { useState } from "react";
+import UploadImage from "../../components/UploadImage/UploadImage";
+import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+import AdminLogin from "../../components/AdminLogin/AdminLogin";
+import styles from "./page.module.css"; // Add this for CSS module
+
+const fieldsForPage = {
+  artwork: [
+    { name: "file", label: "Upload Artwork Image", type: "file" },
+    { name: "title", label: "Artwork Title", type: "text" }
+  ],
+  sculptures: [
+    { name: "file", label: "Upload Sculpture Image", type: "file" },
+    { name: "title", label: "Title", type: "text" },
+    { name: "description", label: "Description", type: "text" },
+    { name: "price", label: "Price", type: "number" }
+  ],
+  paintings: [
+    { name: "file", label: "Upload Painting Image", type: "file" },
+    { name: "title", label: "Title", type: "text" },
+    { name: "description", label: "Description", type: "text" },
+    { name: "price", label: "Price", type: "number" }
+  ]
+};
 
 const AdminPage = () => {
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData();
-    const file = event.target.querySelector('input[type="file"]').files[0];
-    const title = event.target.querySelector('input[type="text"]').value;
-
-    if (!file) {
-      console.error("No file selected");
-      setLoading(false);
-      return;
-    }
-
-    formData.append("file", file);
-    formData.append("title", title); // Add the title to the form data
-
-    try {
-      const response = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const rawErrorData = await response.text();
-        console.error("Error response status:", response.status);
-        console.error("Raw Error Response:", rawErrorData);
-        throw new Error("Upload failed");
-      }
-
-      const data = await response.json();
-      console.log("Image uploaded successfully:", data.message);
-    } catch (error) {
-      console.error("Upload failed:", error.message || error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [activeSection, setActiveSection] = useState("artwork");
 
   return (
-    <div>
-      <form id="uploadForm" onSubmit={handleSubmit}>
-        <input type="file" name="file" />
-        <input type="text" name="title" placeholder="Artwork Title" />
-        <button type="submit" disabled={loading}>
-          {loading ? "Uploading..." : "Upload"}
-        </button>
-      </form>
+    <div className={styles.adminPage}>
+      <AdminSidebar setActiveSection={setActiveSection} />
+      <div className={styles.adminContentWrapper}>
+        <div className={styles.adminTopSection}>
+          <AdminLogin />
+        </div>
+        <div className={styles.adminMainContent}>
+          {/* Render the UploadImage component based on the active section */}
+          {activeSection === "artwork" && <UploadImage pageType="artwork" fields={fieldsForPage.artwork} />}
+          {activeSection === "sculptures" && <UploadImage pageType="sculptures" fields={fieldsForPage.sculptures} />}
+          {activeSection === "paintings" && <UploadImage pageType="paintings" fields={fieldsForPage.paintings} />}
+        </div>
+      </div>
     </div>
   );
 };

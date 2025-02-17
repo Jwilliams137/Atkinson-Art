@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import "./globals.css";
 import styles from './layout.module.css';
-import Nav from '../../components/Nav/Nav';
-import Footer from '../../components/Footer/Footer';
-import UnderConstruction from "../../components/UnderConstruction/UnderConstruction"
+import Nav from '../components/Nav/Nav';
+import Footer from '../components/Footer/Footer';
+import UnderConstruction from "../components/UnderConstruction/UnderConstruction"
 
 export const metadata: Metadata = {
   robots: "noindex, nofollow",
