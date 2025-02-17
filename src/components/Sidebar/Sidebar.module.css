@@ -29,7 +29,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px 40px;
+    gap: 20px 40px;
 }
 
 .mobileLink {
@@ -56,4 +56,24 @@
 
 .hideDesktop {
     display: none;
+}
+
+@media only screen and (max-width: 450px) {
+    .mobileLinks {
+        gap: 20px 30px;
+    }
+
+    .mobileLink {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .mobileLinks {
+        gap: 20px 20px;
+    }
+
+    .mobileLink {
+        font-size: 18px;
+    }
 }
