@@ -1,13 +1,9 @@
 .sidebar {
     width: 200px;
-    background: #333;
-    color: white;
     padding: 20px;
-    min-height: 100vh;
   }
   
   .sidebar ul {
-    list-style: none;
     padding: 0;
   }
   
@@ -19,6 +15,6 @@
   
   .sidebar li:hover,
   .sidebar .active {
-    background: #555;
+    color: var(--hover-text);
   }
   
