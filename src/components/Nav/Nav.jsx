@@ -9,14 +9,8 @@ import navData from "../../data/navData.json";
 export default function Nav() {
   const [user, setUser] = useState(null);
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+  const [restrictedUsers, setRestrictedUsers] = useState([]);
   const { title, pages } = navData;
-
-  // Get restricted users from environment variables
-  const restrictedUsers = process.env.NEXT_PUBLIC_RESTRICTED_USERS
-    ? process.env.NEXT_PUBLIC_RESTRICTED_USERS.split(",")
-    : [];
-
-  const isUserAllowed = user && restrictedUsers.includes(user.email);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -27,23 +21,13 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 1000) {
-        setIsBurgerMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    fetch("/api/restricted-users")
+      .then((res) => res.json())
+      .then((data) => setRestrictedUsers(data.restrictedUsers))
+      .catch((err) => console.error("Failed to fetch restricted users", err));
   }, []);
 
-  const toggleBurgerMenu = () => {
-    setIsBurgerMenuOpen((prevState) => !prevState);
-  };
-
-  const closeBurgerMenu = () => {
-    setIsBurgerMenuOpen(false);
-  };
+  const isUserAllowed = user && restrictedUsers.includes(user.email);
 
   const splitTitle = (text) => {
     return text.split("").map((letter, index) => (
@@ -77,36 +61,6 @@ export default function Nav() {
           </div>
         </div>
       </div>
-
-      <div
-        className={`${styles.hamburgerIcon} ${isBurgerMenuOpen && styles.open}`}
-        onClick={toggleBurgerMenu}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      {isBurgerMenuOpen && (
-        <div className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""}`}>
-          <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
-            {splitTitle(title)}
-          </Link>
-          <ul className={styles.linkList}>
-            {Object.keys(pages).map((key) => {
-              const page = pages[key];
-              if (page.restricted && !isUserAllowed) return null;
-              return (
-                <li key={key} className={styles.burgerItem}>
-                  <Link href={page.href || `/${key}`} className={styles.link} onClick={closeBurgerMenu}>
-                    {page.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
     </>
   );
 }
