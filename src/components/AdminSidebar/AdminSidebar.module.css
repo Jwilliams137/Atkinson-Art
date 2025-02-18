@@ -18,3 +18,14 @@
     color: var(--hover-text);
   }
   
+  @media only screen and (max-width: 1000px) {
+    .sidebar {
+      width: 100%;      
+    }
+    
+    .sidebar ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0px 30px;
+    }
+  }
