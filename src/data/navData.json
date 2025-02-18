@@ -18,6 +18,7 @@
           { "label": "Exhibitions", "href": "/about/exhibitions" }
         ]
       },
+      "shop": { "label": "Shop", "href": "/shop" },
       "contact": { "label": "Contact", "href": "/contact" },
       "admin": { "label": "Admin", "href": "/admin", "restricted": true }
     }
