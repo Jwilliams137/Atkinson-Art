@@ -1,9 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, // Public
-  api_key: process.env.CLOUDINARY_API_KEY, // Private
-  api_secret: process.env.CLOUDINARY_API_SECRET, // Private
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export const uploadImage = async (filePath) => {
@@ -11,7 +11,9 @@ export const uploadImage = async (filePath) => {
     const result = await cloudinary.uploader.upload(filePath, {
       resource_type: "auto",
     });
-    return result;
+
+    const { secure_url, width, height } = result; // Grab width and height
+    return { secure_url, width, height }; // Return these along with the URL
   } catch (error) {
     throw error;
   }

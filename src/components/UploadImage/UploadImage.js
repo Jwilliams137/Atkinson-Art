@@ -1,10 +1,21 @@
-// UploadImage.js
 "use client";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
 
 const UploadImage = ({ pageType, fields }) => {
   const [loading, setLoading] = useState(false);
+
+  // Function to get image dimensions
+  const getImageDimensions = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        resolve({ width: img.width, height: img.height });
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,16 +41,22 @@ const UploadImage = ({ pageType, fields }) => {
       return;
     }
 
-    formData.append("file", file);
-
-    fields.forEach((field) => {
-      const input = event.target.querySelector(`input[name="${field.name}"]`);
-      if (input) {
-        formData.append(field.name, input.value);
-      }
-    });
-
     try {
+      // Get image dimensions before uploading
+      const { width, height } = await getImageDimensions(file);
+
+      // Append file and dimensions to formData
+      formData.append("file", file);
+      formData.append("width", width);
+      formData.append("height", height);
+
+      fields.forEach((field) => {
+        const input = event.target.querySelector(`input[name="${field.name}"]`);
+        if (input) {
+          formData.append(field.name, input.value);
+        }
+      });
+
       const response = await fetch("/api/upload-image", {
         method: "POST",
         body: formData,

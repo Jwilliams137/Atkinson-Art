@@ -48,6 +48,8 @@ export async function POST(req) {
     const formData = await req.formData();
     const file = formData.get("file");
     const title = formData.get("title");
+    const width = formData.get("width");  // Get width from form data
+    const height = formData.get("height"); // Get height from form data
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
@@ -67,6 +69,8 @@ export async function POST(req) {
     const docRef = await db.collection("artworks").add({
       title: title || "Untitled",
       imageUrl: uploadResponse.secure_url,
+      width: width ? parseInt(width) : null,   // Convert to number
+      height: height ? parseInt(height) : null, // Convert to number
       createdAt: new Date(),
     });
 
@@ -75,6 +79,8 @@ export async function POST(req) {
     return NextResponse.json({
       message: "Upload successful",
       url: uploadResponse.secure_url,
+      width: width ? parseInt(width) : null,
+      height: height ? parseInt(height) : null,
     });
   } catch (error) {
     console.error("Upload error:", error.message);
