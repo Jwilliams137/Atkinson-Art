@@ -9,7 +9,13 @@ import navData from "../../data/navData.json";
 export default function Nav() {
   const [user, setUser] = useState(null);
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
-  const { title, restrictedUsers, pages } = navData;
+  const { title, pages } = navData;
+
+  // Get restricted users from environment variables
+  const restrictedUsers = process.env.NEXT_PUBLIC_RESTRICTED_USERS
+    ? process.env.NEXT_PUBLIC_RESTRICTED_USERS.split(",")
+    : [];
+
   const isUserAllowed = user && restrictedUsers.includes(user.email);
 
   useEffect(() => {

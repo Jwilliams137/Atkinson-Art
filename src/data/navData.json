@@ -1,9 +1,5 @@
 {
     "title": "Linda Atkinson",
-    "restrictedUsers": [
-      "jwilliams137.036@gmail.com",
-      "linda.atkinson111@gmail.com"
-    ],
     "pages": {
       "artwork": {
         "label": "Artwork",
@@ -25,4 +21,5 @@
       "contact": { "label": "Contact", "href": "/contact" },
       "admin": { "label": "Admin", "href": "/admin", "restricted": true }
     }
-  }  
+  }
+  
