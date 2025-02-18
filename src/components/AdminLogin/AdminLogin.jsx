@@ -7,12 +7,15 @@ import { auth } from "../../../utils/firebase";
 export default function AdminLogin() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+  const [allowedEmails, setAllowedEmails] = useState([]);
 
-  // Store the allowed emails
-  const allowedEmails = [
-    process.env.ADMIN_EMAIL_1,
-    process.env.ADMIN_EMAIL_2
-  ];
+  useEffect(() => {
+    // Fetch allowed admin emails from API route
+    fetch("/api/restricted-users")
+      .then((res) => res.json())
+      .then((data) => setAllowedEmails(data.restrictedUsers))
+      .catch(() => setError("Failed to load admin access list."));
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -28,11 +31,11 @@ export default function AdminLogin() {
       const user = await signInWithGoogle();
       const { email } = user;
 
-      // Check if the email is in the allowedEmails array
       if (allowedEmails.includes(email)) {
         setUser(user);
       } else {
         setError("You are not authorized to access this page.");
+        await signOut(auth); // Log them out immediately
       }
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -65,9 +68,5 @@ export default function AdminLogin() {
     );
   };
 
-  return (
-    <div>
-      {!user ? renderAuthButtons() : renderUserGreeting()}
-    </div>
-  );
+  return <div>{!user ? renderAuthButtons() : renderUserGreeting()}</div>;
 }
