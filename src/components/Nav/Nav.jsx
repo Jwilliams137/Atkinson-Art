@@ -19,18 +19,16 @@ export default function Nav() {
       setUser(currentUser);
 
       if (currentUser) {
-        // Fetch restricted users
         fetch('/api/restricted-users')
           .then(response => response.json())
           .then(data => {
-            console.log("Fetched restricted users:", data.restrictedUsers); // Debugging line
             setRestrictedUsers(data.restrictedUsers);
-            setIsUserAllowed(data.restrictedUsers.includes(currentUser.email)); // Check if email matches
+            setIsUserAllowed(data.restrictedUsers.includes(currentUser.email));
           })
           .catch(error => console.error("Error fetching restricted users:", error));
       } else {
         setIsUserAllowed(false);
-        setRestrictedUsers([]); // Reset if no user is logged in
+        setRestrictedUsers([]);
       }
     });
 
@@ -76,11 +74,7 @@ export default function Nav() {
               {Object.keys(pages).map((key) => {
                 const page = pages[key];
 
-                // Debugging line to see the permissions check
-                console.log("Checking if user is allowed to see:", page.label);
-
                 if (page.restricted && !isUserAllowed && key === 'admin') {
-                  console.log("Admin page not visible due to restricted access");
                   return null;
                 }
 
@@ -115,8 +109,7 @@ export default function Nav() {
             {Object.keys(pages).map((key) => {
               const page = pages[key];
               if (page.restricted && !isUserAllowed && key === 'admin') {
-                console.log("Admin page not visible in burger menu due to restricted access");
-                return null; 
+                return null;
               }
               return (
                 <li key={key} className={styles.burgerItem}>
