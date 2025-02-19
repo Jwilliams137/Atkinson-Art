@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"; 
 import cloudinary from "cloudinary";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
@@ -47,6 +47,7 @@ export async function POST(req) {
     const title = formData.get("title");
     const width = formData.get("width");
     const height = formData.get("height");
+    const pageType = formData.get("pageType");  // Add this to handle page type
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
@@ -60,11 +61,14 @@ export async function POST(req) {
       folder: "uploads",
     });
 
-    // Save metadata to Firestore for "home" page
-    await db.collection("home").doc("homePage").set({
-      title: title || "Home Page Title",
+    // Create a unique document for each upload
+    await db.collection("uploads").add({
+      pageType: pageType || "home",  // Set the pageType (default "home")
+      title: title || "No Title", 
       imageUrl: uploadResponse.secure_url,
       createdAt: new Date(),
+      width: width ? parseInt(width) : null,
+      height: height ? parseInt(height) : null,
     });
 
     return NextResponse.json({

@@ -50,6 +50,9 @@ const UploadImage = ({ pageType, fields }) => {
       formData.append("width", width);
       formData.append("height", height);
 
+      // Append the pageType to formData (passing it dynamically)
+      formData.append("pageType", pageType);
+
       fields.forEach((field) => {
         const input = event.target.querySelector(`input[name="${field.name}"]`);
         if (input) {
@@ -95,3 +98,4 @@ const UploadImage = ({ pageType, fields }) => {
 };
 
 export default UploadImage;
+

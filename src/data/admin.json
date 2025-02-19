@@ -9,70 +9,81 @@
       { "key": "earlier-work", "label": "Earlier Work" },
       { "key": "about", "label": "About" },
       { "key": "bio", "label": "Bio" },
-      { "key": "Exhibitions", "label": "Exhibitions" },
+      { "key": "exhibitions", "label": "Exhibitions" },
       { "key": "shop", "label": "Shop" }
     ],
     "fieldsForPage": {
-        "home": [
+      "home": [
         { "name": "file", "label": "Upload Home Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" }
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "pageType", "type": "hidden", "value": "home" }
       ],
       "artwork": [
         { "name": "file", "label": "Upload Artwork Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" }
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "pageType", "type": "hidden", "value": "artwork" }
       ],
       "new-work": [
         { "name": "file", "label": "Upload New Work Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "new-work" }
       ],
       "houses": [
         { "name": "file", "label": "Upload Houses Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "houses" }
       ],
       "constructions": [
         { "name": "file", "label": "Upload Constructions Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "constructions" }
       ],
       "collage": [
         { "name": "file", "label": "Upload Collage Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "collage" }
       ],
       "earlier-work": [
         { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "earlier-work" }
       ],
-      "About": [
+      "about": [
         { "name": "file", "label": "Upload About Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" }
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "pageType", "type": "hidden", "value": "about" }
       ],
       "bio": [
         { "name": "file", "label": "Upload Bio Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "bio" }
       ],
       "exhibitions": [
-        { "name": "file", "label": "Upload Exhibitons Image", "type": "file" },
+        { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "exhibitions" }
       ],
       "shop": [
         { "name": "file", "label": "Upload Shop Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" }
+        { "name": "price", "label": "Price", "type": "number" },
+        { "name": "pageType", "type": "hidden", "value": "shop" }
       ]
     }
   }
