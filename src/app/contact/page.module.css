@@ -1,6 +1,5 @@
 .form {
-    width: 100%;
-    max-width: 80%;
+    width: 80%;
     margin: auto;
     padding: 30px;
     border-radius: 8px;
@@ -8,34 +7,34 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
-  
-  .inputField,
-  .textarea {
+}
+
+.inputField,
+.textarea {
     width: 100%;
     padding: 12px;
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 6px;
     transition: border 0.3s ease;
-  }
-  
-  .inputField:focus,
-  .textarea:focus {
+}
+
+.inputField:focus,
+.textarea:focus {
     border-color: var(--primary-text);
     outline: none;
-  }
-  
-  .textarea {
+}
+
+.textarea {
     resize: vertical;
     min-height: 150px;
-  }
-  
-  .hidden {
+}
+
+.hidden {
     display: none;
-  }
-  
-  .button {
+}
+
+.button {
     background-color: var(--primary-text);
     color: white;
     padding: 14px;
@@ -45,15 +44,28 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-weight: bold;
-  }
-  
-  .button:hover {
+}
+
+.button:hover {
     background-color: var(--hover-text);
-  }
-  
-  /* Button disabled state */
-  .button:disabled {
+}
+
+/* Button disabled state */
+.button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-  }
-  
+}
+
+@media only screen and (max-width: 1000px) {
+    .form {
+        padding: 15px;
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .form {
+        padding: 15px;
+        width: 100%;
+    }
+}

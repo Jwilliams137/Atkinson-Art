@@ -3,7 +3,7 @@ import styles from './page.module.css' // Importing the styles
 
 function page() {
   return (
-    <div>
+    <div className={styles.container}>
       <form action="/api/contact" method="POST" className={styles.form}>
 
         <input 
