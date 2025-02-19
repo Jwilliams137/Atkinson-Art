@@ -1,14 +1,12 @@
-/* page.module.css */
 .adminPage {
   display: flex;
+  flex-direction: column; /* Stack by default */
 }
 
 .adminContentWrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 20px;
-  margin-left: 20px; /* Space for the sidebar */
 }
 
 .adminTopSection {
@@ -55,10 +53,6 @@
   background-color: #34495e;
 }
 
-.adminSidebar .active {
-  background-color: #1abc9c;
-}
-
 .adminLogin {
   padding: 20px;
   background-color: #ecf0f1;
@@ -76,19 +70,44 @@
 
 .adminLogin button {
   padding: 10px 15px;
-  background-color: #2ecc71;
+  background-color: var(--primary-text);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.adminLogin button:hover {
-  background-color: #27ae60;
+/* Large screens: Layout with sidebar on the left */
+@media only screen and (min-width: 1001px) {
+  .adminPage {
+    flex-direction: row;
+  }
+
+  .adminContentWrapper {
+    margin-left: 220px; /* Make space for the sidebar */
+  }
+
+  .adminTopSection {
+    flex-direction: column;
+  }
 }
 
+/* Smaller screens (<= 1000px): Stack all content vertically */
 @media only screen and (max-width: 1000px) {
   .adminPage {
     flex-direction: column;
+  }
+
+  .adminContentWrapper {
+    margin-left: 0;
+  }
+
+  /* Make sure the login area is at the top, then sidebar, then content */
+  .adminTopSection {
+    order: 1; /* Makes login appear at the very top */
+  }
+
+  .adminSidebar {
+    order: 2; /* Sidebar appears below login */
   }
 }

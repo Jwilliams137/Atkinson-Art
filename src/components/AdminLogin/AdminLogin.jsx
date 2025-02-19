@@ -3,6 +3,7 @@ import { signInWithGoogle } from "../../../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { auth } from "../../../utils/firebase";
+import styles from './AdminLogin.module.css';
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
@@ -10,7 +11,6 @@ export default function AdminLogin() {
   const [allowedEmails, setAllowedEmails] = useState([]);
 
   useEffect(() => {
-    // Fetch allowed admin emails from API route
     fetch("/api/restricted-users")
       .then((res) => res.json())
       .then((data) => setAllowedEmails(data.restrictedUsers))
@@ -35,7 +35,7 @@ export default function AdminLogin() {
         setUser(user);
       } else {
         setError("You are not authorized to access this page.");
-        await signOut(auth); // Log them out immediately
+        await signOut(auth);
       }
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -52,21 +52,24 @@ export default function AdminLogin() {
   };
 
   const renderAuthButtons = () => (
-    <div>
-      <button onClick={handleGoogleLogin}>Sign in with Google</button>
-      {error && <p>{error}</p>}
+    <div className={styles.authContainer}>
+      <button onClick={handleGoogleLogin} className={styles.button}>Sign in with Google</button>
     </div>
   );
 
   const renderUserGreeting = () => {
     const { displayName, email } = user || {};
     return (
-      <div>
-        <p>Welcome {displayName || email}!</p>
-        <button onClick={handleLogout}>Logout</button>
+      <div className={styles.userContainer}>
+        <p className={styles.welcomeText}>Welcome {displayName || email}!</p>
+        <button onClick={handleLogout} className={styles.button}>Logout</button>
       </div>
     );
   };
 
-  return <div>{!user ? renderAuthButtons() : renderUserGreeting()}</div>;
+  return (
+    <div className={styles.container}>
+      {!user ? renderAuthButtons() : renderUserGreeting()}
+    </div>
+  );
 }

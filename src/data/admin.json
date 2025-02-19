@@ -2,8 +2,15 @@
     "sections": [
       { "key": "home", "label": "Home" },
       { "key": "artwork", "label": "Artwork" },
-      { "key": "sculptures", "label": "Sculpture" },
-      { "key": "paintings", "label": "Painting" }
+      { "key": "new-work", "label": "New Work" },
+      { "key": "houses", "label": "Houses" },
+      { "key": "constructions", "label": "Constructions" },
+      { "key": "collage", "label": "Collage" },
+      { "key": "earlier-work", "label": "Earlier Work" },
+      { "key": "about", "label": "About" },
+      { "key": "bio", "label": "Bio" },
+      { "key": "Exhibitions", "label": "Exhibitions" },
+      { "key": "shop", "label": "Shop" }
     ],
     "fieldsForPage": {
         "home": [
@@ -14,14 +21,55 @@
         { "name": "file", "label": "Upload Artwork Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" }
       ],
-      "sculptures": [
-        { "name": "file", "label": "Upload Sculpture Image", "type": "file" },
+      "new-work": [
+        { "name": "file", "label": "Upload New Work Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
         { "name": "price", "label": "Price", "type": "number" }
       ],
-      "paintings": [
-        { "name": "file", "label": "Upload Painting Image", "type": "file" },
+      "houses": [
+        { "name": "file", "label": "Upload Houses Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "constructions": [
+        { "name": "file", "label": "Upload Constructions Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "collage": [
+        { "name": "file", "label": "Upload Collage Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "earlier-work": [
+        { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "About": [
+        { "name": "file", "label": "Upload About Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" }
+      ],
+      "bio": [
+        { "name": "file", "label": "Upload Bio Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "exhibitions": [
+        { "name": "file", "label": "Upload Exhibitons Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "price", "label": "Price", "type": "number" }
+      ],
+      "shop": [
+        { "name": "file", "label": "Upload Shop Image", "type": "file" },
         { "name": "title", "label": "Title", "type": "text" },
         { "name": "description", "label": "Description", "type": "text" },
         { "name": "price", "label": "Price", "type": "number" }
