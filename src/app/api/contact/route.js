@@ -1,21 +1,30 @@
-// File: src/app/api/contact/route.js
-
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   try {
-    const formData = await request.formData();
+    console.log('API Route hit');
 
-    // Extracting data from the form
+    // Attempt to parse form data
+    const formData = await request.formData();
+    console.log('Form Data received:', Object.fromEntries(formData));
+
     const name = formData.get('name');
     const email = formData.get('email');
     const message = formData.get('message');
 
-    // Now you can either send this data to Formsubmit or handle it in some other way
-    // For example, if you're sending this to Formsubmit, you could use a fetch request
+    // Check for missing form data
+    if (!name || !email || !message) {
+      console.error('Missing form data:', { name, email, message });
+      return NextResponse.json({ error: 'Missing form data' }, { status: 400 });
+    }
 
+    // Log form data for debugging
+    console.log('Form Data:', { name, email, message });
+
+    // Formsubmit URL
     const formSubmitUrl = 'https://formsubmit.co/jwilliams137.036@gmail.com';
 
+    // Send the data to Formsubmit
     const res = await fetch(formSubmitUrl, {
       method: 'POST',
       body: new URLSearchParams({
@@ -27,14 +36,16 @@ export async function POST(request) {
       })
     });
 
+    // Handle error if Formsubmit response is not OK
     if (!res.ok) {
-      return NextResponse.error();
+      console.error('Error from Formsubmit:', res.status, res.statusText);
+      return NextResponse.json({ error: 'Formsubmit error' }, { status: 500 });
     }
 
-    return NextResponse.redirect('/thank-you'); // Redirect to the thank-you page
-
+    // Successfully submitted, redirect to thank-you page
+    return NextResponse.redirect('https://atkinson-art.netlify.app/thank-you');
   } catch (error) {
-    console.error(error);
-    return NextResponse.error();
+    console.error('Error in API Route:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
