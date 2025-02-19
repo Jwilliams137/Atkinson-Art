@@ -4,7 +4,8 @@ import styles from './page.module.css' // Importing the styles
 function page() {
   return (
     <div>
-      <form action="https://formsubmit.co/jwilliams137.036@gmail.com" method="POST" className={styles.form}>
+      <form action="/api/contact" method="POST" className={styles.form}>
+
         <input 
           type="text" 
           name="name" 
