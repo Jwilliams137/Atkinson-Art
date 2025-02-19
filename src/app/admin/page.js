@@ -8,7 +8,7 @@ import adminData from "../../data/admin.json";
 import { auth } from "../../../utils/firebase";
 
 const AdminPage = () => {
-  const [activeSection, setActiveSection] = useState("artwork");
+  const [activeSection, setActiveSection] = useState("home");
   const [fieldsForPage, setFieldsForPage] = useState({});
   const [user, setUser] = useState(null);
 

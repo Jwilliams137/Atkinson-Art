@@ -1,14 +1,14 @@
 "use client";
 import { useState } from "react";
-import styles from "./AdminSidebar.module.css"; // Ensure your CSS is correct
-import sidebarData from "../../data/admin.json"; // Correct path to JSON file
+import styles from "./AdminSidebar.module.css";
+import sidebarData from "../../data/admin.json";
 
 const AdminSidebar = ({ setActiveSection }) => {
-  const [activeKey, setActiveKey] = useState("artwork"); // Default section
+  const [activeKey, setActiveKey] = useState("home");
 
   const handleClick = (key) => {
     setActiveKey(key);
-    setActiveSection(key); // Update parent component with active section
+    setActiveSection(key);
   };
 
   return (
