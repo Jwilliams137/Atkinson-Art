@@ -21,8 +21,8 @@ export async function POST(request) {
     // Log form data for debugging
     console.log('Form Data:', { name, email, message });
 
-    // Formsubmit URL
-    const formSubmitUrl = 'https://formsubmit.co/jwilliams137.036@gmail.com';
+    // Use the existing ADMIN_EMAIL_1 environment variable
+    const formSubmitUrl = `https://formsubmit.co/${process.env.ADMIN_EMAIL_1}`;
 
     // Send the data to Formsubmit
     const res = await fetch(formSubmitUrl, {
