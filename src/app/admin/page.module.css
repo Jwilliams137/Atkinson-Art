@@ -1,12 +1,6 @@
 .adminPage {
   display: flex;
-  flex-direction: column; /* Stack by default */
-}
-
-.adminContentWrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  flex-direction: column; /* Stack everything by default */
 }
 
 .adminTopSection {
@@ -15,9 +9,18 @@
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.adminContentWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .adminMainContent {
+  flex: 1;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -37,77 +40,55 @@
   left: 0;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
-.adminSidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.adminSidebar li {
-  padding: 15px;
-  cursor: pointer;
-}
-
-.adminSidebar li:hover {
-  background-color: #34495e;
-}
-
-.adminLogin {
-  padding: 20px;
-  background-color: #ecf0f1;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.adminLogin input {
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.adminLogin button {
-  padding: 10px 15px;
-  background-color: var(--primary-text);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Large screens: Layout with sidebar on the left */
+/* Large screens: Sidebar on the left and content to the right */
 @media only screen and (min-width: 1001px) {
   .adminPage {
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .adminContentWrapper {
-    margin-left: 220px; /* Make space for the sidebar */
+    display: flex;
+    flex-direction: row; /* Sidebar and content side by side */
+    margin-top: 20px;
   }
 
-  .adminTopSection {
-    flex-direction: column;
+  .adminSidebar {
+    margin-right: 20px; /* Space between sidebar and content */
+    position: static; /* Sidebar should not be fixed anymore */
+    width: 200px;
+  }
+
+  .adminMainContent {
+    flex: 1; /* Content takes the rest of the space */
   }
 }
 
-/* Smaller screens (<= 1000px): Stack all content vertically */
+/* Smaller screens: Stack everything in one column */
 @media only screen and (max-width: 1000px) {
   .adminPage {
     flex-direction: column;
   }
 
-  .adminContentWrapper {
-    margin-left: 0;
+  .adminTopSection {
+    order: 0; /* Ensure login area is always first */
+    width: 100%;
   }
 
-  /* Make sure the login area is at the top, then sidebar, then content */
-  .adminTopSection {
-    order: 1; /* Makes login appear at the very top */
+  .adminContentWrapper {
+    display: flex;
+    flex-direction: column; /* Stack sidebar and content */
+    margin-top: 20px;
   }
 
   .adminSidebar {
-    order: 2; /* Sidebar appears below login */
+    order: 1; /* Sidebar comes after login area */
+    width: 100%; /* Make the sidebar full width */
+  }
+
+  .adminMainContent {
+    order: 2; /* Content below sidebar */
   }
 }

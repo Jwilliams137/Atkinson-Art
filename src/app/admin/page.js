@@ -25,21 +25,20 @@ const AdminPage = () => {
 
   return (
     <div className={styles.adminPage}>
-      {user && <AdminSidebar setActiveSection={setActiveSection} />} {/* Sidebar only if logged in */}
-      
-      <div className={styles.adminContentWrapper}>
-        <div className={styles.adminTopSection}>
-          <AdminLogin />
-        </div>
+      <div className={styles.adminTopSection}>
+        <AdminLogin />
+      </div>
 
-        {user && (
+      {user && (
+        <div className={styles.adminContentWrapper}>
+          <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
               <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} />
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
