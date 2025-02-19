@@ -60,12 +60,10 @@ export async function POST(req) {
       folder: "uploads",
     });
 
-    // Save metadata to Firestore
-    await db.collection("artworks").add({
-      title: title || "Untitled",
+    // Save metadata to Firestore for "home" page
+    await db.collection("home").doc("homePage").set({
+      title: title || "Home Page Title",
       imageUrl: uploadResponse.secure_url,
-      width: width ? parseInt(width) : null,
-      height: height ? parseInt(height) : null,
       createdAt: new Date(),
     });
 

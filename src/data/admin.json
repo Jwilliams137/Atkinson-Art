@@ -1,13 +1,18 @@
 {
     "sections": [
-      { "key": "artwork", "label": "Artwork Home" },
+      { "key": "home", "label": "Home" },
+      { "key": "artwork", "label": "Artwork" },
       { "key": "sculptures", "label": "Sculpture" },
       { "key": "paintings", "label": "Painting" }
     ],
     "fieldsForPage": {
+        "home": [
+        { "name": "file", "label": "Upload Home Image", "type": "file" },
+        { "name": "title", "label": "Title", "type": "text" }
+      ],
       "artwork": [
         { "name": "file", "label": "Upload Artwork Image", "type": "file" },
-        { "name": "title", "label": "Artwork Title", "type": "text" }
+        { "name": "title", "label": "Title", "type": "text" }
       ],
       "sculptures": [
         { "name": "file", "label": "Upload Sculpture Image", "type": "file" },

@@ -1,0 +1,30 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.prompt {
+    text-align: center;
+    font-size: 25px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact {
+    padding: 10px 20px;
+    background-color: var(--primary-text);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: max-content;
+    margin: 20px auto;
+}
+
+.contact:hover {
+    background-color: var(--hover-text);
+}
