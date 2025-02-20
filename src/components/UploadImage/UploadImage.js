@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
+import styles from "./UploadImage.module.css";
 
 const UploadImage = ({ pageType, fields }) => {
   const [loading, setLoading] = useState(false);
@@ -83,14 +84,14 @@ const UploadImage = ({ pageType, fields }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.uploadForm}>
       {fields.map((field) => (
-        <div key={field.name}>
-          <label>{field.label}:</label>
-          <input type={field.type} name={field.name} />
+        <div key={field.name} className={styles.formField}>
+          <label className={styles.label}>{field.label}:</label>
+          <input type={field.type} name={field.name} className={styles.input} />
         </div>
       ))}
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} className={styles.submitButton}>
         {loading ? "Uploading..." : "Upload"}
       </button>
     </form>
