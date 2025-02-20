@@ -5,26 +5,20 @@ import styles from "./UploadImage.module.css";
 
 const UploadImage = ({ pageType, fields, onUpload }) => {
   const [loading, setLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null); // State for image preview
+  const [imagePreview, setImagePreview] = useState(null);
 
-  // Function to get image dimensions
   const getImageDimensions = (file) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.onload = () => {
-        resolve({ width: img.width, height: img.height });
-      };
+      img.onload = () => resolve({ width: img.width, height: img.height });
       img.onerror = reject;
       img.src = URL.createObjectURL(file);
     });
   };
 
-  // Handle file input change for preview
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      setImagePreview(URL.createObjectURL(file)); // Update preview
-    }
+    if (file) setImagePreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (event) => {
@@ -41,9 +35,9 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
     }
 
     const token = await user.getIdToken();
-
     const formData = new FormData();
-    const file = event.target.querySelector('input[type="file"]').files[0];
+    const fileInput = event.target.querySelector('input[type="file"]');
+    const file = fileInput.files[0];
 
     if (!file) {
       console.error("No file selected");
@@ -52,48 +46,40 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
     }
 
     try {
-      // Get image dimensions before uploading
       const { width, height } = await getImageDimensions(file);
 
-      // Append file and dimensions to formData
       formData.append("file", file);
       formData.append("width", width);
       formData.append("height", height);
-
-      // Append the pageType to formData (passing it dynamically)
       formData.append("pageType", pageType);
 
       fields.forEach((field) => {
         const input = event.target.querySelector(`input[name="${field.name}"]`);
-        if (input) {
-          formData.append(field.name, input.value);
-        }
+        if (input) formData.append(field.name, input.value);
       });
 
       const response = await fetch("/api/upload-image", {
         method: "POST",
         body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Upload failed:", response.status, errorText);
+        console.error("Upload failed:", response.status, await response.text());
         throw new Error("Upload failed");
       }
 
       console.log("Upload successful");
 
-      // After successful upload, call onUpload to update the image list
-      const newImage = {
-        imageUrl: URL.createObjectURL(file), // Temporarily use the file URL as the image source
-        title: file.name,
-        width,
-        height,
-      };
-      onUpload(newImage);
+      onUpload({ imageUrl: URL.createObjectURL(file), title: file.name, width, height });
+
+      // Clear form fields
+      fileInput.value = "";
+      setImagePreview(null);
+      fields.forEach((field) => {
+        const input = event.target.querySelector(`input[name="${field.name}"]`);
+        if (input) input.value = "";
+      });
 
     } catch (error) {
       console.error("Upload failed:", error);
@@ -111,12 +97,11 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
             type={field.type}
             name={field.name}
             className={styles.input}
-            onChange={field.type === "file" ? handleFileChange : undefined} // Add change handler for file input
+            onChange={field.type === "file" ? handleFileChange : undefined}
           />
         </div>
       ))}
-      
-      {/* Image preview */}
+
       {imagePreview && (
         <div className={styles.previewContainer}>
           <img src={imagePreview} alt="Image Preview" className={styles.previewImage} />
