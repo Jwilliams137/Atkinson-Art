@@ -18,8 +18,20 @@ const AdminPage = () => {
   const db = getFirestore();
 
   useEffect(() => {
+    // Set initial fields for page
     setFieldsForPage(adminData.fieldsForPage);
+
+    // Retrieve active section from localStorage if available
+    const savedSection = localStorage.getItem("activeSection");
+    if (savedSection) {
+      setActiveSection(savedSection);
+    }
   }, []);
+
+  useEffect(() => {
+    // Save the active section to localStorage when it changes
+    localStorage.setItem("activeSection", activeSection);
+  }, [activeSection]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

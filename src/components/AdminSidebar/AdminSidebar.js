@@ -1,10 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./AdminSidebar.module.css";
 import sidebarData from "../../data/admin.json";
 
 const AdminSidebar = ({ setActiveSection }) => {
   const [activeKey, setActiveKey] = useState("home");
+
+  // Sync activeKey with activeSection after page load
+  useEffect(() => {
+    const savedSection = localStorage.getItem("activeSection");
+    if (savedSection) {
+      setActiveKey(savedSection);
+    }
+  }, []);
 
   const handleClick = (key) => {
     setActiveKey(key);
@@ -29,3 +37,4 @@ const AdminSidebar = ({ setActiveSection }) => {
 };
 
 export default AdminSidebar;
+
