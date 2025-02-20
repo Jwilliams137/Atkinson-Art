@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
+import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import { auth } from "../../../utils/firebase";
@@ -35,7 +35,7 @@ const AdminPage = () => {
   }, [activeSection]);
 
   const fetchImagesByPageType = async (pageType) => {
-    const imagesCollection = collection(db, "uploads"); // Ensure collection name is correct
+    const imagesCollection = collection(db, "uploads");
     const q = query(imagesCollection, where("pageType", "==", pageType));
 
     const querySnapshot = await getDocs(q);
@@ -43,7 +43,6 @@ const AdminPage = () => {
     setImages(fetchedImages);
   };
 
-  // Function to handle the addition of new image after upload
   const handleImageUpload = (newImage) => {
     setImages((prevImages) => [newImage, ...prevImages]);
   };
@@ -61,24 +60,7 @@ const AdminPage = () => {
             {fieldsForPage[activeSection] && (
               <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} onUpload={handleImageUpload} />
             )}
-            <div>
-              <div className={styles.imagesGrid}>
-                {images.length > 0 ? (
-                  images.map((image, index) => (
-                    <div key={index} className={styles.imageItem}>
-                      <Image
-                        src={image.imageUrl}
-                        alt={image.title}
-                        width={image.width}
-                        height={image.height}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <p>No images found for this section.</p>
-                )}
-              </div>
-            </div>
+            <AdminDisplay images={images} activeSection={activeSection} />
           </div>
         </div>
       )}
