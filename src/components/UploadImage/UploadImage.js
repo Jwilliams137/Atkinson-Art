@@ -71,7 +71,16 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
 
       console.log("Upload successful");
 
-      onUpload({ imageUrl: URL.createObjectURL(file), title: file.name, width, height });
+      const uploadedImageUrl = URL.createObjectURL(file);
+
+      // Send new image data to AdminPage immediately
+      onUpload({
+        imageUrl: uploadedImageUrl,
+        title: file.name,
+        width,
+        height,
+        pageType
+      });
 
       // Clear form fields
       fileInput.value = "";

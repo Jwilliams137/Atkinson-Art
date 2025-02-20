@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import styles from './AdminDisplay.module.css';
+import styles from "./AdminDisplay.module.css";
 
-const AdminDisplay = ({ images, activeSection }) => {
+const AdminDisplay = ({ images }) => {
   return (
     <div className={styles.imagesGrid}>
       {images.length > 0 ? (

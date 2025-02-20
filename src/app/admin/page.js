@@ -43,6 +43,7 @@ const AdminPage = () => {
     setImages(fetchedImages);
   };
 
+  // Ensure uploaded images show up without a refresh
   const handleImageUpload = (newImage) => {
     setImages((prevImages) => [newImage, ...prevImages]);
   };
