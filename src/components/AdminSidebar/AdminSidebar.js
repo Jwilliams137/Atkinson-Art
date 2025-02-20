@@ -6,7 +6,6 @@ import sidebarData from "../../data/admin.json";
 const AdminSidebar = ({ setActiveSection }) => {
   const [activeKey, setActiveKey] = useState("home");
 
-  // Sync activeKey with activeSection after page load
   useEffect(() => {
     const savedSection = localStorage.getItem("activeSection");
     if (savedSection) {
@@ -37,4 +36,3 @@ const AdminSidebar = ({ setActiveSection }) => {
 };
 
 export default AdminSidebar;
-
