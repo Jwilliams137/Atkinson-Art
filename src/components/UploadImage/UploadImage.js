@@ -98,4 +98,3 @@ const UploadImage = ({ pageType, fields }) => {
 };
 
 export default UploadImage;
-

@@ -1,16 +1,15 @@
 .adminPage {
   display: flex;
-  flex-direction: column; /* Stack everything by default */
+  flex-direction: column;
 }
 
 .adminTopSection {
   padding: 20px;
-  background-color: #ecf0f1;
+  background-color: #d1d0d8;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .adminContentWrapper {
@@ -22,73 +21,31 @@
 .adminMainContent {
   flex: 1;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f7f6f8;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.adminSidebar {
-  width: 200px;
-  background-color: #2c3e50;
-  padding: 20px;
-  color: white;
-  border-radius: 8px;
-  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
-  position: fixed;
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.imageItem {
+  position: relative;
+  width: 100%;
+}
+
+.imageItem img {
+  width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  border-radius: 8px
 }
 
-/* Large screens: Sidebar on the left and content to the right */
-@media only screen and (min-width: 1001px) {
-  .adminPage {
-    flex-direction: column;
-  }
-
+@media only screen and (max-width: 1000px) {  
   .adminContentWrapper {
-    display: flex;
-    flex-direction: row; /* Sidebar and content side by side */
-    margin-top: 20px;
-  }
-
-  .adminSidebar {
-    margin-right: 20px; /* Space between sidebar and content */
-    position: static; /* Sidebar should not be fixed anymore */
-    width: 200px;
-  }
-
-  .adminMainContent {
-    flex: 1; /* Content takes the rest of the space */
-  }
-}
-
-/* Smaller screens: Stack everything in one column */
-@media only screen and (max-width: 1000px) {
-  .adminPage {
     flex-direction: column;
-  }
-
-  .adminTopSection {
-    order: 0; /* Ensure login area is always first */
-    width: 100%;
-  }
-
-  .adminContentWrapper {
-    display: flex;
-    flex-direction: column; /* Stack sidebar and content */
-    margin-top: 20px;
-  }
-
-  .adminSidebar {
-    order: 1; /* Sidebar comes after login area */
-    width: 100%; /* Make the sidebar full width */
-  }
-
-  .adminMainContent {
-    order: 2; /* Content below sidebar */
   }
 }
