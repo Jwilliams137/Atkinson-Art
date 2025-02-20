@@ -43,6 +43,11 @@ const AdminPage = () => {
     setImages(fetchedImages);
   };
 
+  // Function to handle the addition of new image after upload
+  const handleImageUpload = (newImage) => {
+    setImages((prevImages) => [newImage, ...prevImages]);
+  };
+
   return (
     <div className={styles.adminPage}>
       <div className={styles.adminTopSection}>
@@ -54,7 +59,7 @@ const AdminPage = () => {
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
-              <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} />
+              <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} onUpload={handleImageUpload} />
             )}
             <div>
               <div className={styles.imagesGrid}>
@@ -82,4 +87,3 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
-

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import styles from "./UploadImage.module.css";
 
-const UploadImage = ({ pageType, fields }) => {
+const UploadImage = ({ pageType, fields, onUpload }) => {
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null); // State for image preview
 
@@ -85,6 +85,16 @@ const UploadImage = ({ pageType, fields }) => {
       }
 
       console.log("Upload successful");
+
+      // After successful upload, call onUpload to update the image list
+      const newImage = {
+        imageUrl: URL.createObjectURL(file), // Temporarily use the file URL as the image source
+        title: file.name,
+        width,
+        height,
+      };
+      onUpload(newImage);
+
     } catch (error) {
       console.error("Upload failed:", error);
     } finally {
@@ -121,4 +131,3 @@ const UploadImage = ({ pageType, fields }) => {
 };
 
 export default UploadImage;
-
