@@ -5,6 +5,7 @@ import styles from "./UploadImage.module.css";
 
 const UploadImage = ({ pageType, fields }) => {
   const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null); // State for image preview
 
   // Function to get image dimensions
   const getImageDimensions = (file) => {
@@ -16,6 +17,14 @@ const UploadImage = ({ pageType, fields }) => {
       img.onerror = reject;
       img.src = URL.createObjectURL(file);
     });
+  };
+
+  // Handle file input change for preview
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file)); // Update preview
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -88,9 +97,22 @@ const UploadImage = ({ pageType, fields }) => {
       {fields.map((field) => (
         <div key={field.name} className={styles.formField}>
           <label className={styles.label}>{field.label}:</label>
-          <input type={field.type} name={field.name} className={styles.input} />
+          <input
+            type={field.type}
+            name={field.name}
+            className={styles.input}
+            onChange={field.type === "file" ? handleFileChange : undefined} // Add change handler for file input
+          />
         </div>
       ))}
+      
+      {/* Image preview */}
+      {imagePreview && (
+        <div className={styles.previewContainer}>
+          <img src={imagePreview} alt="Image Preview" className={styles.previewImage} />
+        </div>
+      )}
+
       <button type="submit" disabled={loading} className={styles.submitButton}>
         {loading ? "Uploading..." : "Upload"}
       </button>
@@ -99,3 +121,4 @@ const UploadImage = ({ pageType, fields }) => {
 };
 
 export default UploadImage;
+
