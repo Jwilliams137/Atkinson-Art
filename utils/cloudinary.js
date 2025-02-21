@@ -12,8 +12,8 @@ export const uploadImage = async (filePath) => {
       resource_type: "auto",
     });
 
-    const { secure_url, width, height } = result; // Grab width and height
-    return { secure_url, width, height }; // Return these along with the URL
+    const { secure_url, width, height } = result;
+    return { secure_url, width, height };
   } catch (error) {
     throw error;
   }

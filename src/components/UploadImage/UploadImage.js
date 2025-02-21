@@ -127,4 +127,3 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
 };
 
 export default UploadImage;
-
