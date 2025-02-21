@@ -6,7 +6,7 @@ import AdminLogin from "../../components/AdminLogin/AdminLogin";
 import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
-import { auth } from "../../../utils/firebase";
+import { auth } from "../../utils/firebase";
 import { getFirestore, collection, query, where, getDocs, doc, writeBatch } from "firebase/firestore";
 
 const AdminPage = () => {

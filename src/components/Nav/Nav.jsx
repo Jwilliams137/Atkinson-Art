@@ -1,39 +1,14 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { auth } from "../../../utils/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
 import styles from "./Nav.module.css";
 import navData from "../../data/navData.json";
 
 export default function Nav() {
-  const [user, setUser] = useState(null);
+  const { user, isUserAllowed } = useAuth();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const { title, pages } = navData;
-
-  const [isUserAllowed, setIsUserAllowed] = useState(false);
-  const [restrictedUsers, setRestrictedUsers] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-
-      if (currentUser) {
-        fetch('/api/restricted-users')
-          .then(response => response.json())
-          .then(data => {
-            setRestrictedUsers(data.restrictedUsers);
-            setIsUserAllowed(data.restrictedUsers.includes(currentUser.email));
-          })
-          .catch(error => console.error("Error fetching restricted users:", error));
-      } else {
-        setIsUserAllowed(false);
-        setRestrictedUsers([]);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,7 +48,6 @@ export default function Nav() {
             <ul className={styles.linkList}>
               {Object.keys(pages).map((key) => {
                 const page = pages[key];
-
                 if (page.restricted && !isUserAllowed && key === 'admin') {
                   return null;
                 }
