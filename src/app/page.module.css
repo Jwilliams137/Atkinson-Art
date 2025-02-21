@@ -1,8 +1,7 @@
 .homeContainer {
-  padding: 20px;
   display: flex;
   margin: auto;
-  width: 70%;
+  width: 55%;
   gap: 20px;
 }
 
@@ -24,4 +23,28 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
+}
+
+@media only screen and (max-width: 1500px) {
+  .homeContainer {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .homeContainer {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .homeContainer {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .homeContainer {
+    width: 100%;
+  }
 }
