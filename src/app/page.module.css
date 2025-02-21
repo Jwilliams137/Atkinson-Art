@@ -1,17 +1,27 @@
-.homePageContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-    
-  .homePageContainer img {
-    width: 70%;
-    height: auto;
-    margin-top: 20px;
-  }
+.homeContainer {
+  padding: 20px;
+  display: flex;
+  margin: auto;
+  width: 70%;
+  gap: 20px;
+}
 
-  @media only screen and (max-width: 1000px) {
-    .homePageContainer img {
-        width: 95%;
-      }
-  }  
+.homeGallery {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.homeGalleryCard {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.homeGalleryImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

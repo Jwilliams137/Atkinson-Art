@@ -1,16 +1,17 @@
+// ImageGallery.js
 import Image from "next/image";
-import styles from "./ImageGallery.module.css";
+import styles from "./ImageGallery.module.css"; // Import styles from ImageGallery's CSS module
 
-const ImageGallery = ({ images, className }) => {
+const ImageGallery = ({ images, className, cardClass, imageClass }) => {
   return (
     <div className={`${styles.galleryContainer} ${className}`}>
       {images.length === 0 ? (
         <div>Loading...</div>
       ) : (
         images.map((image) => (
-          <div key={image.id} className={styles.galleryCard}>
+          <div key={image.id} className={cardClass || styles.galleryCard}>
             <Image
-              className={styles.galleryImage}
+              className={imageClass || styles.galleryImage}
               src={image.imageUrl}
               alt={image.title || "Gallery Image"}
               width={image.width || 500}
