@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { app } from "../../utils/firebase";
 import styles from "./page.module.css";
 import Image from "next/image";
@@ -14,6 +14,7 @@ interface ImageData {
   title?: string;
   width: number;
   height: number;
+  order: number;  // Add the 'order' field here
 }
 
 const HomePage = () => {
@@ -22,7 +23,11 @@ const HomePage = () => {
   useEffect(() => {
     const fetchHomeImages = async () => {
       try {
-        const q = query(collection(db, "uploads"), where("pageType", "==", "home"));
+        const q = query(
+          collection(db, "uploads"),
+          where("pageType", "==", "home"),
+          orderBy("order")  // Order by the 'order' field
+        );
         const querySnapshot = await getDocs(q);
 
         const images: ImageData[] = querySnapshot.docs.map((doc) => ({
@@ -62,4 +67,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
 

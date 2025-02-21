@@ -7,13 +7,14 @@ import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import { auth } from "../../../utils/firebase";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, writeBatch } from "firebase/firestore";
 
 const AdminPage = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [fieldsForPage, setFieldsForPage] = useState({});
   const [user, setUser] = useState(null);
   const [images, setImages] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false); // New state for admin check
 
   const db = getFirestore();
 
@@ -32,6 +33,10 @@ const AdminPage = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user || null);
+      if (user) {
+        // Check if the user is an admin
+        setIsAdmin(user.email === 'jwilliams137.036@gmail.com' || user.email === 'linda.atkinson111@gmail.com');
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -48,9 +53,9 @@ const AdminPage = () => {
 
     const querySnapshot = await getDocs(q);
     const fetchedImages = querySnapshot.docs.map(doc => ({
-      id: doc.id, 
+      id: doc.id,
       ...doc.data()
-    })); // Ensure the image ID is included
+    }));
     setImages(fetchedImages);
   };
 
@@ -59,6 +64,8 @@ const AdminPage = () => {
   };
 
   const deleteImage = async (imageId, cloudinaryId) => {
+    if (!isAdmin) return; // Prevent non-admins from deleting images
+
     try {
       const response = await fetch("/api/delete-image", {
         method: "DELETE",
@@ -78,20 +85,71 @@ const AdminPage = () => {
     }
   };
 
+  const moveImageUp = async (imageId, index) => {
+    if (!isAdmin || index === 0) return; // Only admins can move images and not the first one
+
+    const prevImage = images[index - 1];
+    const currentImage = images[index];
+
+    const batch = writeBatch(db);
+
+    const currentImageRef = doc(db, "uploads", currentImage.id);
+    const prevImageRef = doc(db, "uploads", prevImage.id);
+
+    batch.update(currentImageRef, { order: prevImage.order });
+    batch.update(prevImageRef, { order: currentImage.order });
+
+    await batch.commit();
+
+    const updatedImages = [...images];
+    updatedImages[index - 1] = currentImage;
+    updatedImages[index] = prevImage;
+
+    setImages(updatedImages);
+  };
+
+  const moveImageDown = async (imageId, index) => {
+    if (!isAdmin || index === images.length - 1) return; // Only admins can move images and not the last one
+
+    const nextImage = images[index + 1];
+    const currentImage = images[index];
+
+    const batch = writeBatch(db);
+
+    const currentImageRef = doc(db, "uploads", currentImage.id);
+    const nextImageRef = doc(db, "uploads", nextImage.id);
+
+    batch.update(currentImageRef, { order: nextImage.order });
+    batch.update(nextImageRef, { order: currentImage.order });
+
+    await batch.commit();
+
+    const updatedImages = [...images];
+    updatedImages[index + 1] = currentImage;
+    updatedImages[index] = nextImage;
+
+    setImages(updatedImages);
+  };
+
   return (
     <div className={styles.adminPage}>
       <div className={styles.adminTopSection}>
         <AdminLogin />
       </div>
 
-      {user && (
+      {user && isAdmin && ( // Render content only if user is admin
         <div className={styles.adminContentWrapper}>
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
               <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} onUpload={handleImageUpload} />
             )}
-            <AdminDisplay images={images} deleteImage={deleteImage} /> {/* Pass deleteImage function correctly */}
+            <AdminDisplay
+              images={images}
+              deleteImage={deleteImage}
+              moveImageUp={moveImageUp}
+              moveImageDown={moveImageDown}
+            />
           </div>
         </div>
       )}
