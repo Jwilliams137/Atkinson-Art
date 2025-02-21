@@ -1,54 +1,65 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import { app } from "../../utils/firebase";
 import styles from "./page.module.css";
 import Image from "next/image";
 
 const db = getFirestore(app);
 
-// Define the shape of your homeData
-interface HomePageData {
-  title: string;
+// Define the expected shape of each image document
+interface ImageData {
+  id: string;
   imageUrl: string;
+  title?: string;
+  width: number;
+  height: number;
 }
 
 const HomePage = () => {
-  const [homeData, setHomeData] = useState<HomePageData | null>(null);
+  const [homeImages, setHomeImages] = useState<ImageData[]>([]);
 
   useEffect(() => {
-    const fetchHomeData = async () => {
+    const fetchHomeImages = async () => {
       try {
-        const docRef = doc(db, "home", "homePage");  // Adjust if you store the home page differently
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setHomeData(docSnap.data() as HomePageData); // Typecast the result to HomePageData
-        } else {
-          console.log("No such document!");
-        }
+        const q = query(collection(db, "uploads"), where("pageType", "==", "home"));
+        const querySnapshot = await getDocs(q);
+
+        const images: ImageData[] = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as ImageData[];
+
+        setHomeImages(images);
       } catch (error) {
-        console.error("Error fetching home page data:", error);
+        console.error("Error fetching home images:", error);
       }
     };
 
-    fetchHomeData();
+    fetchHomeImages();
   }, []);
 
-  if (!homeData) {
+  if (homeImages.length === 0) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className={styles.homePageContainer}>
-      <Image
-        src={homeData.imageUrl}
-        alt={homeData.title}
-        width={800}
-        height={600}
-        priority
-      />
+      {homeImages.map((image) =>
+        image.imageUrl ? (
+          <Image
+            key={image.id}
+            src={image.imageUrl}
+            alt={image.title || "Uploaded image"}
+            width={image.width}
+            height={image.height}
+            priority
+          />
+        ) : null
+      )}
     </div>
   );
 };
 
 export default HomePage;
+
