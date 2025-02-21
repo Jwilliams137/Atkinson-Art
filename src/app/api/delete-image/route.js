@@ -3,7 +3,6 @@ import cloudinary from "cloudinary";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
-// Ensure Firebase is initialized only once
 if (!getApps().length) {
   initializeApp({
     credential: cert({
@@ -16,14 +15,12 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
-// Configure Cloudinary
 cloudinary.v2.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// **DELETE Request for Deleting Images**
 export async function DELETE(req) {
   try {
     const { cloudinaryId, imageId } = await req.json();
@@ -32,16 +29,11 @@ export async function DELETE(req) {
       return NextResponse.json({ error: "Missing data" }, { status: 400 });
     }
 
-    console.log(`Deleting image from Cloudinary with ID: ${cloudinaryId}`);
-    console.log(`Deleting image from Firestore with ID: ${imageId}`);
-
-    // Delete from Cloudinary
     const cloudinaryResponse = await cloudinary.v2.uploader.destroy(cloudinaryId);
     if (cloudinaryResponse.result !== "ok") {
       return NextResponse.json({ error: "Failed to delete image from Cloudinary" }, { status: 500 });
     }
 
-    // Delete from Firestore
     await db.collection("uploads").doc(imageId).delete();
 
     return NextResponse.json({ message: "Image deleted successfully" }, { status: 200 });

@@ -69,22 +69,20 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
         throw new Error("Upload failed");
       }
 
-      const responseData = await response.json(); // Assuming Cloudinary ID is returned here
+      const responseData = await response.json();
       console.log("Upload successful");
 
       const uploadedImageUrl = URL.createObjectURL(file);
 
-      // Send new image data to AdminPage immediately, including Cloudinary ID
       onUpload({
         imageUrl: uploadedImageUrl,
-        cloudinaryId: responseData.cloudinaryId, // Cloudinary ID returned from API
+        cloudinaryId: responseData.cloudinaryId,
         title: file.name,
         width,
         height,
         pageType
       });
 
-      // Clear form fields
       fileInput.value = "";
       setImagePreview(null);
       fields.forEach((field) => {

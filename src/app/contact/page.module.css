@@ -50,7 +50,6 @@
     background-color: var(--hover-text);
 }
 
-/* Button disabled state */
 .button:disabled {
     background-color: #ccc;
     cursor: not-allowed;

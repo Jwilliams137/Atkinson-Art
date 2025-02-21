@@ -1,4 +1,3 @@
-// src/components/ImageGallery.js
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 

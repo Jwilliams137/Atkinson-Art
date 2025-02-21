@@ -15,7 +15,7 @@ const AdminPage = () => {
   const [user, setUser] = useState(null);
   const [images, setImages] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [adminEmails, setAdminEmails] = useState([]); // Store admin emails from API
+  const [adminEmails, setAdminEmails] = useState([]);
 
   const db = getFirestore();
 
@@ -39,10 +39,9 @@ const AdminPage = () => {
       }
     });
     return () => unsubscribe();
-  }, [adminEmails]); // Runs again when `adminEmails` updates
+  }, [adminEmails]);
 
   useEffect(() => {
-    // Fetch admin emails from API
     const fetchAdminEmails = async () => {
       try {
         const response = await fetch("/api/restricted-users");
@@ -71,7 +70,6 @@ const AdminPage = () => {
       ...doc.data(),
     }));
   
-    // Sort images by "order" field, defaulting to 0 if missing
     const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
   
     setImages(sortedImages);

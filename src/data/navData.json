@@ -22,5 +22,4 @@
       "contact": { "label": "Contact", "href": "/contact" },
       "admin": { "label": "Admin", "href": "/admin", "restricted": true }
     }
-  }
-  
+  }  
