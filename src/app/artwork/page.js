@@ -1,6 +1,6 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { app } from "../../../utils/firebase";
 import styles from "./page.module.css";
 import Image from "next/image";
@@ -13,16 +13,18 @@ const ArtworkPage = () => {
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "artworks"));
-        const artworkData = querySnapshot.docs.map((doc) => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            ...data,
-            width: data.width || 500,
-            height: data.height || 500
-          };
-        });
+        const q = query(
+          collection(db, "uploads"),
+          where("pageType", "==", "artwork"),
+          orderBy("order") // Order artworks by 'order' field
+        );
+        const querySnapshot = await getDocs(q);
+
+        const artworkData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
         setArtworks(artworkData);
       } catch (error) {
         console.error("Error fetching artworks:", error);
@@ -32,6 +34,10 @@ const ArtworkPage = () => {
     fetchArtworks();
   }, []);
 
+  if (artworks.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={styles.artworkContainer}>
       {artworks.map((artwork) => (
@@ -39,9 +45,9 @@ const ArtworkPage = () => {
           <Image
             className={styles.artworkImage}
             src={artwork.imageUrl}
-            alt={artwork.title}
-            width={artwork.width}
-            height={artwork.height}
+            alt={artwork.title || "Artwork"}
+            width={artwork.width || 500} // Default width
+            height={artwork.height || 500} // Default height
             priority
           />
         </div>
