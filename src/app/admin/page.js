@@ -14,7 +14,8 @@ const AdminPage = () => {
   const [fieldsForPage, setFieldsForPage] = useState({});
   const [user, setUser] = useState(null);
   const [images, setImages] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false); // New state for admin check
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminEmails, setAdminEmails] = useState([]); // Store admin emails from API
 
   const db = getFirestore();
 
@@ -33,12 +34,25 @@ const AdminPage = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user || null);
-      if (user) {
-        // Check if the user is an admin
-        setIsAdmin(user.email === 'jwilliams137.036@gmail.com' || user.email === 'linda.atkinson111@gmail.com');
+      if (user && adminEmails.length > 0) {
+        setIsAdmin(adminEmails.includes(user.email));
       }
     });
     return () => unsubscribe();
+  }, [adminEmails]); // Runs again when `adminEmails` updates
+
+  useEffect(() => {
+    // Fetch admin emails from API
+    const fetchAdminEmails = async () => {
+      try {
+        const response = await fetch("/api/restricted-users");
+        const data = await response.json();
+        setAdminEmails(data.restrictedUsers || []);
+      } catch (error) {
+        console.error("Failed to fetch admin emails:", error);
+      }
+    };
+    fetchAdminEmails();
   }, []);
 
   useEffect(() => {
@@ -52,9 +66,9 @@ const AdminPage = () => {
     const q = query(imagesCollection, where("pageType", "==", pageType));
 
     const querySnapshot = await getDocs(q);
-    const fetchedImages = querySnapshot.docs.map(doc => ({
+    const fetchedImages = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
     }));
     setImages(fetchedImages);
   };
@@ -64,7 +78,7 @@ const AdminPage = () => {
   };
 
   const deleteImage = async (imageId, cloudinaryId) => {
-    if (!isAdmin) return; // Prevent non-admins from deleting images
+    if (!isAdmin) return;
 
     try {
       const response = await fetch("/api/delete-image", {
@@ -86,7 +100,7 @@ const AdminPage = () => {
   };
 
   const moveImageUp = async (imageId, index) => {
-    if (!isAdmin || index === 0) return; // Only admins can move images and not the first one
+    if (!isAdmin || index === 0) return;
 
     const prevImage = images[index - 1];
     const currentImage = images[index];
@@ -109,7 +123,7 @@ const AdminPage = () => {
   };
 
   const moveImageDown = async (imageId, index) => {
-    if (!isAdmin || index === images.length - 1) return; // Only admins can move images and not the last one
+    if (!isAdmin || index === images.length - 1) return;
 
     const nextImage = images[index + 1];
     const currentImage = images[index];
@@ -137,7 +151,7 @@ const AdminPage = () => {
         <AdminLogin />
       </div>
 
-      {user && isAdmin && ( // Render content only if user is admin
+      {user && isAdmin && (
         <div className={styles.adminContentWrapper}>
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
