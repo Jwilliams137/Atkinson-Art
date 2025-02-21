@@ -47,7 +47,10 @@ const AdminPage = () => {
     const q = query(imagesCollection, where("pageType", "==", pageType));
 
     const querySnapshot = await getDocs(q);
-    const fetchedImages = querySnapshot.docs.map(doc => doc.data());
+    const fetchedImages = querySnapshot.docs.map(doc => ({
+      id: doc.id, 
+      ...doc.data()
+    })); // Ensure the image ID is included
     setImages(fetchedImages);
   };
 
@@ -55,21 +58,21 @@ const AdminPage = () => {
     setImages((prevImages) => [newImage, ...prevImages]);
   };
 
-  // The deleteImage function was added here
   const deleteImage = async (imageId, cloudinaryId) => {
     try {
-      // 1. Delete image from Cloudinary (using cloudinaryDeleteImage utility)
-      const deleteResponse = await cloudinaryDeleteImage(cloudinaryId);
-      if (!deleteResponse) {
-        throw new Error("Cloudinary deletion failed");
+      const response = await fetch("/api/delete-image", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cloudinaryId, imageId }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setImages((prevImages) => prevImages.filter((image) => image.id !== imageId));
+      } else {
+        console.error("Error deleting image:", result.error);
       }
-
-      // 2. Delete image from Firestore
-      const imageDocRef = doc(db, "uploads", imageId);
-      await deleteDoc(imageDocRef);
-
-      // 3. Update the UI
-      setImages((prevImages) => prevImages.filter((image) => image.id !== imageId));
     } catch (error) {
       console.error("Error deleting image:", error);
     }
@@ -88,7 +91,7 @@ const AdminPage = () => {
             {fieldsForPage[activeSection] && (
               <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} onUpload={handleImageUpload} />
             )}
-            <AdminDisplay images={images} activeSection={activeSection} deleteImage={deleteImage} /> {/* Passing deleteImage here */}
+            <AdminDisplay images={images} deleteImage={deleteImage} /> {/* Pass deleteImage function correctly */}
           </div>
         </div>
       )}

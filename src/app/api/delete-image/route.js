@@ -3,7 +3,7 @@ import cloudinary from "cloudinary";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
-// Initialize Firebase if not already initialized
+// Ensure Firebase is initialized only once
 if (!getApps().length) {
   initializeApp({
     credential: cert({
@@ -23,6 +23,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// **DELETE Request for Deleting Images**
 export async function DELETE(req) {
   try {
     const { cloudinaryId, imageId } = await req.json();
@@ -31,29 +32,19 @@ export async function DELETE(req) {
       return NextResponse.json({ error: "Missing data" }, { status: 400 });
     }
 
-    // Log the IDs to ensure they are passed correctly
     console.log(`Deleting image from Cloudinary with ID: ${cloudinaryId}`);
     console.log(`Deleting image from Firestore with ID: ${imageId}`);
 
-    // Delete image from Cloudinary
+    // Delete from Cloudinary
     const cloudinaryResponse = await cloudinary.v2.uploader.destroy(cloudinaryId);
-
-    // Check Cloudinary response
     if (cloudinaryResponse.result !== "ok") {
-      console.log("Cloudinary response:", cloudinaryResponse);
       return NextResponse.json({ error: "Failed to delete image from Cloudinary" }, { status: 500 });
     }
 
-    // Log Cloudinary success
-    console.log("Successfully deleted image from Cloudinary");
+    // Delete from Firestore
+    await db.collection("uploads").doc(imageId).delete();
 
-    // Delete image document from Firestore
-    const firestoreResponse = await db.collection("uploads").doc(imageId).delete();
-    
-    // Log Firestore response (just in case)
-    console.log(firestoreResponse);
-
-    return NextResponse.json({ message: "Image deleted successfully" });
+    return NextResponse.json({ message: "Image deleted successfully" }, { status: 200 });
   } catch (error) {
     console.error("Error during image deletion:", error);
     return NextResponse.json({ error: "Failed to delete image" }, { status: 500 });
