@@ -55,6 +55,26 @@ const AdminPage = () => {
     setImages((prevImages) => [newImage, ...prevImages]);
   };
 
+  // The deleteImage function was added here
+  const deleteImage = async (imageId, cloudinaryId) => {
+    try {
+      // 1. Delete image from Cloudinary (using cloudinaryDeleteImage utility)
+      const deleteResponse = await cloudinaryDeleteImage(cloudinaryId);
+      if (!deleteResponse) {
+        throw new Error("Cloudinary deletion failed");
+      }
+
+      // 2. Delete image from Firestore
+      const imageDocRef = doc(db, "uploads", imageId);
+      await deleteDoc(imageDocRef);
+
+      // 3. Update the UI
+      setImages((prevImages) => prevImages.filter((image) => image.id !== imageId));
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  };
+
   return (
     <div className={styles.adminPage}>
       <div className={styles.adminTopSection}>
@@ -68,7 +88,7 @@ const AdminPage = () => {
             {fieldsForPage[activeSection] && (
               <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} onUpload={handleImageUpload} />
             )}
-            <AdminDisplay images={images} activeSection={activeSection} />
+            <AdminDisplay images={images} activeSection={activeSection} deleteImage={deleteImage} /> {/* Passing deleteImage here */}
           </div>
         </div>
       )}

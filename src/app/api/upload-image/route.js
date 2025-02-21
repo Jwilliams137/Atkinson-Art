@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"; 
-import cloudinary from "cloudinary";
-import { initializeApp, getApps, cert } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+import cloudinary from "cloudinary"; 
+import { initializeApp, getApps, cert } from "firebase-admin/app"; 
+import { getAuth } from "firebase-admin/auth"; 
 import { getFirestore } from "firebase-admin/firestore";
 
 // Initialize Firebase if not already initialized
@@ -66,6 +66,7 @@ export async function POST(req) {
       pageType: pageType || "home",  // Set the pageType (default "home")
       title: title || "No Title", 
       imageUrl: uploadResponse.secure_url,
+      cloudinaryId: uploadResponse.public_id,  // Include the Cloudinary ID
       createdAt: new Date(),
       width: width ? parseInt(width) : null,
       height: height ? parseInt(height) : null,
@@ -74,6 +75,7 @@ export async function POST(req) {
     return NextResponse.json({
       message: "Upload successful",
       url: uploadResponse.secure_url,
+      cloudinaryId: uploadResponse.public_id,  // Return Cloudinary ID in response
       width: width ? parseInt(width) : null,
       height: height ? parseInt(height) : null,
     });

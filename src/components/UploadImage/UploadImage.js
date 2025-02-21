@@ -69,13 +69,15 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
         throw new Error("Upload failed");
       }
 
+      const responseData = await response.json(); // Assuming Cloudinary ID is returned here
       console.log("Upload successful");
 
       const uploadedImageUrl = URL.createObjectURL(file);
 
-      // Send new image data to AdminPage immediately
+      // Send new image data to AdminPage immediately, including Cloudinary ID
       onUpload({
         imageUrl: uploadedImageUrl,
+        cloudinaryId: responseData.cloudinaryId, // Cloudinary ID returned from API
         title: file.name,
         width,
         height,
@@ -125,3 +127,4 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
 };
 
 export default UploadImage;
+

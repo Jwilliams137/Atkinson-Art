@@ -2,7 +2,7 @@
 import Image from "next/image";
 import styles from "./AdminDisplay.module.css";
 
-const AdminDisplay = ({ images }) => {
+const AdminDisplay = ({ images, deleteImage }) => {
   return (
     <div className={styles.imagesGrid}>
       {images.length > 0 ? (
@@ -14,6 +14,12 @@ const AdminDisplay = ({ images }) => {
               width={image.width || 300}
               height={image.height || 200}
             />
+            <button 
+              onClick={() => deleteImage(image.id, image.cloudinaryId)} 
+              className={styles.deleteButton}
+            >
+              Delete
+            </button>
           </div>
         ))
       ) : (
