@@ -64,14 +64,19 @@ const AdminPage = () => {
   const fetchImagesByPageType = async (pageType) => {
     const imagesCollection = collection(db, "uploads");
     const q = query(imagesCollection, where("pageType", "==", pageType));
-
+  
     const querySnapshot = await getDocs(q);
     const fetchedImages = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    setImages(fetchedImages);
+  
+    // Sort images by "order" field, defaulting to 0 if missing
+    const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
+  
+    setImages(sortedImages);
   };
+  
 
   const handleImageUpload = (newImage) => {
     setImages((prevImages) => [newImage, ...prevImages]);
