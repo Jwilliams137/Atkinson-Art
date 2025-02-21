@@ -1,0 +1,28 @@
+.galleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .galleryCard {
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+  }
+  
+  .galleryCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .galleryImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .galleryCardTitle {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+  }  

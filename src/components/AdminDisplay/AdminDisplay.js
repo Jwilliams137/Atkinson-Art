@@ -48,4 +48,3 @@ const AdminDisplay = ({ images, deleteImage, moveImageUp, moveImageDown }) => {
 };
 
 export default AdminDisplay;
-
