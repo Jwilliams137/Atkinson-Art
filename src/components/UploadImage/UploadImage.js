@@ -1,24 +1,36 @@
 "use client";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
+import Image from "next/image";
 import styles from "./UploadImage.module.css";
 
 const UploadImage = ({ pageType, fields, onUpload }) => {
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
   const getImageDimensions = (file) => {
     return new Promise((resolve, reject) => {
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => resolve({ width: img.width, height: img.height });
       img.onerror = reject;
       img.src = URL.createObjectURL(file);
     });
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (file) setImagePreview(URL.createObjectURL(file));
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+
+      try {
+        const { width, height } = await getImageDimensions(file);
+        setImageSize({ width, height });
+      } catch (error) {
+        console.error("Error getting image dimensions:", error);
+      }
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -46,7 +58,7 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
     }
 
     try {
-      const { width, height } = await getImageDimensions(file);
+      const { width, height } = imageSize;
 
       formData.append("file", file);
       formData.append("width", width);
@@ -80,16 +92,17 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
         title: file.name,
         width,
         height,
-        pageType
+        pageType,
       });
 
       fileInput.value = "";
       setImagePreview(null);
+      setImageSize({ width: 0, height: 0 });
+
       fields.forEach((field) => {
         const input = event.target.querySelector(`input[name="${field.name}"]`);
         if (input) input.value = "";
       });
-
     } catch (error) {
       console.error("Upload failed:", error);
     } finally {
@@ -111,9 +124,15 @@ const UploadImage = ({ pageType, fields, onUpload }) => {
         </div>
       ))}
 
-      {imagePreview && (
+      {imagePreview && imageSize.width > 0 && imageSize.height > 0 && (
         <div className={styles.previewContainer}>
-          <img src={imagePreview} alt="Image Preview" className={styles.previewImage} />
+          <Image
+            src={imagePreview}
+            alt="Image Preview"
+            width={imageSize.width}
+            height={imageSize.height}
+            className={styles.previewImage}
+          />
         </div>
       )}
 

@@ -2,16 +2,17 @@ import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 
 const ImageGallery = ({ images, className, cardClass, imageClass }) => {
-    console.log("Gallery Container Class:", className);
+  console.log("Gallery Container Class:", className);
   console.log("Gallery Card Class:", cardClass);
   console.log("Gallery Image Class:", imageClass);
+
   return (
     <div className={`${styles.galleryContainer} ${className}`}>
       {images.length === 0 ? (
         <div>Loading...</div>
       ) : (
-        images.map((image) => (
-            <div className={cardClass || styles.galleryCard}>
+        images.map((image, index) => (
+          <div key={image.id || index} className={cardClass || styles.galleryCard}>
             <div className={styles.imageWrapper}>
               <Image
                 className={imageClass || styles.galleryImage}
@@ -23,7 +24,6 @@ const ImageGallery = ({ images, className, cardClass, imageClass }) => {
               />
             </div>
           </div>
-          
         ))
       )}
     </div>
