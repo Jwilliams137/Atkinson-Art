@@ -1,14 +1,21 @@
-"use client";
+'use client'
 import usePageImages from "../../hooks/usePageImages";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import styles from "./page.module.css";
 
 const ArtworkPage = () => {
-  const bioImages = usePageImages("artwork");
+  const artworkImages = usePageImages("artwork");
+  console.log("Artwork Gallery Class:", styles.artworkGallery);
 
   return (
-    <div className={styles.bioContainer}>
-      <ImageGallery images={bioImages} className={styles.artworkGallery} />
+    <div className={styles.artworkContainer}>
+      <ImageGallery
+        key="artworkGallery"
+        images={artworkImages}
+        className={styles.artworkGallery}
+        cardClass={styles.artworkGalleryCard}
+        imageClass={styles.artworkGalleryImage}
+      />
     </div>
   );
 };
