@@ -10,7 +10,6 @@ const ArtworkPage = () => {
   return (
     <div className={styles.artworkContainer}>
       <ImageGallery
-        key="artworkGallery"
         images={artworkImages}
         className={styles.artworkGallery}
         cardClass={styles.artworkGalleryCard}
