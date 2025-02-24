@@ -10,7 +10,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 20px;
-  justify-content: center;
+  justify-content: left;
 }
 
 
@@ -25,7 +25,21 @@
   flex-direction: row;  
 }
 
+@media only screen and (max-width: 1500px) {
+.artworkGalleryImage {
+width: 250px;
+}
+}
 
 @media only screen and (max-width: 1000px) {
- 
+ .artworkGallery {
+  justify-content: center;
+ }
+}
+
+@media only screen and (max-width: 600px) {
+ .artworkGallery {
+  flex-direction: column;
+  flex-wrap: nowrap;
+ }
 }

@@ -56,25 +56,24 @@ const AdminPage = () => {
 
   useEffect(() => {
     if (activeSection) {
+      const fetchImagesByPageType = async (pageType) => {
+        const imagesCollection = collection(db, "uploads");
+        const q = query(imagesCollection, where("pageType", "==", pageType));
+      
+        const querySnapshot = await getDocs(q);
+        const fetchedImages = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+      
+        const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+        setImages(sortedImages);
+      };
+
       fetchImagesByPageType(activeSection);
     }
-  }, [activeSection]);
-
-  const fetchImagesByPageType = async (pageType) => {
-    const imagesCollection = collection(db, "uploads");
-    const q = query(imagesCollection, where("pageType", "==", pageType));
-  
-    const querySnapshot = await getDocs(q);
-    const fetchedImages = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  
-    const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
-  
-    setImages(sortedImages);
-  };
-  
+  }, [activeSection, db]);
 
   const handleImageUpload = (newImage) => {
     setImages((prevImages) => [newImage, ...prevImages]);
