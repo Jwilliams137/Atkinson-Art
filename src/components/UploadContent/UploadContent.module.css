@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 20px;
+}
+
+.uploadSection {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.imageUpload,
+.textUpload {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputField {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.textarea {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  height: 150px;
+}
+
+.label {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Add this to your UploadContent.module.css */
+.imagePreview {
+  margin-top: 10px;
+}
+
+.previewImage {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-top: 10px;
+}

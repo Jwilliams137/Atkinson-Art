@@ -14,74 +14,106 @@
     ],
     "fieldsForPage": {
       "home": [
-        { "name": "file", "label": "Upload Home Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "pageType", "type": "hidden", "value": "home" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Home Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "home" }
+        ]},
+        {"text-upload": [
+          { "name": "homeText", "label": "Upload Home Text", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "home" }
+        ]},
+        {"text-upload": [
+          { "name": "bioText", "label": "Upload biographical Text", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "home" }
+        ]}      
       ],
       "artwork": [
-        { "name": "file", "label": "Upload Artwork Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "pageType", "type": "hidden", "value": "artwork" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Artwork Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "artwork" }
+        ]}        
       ],
       "new-work": [
-        { "name": "file", "label": "Upload New Work Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "new-work" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload New Work Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "new-work" }
+        ]}        
       ],
       "houses": [
-        { "name": "file", "label": "Upload Houses Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "houses" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Houses Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "houses" }
+        ]}        
       ],
       "constructions": [
-        { "name": "file", "label": "Upload Constructions Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "constructions" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Constructions Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "constructions" }
+        ]}        
       ],
       "collage": [
-        { "name": "file", "label": "Upload Collage Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "collage" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Collage Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "collage" }
+        ]}        
       ],
       "earlier-work": [
-        { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "earlier-work" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "earlier-work" }
+        ]}        
       ],
       "about": [
-        { "name": "file", "label": "Upload About Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "pageType", "type": "hidden", "value": "about" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload About Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "about" }
+        ]},
+        {"text-upload": [
+          { "name": "generalStatement", "label": "Upload General Statement", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "about" }
+        ]}
       ],
       "bio": [
-        { "name": "file", "label": "Upload Bio Image", "type": "file" },
-        { "name": "title", "label": "Alt text", "type": "text" },
-        { "name": "pageType", "type": "hidden", "value": "bio" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Bio Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "bio" }
+        ]}        
       ],
       "exhibitions": [
-        { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+        {"text-upload": [
+          { "name": "generalStatement", "label": "Upload General Statement", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "price", "label": "Price", "type": "number" },
+          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+        ]}        
       ],
       "shop": [
-        { "name": "file", "label": "Upload Shop Image", "type": "file" },
-        { "name": "title", "label": "Title", "type": "text" },
-        { "name": "description", "label": "Description", "type": "text" },
-        { "name": "price", "label": "Price", "type": "number" },
-        { "name": "pageType", "type": "hidden", "value": "shop" }
+        {"image-upload": [
+          { "name": "file", "label": "Upload Shop Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "price", "label": "Price", "type": "number" },
+          { "name": "pageType", "type": "hidden", "value": "shop" }
+        ]}        
       ]
     }
   }  

@@ -1,7 +1,6 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import UploadContent from "../../components/UploadContent/UploadContent";
+import UploadImage from "../../components/UploadImage/UploadImage";
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
 import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
@@ -17,7 +16,6 @@ const AdminPage = () => {
   const [images, setImages] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminEmails, setAdminEmails] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const db = getFirestore();
 
@@ -34,6 +32,16 @@ const AdminPage = () => {
   }, [activeSection]);
 
   useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user || null);
+      if (user && adminEmails.length > 0) {
+        setIsAdmin(adminEmails.includes(user.email));
+      }
+    });
+    return () => unsubscribe();
+  }, [adminEmails]);
+
+  useEffect(() => {
     const fetchAdminEmails = async () => {
       try {
         const response = await fetch("/api/restricted-users");
@@ -47,39 +55,29 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
-    if (adminEmails.length === 0) return;
-
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user || null);
-      setIsAdmin(user ? adminEmails.includes(user.email) : false);
-    });
-
-    return () => unsubscribe();
-  }, [adminEmails]); // Now only updates when `adminEmails` changes.
-
-  useEffect(() => {
-    if (!activeSection) return;
-
-    const fetchImagesByPageType = async (pageType) => {
-      try {
+    if (activeSection) {
+      const fetchImagesByPageType = async (pageType) => {
         const imagesCollection = collection(db, "uploads");
         const q = query(imagesCollection, where("pageType", "==", pageType));
+      
         const querySnapshot = await getDocs(q);
-        
         const fetchedImages = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-
+      
         const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
         setImages(sortedImages);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
+      };
 
-    fetchImagesByPageType(activeSection);
-  }, [activeSection]); // Removed `db` from dependencies to prevent unnecessary re-fetching.
+      fetchImagesByPageType(activeSection);
+    }
+  }, [activeSection, db]);
+
+  const handleImageUpload = (newImage) => {
+    setImages((prevImages) => [newImage, ...prevImages]);
+  };
 
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
@@ -149,58 +147,19 @@ const AdminPage = () => {
     setImages(updatedImages);
   };
 
-  const handleSubmit = async (uploadType, sectionKey) => {
-    console.log(`Submitting ${uploadType} for section: ${sectionKey}`);
-
-    if (uploadType === "image-upload" && selectedImage) {
-      const formData = new FormData();
-      formData.append("file", selectedImage);
-      formData.append("section", sectionKey);
-
-      try {
-        const response = await fetch("/api/upload-image", {
-          method: "POST",
-          body: formData,
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-          console.log("Upload successful:", result);
-          alert("Image uploaded successfully!");
-          setSelectedImage(null);
-        } else {
-          console.error("Upload failed:", result.error);
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
-    } else if (uploadType === "text-upload") {
-      alert("Text upload feature needs to be implemented!");
-    }
-  };
-
   return (
     <div className={styles.adminPage}>
       <div className={styles.adminTopSection}>
         <AdminLogin />
       </div>
 
-      {user && isAdmin ? (
+      {user && isAdmin && (
         <div className={styles.adminContentWrapper}>
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
-              <UploadContent
-                sectionData={{
-                  fieldsForPage: { [activeSection]: fieldsForPage[activeSection] },
-                  sections: adminData.sections,
-                }}
-                handleSubmit={handleSubmit}
-                selectedImage={selectedImage}
-                setSelectedImage={setSelectedImage}
-              />
+              <UploadImage pageType={activeSection} fields={fieldsForPage[activeSection]} onUpload={handleImageUpload} />
             )}
-
             <AdminDisplay
               images={images}
               deleteImage={deleteImage}
@@ -209,8 +168,6 @@ const AdminPage = () => {
             />
           </div>
         </div>
-      ) : (
-        <p>Access Denied</p>
       )}
     </div>
   );
