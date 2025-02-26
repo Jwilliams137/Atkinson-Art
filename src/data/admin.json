@@ -16,17 +16,13 @@
       "home": [
         {"image-upload": [
           { "name": "file", "label": "Upload Home Image", "type": "file" },
-          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "title", "label": "Title", "type": "text" },          
           { "name": "pageType", "type": "hidden", "value": "home" }
         ]},
         {"text-upload": [
           { "name": "homeText", "label": "Upload Home Text", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "home" }
-        ]},
-        {"text-upload": [
-          { "name": "bioText", "label": "Upload biographical Text", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "home" }
-        ]}      
+        ]}     
       ],
       "artwork": [
         {"image-upload": [
@@ -91,7 +87,11 @@
           { "name": "file", "label": "Upload Bio Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
-        ]}        
+        ]},
+        {"text-upload": [
+          { "name": "bio", "label": "Upload Bio", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "bio" }
+        ]}       
       ],
       "exhibitions": [
         {"text-upload": [
@@ -101,8 +101,6 @@
         {"image-upload": [
           { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
-          { "name": "description", "label": "Description", "type": "text" },
-          { "name": "price", "label": "Price", "type": "number" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]}        
       ],

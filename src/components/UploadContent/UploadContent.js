@@ -7,10 +7,6 @@ import Image from 'next/image';
 const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
 
-  if (!sectionData || Object.keys(sectionData).length === 0) {
-    return <div>No data available to display.</div>;
-  }
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -28,7 +24,6 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
   };
 
   const handleSubmit = async (uploadType, sectionKey) => {
-    console.log(`Submitting ${uploadType} for section: ${sectionKey}`);
     const auth = getAuth();
     const user = auth.currentUser;
   
@@ -56,11 +51,9 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
   
         const result = await response.json();
         if (response.ok) {
-          console.log("Upload successful:", result);
           setSelectedImage(null);
           setImageDimensions({ width: 0, height: 0 });
   
-          // Reset the file input field
           const fileInput = document.querySelector('input[type="file"]');
           if (fileInput) fileInput.value = "";
   
@@ -73,9 +66,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
     } else if (uploadType === "text-upload") {
       alert("Text upload feature needs to be implemented!");
     }
-  };
-  
-  
+  };  
 
   return (
     <div className={styles.container}>
@@ -107,7 +98,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
                             name={field.name}
                             id={field.name}
                             className={styles.inputField}
-                            onChange={handleFileChange} // Now updates AdminPage state
+                            onChange={handleFileChange}
                           />
                         </div>
                       ))}
@@ -119,8 +110,8 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
                             src={URL.createObjectURL(selectedImage)}
                             alt="Selected Image"
                             className={styles.previewImage}
-                            width={imageDimensions.width}  // Dynamically set width
-                            height={imageDimensions.height}  // Dynamically set height
+                            width={imageDimensions.width}
+                            height={imageDimensions.height}
                           />
                         </div>
                       )}

@@ -21,9 +21,10 @@
   .adminMainContent {
     flex: 1;
     padding: 20px;
-    background-color: #f7f6f8;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .reminder {
+    font-size: 20px;
   }
   
   .previewWrapper {

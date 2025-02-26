@@ -10,8 +10,6 @@ import { auth } from "../../utils/firebase";
 import { getFirestore, collection, query, where, getDocs, doc, writeBatch } from "firebase/firestore";
 
 const AdminPage = () => {
-  
-
   const [activeSection, setActiveSection] = useState("home");
   const [fieldsForPage, setFieldsForPage] = useState({});
   const [user, setUser] = useState(null);
@@ -19,10 +17,7 @@ const AdminPage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminEmails, setAdminEmails] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
-
   const db = getFirestore();
-
-  console.log("Images Array:", images);
 
   useEffect(() => {
     setFieldsForPage(adminData.fieldsForPage);
@@ -60,7 +55,6 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
-    
     const fetchImagesByPageType = async (pageType) => {
       try {
         const imagesCollection = collection(db, "uploads");
@@ -87,28 +81,20 @@ const AdminPage = () => {
       const imagesCollection = collection(db, "uploads");
       const q = query(imagesCollection, where("pageType", "==", activeSection));
       const querySnapshot = await getDocs(q);
-  
       const existingImages = querySnapshot.docs.map(doc => doc.data());
       const maxOrder = existingImages.length > 0 ? Math.max(...existingImages.map(img => img.order || 0)) : 0;
       newImage.order = maxOrder + 1;
-  
-      // Add the image to Firestore
       const docRef = await addDoc(imagesCollection, newImage);
-  
-      // Update state with the new image, including the Firestore ID
+
       setImages((prevImages) => [...prevImages, { ...newImage, id: docRef.id }]);
-  
+
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
-  
-  
-  
 
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
-
     try {
       const response = await fetch("/api/delete-image", {
         method: "DELETE",
@@ -133,9 +119,7 @@ const AdminPage = () => {
 
     const prevImage = images[index - 1];
     const currentImage = images[index];
-
     const batch = writeBatch(db);
-
     const currentImageRef = doc(db, "uploads", currentImage.id);
     const prevImageRef = doc(db, "uploads", prevImage.id);
 
@@ -156,9 +140,7 @@ const AdminPage = () => {
 
     const nextImage = images[index + 1];
     const currentImage = images[index];
-
     const batch = writeBatch(db);
-
     const currentImageRef = doc(db, "uploads", currentImage.id);
     const nextImageRef = doc(db, "uploads", nextImage.id);
 
@@ -184,6 +166,8 @@ const AdminPage = () => {
         <div className={styles.adminContentWrapper}>
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
+            <p className={styles.reminder}>Reminder: Always add a title to every image even if one isn't supposed to appear visibly on the site.
+              This helps people who use screen readers and it has benefits for search engine optimization.</p>
             {fieldsForPage[activeSection] && (
               <UploadContent onUpload={handleImageUpload}
                 sectionData={{
