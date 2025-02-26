@@ -1,3 +1,31 @@
-.main {
-    margin-top: 20px;
-  }
+.bioContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.bioGallery {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.textSection {
+  font-size: 25px;
+  line-height: 1.6;
+  text-align: left;
+  width: 100%;
+}
+
+.resumeLink {
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.resumeLink:hover {
+  color: var(--hover-text);
+}

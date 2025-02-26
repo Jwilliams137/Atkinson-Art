@@ -1,13 +1,11 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-import { initializeApp, getApps } from "firebase/app"; // Import getApps
+import { initializeApp, getApps } from "firebase/app";
 import usePageImages from "../../../hooks/usePageImages";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
 import styles from "./page.module.css";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
@@ -17,42 +15,71 @@ const firebaseConfig = {
   appId: "YOUR_APP_ID",
 };
 
-// Initialize Firebase app only if it's not already initialized
 let app;
 if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig); // Initialize app only if no app is initialized
+  app = initializeApp(firebaseConfig);
 } else {
-  app = getApps()[0]; // Use the existing app if it has already been initialized
+  app = getApps()[0];
 }
-const db = getFirestore(app); // Use the initialized app
+const db = getFirestore(app);
 
 const BioPage = () => {
   const [resumeUrl, setResumeUrl] = useState(null);
+  const [textUploads, setTextUploads] = useState([]);
   const bioImages = usePageImages("bio");
 
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        // Query the Firestore collection to find the document where type is "resume"
-        const q = query(collection(db, "yourCollectionName"), where("type", "==", "resume"));
-        const querySnapshot = await getDocs(q);
-
-        // If a document is found, get the URL
+        const querySnapshot = await getDocs(collection(db, "resumes"));
         querySnapshot.forEach((doc) => {
-          setResumeUrl(doc.data().url); // Assuming your document has a field `url` for the resume URL
+          const resumeData = doc.data();
+          if (resumeData?.resumeUrl) {
+            setResumeUrl(resumeData.resumeUrl);
+          }
         });
       } catch (error) {
-        console.error("Error fetching resume:", error);
+        console.error("Error fetching resumes:", error);
+      }
+    };
+
+    const fetchTextUploads = async () => {
+      try {
+        const q = query(collection(db, "textUploads"), where("pageType", "==", "bio"));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          console.log("No textUploads found with pageType 'bio'");
+        } else {
+          const texts = querySnapshot.docs.map((doc) => {
+            const data = doc.data();
+            console.log("Fetched textUpload:", data);
+            return data.content;
+          });
+          setTextUploads(texts);
+        }
+      } catch (error) {
+        console.error("Error fetching text uploads:", error);
       }
     };
 
     fetchResume();
+    fetchTextUploads();
   }, []);
 
   return (
     <div className={styles.bioContainer}>
+      <h2>Biography</h2>
+      {textUploads.length > 0 ? (
+        <div className={styles.textSection}>
+          {textUploads.map((text, index) => (
+            <p key={index}>{text}</p>
+          ))}
+        </div>
+      ) : (
+        <p>No text available.</p>
+      )}
       <ImageGallery images={bioImages} className={styles.bioGallery} />
-
       {resumeUrl && (
         <p>
           <a href={resumeUrl} target="_blank" rel="noopener noreferrer">

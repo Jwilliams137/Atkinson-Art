@@ -20,11 +20,28 @@ const TextUpload = ({
           value={textContent}
           onChange={handleTextChange}
           id={fieldsList[0]?.name}
+          rows={5} // Allows multiple lines
         />
       </div>
-      <button className={styles.submitButton} onClick={() => handleSubmit("text-upload", sectionKey)}>
+      <button
+        className={styles.submitButton}
+        onClick={() => handleSubmit("text-upload", sectionKey)}
+      >
         Submit Text
       </button>
+
+      {/* Preview with Paragraph Separation */}
+      <div className={styles.preview}>
+        <h3>Preview</h3>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: textContent
+              .split("\n")
+              .map((line) => `<p>${line}</p>`)
+              .join("") // Adds <p> tags to each paragraph
+          }}
+        />
+      </div>
     </div>
   );
 };
