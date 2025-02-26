@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import UploadContent from "../../components/UploadContent/UploadContent";
+import ContentUpload from '../../components/ContentUpload/ContentUpload'
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
 import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
@@ -177,7 +177,7 @@ const AdminPage = () => {
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
-              <UploadContent onUpload={handleImageUpload}
+              <ContentUpload onUpload={handleImageUpload}
                 sectionData={{
                   fieldsForPage: { [activeSection]: fieldsForPage[activeSection] },
                   sections: adminData.sections,
