@@ -179,7 +179,6 @@ const AdminPage = () => {
                 moveImageDown={moveImageDown}
               />
             )}
-
             <AdminDisplay
               images={images}
               deleteImage={deleteImage}

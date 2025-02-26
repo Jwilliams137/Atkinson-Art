@@ -74,7 +74,6 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
         .find(fieldGroup => fieldGroup["text-upload"])?.["text-upload"]
         .find(field => field.name === 'type');
 
-
       const textData = {
         content: textContent,
         pageType: sectionKey,
@@ -140,7 +139,6 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
                           />
                         </div>
                       ))}
-
                       {selectedImage && (
                         <div className={styles.imagePreview}>
                           <h4>Image Preview:</h4>
@@ -153,13 +151,11 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
                           />
                         </div>
                       )}
-
                       <button className={styles.submitButton} onClick={() => handleSubmit(uploadType, sectionKey)}>
                         Submit Image
                       </button>
                     </div>
                   )}
-
                   {uploadType === "text-upload" && (
                     <div className={styles.textUpload}>
                       <div className={styles.field}>
@@ -174,14 +170,11 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
                           id={fieldsList[0]?.name}
                         />
                       </div>
-
                       <button className={styles.submitButton} onClick={() => handleSubmit(uploadType, sectionKey)}>
                         Submit Text
                       </button>
                     </div>
                   )}
-
-
                 </div>
               );
             })}
