@@ -4,8 +4,9 @@ import { getAuth } from "firebase/auth";
 import styles from "./UploadContent.module.css";
 import Image from 'next/image';
 
-const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
+const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+  const [textContent, setTextContent] = useState("");
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -21,6 +22,10 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
         URL.revokeObjectURL(objectUrl);
       };
     }
+  };
+
+  const handleTextChange = (event) => {
+    setTextContent(event.target.value);
   };
 
   const handleSubmit = async (uploadType, sectionKey) => {
@@ -63,10 +68,30 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
       } catch (error) {
         console.error("Error uploading image:", error);
       }
-    } else if (uploadType === "text-upload") {
-      alert("Text upload feature needs to be implemented!");
+    } else if (uploadType === "text-upload" && textContent) {
+      const formData = new FormData();
+      formData.append("text", textContent);
+      formData.append("section", sectionKey);
+      formData.append("pageType", sectionKey);
+
+      try {
+        const response = await fetch("/api/upload-text", {
+          method: "POST",
+          body: formData,
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          setTextContent("");
+        } else {
+          console.error("Text upload failed:", result.error);
+        }
+      } catch (error) {
+        console.error("Error uploading text:", error);
+      }
     }
-  };  
+  };
 
   return (
     <div className={styles.container}>
@@ -124,8 +149,15 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
 
                   {uploadType === "text-upload" && (
                     <div className={styles.textUpload}>
-                      <textarea className={styles.textArea} placeholder="Enter your text here"></textarea>
-                      <button className={styles.submitButton}>Submit Text</button>
+                      <textarea
+                        className={styles.textArea}
+                        placeholder="Enter your text here"
+                        value={textContent}
+                        onChange={handleTextChange}
+                      />
+                      <button className={styles.submitButton} onClick={() => handleSubmit(uploadType, sectionKey)}>
+                        Submit Text
+                      </button>
                     </div>
                   )}
                 </div>
