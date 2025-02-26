@@ -82,7 +82,6 @@ export async function POST(req) {
 
           const imageData = imageDoc.data();
           const adjacentImageData = adjacentImageDoc.data();
-
           const tempOrder = imageData.order;
           transaction.update(imageRef, { order: adjacentImageData.order });
           transaction.update(adjacentImageRef, { order: tempOrder });
@@ -104,7 +103,6 @@ export async function POST(req) {
       }
 
       const newOrder = maxOrder + 1;
-
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
