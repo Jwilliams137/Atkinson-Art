@@ -1,51 +1,94 @@
-import cloudinary from 'cloudinary';
-import formidable from 'formidable';
-import fs from 'fs';
+import { NextResponse } from "next/server";
+import cloudinary from "cloudinary";
+import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 
-// Set up Cloudinary configuration
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+if (!getApps().length) {
+  initializeApp({
+    credential: cert({
+      projectId: process.env.NEXT_PUBLIC_PROJECTID,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+  });
+}
+
+const db = getFirestore();
+
+cloudinary.v2.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable Next.js's body parser to handle file uploads manually
-  },
-};
-
-// Handle the file upload
-const handler = (req, res) => {
-  const form = new formidable.IncomingForm();
-  form.uploadDir = "./"; // Temporary folder for the file
-  form.keepExtensions = true;
-
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({ message: 'File upload failed' });
-    }
-
-    const resumeFile = files.resume[0]; // The uploaded resume file
-    const filePath = resumeFile.filepath;
-
+export async function POST(req) {
     try {
-      // Upload the file to Cloudinary
-      const result = await cloudinary.uploader.upload(filePath, {
-        folder: 'resumes', // Optional folder for organization
-        resource_type: 'auto', // Automatically detect the file type (PDF, image, etc.)
+      const authHeader = req.headers.get("Authorization");
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+  
+      const token = authHeader.split("Bearer ")[1];
+      const decodedToken = await getAuth().verifyIdToken(token);
+      const userEmail = decodedToken.email;
+  
+      const formData = await req.formData();
+      const file = formData.get("file");
+      const metadata = formData.get("metadata"); // Get metadata JSON from the request
+  
+      if (!file) {
+        return NextResponse.json({ error: "No file provided" }, { status: 400 });
+      }
+  
+      let metadataObj = {};
+      if (metadata) {
+        try {
+          metadataObj = JSON.parse(metadata);
+        } catch (error) {
+          return NextResponse.json({ error: "Invalid metadata format" }, { status: 400 });
+        }
+      }
+  
+      const resumeType = metadataObj.type || "resume";
+  
+      // Convert file to base64 for Cloudinary upload
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      const base64File = `data:${file.type};base64,${buffer.toString("base64")}`;
+  
+      // Upload to Cloudinary
+      const uploadResponse = await cloudinary.v2.uploader.upload(base64File, {
+        folder: "resumes",
+        resource_type: "auto",
       });
-
-      // Clean up the temporary file
-      fs.unlinkSync(filePath);
-
-      // Return the Cloudinary URL for the uploaded file
-      res.status(200).json({ url: result.secure_url });
-    } catch (uploadError) {
-      console.error(uploadError);
-      res.status(500).json({ message: 'Error uploading to Cloudinary' });
+  
+      if (!uploadResponse || !uploadResponse.secure_url) {
+        return NextResponse.json({ error: "Cloudinary upload failed" }, { status: 500 });
+      }
+  
+      console.log("Cloudinary upload successful:", uploadResponse.secure_url);
+  
+      const resumeRef = await db.collection("resumes").add({
+        fileName: file.name || "Unknown",
+        fileType: file.type,
+        resumeUrl: uploadResponse.secure_url,
+        cloudinaryId: uploadResponse.public_id,
+        type: resumeType,
+        uploadedAt: new Date(),
+      });
+  
+      console.log("Resume saved to Firestore:", resumeRef.id);
+  
+      return NextResponse.json({
+        message: "Resume uploaded and saved successfully",
+        url: uploadResponse.secure_url,
+        cloudinaryId: uploadResponse.public_id,
+        docId: resumeRef.id,
+      });
+    } catch (error) {
+      console.error("Upload failed:", error.message);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-  });
-};
-
-export default handler;
+  }
+  

@@ -90,9 +90,9 @@
           { "name": "type", "value": "biography" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]},
-        {"text-upload": [
-          { "name": "resume", "label": "Upload Resume", "type": "link" },
-          { "name": "type", "value": "biography" },
+        {"resume-upload": [
+          { "name": "resume", "label": "Upload Resume", "type": "file" },
+          { "name": "type", "value": "resume" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]} 
       ],
