@@ -86,18 +86,25 @@
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]},
         {"text-upload": [
-          { "name": "bio", "label": "Upload Bio", "type": "text" },
+          { "name": "bio", "label": "Upload Biography", "type": "text" },
+          { "name": "type", "value": "biography" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
-        ]}       
+        ]},
+        {"text-upload": [
+          { "name": "resume", "label": "Upload Resume", "type": "link" },
+          { "name": "type", "value": "biography" },
+          { "name": "pageType", "type": "hidden", "value": "bio" }
+        ]} 
       ],
       "exhibitions": [
-        {"text-upload": [
-          { "name": "generalStatement", "label": "Upload General Statement", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
-        ]},
-        {"image-upload": [
+         {"image-upload": [
           { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+        ]},
+        {"text-upload": [
+          { "name": "exhibition", "label": "Upload Exhibition", "type": "text" },
+          { "name": "type", "value": "exhibition" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]}        
       ],

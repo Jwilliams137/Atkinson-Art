@@ -7,7 +7,7 @@ import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import { auth } from "../../utils/firebase";
-import { getFirestore, collection, query, where, getDocs, doc, writeBatch } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, writeBatch, addDoc } from "firebase/firestore";
 
 const AdminPage = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -54,44 +54,54 @@ const AdminPage = () => {
     fetchAdminEmails();
   }, []);
 
+  const fetchImagesByPageType = async (pageType) => {
+    try {
+      const imagesCollection = collection(db, "uploads");
+      const q = query(imagesCollection, where("pageType", "==", pageType));
+      const querySnapshot = await getDocs(q);
+  
+      const fetchedImages = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+  
+      const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
+      console.log("Fetched images:", sortedImages);  // Log to verify data
+      setImages(sortedImages);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
+  };
+  
+
   useEffect(() => {
-    const fetchImagesByPageType = async (pageType) => {
-      try {
-        const imagesCollection = collection(db, "uploads");
-        const q = query(imagesCollection, where("pageType", "==", pageType));
-        const querySnapshot = await getDocs(q);
-
-        const fetchedImages = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
-        setImages(sortedImages);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
-
     fetchImagesByPageType(activeSection);
   }, [activeSection, db]);
 
   const handleImageUpload = async (newImage) => {
     try {
       const imagesCollection = collection(db, "uploads");
+  
+      // Get existing images to determine order
       const q = query(imagesCollection, where("pageType", "==", activeSection));
       const querySnapshot = await getDocs(q);
       const existingImages = querySnapshot.docs.map(doc => doc.data());
       const maxOrder = existingImages.length > 0 ? Math.max(...existingImages.map(img => img.order || 0)) : 0;
+  
       newImage.order = maxOrder + 1;
+  
+      // Upload new image to Firestore
       const docRef = await addDoc(imagesCollection, newImage);
-
-      setImages((prevImages) => [...prevImages, { ...newImage, id: docRef.id }]);
-
+  
+      // Manually update the images state after uploading
+      setImages(prevImages => [...prevImages, { id: docRef.id, ...newImage }]);
+  
+      console.log('New image uploaded and state updated:', newImage);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
+      
 
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
