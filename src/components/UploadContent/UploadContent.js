@@ -31,34 +31,34 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
   const handleSubmit = async (uploadType, sectionKey) => {
     const auth = getAuth();
     const user = auth.currentUser;
-  
+
     if (!user) {
       console.error("User not authenticated");
       return;
     }
-  
+
     const token = await user.getIdToken();
-  
+
     if (uploadType === "image-upload" && selectedImage) {
       const formData = new FormData();
       formData.append("file", selectedImage);
       formData.append("section", sectionKey);
-      formData.append("pageType", sectionKey); // Ensure pageType is set
+      formData.append("pageType", sectionKey);
       formData.append("width", imageDimensions.width);
       formData.append("height", imageDimensions.height);
-  
+
       try {
         const response = await fetch("/api/upload-image", {
           method: "POST",
           body: formData,
           headers: { Authorization: `Bearer ${token}` },
         });
-  
+
         const result = await response.json();
         if (response.ok) {
           setSelectedImage(null);
           setImageDimensions({ width: 0, height: 0 });
-  
+
           const fileInput = document.querySelector('input[type="file"]');
           if (fileInput) fileInput.value = "";
         } else {
@@ -68,15 +68,23 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
         console.error("Error uploading image:", error);
       }
     }
-  
+
     if (uploadType === "text-upload" && textContent.trim()) {
+      const typeField = sectionData.fieldsForPage[sectionKey]
+        .find(fieldGroup => fieldGroup["text-upload"])?.["text-upload"]
+        .find(field => field.name === 'type');
+
+
       const textData = {
         content: textContent,
         pageType: sectionKey,
         section: sectionKey,
+        type: typeField?.value || 'untitled',
         timestamp: new Date().toISOString(),
       };
-  
+
+      console.log("Text Data:", textData);
+
       try {
         const response = await fetch("/api/upload-text", {
           method: "POST",
@@ -86,7 +94,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-  
+
         const result = await response.json();
         if (response.ok) {
           setTextContent("");
@@ -97,7 +105,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
         console.error("Error uploading text:", error);
       }
     }
-  };    
+  };
 
   return (
     <div className={styles.container}>
@@ -155,17 +163,27 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
 
                   {uploadType === "text-upload" && (
                     <div className={styles.textUpload}>
-                      <textarea
-                        className={styles.textArea}
-                        placeholder="Enter your text here"
-                        value={textContent}
-                        onChange={handleTextChange}
-                      />
+                      {/* If there's only one field in fieldsList, use it for the text input */}
+                      <div className={styles.field}>
+                        <label htmlFor={fieldsList[0]?.name} className={styles.label}>
+                          {fieldsList[0]?.label}
+                        </label>
+                        <textarea
+                          className={styles.textArea}
+                          placeholder="Enter your text here"
+                          value={textContent}
+                          onChange={handleTextChange}
+                          id={fieldsList[0]?.name}
+                        />
+                      </div>
+
                       <button className={styles.submitButton} onClick={() => handleSubmit(uploadType, sectionKey)}>
                         Submit Text
                       </button>
                     </div>
                   )}
+
+
                 </div>
               );
             })}

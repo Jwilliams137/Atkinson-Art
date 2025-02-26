@@ -18,10 +18,6 @@
           { "name": "file", "label": "Upload Home Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },          
           { "name": "pageType", "type": "hidden", "value": "home" }
-        ]},
-        {"text-upload": [
-          { "name": "homeText", "label": "Upload Home Text", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "home" }
         ]}     
       ],
       "artwork": [
@@ -79,6 +75,7 @@
         ]},
         {"text-upload": [
           { "name": "generalStatement", "label": "Upload General Statement", "type": "text" },
+          { "name": "type", "value": "general-statement" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]}
       ],

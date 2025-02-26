@@ -34,30 +34,32 @@ export async function POST(req) {
 
     // Read JSON body from request
     const body = await req.json();
-    const { title, content, pageType } = body;
+    const { content, pageType, type } = body;
 
     if (!content) {
       return NextResponse.json({ error: "Content is required" }, { status: 400 });
     }
 
     // Assign default values if missing
-    const textTitle = title || "Untitled";
     const textPageType = pageType || "general";
+
+    // Dynamically assign 'type' from the JSON, or default to 'untitled' if not provided
+    const textType = type || "untitled";  
 
     // Add text to Firestore
     const newTextRef = await db.collection("textUploads").add({
-      title: textTitle,
       content,
       pageType: textPageType,
+      type: textType,  // Store the dynamically assigned type in Firestore
       createdAt: new Date(),
     });
 
     return NextResponse.json({
       message: "Text uploaded successfully",
       id: newTextRef.id,
-      title: textTitle,
       content,
       pageType: textPageType,
+      type: textType,  // Include the dynamically assigned type in the response
     });
   } catch (error) {
     console.error("Text upload failed:", error);
