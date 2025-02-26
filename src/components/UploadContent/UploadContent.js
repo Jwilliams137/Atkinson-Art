@@ -58,6 +58,12 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
         if (response.ok) {
           console.log("Upload successful:", result);
           setSelectedImage(null);
+          setImageDimensions({ width: 0, height: 0 });
+  
+          // Reset the file input field
+          const fileInput = document.querySelector('input[type="file"]');
+          if (fileInput) fileInput.value = "";
+  
         } else {
           console.error("Upload failed:", result.error);
         }
@@ -68,6 +74,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
       alert("Text upload feature needs to be implemented!");
     }
   };
+  
   
 
   return (

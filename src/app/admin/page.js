@@ -92,12 +92,17 @@ const AdminPage = () => {
       const maxOrder = existingImages.length > 0 ? Math.max(...existingImages.map(img => img.order || 0)) : 0;
       newImage.order = maxOrder + 1;
   
-      setImages((prevImages) => [...prevImages, newImage]);
-      await fetchImagesByPageType(activeSection);
+      // Add the image to Firestore
+      const docRef = await addDoc(imagesCollection, newImage);
+  
+      // Update state with the new image, including the Firestore ID
+      setImages((prevImages) => [...prevImages, { ...newImage, id: docRef.id }]);
+  
     } catch (error) {
-      console.error("Error determining order number:", error);
+      console.error("Error uploading image:", error);
     }
   };
+  
   
   
 
