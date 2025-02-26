@@ -43,7 +43,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
       const formData = new FormData();
       formData.append("file", selectedImage);
       formData.append("section", sectionKey);
-      formData.append("pageType", sectionKey);
+      formData.append("pageType", sectionKey); // Ensure pageType is set
       formData.append("width", imageDimensions.width);
       formData.append("height", imageDimensions.height);
   
@@ -61,26 +61,32 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
   
           const fileInput = document.querySelector('input[type="file"]');
           if (fileInput) fileInput.value = "";
-  
         } else {
-          console.error("Upload failed:", result.error);
+          console.error("Image upload failed:", result.error);
         }
       } catch (error) {
         console.error("Error uploading image:", error);
       }
-    } else if (uploadType === "text-upload" && textContent) {
-      const formData = new FormData();
-      formData.append("text", textContent);
-      formData.append("section", sectionKey);
-      formData.append("pageType", sectionKey);
-
+    }
+  
+    if (uploadType === "text-upload" && textContent.trim()) {
+      const textData = {
+        content: textContent,
+        pageType: sectionKey,
+        section: sectionKey,
+        timestamp: new Date().toISOString(),
+      };
+  
       try {
         const response = await fetch("/api/upload-text", {
           method: "POST",
-          body: formData,
-          headers: { Authorization: `Bearer ${token}` },
+          body: JSON.stringify(textData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
-
+  
         const result = await response.json();
         if (response.ok) {
           setTextContent("");
@@ -91,7 +97,7 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
         console.error("Error uploading text:", error);
       }
     }
-  };
+  };    
 
   return (
     <div className={styles.container}>
