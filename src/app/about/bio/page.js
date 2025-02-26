@@ -9,7 +9,11 @@ const BioPage = () => {
   return (
     <div className={styles.bioContainer}>
       <ImageGallery images={bioImages} className={styles.bioGallery} />
+      <a href="\Linda Atkinson Complete resume 2025 feb.docx.pdf" download>
+        Click here to download a PDF of my resume
+      </a>
     </div>
+    
   );
 };
 
