@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
+import { getAuth } from "firebase/auth";
 import styles from "./UploadContent.module.css";
 import Image from 'next/image';
 
-const UploadContent = ({ sectionData, handleSubmit, selectedImage, setSelectedImage }) => {
-  console.log("sectionData:", sectionData); // Debugging: Log to check data structure
-
+const UploadContent = ({ sectionData, selectedImage, setSelectedImage}) => {
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
 
   if (!sectionData || Object.keys(sectionData).length === 0) {
@@ -16,17 +15,60 @@ const UploadContent = ({ sectionData, handleSubmit, selectedImage, setSelectedIm
     const file = event.target.files[0];
     if (file) {
       const objectUrl = URL.createObjectURL(file);
-      setSelectedImage(objectUrl); // Update AdminPage state instead of local state
+      setSelectedImage(file);
 
-      // Create a new HTMLImageElement to get natural width and height
       const image = new window.Image();
       image.src = objectUrl;
 
       image.onload = () => {
         setImageDimensions({ width: image.naturalWidth, height: image.naturalHeight });
+        URL.revokeObjectURL(objectUrl);
       };
     }
   };
+
+  const handleSubmit = async (uploadType, sectionKey) => {
+    console.log(`Submitting ${uploadType} for section: ${sectionKey}`);
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+  
+    const token = await user.getIdToken();
+  
+    if (uploadType === "image-upload" && selectedImage) {
+      const formData = new FormData();
+      formData.append("file", selectedImage);
+      formData.append("section", sectionKey);
+      formData.append("pageType", sectionKey);
+      formData.append("width", imageDimensions.width);
+      formData.append("height", imageDimensions.height);
+  
+      try {
+        const response = await fetch("/api/upload-image", {
+          method: "POST",
+          body: formData,
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        const result = await response.json();
+        if (response.ok) {
+          console.log("Upload successful:", result);
+          setSelectedImage(null);
+        } else {
+          console.error("Upload failed:", result.error);
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    } else if (uploadType === "text-upload") {
+      alert("Text upload feature needs to be implemented!");
+    }
+  };
+  
 
   return (
     <div className={styles.container}>
@@ -67,7 +109,7 @@ const UploadContent = ({ sectionData, handleSubmit, selectedImage, setSelectedIm
                         <div className={styles.imagePreview}>
                           <h4>Image Preview:</h4>
                           <Image
-                            src={selectedImage}
+                            src={URL.createObjectURL(selectedImage)}
                             alt="Selected Image"
                             className={styles.previewImage}
                             width={imageDimensions.width}  // Dynamically set width
@@ -84,10 +126,8 @@ const UploadContent = ({ sectionData, handleSubmit, selectedImage, setSelectedIm
 
                   {uploadType === "text-upload" && (
                     <div className={styles.textUpload}>
-                      <textarea className={styles.textArea} placeholder="Enter text here..." />
-                      <button className={styles.submitButton} onClick={() => handleSubmit(uploadType, sectionKey)}>
-                        Submit Text
-                      </button>
+                      <textarea className={styles.textArea} placeholder="Enter your text here"></textarea>
+                      <button className={styles.submitButton}>Submit Text</button>
                     </div>
                   )}
                 </div>
