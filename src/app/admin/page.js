@@ -166,10 +166,6 @@ const AdminPage = () => {
         <div className={styles.adminContentWrapper}>
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
-            <p className={styles.reminder}>
-              Reminder: Add a title to every image even if one isn&apos;t supposed to appear visibly on the site.
-              This helps people who use screen readers and it has benefits for search engine optimization.
-            </p>
             {fieldsForPage[activeSection] && (
               <UploadContent onUpload={handleImageUpload}
                 sectionData={{
