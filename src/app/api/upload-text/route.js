@@ -17,7 +17,6 @@ const db = getFirestore();
 
 export async function POST(req) {
   try {
-    // Authorization check
     const authHeader = req.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -32,7 +31,6 @@ export async function POST(req) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Read JSON body from request
     const body = await req.json();
     const { content, pageType, type } = body;
 
@@ -40,17 +38,13 @@ export async function POST(req) {
       return NextResponse.json({ error: "Content is required" }, { status: 400 });
     }
 
-    // Assign default values if missing
     const textPageType = pageType || "general";
-
-    // Dynamically assign 'type' from the JSON, or default to 'untitled' if not provided
     const textType = type || "untitled";  
 
-    // Add text to Firestore
     const newTextRef = await db.collection("textUploads").add({
       content,
       pageType: textPageType,
-      type: textType,  // Store the dynamically assigned type in Firestore
+      type: textType,
       createdAt: new Date(),
     });
 
@@ -59,7 +53,7 @@ export async function POST(req) {
       id: newTextRef.id,
       content,
       pageType: textPageType,
-      type: textType,  // Include the dynamically assigned type in the response
+      type: textType,
     });
   } catch (error) {
     console.error("Text upload failed:", error);
