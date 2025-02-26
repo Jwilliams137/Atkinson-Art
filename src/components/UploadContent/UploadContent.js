@@ -83,8 +83,6 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
         timestamp: new Date().toISOString(),
       };
 
-      console.log("Text Data:", textData);
-
       try {
         const response = await fetch("/api/upload-text", {
           method: "POST",
@@ -116,15 +114,16 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
         return (
           <div key={index} className={styles.uploadSection}>
             <h2 className={styles.title}>{sectionLabel}</h2>
-
+            <p className={styles.reminder}>
+              Reminder: Add a title to every image even if one isn&apos;t supposed to appear visibly on the site.
+              This helps people who use screen readers and it has benefits for search engine optimization.
+            </p>
             {fields.map((fieldGroup, idx) => {
               const uploadType = Object.keys(fieldGroup)[0];
               const fieldsList = fieldGroup[uploadType];
 
               return (
                 <div key={idx} className={styles.fieldGroup}>
-                  <h3 className={styles.uploadType}>{uploadType.replace("-", " ").toUpperCase()}</h3>
-
                   {uploadType === "image-upload" && (
                     <div className={styles.imageUpload}>
                       {fieldsList.map((field, fieldIdx) => (
@@ -163,7 +162,6 @@ const UploadContent = ({ sectionData, selectedImage, setSelectedImage }) => {
 
                   {uploadType === "text-upload" && (
                     <div className={styles.textUpload}>
-                      {/* If there's only one field in fieldsList, use it for the text input */}
                       <div className={styles.field}>
                         <label htmlFor={fieldsList[0]?.name} className={styles.label}>
                           {fieldsList[0]?.label}

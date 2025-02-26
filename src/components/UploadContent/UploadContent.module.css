@@ -11,6 +11,10 @@
   color: var(--hover-text)
 }
 
+.reminder {
+  font-size: 20px;
+}
+
 .imageUpload,
 .textUpload {
   display: flex;
