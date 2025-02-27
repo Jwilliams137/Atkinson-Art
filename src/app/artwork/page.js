@@ -22,7 +22,8 @@ const ArtworkPage = () => {
           }
         });
         
-        setImages(fetchedImages);
+        const sortedImages = sortImagesByPageLinks(fetchedImages);
+        setImages(sortedImages);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -37,6 +38,13 @@ const ArtworkPage = () => {
     'Click to visit the Constructions page': '/artwork/constructions',
     'Click to visit the Collage page': '/artwork/collage',
     'Click to visit the Earlier Work page': '/artwork/earlier-work'
+  };
+
+  const sortImagesByPageLinks = (images) => {
+    const pageLinkTitles = Object.keys(pageLinks);
+    return images.sort((a, b) => {
+      return pageLinkTitles.indexOf(a.title) - pageLinkTitles.indexOf(b.title);
+    });
   };
 
   return (
