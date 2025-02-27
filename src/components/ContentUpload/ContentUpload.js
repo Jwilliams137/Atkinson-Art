@@ -4,18 +4,18 @@ import { getAuth } from "firebase/auth";
 import styles from "./ContentUpload.module.css";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import TextUpload from "../TextUpload/TextUpload";
-import ResumeUpload from '../ResumeUpload/ResumeUpload'; // Importing the ResumeUpload component
+import ResumeUpload from '../ResumeUpload/ResumeUpload';
 
 const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
     const [textContent, setTextContent] = useState("");
-    const [selectedResume, setSelectedResume] = useState(null); // State to manage the selected resume
+    const [selectedResume, setSelectedResume] = useState(null);
 
     const handleTextChange = (event) => {
         setTextContent(event.target.value);
     };
 
-    const handleSubmit = async (uploadType, sectionKey) => {
+    const handleSubmit = async (uploadType, sectionKey, formData = {}) => {
         const auth = getAuth();
         const user = auth.currentUser;
 
@@ -26,18 +26,24 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
         const token = await user.getIdToken();
 
+        if (!formData.title) {
+            const titleField = sectionData.fieldsForPage[sectionKey]?.find(fieldGroup => fieldGroup["image-upload"])?.["image-upload"]?.find(field => field.name === "title");
+            formData.title = titleField ? titleField.value : "Untitled";
+        }
+
         if (uploadType === "image-upload" && selectedImage) {
-            const formData = new FormData();
-            formData.append("file", selectedImage);
-            formData.append("section", sectionKey);
-            formData.append("pageType", sectionKey);
-            formData.append("width", imageDimensions.width);
-            formData.append("height", imageDimensions.height);
+            const imageFormData = new FormData();
+            imageFormData.append("file", selectedImage);
+            imageFormData.append("section", sectionKey);
+            imageFormData.append("pageType", sectionKey);
+            imageFormData.append("width", imageDimensions.width);
+            imageFormData.append("height", imageDimensions.height);
+            imageFormData.append("title", formData.title);
 
             try {
                 const response = await fetch("/api/upload-image", {
                     method: "POST",
-                    body: formData,
+                    body: imageFormData,
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -45,6 +51,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 if (response.ok) {
                     setSelectedImage(null);
                     setImageDimensions({ width: 0, height: 0 });
+                    formData.title = "";
                 } else {
                     console.error("Image upload failed:", result.error);
                 }
@@ -88,28 +95,27 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         }
 
         if (uploadType === "resume-upload" && selectedResume) {
-            const formData = new FormData();
-            formData.append("file", selectedResume);
-            formData.append("section", sectionKey);
-          
+            const resumeFormData = new FormData();
+            resumeFormData.append("file", selectedResume);
+            resumeFormData.append("section", sectionKey);
+
             try {
-              const response = await fetch("/api/upload-resume", {
-                method: "POST",
-                body: formData,
-                headers: { Authorization: `Bearer ${token}` },
-              });
-          
-              const result = await response.json();
-              if (response.ok) {
-                setSelectedResume(null); // Resetting the selected resume after successful upload
-              } else {
-                console.error("Resume upload failed:", result.error);
-              }
+                const response = await fetch("/api/upload-resume", {
+                    method: "POST",
+                    body: resumeFormData,
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    setSelectedResume(null);
+                } else {
+                    console.error("Resume upload failed:", result.error);
+                }
             } catch (error) {
-              console.error("Error uploading resume:", error);
+                console.error("Error uploading resume:", error);
             }
-          }
-          
+        }
     };
 
     return (

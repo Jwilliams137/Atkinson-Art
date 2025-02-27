@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Image from 'next/image';
 import styles from "../ContentUpload/ContentUpload.module.css";
 
@@ -11,15 +12,21 @@ const ImageUpload = ({
   handleSubmit,
   sectionKey
 }) => {
+  const [formData, setFormData] = useState({});
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const objectUrl = URL.createObjectURL(file);
       setSelectedImage(file);
 
+      setFormData(prev => ({
+        ...prev,
+        file,
+      }));
+
       const image = new window.Image();
       image.src = objectUrl;
-
       image.onload = () => {
         setImageDimensions({ width: image.naturalWidth, height: image.naturalHeight });
         URL.revokeObjectURL(objectUrl);
@@ -27,19 +34,31 @@ const ImageUpload = ({
     }
   };
 
+  const handleInputChange = (event) => {
+    setFormData(prev => ({
+      ...prev,
+      [event.target.name]: event.target.value
+    }));
+  };
+
   return (
     <div className={styles.imageUpload}>
       {fieldsList.map((field, fieldIdx) => (
         <div key={fieldIdx} className={styles.field}>
-          <label htmlFor={field.name} className={styles.label}>
-            {field.label}
-          </label>
+          {field.type !== "hidden" && ( 
+            <label htmlFor={field.name} className={styles.label}>
+              {field.label}
+            </label>
+          )}
           <input
             type={field.type}
             name={field.name}
             id={field.name}
             className={styles.inputField}
-            onChange={handleFileChange}
+            {...(field.type === "file" ? { onChange: handleFileChange } : {
+              value: formData[field.name] || "",
+              onChange: handleInputChange,
+            })}
           />
         </div>
       ))}
@@ -55,7 +74,10 @@ const ImageUpload = ({
           />
         </div>
       )}
-      <button className={styles.submitButton} onClick={() => handleSubmit("image-upload", sectionKey)}>
+      <button
+        className={styles.submitButton}
+        onClick={() => handleSubmit("image-upload", sectionKey, formData)} // Pass formData with title
+      >
         Submit Image
       </button>
     </div>
