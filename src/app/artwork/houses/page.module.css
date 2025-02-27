@@ -1,3 +1,43 @@
 .main {
-    margin-top: 20px;
-  }
+  margin-top: 20px;
+}
+
+.textSection {
+  font-size: 25px;
+}
+
+.text {
+  margin: 20px 0;
+}
+
+.housesContainer {
+  display: flex;
+}
+
+.housesGallery {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.housesGalleryImage {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media only screen and (max-width: 1500px) {
+  
+}
+
+@media only screen and (max-width: 700px) {
+  
+}
+
+@media only screen and (max-width: 600px) {
+  
+}
+
+@media only screen and (max-width: 400px) {
+  
+}
