@@ -82,7 +82,7 @@ const BioPage = () => {
       <ImageGallery images={bioImages} className={styles.bioGallery} />
       {resumeUrl && (
         <p>
-          <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+          <a className={styles.resumeLink} href={resumeUrl} target="_blank" rel="noopener noreferrer">
             Click here to download a PDF of my resume.
           </a>
         </p>
