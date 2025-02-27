@@ -55,10 +55,20 @@ const AboutPage = () => {
     <div className={styles.aboutContainer}>
       {textUploads.length > 0 && (
         <div className={styles.textSection}>
-          {textUploads.map((text, index) => (
-            <p className={styles.text} key={index}>{text}</p>
-          ))}
-        </div>
+        {textUploads.map((text, index) => (
+          <div
+            key={index}
+            className={styles.text}
+            dangerouslySetInnerHTML={{
+              __html: text
+                .split("\n\n") // Split only on double new lines (paragraph breaks)
+                .map((para) => `<p>${para.trim()}</p>`) // Wrap each in a proper <p>
+                .join(""), // Join them back as valid HTML
+            }}
+          />
+        ))}
+      </div>
+      
       )}
       <ImageGallery images={aboutImages} className={styles.aboutGallery} />
     </div>
