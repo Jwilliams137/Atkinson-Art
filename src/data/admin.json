@@ -42,7 +42,7 @@
           { "name": "pageType", "type": "hidden", "value": "artwork" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Earlier Image", "type": "file" },
+          { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" }
         ]}         
