@@ -4,11 +4,11 @@ import ImageGallery from "../../../components/ImageGallery/ImageGallery";
 import styles from "./page.module.css";
 
 const NewWorkPage = () => {
-  const bioImages = usePageImages("new-work");
+  const newWorkImages = usePageImages("new-work");
 
   return (
-    <div className={styles.bioContainer}>
-      <ImageGallery images={bioImages} className={styles.newWorkGallery} />
+    <div className={styles.newWorkContainer}>
+      <ImageGallery images={newWorkImages} className={styles.newWorkGallery} />
     </div>
   );
 };

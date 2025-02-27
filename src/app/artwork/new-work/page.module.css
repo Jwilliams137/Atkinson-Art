@@ -1,3 +1,15 @@
-.main {
-    margin-top: 20px;
-  }
+.newWorkContainer {
+  display: flex;  
+  width: 100%;
+}
+
+.newWorkGallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 1500px) {
+  
+}
