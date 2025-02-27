@@ -10,6 +10,11 @@
   width: 100%;
 }
 
+.newWorkGalleryImage {
+  width: 300px;
+  height: auto;
+}
+
 @media only screen and (max-width: 1500px) {
   
 }

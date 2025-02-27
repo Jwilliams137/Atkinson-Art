@@ -11,16 +11,16 @@ const ImageUpload = ({
   setImageDimensions,
   handleSubmit,
   sectionKey,
-  imageIndex // Pass a unique index to differentiate uploads
+  imageIndex
 }) => {
   const [formData, setFormData] = useState({});
-  const fileInputRef = useRef(null); // Create a ref for the file input
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const objectUrl = URL.createObjectURL(file);
-      setSelectedImage(file); // Set the selected image file
+      setSelectedImage(file);
 
       setFormData(prev => ({
         ...prev,
@@ -44,23 +44,18 @@ const ImageUpload = ({
   };
 
   const handleImageUpload = async (event) => {
-    // Ensure you pass the correct title for each image upload
-    const titleField = fieldsList.find(field => field.name === "title");
-    const title = titleField ? titleField.value : "Untitled";
+    const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
 
-    // Pass unique form data and title for each image upload
     await handleSubmit("image-upload", sectionKey, { ...formData, title });
 
-    // Clear selected image and reset state after successful upload
     setSelectedImage(null);
     setImageDimensions({ width: 0, height: 0 });
-    setFormData({}); // Reset formData to clear other fields if necessary
+    setFormData({});
 
-    // Clear the file input after upload using the ref
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset the file input value
+      fileInputRef.current.value = "";
     }
-  };
+};
 
   return (
     <div className={styles.imageUpload}>
@@ -72,7 +67,7 @@ const ImageUpload = ({
             </label>
           )}
           <input
-            ref={field.type === "file" ? fileInputRef : null} // Set ref only for file input
+            ref={field.type === "file" ? fileInputRef : null}
             type={field.type}
             name={field.name}
             id={field.name}
@@ -98,7 +93,7 @@ const ImageUpload = ({
       )}
       <button
         className={styles.submitButton}
-        onClick={handleImageUpload} // Trigger upload and clear file
+        onClick={handleImageUpload}
       >
         Submit Image
       </button>
