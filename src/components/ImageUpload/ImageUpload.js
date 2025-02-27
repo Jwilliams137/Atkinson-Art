@@ -1,5 +1,5 @@
-"use client";
-import { useState } from "react";
+"use client"; 
+import { useState, useRef } from "react";
 import Image from 'next/image';
 import styles from "../ContentUpload/ContentUpload.module.css";
 
@@ -13,12 +13,13 @@ const ImageUpload = ({
   sectionKey
 }) => {
   const [formData, setFormData] = useState({});
+  const fileInputRef = useRef(null); // Create a ref for the file input
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const objectUrl = URL.createObjectURL(file);
-      setSelectedImage(file);
+      setSelectedImage(file); // Set the selected image file
 
       setFormData(prev => ({
         ...prev,
@@ -41,6 +42,21 @@ const ImageUpload = ({
     }));
   };
 
+  const handleImageUpload = async (event) => {
+    // You can call the handleSubmit function here to upload the image
+    await handleSubmit("image-upload", sectionKey, formData);
+
+    // Clear selected image and reset state after successful upload
+    setSelectedImage(null);
+    setImageDimensions({ width: 0, height: 0 });
+    setFormData({}); // Reset formData to clear other fields if necessary
+
+    // Clear the file input after upload using the ref
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Reset the file input value
+    }
+  };
+
   return (
     <div className={styles.imageUpload}>
       {fieldsList.map((field, fieldIdx) => (
@@ -51,6 +67,7 @@ const ImageUpload = ({
             </label>
           )}
           <input
+            ref={field.type === "file" ? fileInputRef : null} // Set ref only for file input
             type={field.type}
             name={field.name}
             id={field.name}
@@ -76,7 +93,7 @@ const ImageUpload = ({
       )}
       <button
         className={styles.submitButton}
-        onClick={() => handleSubmit("image-upload", sectionKey, formData)} // Pass formData with title
+        onClick={handleImageUpload} // Trigger upload and clear file
       >
         Submit Image
       </button>
