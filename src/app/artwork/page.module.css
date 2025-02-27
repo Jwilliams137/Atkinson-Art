@@ -1,35 +1,33 @@
 .artworkContainer {
   display: flex;
-  flex-wrap: wrap; /* Items should wrap when the container runs out of space */
-  gap: 20px; /* Space between items */
+  flex-wrap: wrap;
+  gap: 300px 20px;
   padding: 20px;
-  justify-content: flex-start;/* Align items to the left of the container */
+  justify-content: flex-start;
 }
 
 .artworkItem {
-  width: 200px; /* Fixed width for each item */
+  width: 300px;
   perspective: 1000px;
-  margin-bottom: 20px; /* Space between rows */
+  margin-bottom: 20px;
 }
 
 .flipCard {
   width: 100%;
-  height: auto;
+  height: 100%; 
   position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.5s;
 }
 
-.flipCard:hover {
+.flipCard:hover .flipCardInner {
   transform: rotateY(180deg);
 }
 
 .flipCardInner {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   transform: rotateY(0deg);
-  transition: transform 0.5s;
+  transition: transform 0.3s;
   transform-style: preserve-3d;
 }
 
@@ -54,6 +52,7 @@
 
 .flipCardBack {
   display: flex;
+  height: 300px;
   justify-content: center;
   align-items: center;
   background-color: var(--primary-text);
@@ -63,4 +62,10 @@
   padding: 10px;
   border-radius: 8px;
   transform: rotateY(180deg);
+}
+
+@media (max-width: 1000px) {
+  .artworkContainer{
+    justify-content: center;
+  }
 }
