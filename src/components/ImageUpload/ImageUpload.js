@@ -1,4 +1,4 @@
-"use client"; 
+"use client";  
 import { useState, useRef } from "react";
 import Image from 'next/image';
 import styles from "../ContentUpload/ContentUpload.module.css";
@@ -10,7 +10,8 @@ const ImageUpload = ({
   imageDimensions,
   setImageDimensions,
   handleSubmit,
-  sectionKey
+  sectionKey,
+  imageIndex // Pass a unique index to differentiate uploads
 }) => {
   const [formData, setFormData] = useState({});
   const fileInputRef = useRef(null); // Create a ref for the file input
@@ -43,8 +44,12 @@ const ImageUpload = ({
   };
 
   const handleImageUpload = async (event) => {
-    // You can call the handleSubmit function here to upload the image
-    await handleSubmit("image-upload", sectionKey, formData);
+    // Ensure you pass the correct title for each image upload
+    const titleField = fieldsList.find(field => field.name === "title");
+    const title = titleField ? titleField.value : "Untitled";
+
+    // Pass unique form data and title for each image upload
+    await handleSubmit("image-upload", sectionKey, { ...formData, title });
 
     // Clear selected image and reset state after successful upload
     setSelectedImage(null);
