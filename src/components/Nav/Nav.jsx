@@ -91,33 +91,32 @@ export default function Nav() {
               }
 
               return (
-                <div className={styles.burgerList}>
+                <div key={`${key}-wrapper`} className={styles.burgerList}>
                   <li key={key} className={styles.burgerMainItem}>
-                  <Link
-                    href={page.href || `/${key}`}
-                    className={styles.burgerMainLink}
-                    onClick={closeBurgerMenu}
-                  >
-                    {page.label}
-                  </Link>
-                  {page.subPages && (
-                    <ul className={styles.burgerSubList}>
-                      {page.subPages.map((subPage, subIndex) => (
-                        <li key={subIndex} className={styles.burgerSubItem}>
-                          <Link
-                            href={subPage.href}
-                            className={styles.burgerSubLink}
-                            onClick={closeBurgerMenu}
-                          >
-                            {subPage.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
+                    <Link
+                      href={page.href || `/${key}`}
+                      className={styles.burgerMainLink}
+                      onClick={closeBurgerMenu}
+                    >
+                      {page.label}
+                    </Link>
+                    {page.subPages && (
+                      <ul className={styles.burgerSubList}>
+                        {page.subPages.map((subPage, subIndex) => (
+                          <li key={subPage.href || subIndex} className={styles.burgerSubItem}>
+                            <Link
+                              href={subPage.href}
+                              className={styles.burgerSubLink}
+                              onClick={closeBurgerMenu}
+                            >
+                              {subPage.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
                 </div>
-                
               );
             })}
           </ul>
