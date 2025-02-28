@@ -24,27 +24,32 @@
         {"image-upload": [
           { "name": "file", "label": "Upload New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
-          { "name": "pageType", "type": "hidden", "value": "artwork" }
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Houses page" },
-          { "name": "pageType", "type": "hidden", "value": "artwork" }
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
-          { "name": "pageType", "type": "hidden", "value": "artwork" }
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Collage Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
-          { "name": "pageType", "type": "hidden", "value": "artwork" }
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
-          { "name": "pageType", "type": "hidden", "value": "artwork" }
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
         ]}         
       ],
       "new-work": [

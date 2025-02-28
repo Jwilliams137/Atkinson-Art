@@ -33,13 +33,13 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
         try {
             if (uploadType === "image-upload" && formData.file) {
-                const { file, title, imageDimensions } = formData;
+                const { file, title, imageDimensions, color } = formData;
 
                 if (!imageDimensions) {
                     console.error("Image dimensions are missing.");
                     return;
                 }
-                
+
                 const imageFormData = new FormData();
                 imageFormData.append("file", selectedImage);
                 imageFormData.append("section", sectionKey);
@@ -47,6 +47,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 imageFormData.append("title", formData.title);
                 imageFormData.append("width", imageDimensions.width);
                 imageFormData.append("height", imageDimensions.height);
+                imageFormData.append("color", color);
 
                 const response = await fetch("/api/upload-image", {
                     method: "POST",

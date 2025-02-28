@@ -18,7 +18,6 @@ const ImageUpload = ({
         if (file) {
             const objectUrl = URL.createObjectURL(file);
             setSelectedImage(file);
-
             setFormData(prev => ({
                 ...prev,
                 file,
@@ -49,6 +48,9 @@ const ImageUpload = ({
 
         const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
 
+        // Check for color and add it to formData if available
+        const color = formData.color || (fieldsList.find(field => field.name === "color")?.value || "#ffffff");
+
         // Send the image dimensions along with other form data
         const imageFormData = new FormData();
         imageFormData.append("file", formData.file);
@@ -57,9 +59,10 @@ const ImageUpload = ({
         imageFormData.append("title", title);
         imageFormData.append("width", imageDimensions.width);
         imageFormData.append("height", imageDimensions.height);
+        imageFormData.append("color", color); // Include color in the form data
 
-        // Call the parent method to handle submission with dimensions
-        await handleSubmit("image-upload", sectionKey, { ...formData, title, imageDimensions });
+        // Call the parent method to handle submission with dimensions and color
+        await handleSubmit("image-upload", sectionKey, { ...formData, title, imageDimensions, color });
 
         // Reset states
         setSelectedImage(null);
@@ -95,7 +98,6 @@ const ImageUpload = ({
             ))}
             {selectedImage && (
                 <div className={styles.imagePreview}>
-                    <h4>Image Preview:</h4>
                     <Image
                         src={URL.createObjectURL(selectedImage)}
                         alt="Selected Image"
@@ -103,6 +105,11 @@ const ImageUpload = ({
                         width={imageDimensions.width}
                         height={imageDimensions.height}
                     />
+                </div>
+            )}
+            {formData.color && (
+                <div className={styles.colorPreview} style={{ backgroundColor: formData.color }}>
+                    <p>Selected Color Preview</p>
                 </div>
             )}
             <button

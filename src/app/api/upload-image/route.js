@@ -46,6 +46,7 @@ export async function POST(req) {
     const pageType = formData.get("pageType");
     const imageId = formData.get("imageId");
     const moveDirection = formData.get("moveDirection");
+    const color = formData.get("color");
 
     if (!file && !imageId) {
       return NextResponse.json({ error: "No file or imageId provided" }, { status: 400 });
@@ -119,6 +120,7 @@ export async function POST(req) {
         width: width ? parseInt(width) : null,
         height: height ? parseInt(height) : null,
         order: newOrder,
+        color: color || "default",
       });
 
       return NextResponse.json({
@@ -128,6 +130,7 @@ export async function POST(req) {
         width: width ? parseInt(width) : null,
         height: height ? parseInt(height) : null,
         order: newOrder,
+        color: color || "default",
       });
     }
 
