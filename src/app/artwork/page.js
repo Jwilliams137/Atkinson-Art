@@ -17,7 +17,7 @@ const ArtworkPage = () => {
         
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          if (data.title && data.imageUrl) {
+          if (data.title && data.imageUrl && data.color) {
             fetchedImages.push(data);
           }
         });
@@ -66,7 +66,7 @@ const ArtworkPage = () => {
                     <div className={styles.flipCardFront}>
                       <img src={image.imageUrl} alt={image.title} className={styles.artworkImage} />
                     </div>
-                    <div className={styles.flipCardBack}>
+                    <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
                       <p>{image.title.replace('Click to visit the ', '').toLowerCase()}</p>
                     </div>
                   </div>
