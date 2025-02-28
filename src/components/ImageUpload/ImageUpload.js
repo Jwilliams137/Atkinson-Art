@@ -1,4 +1,4 @@
-"use client";  
+"use client";
 import { useState, useRef } from "react";
 import Image from 'next/image';
 import styles from "../ContentUpload/ContentUpload.module.css";
@@ -7,13 +7,11 @@ const ImageUpload = ({
   fieldsList,
   selectedImage,
   setSelectedImage,
-  imageDimensions,
-  setImageDimensions,
   handleSubmit,
-  sectionKey,
-  imageIndex
+  sectionKey
 }) => {
   const [formData, setFormData] = useState({});
+  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -43,7 +41,7 @@ const ImageUpload = ({
     }));
   };
 
-  const handleImageUpload = async (event) => {
+  const handleImageUpload = async () => {
     const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
 
     await handleSubmit("image-upload", sectionKey, { ...formData, title });
@@ -55,7 +53,7 @@ const ImageUpload = ({
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-};
+  };
 
   return (
     <div className={styles.imageUpload}>

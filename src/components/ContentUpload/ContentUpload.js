@@ -1,13 +1,12 @@
 "use client";
-import { useState } from "react";
 import { getAuth } from "firebase/auth";
+import { useState } from "react";
 import styles from "./ContentUpload.module.css";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import TextUpload from "../TextUpload/TextUpload";
 import ResumeUpload from "../ResumeUpload/ResumeUpload";
 
 const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
-  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [textContent, setTextContent] = useState("");
   const [selectedResume, setSelectedResume] = useState(null);
 
@@ -38,8 +37,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         imageFormData.append("file", selectedImage);
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
-        imageFormData.append("width", imageDimensions.width);
-        imageFormData.append("height", imageDimensions.height);
         imageFormData.append("title", formData.title);
 
         const response = await fetch("/api/upload-image", {
@@ -51,7 +48,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         const result = await response.json();
         if (response.ok) {
           setSelectedImage(null);
-          setImageDimensions({ width: 0, height: 0 });
         } else {
           console.error("Image upload failed:", result.error);
         }
@@ -136,8 +132,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                       fieldsList={fieldsList}
                       selectedImage={selectedImage}
                       setSelectedImage={setSelectedImage}
-                      imageDimensions={imageDimensions}
-                      setImageDimensions={setImageDimensions}
                       handleSubmit={handleUpload}
                       sectionKey={sectionKey}
                     />
