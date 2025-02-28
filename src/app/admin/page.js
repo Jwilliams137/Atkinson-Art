@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ContentUpload from '../../components/ContentUpload/ContentUpload'
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
-import AdminDisplay from "../../components/AdminDisplay/AdminDisplay";
+import AdminImageDisplay from "../../components/AdminImageDisplay/AdminImageDisplay";
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import { auth } from "../../utils/firebase";
@@ -189,7 +189,7 @@ const AdminPage = () => {
                 moveImageDown={moveImageDown}
               />
             )}
-            <AdminDisplay
+            <AdminImageDisplay
               images={images}
               deleteImage={deleteImage}
               moveImageUp={moveImageUp}

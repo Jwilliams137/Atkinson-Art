@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
-import styles from "./AdminDisplay.module.css";
+import styles from "./AdminImageDisplay.module.css";
 
-const AdminDisplay = ({ images, deleteImage, moveImageUp, moveImageDown }) => {
+const AdminImageDisplay = ({ images, deleteImage, moveImageUp, moveImageDown }) => {
   return (
     <div className={styles.imagesGrid}>
-      {images.length > 0 ? (
-        images.map((image, index) => (
+      {images.map((image, index) => (
           <div key={image.id || index} className={styles.imageItem}>
             <Image
               src={image.imageUrl}
@@ -41,11 +40,9 @@ const AdminDisplay = ({ images, deleteImage, moveImageUp, moveImageDown }) => {
             </div>
           </div>
         ))
-      ) : (
-        <p>No images found for this section.</p>
-      )}
+      }
     </div>
   );
 };
 
-export default AdminDisplay;
+export default AdminImageDisplay;
