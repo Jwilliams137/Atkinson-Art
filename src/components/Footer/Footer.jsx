@@ -1,13 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import styles from './Footer.module.css';
 import footerData from './footerData.json';
 
 const iconMapping = {
   faFacebook: faFacebook,
-  faInstagram: faInstagram
+  faInstagram: faInstagram,
+  faLinkedin: faLinkedin
 };
 
 function Footer() {
