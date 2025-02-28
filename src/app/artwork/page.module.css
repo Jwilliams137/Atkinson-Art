@@ -64,8 +64,43 @@
   transform: rotateY(180deg);
 }
 
+.mobileView {
+  display: none;
+}
+
 @media (max-width: 1000px) {
   .artworkContainer {
     justify-content: center;
+    gap: 50px;
+  }
+
+  .artworkItem {
+    width: 70%;
+    height: auto;
+  }
+
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: flex;
+  }
+
+  .mobileFlipCardBack {
+    padding: 30px 0;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .mobileArtworkImage {
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 500px) {
+  .artworkItem {
+    width: 100%;
   }
 }
