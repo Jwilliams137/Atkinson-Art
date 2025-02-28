@@ -71,7 +71,6 @@ const ArtworkPage = () => {
                         className={styles.artworkImage}
                         width={image.width}
                         height={image.height}
-                        layout="intrinsic"
                       />
                     </div>
                     <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
