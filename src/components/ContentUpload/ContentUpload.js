@@ -128,7 +128,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                         <h2 className={styles.title}>Add Content For {sectionLabel}</h2>
                         <p className={styles.reminder}>
                             Reminder: Add a title to every image even if one isn&apos;t supposed to appear visibly on the site.
-                            This helps people who use screen readers and it has benefits for search engine optimization.
+                            This helps people who use screen readers and has benefits for search engine optimization.
                         </p>
 
                         {fields.map((fieldGroup, idx) => {
