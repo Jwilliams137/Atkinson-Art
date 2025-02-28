@@ -37,3 +37,8 @@
   color: white;
   border-radius: 8px;
 }
+
+.title {
+  padding: 5px 10px;
+  font-size: 18px;
+}

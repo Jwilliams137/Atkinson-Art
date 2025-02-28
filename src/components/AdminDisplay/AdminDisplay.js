@@ -14,6 +14,7 @@ const AdminDisplay = ({ images, deleteImage, moveImageUp, moveImageDown }) => {
               width={image.width || 300}
               height={image.height || 200}
             />
+            <p className={styles.title} style={{ border: `4px solid ${image.color}` }}>{image.title}</p>
             <button
               onClick={() => deleteImage(image.id, image.cloudinaryId)}
               className={styles.deleteButton}
