@@ -27,7 +27,7 @@
   .previewWrapper {
     margin-top: 20px;
     text-align: center;
-    border: 2px dashed #ccc; /* Added border to visualize */
+    border: 2px dashed #ccc;
   }
   
   .previewImage {
@@ -35,13 +35,17 @@
     height: auto;
     border: 2px solid #ccc;
     border-radius: 8px;
-    max-height: 300px; /* Added to limit image size */
+    max-height: 300px;
   }
   
   
   @media only screen and (max-width: 1000px) {  
     .adminContentWrapper {
       flex-direction: column;
+    }
+
+    .adminMainContent {
+      padding: 0;
     }
   }
   

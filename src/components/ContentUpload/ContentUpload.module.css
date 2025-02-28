@@ -74,3 +74,18 @@
   .submitButton:hover {
     background-color: var(--hover-text);
   }
+
+  @media only screen and (max-width: 1000px) {
+
+    .title {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .uploadSection {
+        padding: 0;
+    }
+
+    .imageUpload {
+        padding: 10px;
+    }
+  }

@@ -23,12 +23,15 @@
   
   @media only screen and (max-width: 1000px) {
     .sidebar {
-      width: 100%;      
+      width: 100%;
+      padding: 0;   
     }
     
     .sidebar ul {
       flex-direction: row;
       flex-wrap: wrap;
       gap: 0px 30px;
+      border: solid var(--hover-text) 1px;
+      border-radius: 8px;
     }
   }
