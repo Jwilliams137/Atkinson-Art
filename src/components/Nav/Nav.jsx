@@ -48,7 +48,7 @@ export default function Nav() {
             <ul className={styles.linkList}>
               {Object.keys(pages).map((key) => {
                 const page = pages[key];
-                if (page.restricted && !isUserAllowed && key === 'admin') {
+                if (page.restricted && !isUserAllowed && key === "admin") {
                   return null;
                 }
 
@@ -75,22 +75,49 @@ export default function Nav() {
       </div>
 
       {isBurgerMenuOpen && (
-        <div className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""}`}>
+        <div
+          className={`${styles.burgerMenu} ${
+            isBurgerMenuOpen ? styles.open : ""
+          }`}
+        >
           <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
             {splitTitle(title)}
           </Link>
-          <ul className={styles.linkList}>
+          <ul className={styles.burgerLinkList}>
             {Object.keys(pages).map((key) => {
               const page = pages[key];
-              if (page.restricted && !isUserAllowed && key === 'admin') {
+              if (page.restricted && !isUserAllowed && key === "admin") {
                 return null;
               }
+
               return (
-                <li key={key} className={styles.burgerItem}>
-                  <Link href={page.href || `/${key}`} className={styles.link} onClick={closeBurgerMenu}>
+                <div className={styles.burgerList}>
+                  <li key={key} className={styles.burgerMainItem}>
+                  <Link
+                    href={page.href || `/${key}`}
+                    className={styles.burgerMainLink}
+                    onClick={closeBurgerMenu}
+                  >
                     {page.label}
                   </Link>
+                  {page.subPages && (
+                    <ul className={styles.burgerSubList}>
+                      {page.subPages.map((subPage, subIndex) => (
+                        <li key={subIndex} className={styles.burgerSubItem}>
+                          <Link
+                            href={subPage.href}
+                            className={styles.burgerSubLink}
+                            onClick={closeBurgerMenu}
+                          >
+                            {subPage.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
+                </div>
+                
               );
             })}
           </ul>

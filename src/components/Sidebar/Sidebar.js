@@ -19,16 +19,7 @@ const Sidebar = ({ pageKey }) => {
     }, []);
 
     return (
-        <>
-            {isMobile && (
-                <div className={styles.mobileLinks}>
-                    {subpages.map((page) => (
-                        <Link key={page.href} href={page.href} className={styles.mobileLink}>
-                            {page.label}
-                        </Link>
-                    ))}
-                </div>
-            )}
+        <>           
             <div className={`${styles.sidebar} ${isMobile ? styles.hideDesktop : styles.showDesktop}`}>
                 <nav>
                     <ul className={styles.navList}>

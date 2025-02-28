@@ -25,31 +25,6 @@
     color: var(--hover-text);
 }
 
-.mobileLinks {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px 40px;
-}
-
-.mobileLink {
-    font-size: 22px;
-    padding: 0;
-    display: inline-block;
-}
-
-.mobileLink:hover {
-    color: var(--hover-text);
-}
-
-.showMobile {
-    display: block;
-}
-
-.hideMobile {
-    display: none;
-}
-
 .showDesktop {
     display: block;
 }
@@ -68,25 +43,5 @@
 
     .navList {
         margin-left: 0;
-    }
-}
-
-@media only screen and (max-width: 450px) {
-    .mobileLinks {
-        gap: 20px 30px;
-    }
-
-    .mobileLink {
-        font-size: 20px;
-    }
-}
-
-@media only screen and (max-width: 370px) {
-    .mobileLinks {
-        gap: 20px 20px;
-    }
-
-    .mobileLink {
-        font-size: 18px;
     }
 }

@@ -144,6 +144,42 @@
   transform: rotate(-45deg);
 }
 
+.burgerList {
+  margin: 30px;
+}
+
+.burgerMainLink {
+  font-size: 28px;
+  font-weight: bold;
+  display: block;
+  padding: 8px 0;
+}
+
+.burgerSubList {
+  list-style: none;
+  padding-left: 15px;
+}
+
+.burgerSubItem {
+  margin-top: 5px;
+}
+
+.burgerSubLink {
+  font-size: 25px;
+  text-decoration: none;
+  display: block;
+  padding: 5px 0;
+}
+
+.burgerSubLink:hover {
+  color: var(--hover-text);
+}
+
+.burgerMainLink:hover {
+  color: var(--hover-text);
+}
+
+
 @media only screen and (max-width: 1000px) {
   .nav {
     padding: 8px 20px;
