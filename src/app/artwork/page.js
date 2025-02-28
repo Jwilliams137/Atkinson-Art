@@ -18,7 +18,7 @@ const ArtworkPage = () => {
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           if (data.title && data.imageUrl && data.color && data.width && data.height) {
-            fetchedImages.push(data);
+            fetchedImages.push({ ...data, id: doc.id });
           }
         });
         
@@ -49,7 +49,7 @@ const ArtworkPage = () => {
 
   return (
     <div className={styles.artworkContainer}>      
-        {images.map((image, index) => {
+        {images.map((image) => {
           const pageLink = pageLinks[image.title];
 
           if (!pageLink) {
@@ -60,7 +60,7 @@ const ArtworkPage = () => {
           const visibleTitle = image.title.replace('Click to visit the ', '').replace(' page', '').toLowerCase();
 
           return (
-            <div key={index} className={styles.artworkItem}>
+            <div key={image.id} className={styles.artworkItem}>
               <Link href={pageLink} passHref className={styles.desktopView}>
                 <div className={styles.flipCard}>
                   <div className={styles.flipCardInner}>
