@@ -1,4 +1,4 @@
-This website was built using Next.js, Cloudinary, and Firebase to showcase the art of Linda Atkinson. It's designed to be a personal portfolio, making it easy to display and update artwork.  It has been renovated for deployment on Netlify.
+This website was built using Next.js, Cloudinary, and Firebase to showcase the art of Linda Atkinson. It's designed with an admin page where content can be uploaded making it easy to display and update.  It has been renovated for deployment on Netlify.
 
 ## Getting Started
 
