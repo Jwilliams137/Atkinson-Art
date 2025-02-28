@@ -4,6 +4,7 @@ import ContentUpload from '../../components/ContentUpload/ContentUpload'
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
 import AdminImageDisplay from "../../components/AdminImageDisplay/AdminImageDisplay";
+import AdminTextDisplay from '../../components/AdminTextDisplay/AdminTextDisplay';
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import { auth } from "../../utils/firebase";
@@ -66,13 +67,12 @@ const AdminPage = () => {
       }));
   
       const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
-      console.log("Fetched images:", sortedImages);  // Log to verify data
+      console.log("Fetched images:", sortedImages);
       setImages(sortedImages);
     } catch (error) {
       console.error("Error fetching images:", error);
     }
-  };
-  
+  };  
 
   useEffect(() => {
     fetchImagesByPageType(activeSection);
@@ -82,7 +82,6 @@ const AdminPage = () => {
     try {
       const imagesCollection = collection(db, "uploads");
   
-      // Get existing images to determine order
       const q = query(imagesCollection, where("pageType", "==", activeSection));
       const querySnapshot = await getDocs(q);
       const existingImages = querySnapshot.docs.map(doc => doc.data());
@@ -90,18 +89,15 @@ const AdminPage = () => {
   
       newImage.order = maxOrder + 1;
   
-      // Upload new image to Firestore
       const docRef = await addDoc(imagesCollection, newImage);
   
-      // Manually update the images state after uploading
       setImages(prevImages => [...prevImages, { id: docRef.id, ...newImage }]);
   
       console.log('New image uploaded and state updated:', newImage);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
-  };
-      
+  };      
 
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
@@ -195,6 +191,7 @@ const AdminPage = () => {
               moveImageUp={moveImageUp}
               moveImageDown={moveImageDown}
             />
+            <AdminTextDisplay />
           </div>
         </div>
       )}
