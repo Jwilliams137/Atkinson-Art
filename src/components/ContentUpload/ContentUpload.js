@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 import { getAuth } from "firebase/auth";
 import { useState } from "react";
 import styles from "./ContentUpload.module.css";

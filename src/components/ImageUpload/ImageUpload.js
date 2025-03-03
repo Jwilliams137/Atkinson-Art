@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useRef } from "react";
 import Image from 'next/image';
 import styles from "../ContentUpload/ContentUpload.module.css";

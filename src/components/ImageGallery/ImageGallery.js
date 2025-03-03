@@ -1,7 +1,9 @@
+import React from 'react';
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 
 const ImageGallery = ({ images, className, cardClass, imageClass }) => {
+  // Log the passed props for debugging
   console.log("Gallery Container Class:", className);
   console.log("Gallery Card Class:", cardClass);
   console.log("Gallery Image Class:", imageClass);
@@ -9,7 +11,7 @@ const ImageGallery = ({ images, className, cardClass, imageClass }) => {
   return (
     <div className={`${styles.galleryContainer} ${className}`}>
       {images?.map((image, index) => (
-        <div key={image.id || index} className={cardClass || styles.galleryCard}>
+        <div key={image.id || index} className={cardClass ? cardClass : styles.galleryCard}>
           <div className={styles.imageWrapper}>
             <Image
               className={imageClass || styles.galleryImage}
@@ -27,3 +29,4 @@ const ImageGallery = ({ images, className, cardClass, imageClass }) => {
 };
 
 export default ImageGallery;
+
