@@ -6,8 +6,8 @@ import HomePage from "../src/app/page"; // Adjust this path if needed
 test("renders homepage without crashing", () => {
   render(<HomePage />);
   
-  // Query for the gallery container by class name using querySelector
-  const galleryContainer = document.querySelector('.homeGallery');
+  // Query the gallery container using getByTestId
+  const galleryContainer = screen.getByTestId("gallery-container");
   
   // Assert that the gallery container is in the document
   expect(galleryContainer).toBeInTheDocument();

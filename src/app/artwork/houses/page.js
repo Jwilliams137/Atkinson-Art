@@ -56,10 +56,10 @@ const HousesPage = () => {
 
   return (
     <div>
-      <ImageGallery images={housesImages}
+      {housesImages && housesImages.length > 0 && (<ImageGallery images={housesImages}
         className={styles.housesGallery}
         cardClass={styles.housesGalleryCard}
-        imageClass={styles.housesGalleryImage} />
+        imageClass={styles.housesGalleryImage} />)}
       <div className={styles.housesContainer}>
         {textUploads.length > 0 ? (
           <div className={styles.textSection}>

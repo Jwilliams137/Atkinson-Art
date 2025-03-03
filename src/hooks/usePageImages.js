@@ -23,7 +23,7 @@ const usePageImages = (pageType) => {
           ...doc.data(),
         }));
     
-        console.log(fetchedImages); // Check the data you're getting
+        console.log(fetchedImages);
         setImages(fetchedImages);
       } catch (error) {
         console.error(`Error fetching ${pageType} images:`, error);
