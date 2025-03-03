@@ -50,6 +50,10 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
             className={styles.fullSizeImage}
           />
         </div>
+        {/* Display the title of the image under it */}
+        <div className={styles.imageTitle}>
+          <h3>{selectedImage.title}</h3> {/* Assuming 'title' exists in your image object */}
+        </div>
       </div>
     </div>
   );
