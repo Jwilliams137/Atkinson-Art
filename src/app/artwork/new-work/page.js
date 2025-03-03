@@ -15,8 +15,10 @@ const NewWorkPage = () => {
 
   // Function to open the modal and set the selected image index
   const openModal = (index) => {
-    setCurrentImageIndex(index);
-    setIsModalOpen(true);
+    if (windowWidth > 1000) {
+      setCurrentImageIndex(index);
+      setIsModalOpen(true);
+    }
   };
 
   // Function to close the modal
@@ -24,15 +26,22 @@ const NewWorkPage = () => {
     setIsModalOpen(false);
   };
 
-  // Update window width on resize
+  // Update window width on resize and close the modal if screen is smaller than 1000px
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      // Close the modal if the screen is resized below 1000px
+      if (window.innerWidth <= 1000) {
+        setIsModalOpen(false);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Only allow the modal to be rendered if the screen width is large enough
+  // Only render the modal if the screen width is large enough
   const shouldRenderModal = windowWidth > 1000;
 
   return (
