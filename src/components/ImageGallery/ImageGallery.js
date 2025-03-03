@@ -2,8 +2,7 @@ import React from 'react';
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 
-const ImageGallery = ({ images, className, cardClass, imageClass }) => {
-  // Log the passed props for debugging
+const ImageGallery = ({ images, className, cardClass, imageClass, onImageClick = () => {} }) => {
   console.log("Gallery Container Class:", className);
   console.log("Gallery Card Class:", cardClass);
   console.log("Gallery Image Class:", imageClass);
@@ -20,6 +19,7 @@ const ImageGallery = ({ images, className, cardClass, imageClass }) => {
               width={image.width || 500}
               height={image.height || 500}
               priority
+              onClick={() => onImageClick(index)}
             />
           </div>
         </div>
@@ -29,4 +29,3 @@ const ImageGallery = ({ images, className, cardClass, imageClass }) => {
 };
 
 export default ImageGallery;
-
