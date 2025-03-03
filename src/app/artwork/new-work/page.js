@@ -11,7 +11,27 @@ const NewWorkPage = () => {
   // State for controlling the modal visibility and selected image index
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
+  const [windowWidth, setWindowWidth] = useState(0); // Default to 0 until client-side code runs
+
+  // Check if we're in the browser before trying to access window
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Only run this code on the client side
+      setWindowWidth(window.innerWidth); // Set initial width when the component mounts
+
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+        // Close the modal if the screen is resized below 1000px
+        if (window.innerWidth <= 1000) {
+          setIsModalOpen(false);
+        }
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []); // Empty dependency array ensures this runs only once when component mounts
 
   // Function to open the modal and set the selected image index
   const openModal = (index) => {
@@ -26,21 +46,6 @@ const NewWorkPage = () => {
     setIsModalOpen(false);
   };
 
-  // Update window width on resize and close the modal if screen is smaller than 1000px
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      // Close the modal if the screen is resized below 1000px
-      if (window.innerWidth <= 1000) {
-        setIsModalOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   // Only render the modal if the screen width is large enough
   const shouldRenderModal = windowWidth > 1000;
 
@@ -53,7 +58,7 @@ const NewWorkPage = () => {
         imageClass={styles.newWorkGalleryImage}
         onImageClick={openModal} // Pass openModal function to ImageGallery
       />
-
+      
       {/* Conditionally render the Modal based on screen width */}
       {isModalOpen && shouldRenderModal && (
         <Modal
