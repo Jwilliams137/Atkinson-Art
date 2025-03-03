@@ -41,6 +41,7 @@ export async function POST(req) {
     const formData = await req.formData();
     const file = formData.get("file");
     const title = formData.get("title");
+    const description = formData.get("description");
     const width = formData.get("width");
     const height = formData.get("height");
     const pageType = formData.get("pageType");
@@ -114,6 +115,7 @@ export async function POST(req) {
       await db.collection("uploads").add({
         pageType: pageType || "home",
         title: title || "No Title",
+        description: description || "",
         imageUrl: uploadResponse.secure_url,
         cloudinaryId: uploadResponse.public_id,
         createdAt: new Date(),

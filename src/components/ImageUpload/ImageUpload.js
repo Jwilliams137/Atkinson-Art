@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Image from 'next/image';
 import styles from "../ContentUpload/ContentUpload.module.css";
 
@@ -35,6 +34,7 @@ const ImageUpload = ({
     };
 
     const handleInputChange = (event) => {
+        // Update form data for the respective field name (including description)
         setFormData(prev => ({
             ...prev,
             [event.target.name]: event.target.value
@@ -52,18 +52,24 @@ const ImageUpload = ({
         // Check for color and add it to formData if available
         const color = formData.color || (fieldsList.find(field => field.name === "color")?.value || "#ffffff");
 
+        // Ensure the description is correctly fetched from formData
+        const description = formData.description || (fieldsList.find(field => field.name === "description")?.value || "No description provided");
+
+        console.log("Form Data on Submit:", formData); // Debugging line to ensure correct data
+
         // Send the image dimensions along with other form data
         const imageFormData = new FormData();
         imageFormData.append("file", formData.file);
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
         imageFormData.append("title", title);
+        imageFormData.append("description", description); // Include description here
         imageFormData.append("width", imageDimensions.width);
         imageFormData.append("height", imageDimensions.height);
         imageFormData.append("color", color); // Include color in the form data
 
         // Call the parent method to handle submission with dimensions and color
-        await handleSubmit("image-upload", sectionKey, { ...formData, title, imageDimensions, color });
+        await handleSubmit("image-upload", sectionKey, { ...formData, title, description, imageDimensions, color });
 
         // Reset states
         setSelectedImage(null);
