@@ -57,7 +57,8 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 25px;
+  font-size: 40px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
   padding: 10px;
   border-radius: 8px;
@@ -90,6 +91,8 @@
   .mobileFlipCardBack {
     padding: 30px 0;
     color: white;
+    font-size: 35px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-align: center;
     border-radius: 8px;
   }
