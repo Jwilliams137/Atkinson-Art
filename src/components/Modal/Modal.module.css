@@ -47,11 +47,23 @@
   .fullSizeImage {
     width: 100%;
     height: auto;
-  }
+  } 
 
   @media only screen and (max-width: 1800px) {
     .modalContent {
-        width: 90%;
+        width: 50%;
+    }
+  }
+
+  @media only screen and (max-width: 1600px) {
+    .modalContent {
+        width: 55%;
+    }
+  }
+
+  @media only screen and (max-width: 1500px) {
+    .modalContent {
+        width: 60%;
     }
   }
   
