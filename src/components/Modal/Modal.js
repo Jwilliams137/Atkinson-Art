@@ -49,7 +49,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
             className={styles.fullSizeImage}
           />
         </div>
-        <div>
+        <div className={styles.imageLabel}>
           <p className={styles.imageTitle}>{selectedImage.title}</p>
           <p>{selectedImage.description}</p>
           <p>{selectedImage.dimensions}</p>
