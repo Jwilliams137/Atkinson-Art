@@ -24,7 +24,7 @@ const HomePage = () => {
         <TextSection textUploads={homeTextUploads}
           containerClass={styles.homeTextContainer}
           sectionClass={styles.homeTextSection}
-          textClass={styles.homeTextClass} />
+          textClass={styles.homeText} />
       </div>
     </div>
   );

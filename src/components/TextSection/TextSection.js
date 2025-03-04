@@ -12,9 +12,18 @@ const TextSection = ({
   return (
     <div className={`${styles.textContainer} ${containerClass || ""}`}>
       <div className={`${styles.textSection} ${sectionClass || ""}`}>
-        {textUploads.map((text, index) => (
-          <p className={`${styles.text} ${textClass || ""}`} key={index}>{text}</p>
-        ))}
+        {textUploads.map((text, index) => {
+          const paragraphs = text.split("\n\n"); // Split on double newlines (paragraph breaks)
+
+          return paragraphs.map((para, idx) => (
+            <p
+              key={`${index}-${idx}`} // Unique key for each paragraph
+              className={`${styles.text} ${textClass || ""}`}
+            >
+              {para.trim()}
+            </p>
+          ));
+        })}
       </div>
     </div>
   );

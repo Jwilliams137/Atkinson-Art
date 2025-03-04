@@ -23,6 +23,10 @@
   display: none;
 }
 
+.homeText {
+  margin-bottom: 20px;
+}
+
 @media only screen and (max-width: 1500px) {
   .homeContainer {
     width: 80%;
