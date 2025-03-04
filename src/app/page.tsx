@@ -20,12 +20,12 @@ const HomePage = () => {
         mobileLabelClass={styles.homeMobileLabel}
         mobileTitleClass={styles.homeMobileTitle}
       />
-      <div className={styles.text}>
-        <TextSection textUploads={homeTextUploads}
-          containerClass={styles.homeTextContainer}
-          sectionClass={styles.homeTextSection}
-          textClass={styles.homeText} />
-      </div>
+      <TextSection
+        textUploads={homeTextUploads}
+        containerClass={styles.homeTextContainer}
+        sectionClass={styles.homeTextSection}
+        textClass={styles.homeText}
+      />
     </div>
   );
 };
