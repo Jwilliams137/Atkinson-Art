@@ -6,7 +6,7 @@ import Modal from "../../../components/Modal/Modal";
 import styles from "./page.module.css";
 
 const EarlierWorkPage = () => {
-  const earlierWorkImages = usePageImages("collage");
+  const earlierWorkImages = usePageImages("earlier-work");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -53,7 +53,7 @@ const EarlierWorkPage = () => {
       
       {isModalOpen && shouldRenderModal && (
         <Modal
-          images={newWorkImages}
+          images={earlierWorkImages}
           currentImageIndex={currentImageIndex}
           closeModal={closeModal}
         />

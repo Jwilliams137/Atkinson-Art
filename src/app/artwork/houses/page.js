@@ -98,7 +98,7 @@ const HousesPage = () => {
       
       {isModalOpen && shouldRenderModal && (
         <Modal
-          images={newWorkImages}
+          images={housesImages}
           currentImageIndex={currentImageIndex}
           closeModal={closeModal}
         />

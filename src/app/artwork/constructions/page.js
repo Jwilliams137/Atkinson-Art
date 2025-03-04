@@ -53,7 +53,7 @@ const ConstructionsPage = () => {
       
       {isModalOpen && shouldRenderModal && (
         <Modal
-          images={newWorkImages}
+          images={constructionsImages}
           currentImageIndex={currentImageIndex}
           closeModal={closeModal}
         />

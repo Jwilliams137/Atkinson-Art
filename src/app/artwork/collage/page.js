@@ -6,7 +6,7 @@ import Modal from "../../../components/Modal/Modal";
 import styles from "./page.module.css";
 
 const CollagePage = () => {
-  const newWorkImages = usePageImages("collage");
+  const collageImages = usePageImages("collage");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -44,7 +44,7 @@ const CollagePage = () => {
   return (
     <div className={styles.collageContainer}>
       <ImageGallery
-        images={newWorkImages}
+        images={collageImages}
         className={styles.collageGallery}
         cardClass={styles.collageGalleryCard}
         imageClass={styles.collageGalleryImage}
@@ -53,7 +53,7 @@ const CollagePage = () => {
       
       {isModalOpen && shouldRenderModal && (
         <Modal
-          images={newWorkImages}
+          images={collageImages}
           currentImageIndex={currentImageIndex}
           closeModal={closeModal}
         />
