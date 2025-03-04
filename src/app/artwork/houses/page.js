@@ -9,7 +9,7 @@ import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const HousesPage = () => {
-  const housesImages = usePageImages("houses");
+  const images = usePageImages("houses");
   const textUploads = useTextUploads("houses");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
@@ -17,7 +17,7 @@ const HousesPage = () => {
     <div>
       <div className={styles.housesContainer}>
         <ImageGallery
-          images={housesImages}
+          images={images}
           className={styles.housesGallery}
           cardClass={styles.housesGalleryCard}
           imageClass={styles.housesGalleryImage}
@@ -27,7 +27,7 @@ const HousesPage = () => {
         />
 
         {isModalOpen && shouldRenderModal && (
-          <Modal images={housesImages} currentImageIndex={currentImageIndex} closeModal={closeModal} />
+          <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
         )}
       </div>
       <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.housesTextContainer}

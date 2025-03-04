@@ -1,65 +1,38 @@
-'use client'
-import React, { useState, useEffect } from "react";
+"use client";
+import React from "react";
 import usePageImages from "../../../hooks/usePageImages";
+import useTextUploads from "../../../hooks/useTextUploads";
+import useModal from "../../../hooks/useModal";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
 import Modal from "../../../components/Modal/Modal";
+import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const ConstructionsPage = () => {
-  const constructionsImages = usePageImages("constructions");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(0);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setWindowWidth(window.innerWidth);
-
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-        if (window.innerWidth <= 1000) {
-          setIsModalOpen(false);
-        }
-      };
-
-      window.addEventListener("resize", handleResize);
-
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
-
-  const openModal = (index) => {
-    if (windowWidth > 1000) {
-      setCurrentImageIndex(index);
-      setIsModalOpen(true);
-    }
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const shouldRenderModal = windowWidth > 1000;
+  const images = usePageImages("constructions");
+  const textUploads = useTextUploads("constructions");
+  const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   return (
-    <div className={styles.constructionsContainer}>
-      <ImageGallery
-        images={constructionsImages}
-        className={styles.constructionsGallery}
-        cardClass={styles.constructionsGalleryCard}
-        imageClass={styles.constructionsGalleryImage}
-        onImageClick={openModal}
-        mobileLabelClass={styles.constructionsMobileLabel}
-        mobileTitleClass={styles.constructionsMobileTitle}
-      />
-      
-      {isModalOpen && shouldRenderModal && (
-        <Modal
-          images={constructionsImages}
-          currentImageIndex={currentImageIndex}
-          closeModal={closeModal}
+    <div>
+      <div className={styles.constructionsContainer}>
+        <ImageGallery
+          images={images}
+          className={styles.constructionsGallery}
+          cardClass={styles.constructionsGalleryCard}
+          imageClass={styles.constructionsGalleryImage}
+          onImageClick={openModal}
+          mobileLabelClass={styles.constructionsMobileLabel}
+          mobileTitleClass={styles.constructionsMobileTitle}
         />
-      )}
+
+        {isModalOpen && shouldRenderModal && (
+          <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
+        )}
+      </div>
+      <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.constructionsTextContainer}
+        sectionClass={styles.constructionsTextSection}
+        textClass={styles.constructionsTextClass} /></div>
     </div>
   );
 };
