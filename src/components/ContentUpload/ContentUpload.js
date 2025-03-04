@@ -48,6 +48,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 imageFormData.append("title", formData.title);
                 imageFormData.append("description", formData.description);
                 imageFormData.append("dimensions", formData.dimensions);
+                imageFormData.append("price", formData.price)
                 imageFormData.append("width", imageDimensions.width);
                 imageFormData.append("height", imageDimensions.height);
                 imageFormData.append("color", color);

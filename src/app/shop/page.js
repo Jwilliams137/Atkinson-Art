@@ -14,7 +14,7 @@ const ShopPage = () => {
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   return (
-    <div>
+    <div className={styles.shopPage}>
       <div className={styles.shopContainer}>
         <ImageGallery
           images={images}

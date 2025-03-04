@@ -53,6 +53,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
           <p className={styles.imageTitle}>{selectedImage.title}</p>
           <p>{selectedImage.description}</p>
           <p>{selectedImage.dimensions}</p>
+          <p>{selectedImage.price}</p>
         </div>
       </div>
     </div>

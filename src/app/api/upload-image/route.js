@@ -42,7 +42,8 @@ export async function POST(req) {
     const file = formData.get("file");
     const title = formData.get("title");
     const description = formData.get("description");
-    const dimensions = formData.get("dimensions")
+    const dimensions = formData.get("dimensions");
+    const price = formData.get("price");
     const width = formData.get("width");
     const height = formData.get("height");
     const pageType = formData.get("pageType");
@@ -55,6 +56,7 @@ export async function POST(req) {
       title,
       description,
       dimensions,
+      price,
       width,
       height,
       pageType,
@@ -130,6 +132,7 @@ export async function POST(req) {
         title: title || "No Title",
         description: description || "",
         dimensions: dimensions || "",
+        price: price || "",
         imageUrl: uploadResponse.secure_url,
         cloudinaryId: uploadResponse.public_id,
         createdAt: new Date(),

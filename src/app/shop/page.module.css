@@ -1,3 +1,6 @@
+.shopPage {
+    width: 100%;
+}
 .shopContainer {
     display: flex;
     flex-direction: column;
