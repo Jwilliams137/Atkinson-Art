@@ -1,12 +1,10 @@
-"use client";
-import React from 'react';
-import { useEffect, useState } from "react";
+'use client'
+import React, { useState, useEffect } from "react";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import usePageImages from "../../../hooks/usePageImages";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
+import Modal from "../../../components/Modal/Modal";
 import styles from "./page.module.css";
-
-// Initialize Firebase Firestore
 import { initializeApp, getApps } from "firebase/app";
 
 const firebaseConfig = {
@@ -27,6 +25,10 @@ if (getApps().length === 0) {
 const db = getFirestore(app);
 
 const HousesPage = () => {
+  const newWorkImages = usePageImages("houses");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
   const [textUploads, setTextUploads] = useState([]);
   const housesImages = usePageImages("houses");
 
@@ -54,25 +56,67 @@ const HousesPage = () => {
     fetchTextUploads();
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+        if (window.innerWidth <= 1000) {
+          setIsModalOpen(false);
+        }
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  const openModal = (index) => {
+    if (windowWidth > 1000) {
+      setCurrentImageIndex(index);
+      setIsModalOpen(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const shouldRenderModal = windowWidth > 1000;
+
   return (
     <div>
-      {housesImages && housesImages.length > 0 && (<ImageGallery images={housesImages}
+<div className={styles.housesContainer}>
+      <ImageGallery
+        images={newWorkImages}
         className={styles.housesGallery}
         cardClass={styles.housesGalleryCard}
-        imageClass={styles.housesGalleryImage} />)}
-      <div className={styles.housesContainer}>
-        {textUploads.length > 0 ? (
+        imageClass={styles.housesGalleryImage}
+        onImageClick={openModal}
+      />
+      
+      {isModalOpen && shouldRenderModal && (
+        <Modal
+          images={newWorkImages}
+          currentImageIndex={currentImageIndex}
+          closeModal={closeModal}
+        />
+      )}
+    </div>
+    <div>
+      <div className={styles.textContainer}>
+        {textUploads.length > 0 && (
           <div className={styles.textSection}>
             {textUploads.map((text, index) => (
               <p className={styles.text} key={index}>{text}</p>
             ))}
           </div>
-        ) : (
-          <p>No text available.</p>
         )}
       </div>
     </div>
-
+    </div>    
   );
 };
 

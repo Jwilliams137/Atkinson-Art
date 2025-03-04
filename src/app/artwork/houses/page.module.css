@@ -1,7 +1,3 @@
-.main {
-  margin-top: 20px;
-}
-
 .textSection {
   font-size: 25px;
 }
@@ -12,32 +8,60 @@
 
 .housesContainer {
   display: flex;
+  width: 100%;
 }
 
 .housesGallery {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   width: 100%;
 }
 
 .housesGalleryImage {
-  width: 100px;
-  height: auto;
+  width: 100%;
+  height: 300px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
-@media only screen and (max-width: 1500px) {
-  
+@media only screen and (max-width: 1800px) {
+  .housesGalleryImage {
+    height: 300px;
+  }
 }
 
-@media only screen and (max-width: 700px) {
-  
+@media (max-width: 1300px) {
+  .housesGalleryImage {
+    height: 200px;
+  }
 }
 
-@media only screen and (max-width: 600px) {
-  
+@media (max-width: 1000px) {
+  .housesGallery {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .housesGalleryImage {
+    width: 60%;
+    height: auto;
+    cursor: default;
+  }
 }
 
-@media only screen and (max-width: 400px) {
-  
+@media (max-width: 800px) {
+  .housesGalleryImage {
+    width: 90%;
+    height: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .housesGalleryImage {
+    width: 95%;
+    height: auto;
+  }
 }
