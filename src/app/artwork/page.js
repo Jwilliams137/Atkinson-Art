@@ -5,24 +5,27 @@ import { db } from '../../utils/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
+import useTextUploads from "../../hooks/useTextUploads";
+import TextSection from "../../components/TextSection/TextSection";
 import styles from './page.module.css';
 
 const ArtworkPage = () => {
   const [images, setImages] = useState([]);
+  const artworkTextUploads = useTextUploads("artwork");
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'uploads'));
         const fetchedImages = [];
-        
+
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           if (data.title && data.imageUrl && data.color && data.width && data.height) {
             fetchedImages.push({ ...data, id: doc.id });
           }
         });
-        
+
         const sortedImages = sortImagesByPageLinks(fetchedImages);
         setImages(sortedImages);
       } catch (error) {
@@ -49,7 +52,8 @@ const ArtworkPage = () => {
   };
 
   return (
-    <div className={styles.artworkContainer}>      
+    <div className={styles.artworkPage}>
+      <div className={styles.artworkContainer}>
         {images.map((image) => {
           const pageLink = pageLinks[image.title];
 
@@ -66,9 +70,9 @@ const ArtworkPage = () => {
                 <div className={styles.flipCard}>
                   <div className={styles.flipCardInner}>
                     <div className={styles.flipCardFront}>
-                      <Image 
-                        src={image.imageUrl} 
-                        alt={image.title} 
+                      <Image
+                        src={image.imageUrl}
+                        alt={image.title}
                         className={styles.artworkImage}
                         width={image.width}
                         height={image.height}
@@ -85,9 +89,9 @@ const ArtworkPage = () => {
                 <div className={styles.mobileFlipCard}>
                   <div className={styles.mobileFlipCardInner}>
                     <div className={styles.mobileFlipCardFront}>
-                      <Image 
-                        src={image.imageUrl} 
-                        alt={image.title} 
+                      <Image
+                        src={image.imageUrl}
+                        alt={image.title}
                         className={styles.mobileArtworkImage}
                         width={image.width}
                         height={image.height}
@@ -105,6 +109,13 @@ const ArtworkPage = () => {
             </div>
           );
         })}
+      </div>
+      <div className={styles.text}>
+        <TextSection textUploads={artworkTextUploads}
+          containerClass={styles.artworkTextContainer}
+          sectionClass={styles.artworkTextSection}
+          textClass={styles.artworkText} />
+      </div>
     </div>
   );
 };

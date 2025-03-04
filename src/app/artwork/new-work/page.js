@@ -3,10 +3,13 @@ import React, { useState, useEffect } from "react";
 import usePageImages from "../../../hooks/usePageImages";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
 import Modal from "../../../components/Modal/Modal";
+import useTextUploads from "../../../hooks/useTextUploads";
+import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const NewWorkPage = () => {
   const newWorkImages = usePageImages("new-work");
+  const newWorkTextUploads = useTextUploads("new-work");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -52,6 +55,12 @@ const NewWorkPage = () => {
         mobileLabelClass={styles.newWorkMobileLabel}
         mobileTitleClass={styles.newWorkMobileTitle}
       />
+      <div className={styles.text}>
+        <TextSection textUploads={newWorkTextUploads}
+          containerClass={styles.newWorkTextContainer}
+          sectionClass={styles.newWorkTextSection}
+          textClass={styles.newWorkText} />
+      </div>
       
       {isModalOpen && shouldRenderModal && (
         <Modal
