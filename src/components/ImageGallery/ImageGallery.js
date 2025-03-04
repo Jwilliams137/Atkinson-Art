@@ -2,7 +2,7 @@ import React from 'react';
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 
-const ImageGallery = ({ images, className, cardClass, imageClass, onImageClick = () => {} }) => {
+const ImageGallery = ({ images, className, cardClass, imageClass, onImageClick = () => { } }) => {
   console.log("Gallery Container Class:", className);
   console.log("Gallery Card Class:", cardClass);
   console.log("Gallery Image Class:", imageClass);
@@ -21,6 +21,12 @@ const ImageGallery = ({ images, className, cardClass, imageClass, onImageClick =
               priority
               onClick={() => onImageClick(index)}
             />
+          </div>
+          <div className={styles.mobileLabel}>
+            <p className={styles.mobileTitle}>{image.title}</p>
+            <p>{image.description}</p>
+            <p>{image.dimensions}</p>
+            <p>{image.price}</p>
           </div>
         </div>
       ))}
