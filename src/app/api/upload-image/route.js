@@ -42,6 +42,7 @@ export async function POST(req) {
     const file = formData.get("file");
     const title = formData.get("title");
     const description = formData.get("description");
+    const dimensions = formData.get("dimensions")
     const width = formData.get("width");
     const height = formData.get("height");
     const pageType = formData.get("pageType");
@@ -53,6 +54,7 @@ export async function POST(req) {
     console.log("Received formData:", {
       title,
       description,
+      dimensions,
       width,
       height,
       pageType,
@@ -127,6 +129,7 @@ export async function POST(req) {
         pageType: pageType || "home",
         title: title || "No Title",
         description: description || "",
+        dimensions: dimensions || "",
         imageUrl: uploadResponse.secure_url,
         cloudinaryId: uploadResponse.public_id,
         createdAt: new Date(),

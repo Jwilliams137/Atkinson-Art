@@ -15,7 +15,6 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
     );
   }, [images.length]);
 
-  // Handle scroll event
   const handleScroll = useCallback(
     (event) => {
       event.preventDefault();
@@ -50,10 +49,10 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
             className={styles.fullSizeImage}
           />
         </div>
-        {/* Display the title of the image under it */}
         <div>
-          <p className={styles.imageTitle}>{selectedImage.title}</p> {/* Assuming 'title' exists in your image object */}
+          <p className={styles.imageTitle}>{selectedImage.title}</p>
           <p>{selectedImage.description}</p>
+          <p>{selectedImage.dimensions}</p>
         </div>
       </div>
     </div>

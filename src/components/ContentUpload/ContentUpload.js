@@ -34,7 +34,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
         try {
             if (uploadType === "image-upload" && formData.file) {
-                const { file, title, imageDimensions, color } = formData;
+                const { file, title, desrciption, imageDimensions, color } = formData;
 
                 if (!imageDimensions) {
                     console.error("Image dimensions are missing.");
@@ -46,7 +46,8 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 imageFormData.append("section", sectionKey);
                 imageFormData.append("pageType", sectionKey);
                 imageFormData.append("title", formData.title);
-                imageFormData.append("description", formData.description)
+                imageFormData.append("description", formData.description);
+                imageFormData.append("dimensions", formData.dimensions);
                 imageFormData.append("width", imageDimensions.width);
                 imageFormData.append("height", imageDimensions.height);
                 imageFormData.append("color", color);

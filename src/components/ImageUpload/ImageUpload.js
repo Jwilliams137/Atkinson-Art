@@ -27,7 +27,6 @@ const ImageUpload = ({
             image.src = objectUrl;
             image.onload = () => {
                 setImageDimensions({ width: image.naturalWidth, height: image.naturalHeight });
-                console.log("Image loaded with dimensions:", image.naturalWidth, image.naturalHeight); // Debugging line
                 URL.revokeObjectURL(objectUrl);
             };
         }
@@ -37,25 +36,19 @@ const ImageUpload = ({
         const { name, value } = e.target;
         setFormData((prevData) => {
             const updatedData = { ...prevData, [name]: value };
-            console.log("Updated description:", updatedData.description); // Check if description updates correctly
             return updatedData;
         });
     };    
 
     const handleImageUpload = async () => {
         if (imageDimensions.width === 0 || imageDimensions.height === 0) {
-            console.error("Image dimensions are not available.");
-            return; // Prevent submission if dimensions aren't set yet
+            return;
         }
 
         const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
-
-        // Check for color and add it to formData if available
         const color = formData.color || (fieldsList.find(field => field.name === "color")?.value || "#ffffff");
-
-        // Ensure the description is correctly fetched from formData
-        const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "No description provided");
-
+        const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "");
+        const dimensions = formData.dimensions || ""; 
 
 
         console.log("Form Data on Submit:", formData); // Debugging line to ensure correct data
@@ -66,14 +59,15 @@ const ImageUpload = ({
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
         imageFormData.append("title", title);
-        imageFormData.append("description", description); // Include description here
+        imageFormData.append("description", description);
+        imageFormData.append("dimensions", dimensions);
         imageFormData.append("width", imageDimensions.width);
         imageFormData.append("height", imageDimensions.height);
-        imageFormData.append("color", color); // Include color in the form data
+        imageFormData.append("color", color);
 
         // Call the parent method to handle submission with dimensions and color
         console.log("Form Data before submit:", formData);
-        await handleSubmit("image-upload", sectionKey, { ...formData, title, description, imageDimensions, color });
+        await handleSubmit("image-upload", sectionKey, { ...formData, title, description, dimensions, imageDimensions, color });
 
         // Reset states
         setSelectedImage(null);

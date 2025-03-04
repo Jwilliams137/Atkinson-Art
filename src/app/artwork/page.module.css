@@ -107,6 +107,8 @@
 
   .mobileView {
     display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
   .mobileFlipCardBack {
@@ -120,6 +122,7 @@
 
   .mobileArtworkImage {
     border-radius: 8px;
+    width: 100%;
   }
 }
 
