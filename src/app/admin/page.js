@@ -1,11 +1,10 @@
 "use client";
-import React from 'react';
-import { useState, useEffect } from "react";
-import ContentUpload from '../../components/ContentUpload/ContentUpload'
+import React, { useState, useEffect } from "react";
+import ContentUpload from "../../components/ContentUpload/ContentUpload";
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
 import AdminImageDisplay from "../../components/AdminImageDisplay/AdminImageDisplay";
-import AdminTextDisplay from '../../components/AdminTextDisplay/AdminTextDisplay';
+import AdminTextDisplay from "../../components/AdminTextDisplay/AdminTextDisplay";
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import { auth } from "../../utils/firebase";
@@ -23,14 +22,12 @@ const AdminPage = () => {
 
   useEffect(() => {
     setFieldsForPage(adminData.fieldsForPage);
-    const savedSection = localStorage.getItem("activeSection");
-    if (savedSection) {
-      setActiveSection(savedSection);
-    }
+    setActiveSection(localStorage.getItem("activeSection") || "home");
   }, []);
 
   useEffect(() => {
     localStorage.setItem("activeSection", activeSection);
+    fetchImagesByPageType(activeSection);
   }, [activeSection]);
 
   useEffect(() => {
@@ -58,47 +55,27 @@ const AdminPage = () => {
 
   const fetchImagesByPageType = async (pageType) => {
     try {
-      const imagesCollection = collection(db, "uploads");
-      const q = query(imagesCollection, where("pageType", "==", pageType));
+      const q = query(collection(db, "uploads"), where("pageType", "==", pageType));
       const querySnapshot = await getDocs(q);
-  
-      const fetchedImages = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-  
-      const sortedImages = fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0));
-      console.log("Fetched images:", sortedImages);
-      setImages(sortedImages);
+      const fetchedImages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setImages(fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0)));
     } catch (error) {
       console.error("Error fetching images:", error);
     }
-  };  
-
-  useEffect(() => {
-    fetchImagesByPageType(activeSection);
-  }, [activeSection, db]);
+  };
 
   const handleImageUpload = async (newImage) => {
     try {
-      const imagesCollection = collection(db, "uploads");
-  
-      const q = query(imagesCollection, where("pageType", "==", activeSection));
+      const q = query(collection(db, "uploads"), where("pageType", "==", activeSection));
       const querySnapshot = await getDocs(q);
-      const existingImages = querySnapshot.docs.map(doc => doc.data());
-      const maxOrder = existingImages.length > 0 ? Math.max(...existingImages.map(img => img.order || 0)) : 0;
-  
+      const maxOrder = querySnapshot.docs.length > 0 ? Math.max(...querySnapshot.docs.map(doc => doc.data().order || 0)) : 0;
       newImage.order = maxOrder + 1;
-  
-      const docRef = await addDoc(imagesCollection, newImage);
-  
-      setImages(prevImages => [...prevImages, { id: docRef.id, ...newImage }]);
-  
-      console.log('New image uploaded and state updated:', newImage);
+      const docRef = await addDoc(collection(db, "uploads"), newImage);
+      setImages([...images, { id: docRef.id, ...newImage }].sort((a, b) => a.order - b.order));
     } catch (error) {
       console.error("Error uploading image:", error);
     }
-  };      
+  };
 
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
@@ -108,59 +85,29 @@ const AdminPage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cloudinaryId, imageId }),
       });
-
-      const result = await response.json();
-
       if (response.ok) {
-        setImages((prevImages) => prevImages.filter((image) => image.id !== imageId));
+        setImages(images.filter((image) => image.id !== imageId));
       } else {
-        console.error("Error deleting image:", result.error);
+        console.error("Error deleting image:", await response.json());
       }
     } catch (error) {
       console.error("Error deleting image:", error);
     }
   };
 
-  const moveImageUp = async (imageId, index) => {
-    if (!isAdmin || index === 0) return;
+  const reorderImages = async (index, direction) => {
+    if (!isAdmin || (direction === -1 && index === 0) || (direction === 1 && index === images.length - 1)) return;
+    const newImages = [...images];
+    const swapIndex = index + direction;
+    [newImages[index], newImages[swapIndex]] = [newImages[swapIndex], newImages[index]];
+    newImages[index].order = index;
+    newImages[swapIndex].order = swapIndex;
 
-    const prevImage = images[index - 1];
-    const currentImage = images[index];
+    setImages([...newImages]);
     const batch = writeBatch(db);
-    const currentImageRef = doc(db, "uploads", currentImage.id);
-    const prevImageRef = doc(db, "uploads", prevImage.id);
-
-    batch.update(currentImageRef, { order: prevImage.order });
-    batch.update(prevImageRef, { order: currentImage.order });
-
+    batch.update(doc(db, "uploads", newImages[index].id), { order: newImages[index].order });
+    batch.update(doc(db, "uploads", newImages[swapIndex].id), { order: newImages[swapIndex].order });
     await batch.commit();
-
-    const updatedImages = [...images];
-    updatedImages[index - 1] = currentImage;
-    updatedImages[index] = prevImage;
-
-    setImages(updatedImages);
-  };
-
-  const moveImageDown = async (imageId, index) => {
-    if (!isAdmin || index === images.length - 1) return;
-
-    const nextImage = images[index + 1];
-    const currentImage = images[index];
-    const batch = writeBatch(db);
-    const currentImageRef = doc(db, "uploads", currentImage.id);
-    const nextImageRef = doc(db, "uploads", nextImage.id);
-
-    batch.update(currentImageRef, { order: nextImage.order });
-    batch.update(nextImageRef, { order: currentImage.order });
-
-    await batch.commit();
-
-    const updatedImages = [...images];
-    updatedImages[index + 1] = currentImage;
-    updatedImages[index] = nextImage;
-
-    setImages(updatedImages);
   };
 
   return (
@@ -168,29 +115,26 @@ const AdminPage = () => {
       <div className={styles.adminTopSection}>
         <AdminLogin />
       </div>
-
       {user && isAdmin && (
         <div className={styles.adminContentWrapper}>
           <AdminSidebar setActiveSection={setActiveSection} />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
-              <ContentUpload onUpload={handleImageUpload}
-                sectionData={{
-                  fieldsForPage: { [activeSection]: fieldsForPage[activeSection] },
-                  sections: adminData.sections,
-                }}
+              <ContentUpload
+                onUpload={handleImageUpload}
+                sectionData={{ fieldsForPage: { [activeSection]: fieldsForPage[activeSection] }, sections: adminData.sections }}
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
                 deleteImage={deleteImage}
-                moveImageUp={moveImageUp}
-                moveImageDown={moveImageDown}
+                moveImageUp={(id, index) => reorderImages(index, -1)}
+                moveImageDown={(id, index) => reorderImages(index, 1)}
               />
             )}
             <AdminImageDisplay
               images={images}
               deleteImage={deleteImage}
-              moveImageUp={moveImageUp}
-              moveImageDown={moveImageDown}
+              moveImageUp={(id, index) => reorderImages(index, -1)}
+              moveImageDown={(id, index) => reorderImages(index, 1)}
             />
             <AdminTextDisplay />
           </div>
