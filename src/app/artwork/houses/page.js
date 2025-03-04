@@ -25,12 +25,11 @@ if (getApps().length === 0) {
 const db = getFirestore(app);
 
 const HousesPage = () => {
-  const newWorkImages = usePageImages("houses");
+  const housesImages = usePageImages("houses");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const [textUploads, setTextUploads] = useState([]);
-  const housesImages = usePageImages("houses");
 
   useEffect(() => {
     const fetchTextUploads = async () => {
@@ -90,7 +89,7 @@ const HousesPage = () => {
     <div>
 <div className={styles.housesContainer}>
       <ImageGallery
-        images={newWorkImages}
+        images={housesImages}
         className={styles.housesGallery}
         cardClass={styles.housesGalleryCard}
         imageClass={styles.housesGalleryImage}

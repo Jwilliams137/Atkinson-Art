@@ -1,3 +1,59 @@
-.main {
-    margin-top: 20px;
+.constructionsContainer {
+  display: flex;
+  width: 100%;
+}
+
+.constructionsGallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.constructionsGalleryImage {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1800px) {
+  .constructionsGalleryImage {
+    height: 300px;
   }
+}
+
+@media (max-width: 1300px) {
+  .constructionsGalleryImage {
+    height: 200px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .constructionsGallery {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .constructionsGalleryImage {
+    width: 60%;
+    height: auto;
+    cursor: default;
+  }
+}
+
+@media (max-width: 800px) {
+  .constructionsGalleryImage {
+    width: 90%;
+    height: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .constructionsGalleryImage {
+    width: 95%;
+    height: auto;
+  }
+}
