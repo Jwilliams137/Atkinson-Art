@@ -61,7 +61,6 @@ const NewWorkPage = () => {
           sectionClass={styles.newWorkTextSection}
           textClass={styles.newWorkText} />
       </div>
-      
       {isModalOpen && shouldRenderModal && (
         <Modal
           images={newWorkImages}

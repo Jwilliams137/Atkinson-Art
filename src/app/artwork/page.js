@@ -99,13 +99,16 @@ const ArtworkPage = () => {
                       />
                     </div>
                     <div className={styles.mobileFlipCardBack} style={{ backgroundColor: image.color }}>
-                      <Link href={pageLink} passHref>
-                        <p>{visibleTitle}</p>
-                      </Link>
+                      <p>
+                        <Link href={pageLink} passHref>
+                          {visibleTitle}
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
           );
         })}
