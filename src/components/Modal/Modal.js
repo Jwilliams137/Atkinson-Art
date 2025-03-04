@@ -53,6 +53,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
         {/* Display the title of the image under it */}
         <div>
           <p className={styles.imageTitle}>{selectedImage.title}</p> {/* Assuming 'title' exists in your image object */}
+          <p>{selectedImage.description}</p>
         </div>
       </div>
     </div>

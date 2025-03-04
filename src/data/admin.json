@@ -57,6 +57,7 @@
           { "name": "file", "label": "Upload New Work Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
+          {"name": "dimensions", "label": "Dimensions", "type": "text"},
           { "name": "pageType", "type": "hidden", "value": "new-work" }
         ]}        
       ],

@@ -40,11 +40,7 @@ const ImageUpload = ({
             console.log("Updated description:", updatedData.description); // Check if description updates correctly
             return updatedData;
         });
-    };
-    
-    
-    
-    
+    };    
 
     const handleImageUpload = async () => {
         if (imageDimensions.width === 0 || imageDimensions.height === 0) {
