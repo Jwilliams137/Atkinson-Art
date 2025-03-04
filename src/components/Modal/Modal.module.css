@@ -17,10 +17,10 @@
     border-radius: 8px;
     width: 35%;
     display: flex;
-    flex-direction: column;  /* Stack images & buttons vertically */
+    flex-direction: column;
     
     position: relative;
-    overflow: hidden; /* Prevent overflow issues */
+    overflow: hidden;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
   }
   
@@ -37,11 +37,11 @@
   
   .imageWrapper {
     display: flex;
-    flex-direction: column; /* Stack images & buttons vertically */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
   }
     
   .fullSizeImage {
@@ -76,5 +76,4 @@
     .modalContent {
         width: 60%;
     }
-  }
-  
+  }  

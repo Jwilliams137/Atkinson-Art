@@ -17,7 +17,6 @@ function ThankYouPage() {
         const images = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log('Fetched image data:', data);
           if (data.imageUrl && data.width && data.height) {
             images.push(data);
           }

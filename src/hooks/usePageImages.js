@@ -10,7 +10,6 @@ const usePageImages = (pageType) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        console.log("Fetching images...");
         const q = query(
           collection(db, "uploads"),
           where("pageType", "==", pageType),
@@ -23,7 +22,6 @@ const usePageImages = (pageType) => {
           ...doc.data(),
         }));
     
-        console.log(fetchedImages);
         setImages(fetchedImages);
       } catch (error) {
         console.error(`Error fetching ${pageType} images:`, error);

@@ -50,10 +50,6 @@ const ImageUpload = ({
         const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "");
         const dimensions = formData.dimensions || ""; 
 
-
-        console.log("Form Data on Submit:", formData); // Debugging line to ensure correct data
-
-        // Send the image dimensions along with other form data
         const imageFormData = new FormData();
         imageFormData.append("file", formData.file);
         imageFormData.append("section", sectionKey);
@@ -65,11 +61,8 @@ const ImageUpload = ({
         imageFormData.append("height", imageDimensions.height);
         imageFormData.append("color", color);
 
-        // Call the parent method to handle submission with dimensions and color
-        console.log("Form Data before submit:", formData);
         await handleSubmit("image-upload", sectionKey, { ...formData, title, description, dimensions, imageDimensions, color });
 
-        // Reset states
         setSelectedImage(null);
         setImageDimensions({ width: 0, height: 0 });
         setFormData({});

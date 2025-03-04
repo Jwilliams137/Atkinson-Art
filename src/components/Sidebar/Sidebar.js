@@ -20,7 +20,7 @@ const Sidebar = ({ pageKey }) => {
     }, []);
 
     return (
-        <>           
+        <>
             <div className={`${styles.sidebar} ${isMobile ? styles.hideDesktop : styles.showDesktop}`}>
                 <nav>
                     <ul className={styles.navList}>

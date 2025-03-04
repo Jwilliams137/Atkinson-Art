@@ -30,8 +30,6 @@ const TextUpload = ({
       >
         Submit Text
       </button>
-
-      {/* Preview with Paragraph Separation */}
       <div className={styles.preview}>
         <h3>Preview</h3>
         <div>

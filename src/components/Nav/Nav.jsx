@@ -77,9 +77,8 @@ export default function Nav() {
 
       {isBurgerMenuOpen && (
         <div
-          className={`${styles.burgerMenu} ${
-            isBurgerMenuOpen ? styles.open : ""
-          }`}
+          className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""
+            }`}
         >
           <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
             {splitTitle(title)}
