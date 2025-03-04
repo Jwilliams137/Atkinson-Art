@@ -16,6 +16,15 @@
     border-radius: 8px;
     cursor: pointer;
   }
+
+  .earlierWorkMobileLabel {
+    display: none;
+    font-size: 20px;
+  }
+
+  .earlierWorkMobileTitle {
+    font-size: 22px;
+  }
   
   @media only screen and (max-width: 1800px) {
     .earlierWorkGalleryImage {
@@ -41,6 +50,10 @@
       width: 60%;
       height: auto;
       cursor: default;
+    }
+
+    .earlierWorkMobileLabel {
+        display: block;
     }
   }
   

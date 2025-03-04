@@ -14,6 +14,8 @@ const HomePage = () => {
         className={styles.homeGallery}
         cardClass={styles.homeGalleryCard}
         imageClass={styles.homeGalleryImage}
+        mobileLabelClass={styles.homeMobileLabel}
+        mobileTitleClass={styles.homeMobileTitle}
       />
     </div>
   );

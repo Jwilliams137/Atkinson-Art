@@ -49,6 +49,8 @@ const CollagePage = () => {
         cardClass={styles.collageGalleryCard}
         imageClass={styles.collageGalleryImage}
         onImageClick={openModal}
+        mobileLabelClass={styles.collageMobileLabel}
+        mobileTitleClass={styles.collageMobileTitle}
       />
       
       {isModalOpen && shouldRenderModal && (

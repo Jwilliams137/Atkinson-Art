@@ -49,6 +49,8 @@ const ConstructionsPage = () => {
         cardClass={styles.constructionsGalleryCard}
         imageClass={styles.constructionsGalleryImage}
         onImageClick={openModal}
+        mobileLabelClass={styles.constructionsMobileLabel}
+        mobileTitleClass={styles.constructionsMobileTitle}
       />
       
       {isModalOpen && shouldRenderModal && (

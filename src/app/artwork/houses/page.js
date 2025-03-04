@@ -94,6 +94,8 @@ const HousesPage = () => {
         cardClass={styles.housesGalleryCard}
         imageClass={styles.housesGalleryImage}
         onImageClick={openModal}
+        mobileLabelClass={styles.housesMobileLabel}
+        mobileTitleClass={styles.housesMobileTitle}
       />
       
       {isModalOpen && shouldRenderModal && (

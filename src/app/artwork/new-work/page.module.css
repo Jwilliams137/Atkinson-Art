@@ -17,6 +17,15 @@
   cursor: pointer;
 }
 
+.newWorkMobileLabel {
+  display: none;
+  font-size: 20px;
+}
+
+.newWorkMobileTitle {
+  font-size: 22px;
+}
+
 @media only screen and (max-width: 1800px) {
   .newWorkGalleryImage {
     height: 300px;
@@ -41,6 +50,10 @@
     width: 60%;
     height: auto;
     cursor: default;
+  }
+
+  .newWorkMobileLabel {
+    display: block;
   }
 }
 

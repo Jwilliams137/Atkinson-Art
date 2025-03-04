@@ -25,6 +25,15 @@
   cursor: pointer;
 }
 
+.housesMobileLabel {
+  display: none;
+  font-size: 20px;
+}
+
+.housesMobileTitle {
+  font-size: 22px;
+}
+
 @media only screen and (max-width: 1800px) {
   .housesGalleryImage {
     height: 300px;
@@ -49,6 +58,9 @@
     width: 60%;
     height: auto;
     cursor: default;
+  }
+  .housesMobileLabel {
+    display: block;
   }
 }
 

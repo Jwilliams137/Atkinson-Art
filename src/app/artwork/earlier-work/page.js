@@ -49,6 +49,8 @@ const EarlierWorkPage = () => {
         cardClass={styles.earlierWorkGalleryCard}
         imageClass={styles.earlierWorkGalleryImage}
         onImageClick={openModal}
+        mobileLabelClass={styles.earlierWorkMobileLabel}
+        mobileTitleClass={styles.earlierWorkMobileTitle}
       />
       
       {isModalOpen && shouldRenderModal && (

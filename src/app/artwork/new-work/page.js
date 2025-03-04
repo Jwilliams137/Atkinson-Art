@@ -49,6 +49,8 @@ const NewWorkPage = () => {
         cardClass={styles.newWorkGalleryCard}
         imageClass={styles.newWorkGalleryImage}
         onImageClick={openModal}
+        mobileLabelClass={styles.newWorkMobileLabel}
+        mobileTitleClass={styles.newWorkMobileTitle}
       />
       
       {isModalOpen && shouldRenderModal && (

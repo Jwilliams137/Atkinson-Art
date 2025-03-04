@@ -17,6 +17,15 @@
   cursor: pointer;
 }
 
+.constructionsMobileLabel {
+  display: none;
+  font-size: 20px;
+}
+
+.constructionsMobileTitle {
+  font-size: 22px;
+}
+
 @media only screen and (max-width: 1800px) {
   .constructionsGalleryImage {
     height: 300px;
@@ -41,6 +50,10 @@
     width: 60%;
     height: auto;
     cursor: default;
+  }
+
+  .constructionsMobileLabel {
+    display: block;
   }
 }
 
