@@ -13,7 +13,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
     const handleTextChange = (event) => setTextContent(event.target.value);
 
-    const handleUpload = async (uploadType, sectionKey, formData = {}) => {
+    const handleUpload = async (uploadType, sectionKey, formData = {}, order = null) => {
         const auth = getAuth();
         const user = auth.currentUser;
 
@@ -79,6 +79,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     section: sectionKey,
                     type: typeField?.value || "untitled",
                     timestamp: new Date().toISOString(),
+                    order: order,
                 };
 
                 const response = await fetch("/api/upload-text", {

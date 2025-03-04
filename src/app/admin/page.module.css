@@ -37,6 +37,13 @@
     border-radius: 8px;
     max-height: 300px;
   }
+
+  .adminDisplay {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 22px;
+  }
   
   
   @media only screen and (max-width: 1000px) {  
