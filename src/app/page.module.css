@@ -1,5 +1,7 @@
 .homeContainer {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   margin: auto;
   width: 55%;
 }

@@ -11,11 +11,6 @@ const ImageGallery = ({
   mobileTitleClass, 
   onImageClick = () => {} 
 }) => {
-  console.log("Gallery Container Class:", className);
-  console.log("Gallery Card Class:", cardClass);
-  console.log("Gallery Image Class:", imageClass);
-  console.log("Gallery Mobile Label Class:", mobileLabelClass);
-  console.log("Gallery Mobile Title Class:", mobileTitleClass);
 
   return (
     <div className={`${styles.galleryContainer} ${className}`}>
