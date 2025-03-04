@@ -48,6 +48,17 @@ export async function POST(req) {
     const imageId = formData.get("imageId");
     const moveDirection = formData.get("moveDirection");
     const color = formData.get("color");
+    console.log("Description:", description);
+
+    console.log("Received formData:", {
+      title,
+      description,
+      width,
+      height,
+      pageType,
+      color,
+    });
+    
 
     if (!file && !imageId) {
       return NextResponse.json({ error: "No file or imageId provided" }, { status: 400 });

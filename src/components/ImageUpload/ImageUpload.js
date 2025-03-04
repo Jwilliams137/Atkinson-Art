@@ -33,13 +33,18 @@ const ImageUpload = ({
         }
     };
 
-    const handleInputChange = (event) => {
-        // Update form data for the respective field name (including description)
-        setFormData(prev => ({
-            ...prev,
-            [event.target.name]: event.target.value
-        }));
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => {
+            const updatedData = { ...prevData, [name]: value };
+            console.log("Updated description:", updatedData.description); // Check if description updates correctly
+            return updatedData;
+        });
     };
+    
+    
+    
+    
 
     const handleImageUpload = async () => {
         if (imageDimensions.width === 0 || imageDimensions.height === 0) {
@@ -53,7 +58,9 @@ const ImageUpload = ({
         const color = formData.color || (fieldsList.find(field => field.name === "color")?.value || "#ffffff");
 
         // Ensure the description is correctly fetched from formData
-        const description = formData.description || (fieldsList.find(field => field.name === "description")?.value || "No description provided");
+        const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "No description provided");
+
+
 
         console.log("Form Data on Submit:", formData); // Debugging line to ensure correct data
 
@@ -69,6 +76,7 @@ const ImageUpload = ({
         imageFormData.append("color", color); // Include color in the form data
 
         // Call the parent method to handle submission with dimensions and color
+        console.log("Form Data before submit:", formData);
         await handleSubmit("image-upload", sectionKey, { ...formData, title, description, imageDimensions, color });
 
         // Reset states
