@@ -1,16 +1,16 @@
 {
     "socialLinks": [
-      {
-        "href": "https://www.instagram.com/linda.atkinson111",
-        "icon": "faInstagram"
-      },
-      {
+            {
         "href": "https://www.linkedin.com/in/linda-atkinson-9a127b42",
         "icon": "faLinkedin"
       },
       {
         "href": "https://www.facebook.com/artistlindaatkinson",
         "icon": "faFacebook"
+      },
+      {
+        "href": "https://www.instagram.com/linda.atkinson111",
+        "icon": "faInstagram"
       }
     ],
     "copyright": "© {year} Linda Atkinson. All rights reserved."
