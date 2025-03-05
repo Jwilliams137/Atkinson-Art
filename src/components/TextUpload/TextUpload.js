@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { getFirestore, query, collection, where, getDocs } from "firebase/firestore";
 import styles from "../ContentUpload/ContentUpload.module.css";
@@ -12,7 +13,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
       const q = query(collection(db, "textUploads"), where("pageType", "==", sectionKey));
       const querySnapshot = await getDocs(q);
       const nextOrder = querySnapshot.size + 1;
-      
+
       setOrderState(nextOrder);
       setOrder(nextOrder);
     };
@@ -65,6 +66,15 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           />
         </div>
       )}
+
+      <div className={styles.preview}>
+        <h3>Preview</h3>
+        <div>
+          {textContent.split("\n").map((paragraph, index) =>
+            paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
+          )}
+        </div>
+      </div>
 
       <button className={styles.submitButton} onClick={handleTextUpload}>
         Submit
