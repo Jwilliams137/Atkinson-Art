@@ -5,12 +5,13 @@ const TextSection = ({
     textUploads,
     containerClass,
     sectionClass,
-    textClass
+    textClass,
 }) => {
     if (!textUploads.length) return null;
 
     return (
         <div className={`${styles.textContainer} ${containerClass || ""}`}>
+            
             <div className={`${styles.textSection} ${sectionClass || ""}`}>
                 {textUploads.map((text, index) => {
                     const paragraphs = text.split("\n\n");

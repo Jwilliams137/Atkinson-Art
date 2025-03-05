@@ -93,7 +93,8 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                         title: formData.title || "Untitled",
                         type: formData.type || "general",
                         timestamp: new Date().toISOString(),
-                        order: nextOrder,  // Use the calculated order
+                        order: nextOrder,
+                        year: formData.year || ''
                     };
 
                     const textUploadResponse = await fetch("/api/upload-text", {

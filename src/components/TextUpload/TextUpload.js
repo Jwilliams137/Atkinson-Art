@@ -1,48 +1,39 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import { getFirestore, query, collection, where, getDocs } from "firebase/firestore";
 import styles from "../ContentUpload/ContentUpload.module.css";
 
 const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [order, setOrderState] = useState(1);
+  const [year, setYear] = useState("");
 
-  // Function to fetch the next available order number for the pageType
-  const getNextTextOrder = async (pageType) => {
-    const db = getFirestore();
-    const q = query(collection(db, "textUploads"), where("pageType", "==", pageType));
-
-    const querySnapshot = await getDocs(q);
-    const existingTextsCount = querySnapshot.size;
-    
-    // The new text will have an order number of 1 + the current count of texts for the given pageType
-    return existingTextsCount + 1;
-  };
-
-  // Fetch the next order number when the component mounts
   useEffect(() => {
     const fetchOrder = async () => {
-      const nextOrder = await getNextTextOrder(sectionKey);
+      const db = getFirestore();
+      const q = query(collection(db, "textUploads"), where("pageType", "==", sectionKey));
+      const querySnapshot = await getDocs(q);
+      const nextOrder = querySnapshot.size + 1;
+      
       setOrderState(nextOrder);
-      setOrder(nextOrder); // Send the order back to ContentUpload
+      setOrder(nextOrder);
     };
 
     fetchOrder();
   }, [sectionKey, setOrder]);
 
-  // Function to handle text upload with the new order number
   const handleTextUpload = async () => {
-    if (order === null) return;
+    if (!textContent.trim()) return;
 
     const newTextData = {
       content: textContent,
       pageType: sectionKey,
-      order: order,  // Add the order field
+      order,
+      ...(year && { year }),
     };
 
     await handleSubmit("text-upload", sectionKey, newTextData);
 
-    // Clear the text field after submission
-    handleTextChange("");  // Clear text content after submitting
+    handleTextChange("");
+    setYear("");
   };
 
   return (
@@ -60,24 +51,26 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           rows={5}
         />
       </div>
-      <button
-        className={styles.submitButton}
-        onClick={handleTextUpload}
-        disabled={order === null}  // Disable the button until the order is fetched
-      >
-        Submit Text
-      </button>
-      <div className={styles.preview}>
-        <h3>Preview</h3>
-        <div>
-          {textContent.split("\n").map((paragraph, index) =>
-            paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
-          )}
+
+      {sectionKey === "exhibitions" && (
+        <div className={styles.field}>
+          <label htmlFor="year" className={styles.label}>Year (optional)</label>
+          <input
+            type="text"
+            className={styles.input}
+            placeholder="Enter year or date"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            id="year"
+          />
         </div>
-      </div>
+      )}
+
+      <button className={styles.submitButton} onClick={handleTextUpload}>
+        Submit
+      </button>
     </div>
   );
 };
 
 export default TextUpload;
-

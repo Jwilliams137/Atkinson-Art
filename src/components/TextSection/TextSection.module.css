@@ -2,3 +2,13 @@
     font-size: 25px;
     margin-bottom: 20px;
 }
+
+.year {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  .textEntry {
+    margin-bottom: 15px;
+  }
+  
