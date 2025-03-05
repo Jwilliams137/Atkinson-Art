@@ -1,16 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getFirestore, query, collection, where, getDocs, writeBatch, doc } from "firebase/firestore";
+import { getFirestore, query, collection, where, getDocs } from "firebase/firestore";
 import styles from "../ContentUpload/ContentUpload.module.css";
 
-const TextUpload = ({
-  fieldsList,
-  textContent,
-  handleTextChange,
-  handleSubmit,
-  sectionKey
-}) => {
-  const [order, setOrder] = useState(null);
+const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
+  const [order, setOrderState] = useState(1);
 
   // Function to fetch the next available order number for the pageType
   const getNextTextOrder = async (pageType) => {
@@ -28,11 +22,12 @@ const TextUpload = ({
   useEffect(() => {
     const fetchOrder = async () => {
       const nextOrder = await getNextTextOrder(sectionKey);
-      setOrder(nextOrder);
+      setOrderState(nextOrder);
+      setOrder(nextOrder); // Send the order back to ContentUpload
     };
 
     fetchOrder();
-  }, [sectionKey]);
+  }, [sectionKey, setOrder]);
 
   // Function to handle text upload with the new order number
   const handleTextUpload = async () => {
@@ -85,3 +80,4 @@ const TextUpload = ({
 };
 
 export default TextUpload;
+
