@@ -43,3 +43,9 @@
   font-size: 18px;
   text-align: center;
 }
+
+@media only screen and (max-width: 1000px) {
+.imagesGrid {
+  justify-content: center;
+}
+}
