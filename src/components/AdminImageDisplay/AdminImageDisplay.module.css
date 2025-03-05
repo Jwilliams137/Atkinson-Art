@@ -38,6 +38,14 @@
   border-radius: 8px;
 }
 
+.deleteButton:hover {
+  background-color: var(--hover-text)
+}
+
+.moveButton:hover {
+  background-color: var(--hover-text)
+}
+
 .title {
   padding: 5px 10px;
   font-size: 18px;
