@@ -11,10 +11,13 @@ const useTextUploads = (pageType) => {
         const q = query(
           collection(db, "textUploads"),
           where("pageType", "==", pageType),
-          orderBy("order") // Ensure your Firestore documents have this field
+          orderBy("order")
         );
         const querySnapshot = await getDocs(q);
-        const texts = querySnapshot.docs.map((doc) => doc.data().content);
+        const texts = querySnapshot.docs.map((doc) => ({
+          content: doc.data().content, 
+          year: doc.data().year || ""
+        }));
         setTextUploads(texts);
       } catch (error) {
         console.error("Error fetching text uploads:", error);

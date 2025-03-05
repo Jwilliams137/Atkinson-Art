@@ -9,21 +9,33 @@ const TextSection = ({
 }) => {
     if (!textUploads.length) return null;
 
+    console.log(textUploads); // Debugging: Check if year is actually in the data
+
     return (
         <div className={`${styles.textContainer} ${containerClass || ""}`}>
-            
             <div className={`${styles.textSection} ${sectionClass || ""}`}>
                 {textUploads.map((text, index) => {
-                    const paragraphs = text.split("\n\n");
+                    const content = typeof text === "string" ? text : text.content;
+                    if (!content) return null; 
 
-                    return paragraphs.map((para, idx) => (
-                        <p
-                            key={`${index}-${idx}`}
-                            className={`${styles.text} ${textClass || ""}`}
-                        >
-                            {para.trim()}
-                        </p>
-                    ));
+                    const paragraphs = content.split("\n\n");
+
+                    return (
+                        <div key={index} className={styles.textItem}>
+                            {/* Make sure year is properly checked */}
+                            {text.year !== undefined && text.year !== "" && (
+                                <p className={styles.year}>{text.year}</p>
+                            )}
+                            {paragraphs.map((para, idx) => (
+                                <p
+                                    key={`${index}-${idx}`}
+                                    className={`${styles.text} ${textClass || ""}`}
+                                >
+                                    {para.trim()}
+                                </p>
+                            ))}
+                        </div>
+                    );
                 })}
             </div>
         </div>
