@@ -26,27 +26,24 @@ const AdminPage = () => {
 
   useEffect(() => {
     localStorage.setItem("activeSection", activeSection);
-    fetchTextsByPageType(activeSection);
   
-    const q = query(collection(db, "uploads"), where("pageType", "==", activeSection));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const imageQuery = query(collection(db, "uploads"), where("pageType", "==", activeSection));
+    const unsubscribeImages = onSnapshot(imageQuery, (querySnapshot) => {
       const fetchedImages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setImages(fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0)));
     });
   
-    return () => unsubscribe();
-  }, [activeSection]);
-  
-  const fetchTextsByPageType = async (pageType) => {
-    try {
-      const q = query(collection(db, "textUploads"), where("pageType", "==", pageType));
-      const querySnapshot = await getDocs(q);
+    const textQuery = query(collection(db, "textUploads"), where("pageType", "==", activeSection));
+    const unsubscribeTexts = onSnapshot(textQuery, (querySnapshot) => {
       const fetchedTexts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setTexts(fetchedTexts);
-    } catch (error) {
-      console.error("Error fetching texts:", error);
-    }
-  };
+      setTexts(fetchedTexts.sort((a, b) => (a.order || 0) - (b.order || 0)));
+    });
+  
+    return () => {
+      unsubscribeImages();
+      unsubscribeTexts();
+    };
+  }, [activeSection]);
 
   const deleteText = async (id) => {
     try {
