@@ -13,7 +13,12 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    align-items: flex-end;
+  }
+  
+  .textContent {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
   }
   
   .textSnippet {
@@ -33,9 +38,19 @@
     padding: 0;
   }
   
+  .year {
+    margin-top: 4px;
+  }
+  
+  .textActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  
   .deleteButton {
     width: 100px;
-    margin-top: 12px;
     padding: 8px 16px;
     background-color: var(--primary-text);
     color: white;
@@ -52,7 +67,6 @@
   .reorderButtons {
     display: flex;
     gap: 8px;
-    margin-top: 12px;
   }
   
   .moveButton {
