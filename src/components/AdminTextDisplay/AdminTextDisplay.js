@@ -3,14 +3,18 @@ import React, { useState } from "react";
 import styles from "./AdminTextDisplay.module.css";
 
 const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) => {
+  const [expandedTextIds, setExpandedTextIds] = useState([]);
+
+  const toggleText = (id) => {
+    setExpandedTextIds((prevIds) =>
+      prevIds.includes(id) ? prevIds.filter((textId) => textId !== id) : [...prevIds, id]
+    );
+  };
+
   return (
     <div className={styles.textList}>
       {texts.map((text, index) => {
-        const [isExpanded, setIsExpanded] = useState(false);
-
-        const handleReadMoreClick = () => {
-          setIsExpanded(!isExpanded); // Toggle the state
-        };
+        const isExpanded = expandedTextIds.includes(text.id);
 
         return (
           <div key={text.id || index} className={styles.textItem}>
@@ -21,7 +25,7 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
                   : text.content.slice(0, 100) + "..."}
               </p>
               {text.content.length > 100 && (
-                <button onClick={handleReadMoreClick} className={styles.readMoreButton}>
+                <button onClick={() => toggleText(text.id)} className={styles.readMoreButton}>
                   {isExpanded ? "Read Less" : "Read More"}
                 </button>
               )}
