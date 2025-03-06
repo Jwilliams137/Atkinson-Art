@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import styles from "./AdminTextDisplay.module.css";
 
@@ -15,15 +14,22 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
     <div className={styles.textList}>
       {texts.map((text, index) => {
         const isExpanded = expandedTextIds.includes(text.id);
+        const formattedContent = text.content
+          .split("\n\n")
+          .map((para, idx) => (
+            <p key={idx} className={styles.text}>
+              {para.trim()}
+            </p>
+          ));
 
         return (
           <div key={text.id || index} className={styles.textItem}>
             <div className={styles.textContent}>
-              <p className={styles.textSnippet}>
+              <div className={styles.textSnippet}>
                 {isExpanded || text.content.length <= 100
-                  ? text.content
-                  : text.content.slice(0, 100) + "..."}
-              </p>
+                  ? formattedContent
+                  : formattedContent.slice(0, 3)}
+              </div>
               {text.content.length > 100 && (
                 <button onClick={() => toggleText(text.id)} className={styles.readMoreButton}>
                   {isExpanded ? "Read Less" : "Read More"}
