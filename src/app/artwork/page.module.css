@@ -73,7 +73,7 @@
   display: none;
 }
 
-@media (max-width: 1800px) {
+@media (max-width: 1350px) {
   .artworkItem {
     width: 300px;
     height: 300px;
@@ -81,17 +81,6 @@
 
   .flipCardBack {
     font-size: 38px;
-  }
-}
-
-@media (max-width: 1300px) {
-  .artworkItem {
-    width: 200px;
-    height: 200px;
-  }
-
-  .flipCardBack {
-    font-size: 25px;
   }
 }
 
