@@ -62,7 +62,7 @@ const ArtworkPage = () => {
             return null;
           }
 
-          const visibleTitle = image.title.replace('Click to visit the ', '').replace(' page', '').toLowerCase();
+          const visibleTitle = image.title.replace('Click to visit the ', '').replace(' page', '');
 
           return (
             <div key={image.id} className={styles.artworkItem}>
