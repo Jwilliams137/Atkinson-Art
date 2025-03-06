@@ -3,7 +3,7 @@ import React from "react";
 import usePageImages from "../../../hooks/usePageImages";
 import useTextUploads from "../../../hooks/useTextUploads";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
-import TextSection from "../../../components/TextSection/TextSection";
+import ExhibitionTextSection from '../../../components/ExhibitionTextSection/ExhibitionTextSection'
 import styles from "./page.module.css";
 
 const ExhibitionsPage = () => {
@@ -12,9 +12,10 @@ const ExhibitionsPage = () => {
 
   return (
     <div>
-      <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.exhibitionsTextContainer}
-        sectionClass={styles.exhibitionsTextSection}
-        textClass={styles.exhibitionsTextClass} />
+      <div className={styles.text}>
+        <ExhibitionTextSection
+        textUploads={textUploads}
+        />
       </div>
       <div className={styles.exhibitionsontainer}>
         <ImageGallery

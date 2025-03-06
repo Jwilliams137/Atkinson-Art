@@ -6,10 +6,9 @@ const TextSection = ({
     containerClass,
     sectionClass,
     textClass,
+    yearClass,
 }) => {
     if (!textUploads.length) return null;
-
-    console.log(textUploads); // Debugging: Check if year is actually in the data
 
     return (
         <div className={`${styles.textContainer} ${containerClass || ""}`}>
@@ -22,9 +21,8 @@ const TextSection = ({
 
                     return (
                         <div key={index} className={styles.textItem}>
-                            {/* Make sure year is properly checked */}
                             {text.year !== undefined && text.year !== "" && (
-                                <p className={styles.year}>{text.year}</p>
+                                <p className={`${styles.year} ${yearClass || ""}`}>{text.year}</p>
                             )}
                             {paragraphs.map((para, idx) => (
                                 <p
