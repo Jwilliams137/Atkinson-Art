@@ -14,41 +14,61 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
     <div className={styles.textList}>
       {texts.map((text, index) => {
         const isExpanded = expandedTextIds.includes(text.id);
+
         const formattedContent = text.content
           .split("\n\n")
+          .map((para) => para.trim())
+          .join("\n\n");
+
+        const displayedContent = isExpanded
+          ? formattedContent
+          : formattedContent.slice(0, 100);
+
+        const paragraphsToDisplay = displayedContent
+          .split("\n\n")
           .map((para, idx) => (
-            <p key={idx} className={styles.text}>
-              {para.trim()}
-            </p>
+            <p key={idx} className={styles.paragraph}>{para}</p>
           ));
 
         return (
           <div key={text.id || index} className={styles.textItem}>
             <div className={styles.textContent}>
+              {text.year && text.year !== "" && (
+                <p className={styles.year}>{text.year}</p>
+              )}
               <div className={styles.textSnippet}>
-                {isExpanded || text.content.length <= 100
-                  ? formattedContent
-                  : formattedContent.slice(0, 3)}
+                {paragraphsToDisplay}
               </div>
-              {text.content.length > 100 && (
-                <button onClick={() => toggleText(text.id)} className={styles.readMoreButton}>
+              {formattedContent.length > 100 && (
+                <button
+                  onClick={() => toggleText(text.id)}
+                  className={styles.readMoreButton}
+                >
                   {isExpanded ? "Read Less" : "Read More"}
                 </button>
               )}
-              {text.year && text.year !== "" && <p className={styles.year}>{text.year}</p>}
             </div>
             <div className={styles.textActions}>
-              <button onClick={() => deleteText(text.id)} className={styles.deleteButton}>
+              <button
+                onClick={() => deleteText(text.id)}
+                className={styles.deleteButton}
+              >
                 Delete
               </button>
               <div className={styles.reorderButtons}>
                 {index > 0 && (
-                  <button onClick={() => moveTextUp(text.id, index)} className={styles.moveButton}>
+                  <button
+                    onClick={() => moveTextUp(text.id, index)}
+                    className={styles.moveButton}
+                  >
                     Move Up
                   </button>
                 )}
                 {index < texts.length - 1 && (
-                  <button onClick={() => moveTextDown(text.id, index)} className={styles.moveButton}>
+                  <button
+                    onClick={() => moveTextDown(text.id, index)}
+                    className={styles.moveButton}
+                  >
                     Move Down
                   </button>
                 )}

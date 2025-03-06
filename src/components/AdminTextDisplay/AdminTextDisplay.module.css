@@ -1,3 +1,7 @@
+.adminDisplayText {
+    max-width: 100%
+}
+
 .textList {
     display: flex;
     flex-direction: column;
@@ -13,6 +17,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
   }
   
   .textContent {
@@ -24,12 +29,12 @@
   .textSnippet {
     font-size: 16px;
     line-height: 1.5;
-    margin-bottom: 8px;
     font-size: 20px;
   }
 
-  .text {
+  .paragraph {
     margin-bottom: 20px;
+    max-width: 100%;
   }
   
   .readMoreButton {
@@ -41,9 +46,9 @@
     text-decoration: underline;
     padding: 0;
   }
-  
+
   .year {
-    margin-top: 4px;
+    margin-bottom: 10x;
   }
   
   .textActions {
