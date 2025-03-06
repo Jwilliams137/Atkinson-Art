@@ -15,6 +15,9 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
               Read More
             </button>
           )}
+          {text.year && text.year !== "" && (
+            <p className={styles.year}>{text.year}</p>
+          )}
           <button
             onClick={() => deleteText(text.id)}
             className={styles.deleteButton}
