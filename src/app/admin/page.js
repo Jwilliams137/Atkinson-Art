@@ -8,7 +8,7 @@ import AdminTextDisplay from "../../components/AdminTextDisplay/AdminTextDisplay
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import useAuth from "../../hooks/useAuth";
-import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
 
 const AdminPage = () => {
   const { user, isUserAllowed } = useAuth();
@@ -26,21 +26,17 @@ const AdminPage = () => {
 
   useEffect(() => {
     localStorage.setItem("activeSection", activeSection);
-    fetchImagesByPageType(activeSection);
     fetchTextsByPageType(activeSection);
-  }, [activeSection]);
-
-  const fetchImagesByPageType = async (pageType) => {
-    try {
-      const q = query(collection(db, "uploads"), where("pageType", "==", pageType));
-      const querySnapshot = await getDocs(q);
+  
+    const q = query(collection(db, "uploads"), where("pageType", "==", activeSection));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const fetchedImages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setImages(fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0)));
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
-
+    });
+  
+    return () => unsubscribe();
+  }, [activeSection]);
+  
   const fetchTextsByPageType = async (pageType) => {
     try {
       const q = query(collection(db, "textUploads"), where("pageType", "==", pageType));
