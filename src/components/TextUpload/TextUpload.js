@@ -55,7 +55,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
 
       {sectionKey === "exhibitions" && (
         <div className={styles.field}>
-          <label htmlFor="year" className={styles.label}>Year (optional)</label>
+          <label htmlFor="year" className={styles.label}>Year</label>
           <input
             type="text"
             className={styles.input}
