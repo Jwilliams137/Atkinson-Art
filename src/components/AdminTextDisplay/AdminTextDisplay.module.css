@@ -38,8 +38,8 @@
   }
   
   .readMoreButton {
-    font-size: 14px;
-    color: var(--primary-text);
+    font-size: 18px;
+    color: var(--hover-text);
     background: none;
     border: none;
     cursor: pointer;

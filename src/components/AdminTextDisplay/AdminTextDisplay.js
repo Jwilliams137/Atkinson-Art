@@ -22,7 +22,7 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
 
         const displayedContent = isExpanded
           ? formattedContent
-          : formattedContent.slice(0, 100);
+          : formattedContent.slice(0, 80);
 
         const paragraphsToDisplay = displayedContent
           .split("\n\n")
@@ -39,7 +39,7 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
               <div className={styles.textSnippet}>
                 {paragraphsToDisplay}
               </div>
-              {formattedContent.length > 100 && (
+              {formattedContent.length > 80 && (
                 <button
                   onClick={() => toggleText(text.id)}
                   className={styles.readMoreButton}
