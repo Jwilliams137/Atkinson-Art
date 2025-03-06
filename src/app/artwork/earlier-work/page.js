@@ -30,9 +30,14 @@ const EarlierWorkPage = () => {
           <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
         )}
       </div>
-      <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.earlierWorkTextContainer}
-        sectionClass={styles.earlierWorkTextSection}
-        textClass={styles.earlierWorkTextClass} /></div>
+      <div className={styles.text}>
+        <TextSection
+          textUploads={textUploads}
+          containerClass={styles.earlierWorkTextContainer}
+          sectionClass={styles.earlierWorkTextSection}
+          textClass={styles.earlierWorkTextClass}
+        />
+      </div>
     </div>
   );
 };

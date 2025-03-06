@@ -1,13 +1,18 @@
-.main {
-  text-align: center;
+
+.aboutContainer {
   
 }
 
 .textSection p {
   font-size: 25px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .aboutGallery {
   margin-top: 20px;
+}
+
+.aboutMobileTitle {
+  display: none;
 }

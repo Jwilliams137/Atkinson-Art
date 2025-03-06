@@ -25,7 +25,6 @@ const HomePage = () => {
         containerClass={styles.homeTextContainer}
         sectionClass={styles.homeTextSection}
         textClass={styles.homeText}
-        yearClass={styles.homeYear}
       />
     </div>
   );

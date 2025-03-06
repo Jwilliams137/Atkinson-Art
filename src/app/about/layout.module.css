@@ -9,8 +9,7 @@
 }
 
 .main {
-    flex-grow: 1;    
-    overflow: auto;
+    
 }
 
 @media (max-width: 1000px) {
