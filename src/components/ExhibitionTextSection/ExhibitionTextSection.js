@@ -15,21 +15,24 @@ const ExhibitionTextSection = ({ textUploads, containerClass, sectionClass, text
     return (
         <div className={`${styles.textContainer} ${containerClass || ""}`}>
             <div className={`${styles.textSection} ${sectionClass || ""}`}>
-                {Object.entries(groupedByYear).map(([year, exhibitions]) => (
-                    <div key={year} className={styles.yearGroup}>
-                        <h3 className={styles.year}>{year}</h3>
-                        {exhibitions.map((text, index) => {
-                            return text.split("\n\n").map((para, idx) => (
-                                <p key={`${index}-${idx}`} className={`${styles.text} ${textClass || ""}`}>
-                                    {para.trim()}
-                                </p>
-                            ));
-                        })}
-                    </div>
-                ))}
+                {Object.entries(groupedByYear)
+                    .sort(([a], [b]) => Number(b) - Number(a))
+                    .map(([year, exhibitions]) => (
+                        <div key={year} className={styles.yearGroup}>
+                            <h3 className={styles.year}>{year}</h3>
+                            {exhibitions.map((text, index) => {
+                                return text.split("\n\n").map((para, idx) => (
+                                    <p key={`${index}-${idx}`} className={`${styles.text} ${textClass || ""}`}>
+                                        {para.trim()}
+                                    </p>
+                                ));
+                            })}
+                        </div>
+                    ))}
             </div>
         </div>
     );
+    
 };
 
 export default ExhibitionTextSection;

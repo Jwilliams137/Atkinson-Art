@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 0 auto;
   gap: 20px;
 }
 
@@ -22,4 +21,16 @@
 
 .bioMobileTitle {
   display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+  .bioGallery {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+  .bioGalleryImage {
+    max-width: 100%;
+    height: auto;
+  }
 }

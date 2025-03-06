@@ -11,7 +11,7 @@ const ExhibitionsPage = () => {
   const textUploads = useTextUploads("exhibitions");
 
   return (
-    <div>
+    <div className={styles.exhibitionsContainer}>
       <div className={styles.text}>
         <ExhibitionTextSection
         textUploads={textUploads}

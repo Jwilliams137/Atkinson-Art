@@ -1,13 +1,18 @@
-.textSection p {
-  font-size: 25px;
-  margin-top: 20px;
-  width: 100%;
-}
-
 .aboutGallery {
   margin-top: 20px;
 }
 
 .aboutMobileTitle {
   display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+  .aboutGallery {
+    display: flex;
+    justify-content: center;
+  }
+  .aboutGalleryImage {
+    max-width: 100%;
+    height: auto;
+  }
 }

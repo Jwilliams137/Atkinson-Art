@@ -5,3 +5,9 @@
 .exhibitionsText {
 font-size: 22px;
 }
+
+@media only screen and (max-width: 1000px) {
+  .exhibitionsContainer {
+    padding: 20px;
+    } 
+}
