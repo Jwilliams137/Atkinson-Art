@@ -1,48 +1,61 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.title {
+  font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary-text);
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: var(--hover-text);
+}
+
+@media (max-width: 768px) {
   .title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 35px;
   }
-  
+
   .text {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+    font-size: 20px;
   }
-  
+
   .button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    background-color: var(--primary-text);
-    border-radius: 5px;
+    font-size: 18px;
   }
-  
-  .button:hover {
-    background-color: var(--hover-text);
+}
+
+@media (max-width: 468px) {
+  .title {
+    font-size: 30px;
   }
-  
-  @media (max-width: 768px) {
-    .title {
-      font-size: 1.8rem;
-    }
-    
-    .text {
-      font-size: 1rem;
-    }
-  
-    .button {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    }
-  }  
+
+  .text {
+    font-size: 20px;
+  }
+
+  .button {
+    font-size: 18px;
+  }
+}
