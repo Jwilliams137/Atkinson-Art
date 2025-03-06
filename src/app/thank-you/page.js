@@ -46,8 +46,7 @@ function ThankYouPage() {
         <p className={styles.success}>
           Your message has been sent. I will get back to you as soon as possible.
         </p>
-      </div>
-      
+      </div>      
       {randomImage && (
         <div className={styles.imageContainer}>
           <Image

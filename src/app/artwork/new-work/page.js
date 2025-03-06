@@ -25,14 +25,22 @@ const NewWorkPage = () => {
           mobileLabelClass={styles.newWorkMobileLabel}
           mobileTitleClass={styles.newWorkMobileTitle}
         />
-
         {isModalOpen && shouldRenderModal && (
-          <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
+          <Modal
+            images={images}
+            currentImageIndex={currentImageIndex}
+            closeModal={closeModal}
+          />
         )}
       </div>
-      <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.newWorkTextContainer}
-        sectionClass={styles.newWorkTextSection}
-        textClass={styles.newWorkTextClass} /></div>
+      <div className={styles.text}>
+        <TextSection
+          textUploads={textUploads}
+          containerClass={styles.newWorkTextContainer}
+          sectionClass={styles.newWorkTextSection}
+          textClass={styles.newWorkTextClass}
+        />
+      </div>
     </div>
   );
 };

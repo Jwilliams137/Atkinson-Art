@@ -26,19 +26,19 @@ const AdminPage = () => {
 
   useEffect(() => {
     localStorage.setItem("activeSection", activeSection);
-  
+
     const imageQuery = query(collection(db, "uploads"), where("pageType", "==", activeSection));
     const unsubscribeImages = onSnapshot(imageQuery, (querySnapshot) => {
       const fetchedImages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setImages(fetchedImages.sort((a, b) => (a.order || 0) - (b.order || 0)));
     });
-  
+
     const textQuery = query(collection(db, "textUploads"), where("pageType", "==", activeSection));
     const unsubscribeTexts = onSnapshot(textQuery, (querySnapshot) => {
       const fetchedTexts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setTexts(fetchedTexts.sort((a, b) => (a.order || 0) - (b.order || 0)));
     });
-  
+
     return () => {
       unsubscribeImages();
       unsubscribeTexts();
@@ -107,7 +107,9 @@ const AdminPage = () => {
       </div>
       {user && isUserAllowed && (
         <div className={styles.adminContentWrapper}>
-          <AdminSidebar setActiveSection={setActiveSection} />
+          <AdminSidebar
+            setActiveSection={setActiveSection}
+          />
           <div className={styles.adminMainContent}>
             {fieldsForPage[activeSection] && (
               <ContentUpload
@@ -118,11 +120,15 @@ const AdminPage = () => {
               />
             )}
             <div className={styles.adminDisplay}>
-              <AdminImageDisplay images={images} setImages={setImages} isAdmin={isUserAllowed} />
+              <AdminImageDisplay
+                images={images}
+                setImages={setImages}
+                isAdmin={isUserAllowed}
+              />
               <AdminTextDisplay
-                texts={texts} 
-                deleteText={deleteText} 
-                moveTextUp={moveTextUp} 
+                texts={texts}
+                deleteText={deleteText}
+                moveTextUp={moveTextUp}
                 moveTextDown={moveTextDown}
               />
             </div>

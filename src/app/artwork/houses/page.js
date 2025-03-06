@@ -25,14 +25,22 @@ const HousesPage = () => {
           mobileLabelClass={styles.housesMobileLabel}
           mobileTitleClass={styles.housesMobileTitle}
         />
-
         {isModalOpen && shouldRenderModal && (
-          <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
+          <Modal
+            images={images}
+            currentImageIndex={currentImageIndex}
+            closeModal={closeModal}
+          />
         )}
       </div>
-      <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.housesTextContainer}
-        sectionClass={styles.housesTextSection}
-        textClass={styles.housesTextClass} /></div>
+      <div className={styles.text}>
+        <TextSection
+          textUploads={textUploads}
+          containerClass={styles.housesTextContainer}
+          sectionClass={styles.housesTextSection}
+          textClass={styles.housesTextClass}
+        />
+      </div>
     </div>
   );
 };

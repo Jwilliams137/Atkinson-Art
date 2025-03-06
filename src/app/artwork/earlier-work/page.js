@@ -25,9 +25,12 @@ const EarlierWorkPage = () => {
           mobileLabelClass={styles.earlierWorkMobileLabel}
           mobileTitleClass={styles.earlierWorkMobileTitle}
         />
-
         {isModalOpen && shouldRenderModal && (
-          <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
+          <Modal
+            images={images}
+            currentImageIndex={currentImageIndex}
+            closeModal={closeModal}
+          />
         )}
       </div>
       <div className={styles.text}>

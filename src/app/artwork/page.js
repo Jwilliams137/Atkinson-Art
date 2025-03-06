@@ -84,7 +84,6 @@ const ArtworkPage = () => {
                   </div>
                 </div>
               </Link>
-
               <div className={styles.mobileView}>
                 <div className={styles.mobileFlipCard}>
                   <div className={styles.mobileFlipCardInner}>
@@ -108,16 +107,17 @@ const ArtworkPage = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           );
         })}
       </div>
       <div className={styles.text}>
-        <TextSection textUploads={artworkTextUploads}
+        <TextSection
+          textUploads={artworkTextUploads}
           containerClass={styles.artworkTextContainer}
           sectionClass={styles.artworkTextSection}
-          textClass={styles.artworkText} />
+          textClass={styles.artworkText}
+        />
       </div>
     </div>
   );

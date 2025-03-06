@@ -7,13 +7,13 @@ import TextSection from "../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const HomePage = () => {
-  const homeImages = usePageImages("home");
+  const images = usePageImages("home");
   const homeTextUploads = useTextUploads("home");
 
   return (
     <div className={styles.homeContainer}>
       <ImageGallery
-        images={homeImages}
+        images={images}
         className={styles.homeGallery}
         cardClass={styles.homeGalleryCard}
         imageClass={styles.homeGalleryImage}
