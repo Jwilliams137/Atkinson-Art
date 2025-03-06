@@ -11,7 +11,14 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [selectedResume, setSelectedResume] = useState(null);
     const [order, setOrder] = useState(null);
 
-    const handleTextChange = (event) => setTextContent(event.target.value);
+    const handleTextChange = (event) => {
+        console.log(event);
+        if (event && event.target) {
+          setTextContent(event.target.value);
+        } else {
+          console.error("Event or event.target is undefined");
+        }
+      };                 
 
     const handleUpload = async (uploadType, sectionKey, formData = {}) => {
         const auth = getAuth();
@@ -69,7 +76,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
             if (uploadType === "text-upload" && textContent.trim()) {
                 try {
-                    // Fetch the next available order for this sectionKey
                     const orderResponse = await fetch(`/api/get-max-text-order?pageType=${sectionKey}`, {
                         method: "GET",
                         headers: {
@@ -84,7 +90,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     }
 
                     const data = await orderResponse.json();
-                    const nextOrder = data.nextOrder; // Get the next order from the response
+                    const nextOrder = data.nextOrder;
 
                     const textData = {
                         content: textContent,
@@ -108,7 +114,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
                     const result = await textUploadResponse.json();
                     if (textUploadResponse.ok) {
-                        setTextContent(""); // Clear content if upload is successful
+                        setTextContent("");
                     } else {
                         console.error("Text upload failed:", result.error);
                     }
