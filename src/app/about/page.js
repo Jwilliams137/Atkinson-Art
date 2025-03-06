@@ -8,7 +8,7 @@ import useTextUploads from '../../hooks/useTextUploads';
 
 const AboutPage = () => {
   const textUploads = useTextUploads("about")
-  const aboutImages = usePageImages("about");
+  const images = usePageImages("about");
 
     return (
     <div className={styles.aboutContainer}>
@@ -19,7 +19,7 @@ const AboutPage = () => {
         textClass={styles.earlierWorkTextClass}
       />
       <ImageGallery
-        images={aboutImages}
+        images={images}
         className={styles.aboutGallery}
         cardClass={styles.aboutGalleryCard}
         imageClass={styles.aboutGalleryImage}
