@@ -16,7 +16,8 @@ const ImageGallery = ({
   hasMore,
   itemsPerPage
 }) => {
-  const showPageNumber = images.length > itemsPerPage || page > 1;
+  const showPageNumber = page > 1 || hasMore;
+
 
   return (
     <div>
