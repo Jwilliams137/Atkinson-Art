@@ -1,3 +1,34 @@
 .galleryContainer {
 margin-bottom: 40px;
 }
+
+.paginationControls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .arrowButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .arrowButton:disabled {
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .arrowButton:hover:not(:disabled) {
+    color: #007bff;
+  }
+  
+  .pageNumber {
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
