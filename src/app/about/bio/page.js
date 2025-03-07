@@ -30,6 +30,7 @@ const BioPage = () => {
         prevPage={prevPage}
         page={page}
         hasMore={hasMore}
+        itemsPerPage={20}
       />
     </div>
   );

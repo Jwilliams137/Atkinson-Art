@@ -29,6 +29,7 @@ const ExhibitionsPage = () => {
           prevPage={prevPage}
           page={page}
           hasMore={hasMore}
+          itemsPerPage={20}
         />
       </div>
     </div>
