@@ -21,6 +21,35 @@ const ImageGallery = ({
 
   return (
     <div>
+      <div className={styles.paginationControls}>
+        <div className={styles.buttonContainer}>
+          {page > 1 && (
+            <button
+              onClick={prevPage}
+              disabled={page === 1}
+              className={styles.arrowButton}
+              aria-label="Previous Page"
+            >
+              &#8592;
+            </button>
+          )}
+        </div>
+        {showPageNumber && (
+          <span className={styles.pageNumber}>Page {page}</span>
+        )}
+        <div className={styles.buttonContainer}>
+          {hasMore && (
+            <button
+              onClick={nextPage}
+              disabled={!hasMore}
+              className={styles.arrowButton}
+              aria-label="Next Page"
+            >
+              &#8594;
+            </button>
+          )}
+        </div>
+      </div>
       <div className={`${styles.galleryContainer} ${className}`}>
         {images.length > 0 && (
           images.map((image, index) => (
@@ -46,34 +75,34 @@ const ImageGallery = ({
           ))
         )}
       </div>
-
       <div className={styles.paginationControls}>
-        {page > 1 && (
-          <button
-            onClick={prevPage}
-            disabled={page === 1}
-            className={styles.arrowButton}
-            aria-label="Previous Page"
-          >
-            &#8592;
-          </button>
-        )}
-
-        {/* Only display page number if there are more than one page */}
+        <div className={styles.buttonContainer}>
+          {page > 1 && (
+            <button
+              onClick={prevPage}
+              disabled={page === 1}
+              className={styles.arrowButton}
+              aria-label="Previous Page"
+            >
+              &#8592;
+            </button>
+          )}
+        </div>
         {showPageNumber && (
           <span className={styles.pageNumber}>Page {page}</span>
         )}
-
-        {hasMore && (
-          <button
-            onClick={nextPage}
-            disabled={!hasMore}
-            className={styles.arrowButton}
-            aria-label="Next Page"
-          >
-            &#8594;
-          </button>
-        )}
+        <div className={styles.buttonContainer}>
+          {hasMore && (
+            <button
+              onClick={nextPage}
+              disabled={!hasMore}
+              className={styles.arrowButton}
+              aria-label="Next Page"
+            >
+              &#8594;
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
