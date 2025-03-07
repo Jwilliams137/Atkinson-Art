@@ -8,7 +8,7 @@ import AdminTextDisplay from "../../components/AdminTextDisplay/AdminTextDisplay
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import useAuth from "../../hooks/useAuth";
-import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, addDoc, onSnapshot } from "firebase/firestore";
 
 const AdminPage = () => {
   const { user, isUserAllowed } = useAuth();
