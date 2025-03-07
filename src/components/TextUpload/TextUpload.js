@@ -33,7 +33,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
 
     await handleSubmit("text-upload", sectionKey, newTextData);
 
-    handleTextChange("");
+    handleTextChange({ target: { value: "" } });
     setYear("");
   };
 

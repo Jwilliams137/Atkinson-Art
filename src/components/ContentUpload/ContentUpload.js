@@ -12,13 +12,13 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [order, setOrder] = useState(null);
 
     const handleTextChange = (event) => {
-        console.log(event);
-        if (event && event.target) {
-          setTextContent(event.target.value);
-        } else {
-          console.error("Event or event.target is undefined");
+        if (!event || !event.target) {
+            console.error("Event or event.target is undefined");
+            return;
         }
-      };                 
+        setTextContent(event.target.value);
+    };
+                     
 
     const handleUpload = async (uploadType, sectionKey, formData = {}) => {
         const auth = getAuth();
