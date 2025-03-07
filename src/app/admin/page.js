@@ -45,48 +45,6 @@ const AdminPage = () => {
     };
   }, [activeSection]);
 
-  const deleteText = async (id) => {
-    try {
-      await deleteDoc(doc(db, "textUploads", id));
-      setTexts(texts.filter((text) => text.id !== id));
-    } catch (error) {
-      console.error("Error deleting text:", error);
-    }
-  };
-
-  const moveTextUp = async (id, index) => {
-    if (index > 0) {
-      const newTexts = [...texts];
-      const temp = newTexts[index];
-      newTexts[index] = newTexts[index - 1];
-      newTexts[index - 1] = temp;
-      setTexts(newTexts);
-      await updateTextOrder(newTexts);
-    }
-  };
-
-  const moveTextDown = async (id, index) => {
-    if (index < texts.length - 1) {
-      const newTexts = [...texts];
-      const temp = newTexts[index];
-      newTexts[index] = newTexts[index + 1];
-      newTexts[index + 1] = temp;
-      setTexts(newTexts);
-      await updateTextOrder(newTexts);
-    }
-  };
-
-  const updateTextOrder = async (newTexts) => {
-    try {
-      for (let i = 0; i < newTexts.length; i++) {
-        const textRef = doc(db, "textUploads", newTexts[i].id);
-        await updateDoc(textRef, { order: i });
-      }
-    } catch (error) {
-      console.error("Error updating text order:", error);
-    }
-  };
-
   const handleImageUpload = async (newImage) => {
     try {
       const q = query(collection(db, "uploads"), where("pageType", "==", activeSection));
@@ -127,9 +85,8 @@ const AdminPage = () => {
               />
               <AdminTextDisplay
                 texts={texts}
-                deleteText={deleteText}
-                moveTextUp={moveTextUp}
-                moveTextDown={moveTextDown}
+                setTexts={setTexts}
+                db={db}
               />
             </div>
           </div>

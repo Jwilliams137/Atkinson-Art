@@ -1,13 +1,45 @@
 import React, { useState } from "react";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import styles from "./AdminTextDisplay.module.css";
 
-const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) => {
+const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [expandedTextIds, setExpandedTextIds] = useState([]);
 
   const toggleText = (id) => {
     setExpandedTextIds((prevIds) =>
       prevIds.includes(id) ? prevIds.filter((textId) => textId !== id) : [...prevIds, id]
     );
+  };
+
+  const deleteText = async (id) => {
+    try {
+      await deleteDoc(doc(db, "textUploads", id));
+      setTexts(texts.filter((text) => text.id !== id));
+    } catch (error) {
+      console.error("Error deleting text:", error);
+    }
+  };
+
+  const moveText = async (index, direction) => {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= texts.length) return;
+
+    const newTexts = [...texts];
+    [newTexts[index], newTexts[newIndex]] = [newTexts[newIndex], newTexts[index]];
+    setTexts(newTexts);
+
+    await updateTextOrder(newTexts);
+  };
+
+  const updateTextOrder = async (newTexts) => {
+    try {
+      for (let i = 0; i < newTexts.length; i++) {
+        const textRef = doc(db, "textUploads", newTexts[i].id);
+        await updateDoc(textRef, { order: i });
+      }
+    } catch (error) {
+      console.error("Error updating text order:", error);
+    }
   };
 
   return (
@@ -58,7 +90,7 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
               <div className={styles.reorderButtons}>
                 {index > 0 && (
                   <button
-                    onClick={() => moveTextUp(text.id, index)}
+                    onClick={() => moveText(index, -1)}
                     className={styles.moveButton}
                   >
                     Move Up
@@ -66,7 +98,7 @@ const AdminTextDisplay = ({ texts = [], deleteText, moveTextUp, moveTextDown }) 
                 )}
                 {index < texts.length - 1 && (
                   <button
-                    onClick={() => moveTextDown(text.id, index)}
+                    onClick={() => moveText(index, 1)}
                     className={styles.moveButton}
                   >
                     Move Down
