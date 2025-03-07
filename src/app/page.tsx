@@ -23,6 +23,7 @@ const HomePage = () => {
         prevPage={prevPage} 
         page={page} 
         hasMore={hasMore} 
+        itemsPerPage={20}
       />
       <TextSection
         textUploads={homeTextUploads}

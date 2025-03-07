@@ -28,6 +28,7 @@ const NewWorkPage = () => {
           prevPage={prevPage}
           page={page}
           hasMore={hasMore}
+          itemsPerPage={20}
         />
         {isModalOpen && shouldRenderModal && (
           <Modal

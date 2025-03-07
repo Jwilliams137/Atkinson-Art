@@ -13,8 +13,11 @@ const ImageGallery = ({
   nextPage,
   prevPage,
   page,
-  hasMore
+  hasMore,
+  itemsPerPage
 }) => {
+  const showPageNumber = images.length > itemsPerPage || page > 1;
+
   return (
     <div>
       <div className={`${styles.galleryContainer} ${className}`}>
@@ -43,7 +46,6 @@ const ImageGallery = ({
         )}
       </div>
 
-      {/* Pagination Controls */}
       <div className={styles.paginationControls}>
         {page > 1 && (
           <button
@@ -55,10 +57,12 @@ const ImageGallery = ({
             &#8592;
           </button>
         )}
-        
-        <span className={styles.pageNumber}>Page {page}</span>
 
-        {/* Only show "Next" button if there's more data */}
+        {/* Only display page number if there are more than one page */}
+        {showPageNumber && (
+          <span className={styles.pageNumber}>Page {page}</span>
+        )}
+
         {hasMore && (
           <button
             onClick={nextPage}

@@ -4,7 +4,7 @@ import { app } from "../utils/firebase";
 
 const db = getFirestore(app);
 
-const usePageImages = (pageType, itemsPerPage = 30) => {
+const usePageImages = (pageType, itemsPerPage = 20) => {
   const [images, setImages] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ const usePageImages = (pageType, itemsPerPage = 30) => {
 
   const fetchImages = async (reset = false) => {
     if (!pageType) return;
-
+  
     setLoading(true);
     try {
       let q = query(
@@ -26,22 +26,27 @@ const usePageImages = (pageType, itemsPerPage = 30) => {
         orderBy("order"),
         limit(itemsPerPage)
       );
-
+  
       if (!reset && lastDoc) {
         q = query(q, startAfter(lastDoc));
       }
-
+  
       const querySnapshot = await getDocs(q);
       const fetchedImages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-      setImages(fetchedImages);
-      
+  
+      // Reset images if needed, otherwise append
+      setImages(reset ? fetchedImages : [...fetchedImages]);
+  
       setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);
+  
+      if (fetchedImages.length < itemsPerPage) {
+        setLastDoc(null);
+      }
     } catch (error) {
       console.error(`Error fetching ${pageType} images:`, error);
     }
     setLoading(false);
-  };
+  };  
 
   const nextPage = () => {
     if (lastDoc) {
@@ -57,7 +62,9 @@ const usePageImages = (pageType, itemsPerPage = 30) => {
     }
   };
 
-  return { images, nextPage, prevPage, loading, page, hasMore: !!lastDoc };
+  const hasMore = !!lastDoc;
+
+  return { images, nextPage, prevPage, loading, page, hasMore };
 };
 
 export default usePageImages;
