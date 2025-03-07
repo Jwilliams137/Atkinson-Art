@@ -5,25 +5,14 @@
   gap: 20px;
 }
 
-.bioGallery {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.textSection {
-  font-size: 25px;
-  line-height: 1.6;
-  text-align: left;
-  width: 100%;
-}
-
 .bioMobileTitle {
   display: none;
 }
 
 @media only screen and (max-width: 1000px) {
+  .bioContainer {
+    padding: 0 20px;
+  }
   .bioGallery {
     display: flex;
     justify-content: center;
@@ -32,5 +21,11 @@
   .bioGalleryImage {
     max-width: 100%;
     height: auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .bioContainer {
+    padding: 0 10px;
   }
 }

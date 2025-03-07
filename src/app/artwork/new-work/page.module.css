@@ -41,6 +41,10 @@
 }
 
 @media (max-width: 1000px) {
+  .newWorkContainer {
+    display: block;
+  }
+
   .newWorkGallery {
     flex-wrap: nowrap;
     flex-direction: column;
@@ -66,9 +70,9 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .newWorkGalleryImage {
-    width: 95%;
+    width: 100%;
     height: auto;
   }
 }

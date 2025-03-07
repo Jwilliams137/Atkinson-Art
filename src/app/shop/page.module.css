@@ -44,6 +44,9 @@
   }
   
   @media (max-width: 1000px) {
+    .shopContainer {
+        padding: 0 20px;
+    }
     .shopGallery {
       flex-wrap: nowrap;
       flex-direction: column;
@@ -69,9 +72,12 @@
     }
   }
   
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
+    .shopContainer {
+        padding: 0 10px;
+    }
     .shopGalleryImage {
-      width: 95%;
+      width: 100%;
       height: auto;
     }
   }

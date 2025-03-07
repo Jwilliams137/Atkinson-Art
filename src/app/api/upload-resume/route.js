@@ -35,7 +35,7 @@ export async function POST(req) {
   
       const formData = await req.formData();
       const file = formData.get("file");
-      const metadata = formData.get("metadata"); // Get metadata JSON from the request
+      const metadata = formData.get("metadata");
   
       if (!file) {
         return NextResponse.json({ error: "No file provided" }, { status: 400 });
@@ -51,13 +51,9 @@ export async function POST(req) {
       }
   
       const resumeType = metadataObj.type || "resume";
-  
-      // Convert file to base64 for Cloudinary upload
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const base64File = `data:${file.type};base64,${buffer.toString("base64")}`;
-  
-      // Upload to Cloudinary
       const uploadResponse = await cloudinary.v2.uploader.upload(base64File, {
         folder: "resumes",
         resource_type: "auto",
@@ -91,4 +87,3 @@ export async function POST(req) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
   }
-  

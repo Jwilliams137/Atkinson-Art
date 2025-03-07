@@ -39,6 +39,9 @@
   }
   
   @media (max-width: 1000px) {
+    .earlierWorkContainer {
+        display: block;
+    }
     .earlierWorkGallery {
       flex-wrap: nowrap;
       flex-direction: column;
@@ -64,9 +67,9 @@
     }
   }
   
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     .earlierWorkGalleryImage {
-      width: 95%;
+      width: 100%;
       height: auto;
     }
   }

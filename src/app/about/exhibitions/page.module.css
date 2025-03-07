@@ -4,7 +4,7 @@
 
 @media only screen and (max-width: 1000px) {
   .exhibitionsContainer {
-    padding: 20px;
+    padding: 0 20px;
     } 
     .exhibitionsGallery {
       display: flex;
@@ -19,6 +19,6 @@
 
 @media only screen and (max-width: 600px) {
   .exhibitionsContainer {
-    padding: 10px;
+    padding: 0 10px;
     }
 }

@@ -5,7 +5,6 @@ function page() {
   return (
     <div className={styles.container}>
       <form action="/api/contact" method="POST" className={styles.form}>
-
         <input 
           type="text" 
           name="name" 
@@ -26,11 +25,9 @@ function page() {
           required 
           className={styles.textarea}
         ></textarea>
-
         <input type="hidden" name="_next" value="https://atkinson-art.netlify.app/thank-you" className={styles.hidden} />
         <input type="hidden" name="_subject" value="New message from your website visitor" className={styles.hidden} />
         <input type="hidden" name="_honey" className={styles.hidden} />
-
         <button type="submit" className={styles.button}>Send Message</button>
       </form>
     </div>

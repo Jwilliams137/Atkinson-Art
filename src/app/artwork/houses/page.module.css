@@ -47,6 +47,9 @@
 }
 
 @media (max-width: 1000px) {
+  .housesContainer {
+    display: block;
+  }
   .housesGallery {
     flex-wrap: nowrap;
     flex-direction: column;
@@ -71,9 +74,9 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .housesGalleryImage {
-    width: 95%;
+    width: 100%;
     height: auto;
   }
 }
