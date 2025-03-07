@@ -40,7 +40,7 @@ const ImageGallery = ({
           </div>
         ))
       )}
-      {images.length > 20 && (
+      {(hasMore || page > 1) && (
         <div className={styles.paginationControls}>
           <button onClick={prevPage} disabled={page === 1}>Previous</button>
           <span>Page {page}</span>
