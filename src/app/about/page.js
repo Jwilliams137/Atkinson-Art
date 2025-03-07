@@ -8,9 +8,9 @@ import useTextUploads from '../../hooks/useTextUploads';
 
 const AboutPage = () => {
   const textUploads = useTextUploads("about")
-  const images = usePageImages("about");
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("about");
 
-    return (
+  return (
     <div className={styles.aboutContainer}>
       <TextSection
         textUploads={textUploads}
@@ -25,6 +25,10 @@ const AboutPage = () => {
         imageClass={styles.aboutGalleryImage}
         mobileLabelClass={styles.aboutMobileLabel}
         mobileTitleClass={styles.aboutMobileTitle}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        page={page}
+        hasMore={hasMore}
       />
     </div>
   );

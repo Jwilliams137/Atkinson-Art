@@ -1,7 +1,24 @@
-
+.exhibitionsMobileTitle {
+  display: none;
+}
 
 @media only screen and (max-width: 1000px) {
   .exhibitionsContainer {
     padding: 20px;
     } 
+    .exhibitionsGallery {
+      display: flex;
+      justify-content: center;
+      margin: auto;
+    }
+    .exhibitionsGalleryImage {
+      max-width: 100%;
+      height: auto;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+  .exhibitionsContainer {
+    padding: 10px;
+    }
 }

@@ -9,7 +9,7 @@ import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const CollagePage = () => {
-  const images = usePageImages("collage");
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("collage");
   const textUploads = useTextUploads("collage");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
@@ -24,6 +24,10 @@ const CollagePage = () => {
           onImageClick={openModal}
           mobileLabelClass={styles.collageMobileLabel}
           mobileTitleClass={styles.collageMobileTitle}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          page={page}
+          hasMore={hasMore}
         />
         {isModalOpen && shouldRenderModal && (
           <Modal

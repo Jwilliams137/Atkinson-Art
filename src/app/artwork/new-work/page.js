@@ -9,7 +9,7 @@ import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const NewWorkPage = () => {
-  const images = usePageImages("new-work");
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("new-work");
   const textUploads = useTextUploads("new-work");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
@@ -24,6 +24,10 @@ const NewWorkPage = () => {
           onImageClick={openModal}
           mobileLabelClass={styles.newWorkMobileLabel}
           mobileTitleClass={styles.newWorkMobileTitle}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          page={page}
+          hasMore={hasMore}
         />
         {isModalOpen && shouldRenderModal && (
           <Modal

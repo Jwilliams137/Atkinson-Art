@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 const BioPage = () => {
   const textUploads = useTextUploads('bio')
-  const images = usePageImages("bio");
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("about");
 
   return (
     <div className={styles.bioContainer}>
@@ -26,7 +26,11 @@ const BioPage = () => {
         imageClass={styles.bioGalleryImage}
         mobileLabelClass={styles.bioMobileLabel}
         mobileTitleClass={styles.bioMobileTitle}
-         />
+        nextPage={nextPage}
+        prevPage={prevPage}
+        page={page}
+        hasMore={hasMore}
+      />
     </div>
   );
 };

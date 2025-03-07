@@ -7,7 +7,7 @@ import TextSection from "../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const HomePage = () => {
-  const images = usePageImages("home");
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("home");
   const homeTextUploads = useTextUploads("home");
 
   return (
@@ -19,6 +19,10 @@ const HomePage = () => {
         imageClass={styles.homeGalleryImage}
         mobileLabelClass={styles.homeMobileLabel}
         mobileTitleClass={styles.homeMobileTitle}
+        nextPage={nextPage} 
+        prevPage={prevPage} 
+        page={page} 
+        hasMore={hasMore} 
       />
       <TextSection
         textUploads={homeTextUploads}

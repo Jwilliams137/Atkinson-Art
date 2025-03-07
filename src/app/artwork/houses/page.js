@@ -9,7 +9,7 @@ import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
 const HousesPage = () => {
-  const images = usePageImages("houses");
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("houses");
   const textUploads = useTextUploads("houses");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
@@ -24,6 +24,10 @@ const HousesPage = () => {
           onImageClick={openModal}
           mobileLabelClass={styles.housesMobileLabel}
           mobileTitleClass={styles.housesMobileTitle}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          page={page}
+          hasMore={hasMore}
         />
         {isModalOpen && shouldRenderModal && (
           <Modal
