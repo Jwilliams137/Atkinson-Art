@@ -14,6 +14,7 @@ const ImageGallery = ({
   prevPage,
   page,
   hasMore,
+  itemsPerPage
 }) => {
   const showPageNumber = page > 1 || hasMore;
 
