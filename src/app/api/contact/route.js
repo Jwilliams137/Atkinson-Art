@@ -1,12 +1,20 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
+  console.log("ADMIN_EMAIL:", process.env.ADMIN_EMAIL_1);
+
   try {
     console.log('API Route hit');
 
+    // Ensure environment variable is set
+    const adminEmail = process.env.ADMIN_EMAIL_1;
+    if (!adminEmail) {
+      console.error("ADMIN_EMAIL is not configured");
+      return NextResponse.json({ error: "Admin email is missing" }, { status: 500 });
+    }
+    
+    // Parse form data
     const formData = await request.formData();
-    console.log('Form Data received:', Object.fromEntries(formData));
-
     const name = formData.get('name');
     const email = formData.get('email');
     const message = formData.get('message');
@@ -18,10 +26,12 @@ export async function POST(request) {
 
     console.log('Form Data:', { name, email, message });
 
-    const formSubmitUrl = `https://formsubmit.co/${process.env.ADMIN_EMAIL_1}`;
+    // FormSubmit URL with the correct environment variable
+    const formSubmitUrl = `https://formsubmit.co/${adminEmail}`;
 
     const res = await fetch(formSubmitUrl, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         name,
         email,
@@ -32,8 +42,8 @@ export async function POST(request) {
     });
 
     if (!res.ok) {
-      console.error('Error from Formsubmit:', res.status, res.statusText);
-      return NextResponse.json({ error: 'Formsubmit error' }, { status: 500 });
+      console.error('Error from FormSubmit:', res.status, res.statusText);
+      return NextResponse.json({ error: 'FormSubmit error' }, { status: 500 });
     }
 
     return NextResponse.redirect('https://atkinson-art.netlify.app/thank-you');
