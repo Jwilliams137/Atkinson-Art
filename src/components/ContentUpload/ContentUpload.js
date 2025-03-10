@@ -5,6 +5,7 @@ import styles from "./ContentUpload.module.css";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import TextUpload from "../TextUpload/TextUpload";
 import ResumeUpload from "../ResumeUpload/ResumeUpload";
+import AdminNotes from "../AdminNotes/AdminNotes"
 
 const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [textContent, setTextContent] = useState("");
@@ -18,7 +19,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         }
         setTextContent(event.target.value);
     };
-                     
+
 
     const handleUpload = async (uploadType, sectionKey, formData = {}) => {
         const auth = getAuth();
@@ -154,12 +155,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
                 return (
                     <div key={index} className={styles.uploadSection}>
-                        <h2 className={styles.title}>Add Content For {sectionLabel}</h2>
-                        <p className={styles.reminder}>
-                            Add a title to image uploads even if one isn&apos;t supposed to appear visibly on the site.
-                            This helps people who use screen readers and has benefits for search engine optimization.
-                        </p>
-
+                        
                         {fields.map((fieldGroup, idx) => {
                             const uploadType = Object.keys(fieldGroup)[0];
                             const fieldsList = fieldGroup[uploadType];

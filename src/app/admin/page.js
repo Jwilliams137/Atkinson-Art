@@ -5,6 +5,7 @@ import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
 import AdminImageDisplay from "../../components/AdminImageDisplay/AdminImageDisplay";
 import AdminTextDisplay from "../../components/AdminTextDisplay/AdminTextDisplay";
+import AdminNotes from '../../components/AdminNotes/AdminNotes'
 import styles from "./page.module.css";
 import adminData from "../../data/admin.json";
 import useAuth from "../../hooks/useAuth";
@@ -69,6 +70,13 @@ const AdminPage = () => {
             setActiveSection={setActiveSection}
           />
           <div className={styles.adminMainContent}>
+            <h2 className={styles.section}>Add content for {activeSection}</h2>
+            <div className={styles.notes}>
+              <AdminNotes
+                section={activeSection}
+                fieldsForPage={fieldsForPage}
+              />
+            </div>
             {fieldsForPage[activeSection] && (
               <ContentUpload
                 onUpload={handleImageUpload}

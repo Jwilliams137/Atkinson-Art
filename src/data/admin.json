@@ -14,6 +14,7 @@
     ],
     "fieldsForPage": {
       "home": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Home Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },          
@@ -26,35 +27,36 @@
         ]}    
       ],
       "artwork": [
+        {"notes": "Titles already added for these.  They will end up being links to the subpages of Artwork and flip on mouse hover to show a solid color and the name of the page they link to."},
         {"image-upload": [
           { "name": "file", "label": "Upload New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#c992e3" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#640c26" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6d63f2" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Collage Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e27474" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#ffffff" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e3c94a" }
         ]},
         {"text-upload": [
           { "name": "artworkStatement", "label": "Upload Artwork Statement", "type": "text" },
@@ -63,6 +65,7 @@
         ]}         
       ],
       "new-work": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload New Work Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -77,6 +80,7 @@
         ]}       
       ],
       "houses": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Houses Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -91,6 +95,7 @@
         ]}        
       ],
       "constructions": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Constructions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -105,6 +110,7 @@
         ]}      
       ],
       "collage": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Collage Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -119,6 +125,7 @@
         ]}       
       ],
       "earlier-work": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -133,6 +140,7 @@
         ]}      
       ],
       "about": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload About Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -145,6 +153,7 @@
         ]}
       ],
       "bio": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Bio Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -157,6 +166,7 @@
         ]}
       ],
       "exhibitions": [
+        {"notes": "Exhibitions show up on your page sorted by year.  Without a year they wont show up."},
          {"image-upload": [
           { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -169,6 +179,7 @@
         ]}        
       ],
       "shop": [
+        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Shop Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
