@@ -58,7 +58,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           <label htmlFor="year" className={styles.label}>Year</label>
           <input
             type="text"
-            className={styles.input}
+            className={styles.yearInput}
             placeholder="Enter year or date"
             value={year}
             onChange={(e) => setYear(e.target.value)}

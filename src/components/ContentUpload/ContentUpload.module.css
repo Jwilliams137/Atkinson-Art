@@ -24,15 +24,23 @@
   
   .inputField {
     padding: 8px;
-    font-size: 18px;
+    font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
   }
-  
-  .textarea {
+
+  .yearInput {
     padding: 8px;
-    font-size: 20px;
+    height: 45px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .textArea {
+    padding: 8px;
+    font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
