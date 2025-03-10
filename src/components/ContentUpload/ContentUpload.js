@@ -5,7 +5,6 @@ import styles from "./ContentUpload.module.css";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import TextUpload from "../TextUpload/TextUpload";
 import ResumeUpload from "../ResumeUpload/ResumeUpload";
-import AdminNotes from "../AdminNotes/AdminNotes"
 
 const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [textContent, setTextContent] = useState("");
