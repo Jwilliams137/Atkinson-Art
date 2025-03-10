@@ -17,7 +17,7 @@ const ExhibitionsPage = () => {
           textUploads={textUploads}
         />
       </div>
-      <div className={styles.exhibitionsontainer}>
+      <div className={styles.exhibitionsImageContainer}>
         <ImageGallery
           images={images}
           className={styles.exhibitionsGallery}

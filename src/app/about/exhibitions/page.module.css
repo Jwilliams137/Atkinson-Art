@@ -2,6 +2,10 @@
   display: none;
 }
 
+.exhibitionsImageContainer {
+  margin-top: 20px;
+}
+
 @media only screen and (max-width: 1000px) {
   .exhibitionsContainer {
     padding: 0 20px;
