@@ -145,7 +145,18 @@
 }
 
 .burgerList {
-  margin: 30px 50px;
+  margin: 15px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.burgerLinkList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;  
+  width: 100%;
+  margin-top: 30px;
 }
 
 .burgerMainLink {
@@ -157,7 +168,6 @@
 
 .burgerSubList {
   list-style: none;
-  padding-left: 15px;
 }
 
 .burgerSubItem {
@@ -279,6 +289,14 @@
   .mobileTitle {
     font-size: 40px;
   }
+
+  .mobileTitle span:nth-child(5) {
+    margin-right: 12px;
+  }
+
+  .title span:nth-child(5) {
+    margin-right: 12px;
+  }
 }
 
 @media only screen and (max-width: 400px) {
@@ -300,5 +318,15 @@
 
   .burgerMenu .link {
     font-size: 28px;
+  }
+
+  .hamburgerIcon {
+    top: 15px;
+    right: 15px;
+  }
+
+  .hamburgerIcon.open {
+    top: 15px;
+    right: 15px;
   }
 }
