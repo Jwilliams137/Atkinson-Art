@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './page.module.css'
 
-function page() {
+function ContactPage() {
   return (
     <div className={styles.container}>
       <form action="https://formsubmit.co/jwilliams137.036@gmail.com" method="POST" className={styles.form}>
@@ -34,4 +34,4 @@ function page() {
   )
 }
 
-export default page
+export default ContactPage
