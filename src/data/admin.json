@@ -65,7 +65,6 @@
         ]}         
       ],
       "new-work": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload New Work Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -80,7 +79,6 @@
         ]}       
       ],
       "houses": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Houses Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -95,7 +93,6 @@
         ]}        
       ],
       "constructions": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Constructions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -110,7 +107,6 @@
         ]}      
       ],
       "collage": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Collage Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -125,7 +121,6 @@
         ]}       
       ],
       "earlier-work": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -179,7 +174,6 @@
         ]}        
       ],
       "shop": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Upload Shop Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },

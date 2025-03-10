@@ -70,7 +70,7 @@ const AdminPage = () => {
             setActiveSection={setActiveSection}
           />
           <div className={styles.adminMainContent}>
-            <h2 className={styles.section}>Add content for {activeSection}</h2>
+            <h2 className={styles.section}>Edit content for {activeSection}</h2>
             <div className={styles.notes}>
               <AdminNotes
                 section={activeSection}
