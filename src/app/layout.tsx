@@ -1,4 +1,4 @@
-import React from 'react'; // Add this import
+import React from 'react';
 import { Metadata } from "next";
 import "./globals.css";
 import styles from './layout.module.css';
