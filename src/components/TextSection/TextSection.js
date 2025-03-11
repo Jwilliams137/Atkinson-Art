@@ -25,4 +25,3 @@ const TextSection = ({ textUploads, containerClass, sectionClass, textClass }) =
 };
 
 export default TextSection;
-

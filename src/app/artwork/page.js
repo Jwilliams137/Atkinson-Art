@@ -1,14 +1,13 @@
 'use client'
 import { useState, useEffect, useMemo } from 'react';
 import { db } from '../../utils/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
 import useTextUploads from "../../hooks/useTextUploads";
 import TextSection from "../../components/TextSection/TextSection";
 import styles from './page.module.css';
 
-// Move sortImagesByPageLinks function outside the component
 const sortImagesByPageLinks = (images, pageLinks) => {
   const pageLinkTitles = Object.keys(pageLinks);
   return images.sort((a, b) => {
@@ -20,7 +19,6 @@ const ArtworkPage = () => {
   const [images, setImages] = useState([]);
   const artworkTextUploads = useTextUploads("artwork");
 
-  // Memoize the pageLinks object to avoid it changing on each render
   const pageLinks = useMemo(() => ({
     'Click to visit the New Work page': '/artwork/new-work',
     'Click to visit the Houses page': '/artwork/houses',
@@ -32,7 +30,8 @@ const ArtworkPage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'uploads'));
+        const q = query(collection(db, 'uploads'), where("pageType", "==", "artwork"));
+        const querySnapshot = await getDocs(q);
         const fetchedImages = [];
 
         querySnapshot.forEach((doc) => {
@@ -50,7 +49,7 @@ const ArtworkPage = () => {
     };
 
     fetchImages();
-  }, [pageLinks]);  // Now, pageLinks won't trigger re-renders unnecessarily
+  }, [pageLinks]);
 
   return (
     <div className={styles.artworkPage}>
@@ -95,7 +94,7 @@ const ArtworkPage = () => {
                         className={styles.mobileArtworkImage}
                         width={image.width}
                         height={image.height}
-                        layout="intrinsic"
+                        style={{ width: "100%", height: "auto" }}
                       />
                     </div>
                     <div className={styles.mobileFlipCardBack} style={{ backgroundColor: image.color }}>
