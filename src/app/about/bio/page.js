@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import useTextUploads from '../../../hooks/useTextUploads';
 import TextSection from '../../../components/TextSection/TextSection';
 import usePageImages from "../../../hooks/usePageImages";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import styles from "./AdminTextDisplay.module.css";
 

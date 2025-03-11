@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import styles from "./ResumeUpload.module.css";

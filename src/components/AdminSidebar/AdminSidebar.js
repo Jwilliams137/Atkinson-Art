@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import { useState, useEffect } from "react";
 import styles from "./AdminSidebar.module.css";
 import sidebarData from "../../data/admin.json";

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Image from "next/image";
 import { getFirestore, doc, writeBatch } from "firebase/firestore";
 import styles from "./AdminImageDisplay.module.css";

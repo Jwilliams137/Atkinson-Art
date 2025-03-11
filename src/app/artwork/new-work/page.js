@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import usePageImages from "../../../hooks/usePageImages";
 import useTextUploads from "../../../hooks/useTextUploads";
 import useModal from "../../../hooks/useModal";
