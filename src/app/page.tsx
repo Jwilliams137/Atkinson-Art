@@ -1,5 +1,4 @@
 'use client'
-import React from 'react';
 import usePageImages from "../hooks/usePageImages";
 import ImageGallery from "../components/ImageGallery/ImageGallery";
 import useTextUploads from "../hooks/useTextUploads";
