@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getFirestore, collection, query, where, orderBy, limit, getDocs, startAfter } from "firebase/firestore";
 import { app } from "../utils/firebase";
 
@@ -10,12 +10,7 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    if (!pageType) return;
-    fetchImages(true);
-  }, [pageType]);
-
-  const fetchImages = async (reset = false) => {
+  const fetchImages = useCallback(async (reset = false) => {
     if (!pageType) return;
   
     setLoading(true);
@@ -34,7 +29,6 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       const querySnapshot = await getDocs(q);
       const fetchedImages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   
-      // Reset images if needed, otherwise append
       setImages(reset ? fetchedImages : [...fetchedImages]);
   
       setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);
@@ -46,7 +40,12 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       console.error(`Error fetching ${pageType} images:`, error);
     }
     setLoading(false);
-  };  
+  }, [pageType, lastDoc, itemsPerPage]);
+
+  useEffect(() => {
+    if (!pageType) return;
+    fetchImages(true);
+  }, [pageType, fetchImages]);
 
   const nextPage = () => {
     if (lastDoc) {
