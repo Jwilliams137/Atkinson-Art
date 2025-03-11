@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { db } from '../../utils/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import useTextUploads from "../../hooks/useTextUploads";
 import TextSection from "../../components/TextSection/TextSection";
 import styles from './page.module.css';
 
+// Move sortImagesByPageLinks function outside the component
 const sortImagesByPageLinks = (images, pageLinks) => {
   const pageLinkTitles = Object.keys(pageLinks);
   return images.sort((a, b) => {
@@ -19,13 +20,14 @@ const ArtworkPage = () => {
   const [images, setImages] = useState([]);
   const artworkTextUploads = useTextUploads("artwork");
 
-  const pageLinks = {
+  // Memoize the pageLinks object to avoid it changing on each render
+  const pageLinks = useMemo(() => ({
     'Click to visit the New Work page': '/artwork/new-work',
     'Click to visit the Houses page': '/artwork/houses',
     'Click to visit the Constructions page': '/artwork/constructions',
     'Click to visit the Collage page': '/artwork/collage',
     'Click to visit the Earlier Work page': '/artwork/earlier-work'
-  };
+  }), []);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -48,7 +50,7 @@ const ArtworkPage = () => {
     };
 
     fetchImages();
-  }, [pageLinks]);
+  }, [pageLinks]);  // Now, pageLinks won't trigger re-renders unnecessarily
 
   return (
     <div className={styles.artworkPage}>
