@@ -15,7 +15,7 @@ const useTextUploads = (pageType) => {
         );
         const querySnapshot = await getDocs(q);
         const texts = querySnapshot.docs.map((doc) => ({
-          content: doc.data().content, 
+          content: doc.data().content,
           year: doc.data().year || ""
         }));
         setTextUploads(texts);

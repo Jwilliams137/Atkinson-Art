@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import Image from 'next/image';
-import styles from "../ContentUpload/ContentUpload.module.css";
+import styles from "./ImageUpload.module.css";
 
 const ImageUpload = ({
     fieldsList,

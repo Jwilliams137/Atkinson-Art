@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { getFirestore, query, collection, where, getDocs } from "firebase/firestore";
-import styles from "../ContentUpload/ContentUpload.module.css";
+import styles from "./TextUpload.module.css";
 
 const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [order, setOrderState] = useState(1);

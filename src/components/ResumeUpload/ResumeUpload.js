@@ -45,9 +45,8 @@ const ResumeUpload = ({ sectionKey, handleSubmit }) => {
   
       if (response.ok) {
         console.log("Resume uploaded:", data.url);
-        setResume(null); // Clear state
+        setResume(null);
   
-        // Clear file input
         const fileInput = document.querySelector(`.${styles.fileInput}`);
         if (fileInput) {
           fileInput.value = "";

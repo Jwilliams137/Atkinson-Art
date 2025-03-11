@@ -19,7 +19,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         setTextContent(event.target.value);
     };
 
-
     const handleUpload = async (uploadType, sectionKey, formData = {}) => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -154,7 +153,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
                 return (
                     <div key={index} className={styles.uploadSection}>
-                        
+
                         {fields.map((fieldGroup, idx) => {
                             const uploadType = Object.keys(fieldGroup)[0];
                             const fieldsList = fieldGroup[uploadType];

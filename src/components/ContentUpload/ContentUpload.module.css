@@ -3,82 +3,9 @@
     flex-direction: column; 
     gap: 20px;
     margin-bottom: 20px;
-  }
-    
-  .imageUpload,
-  .textUpload {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: #f7f6f8;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-  }
-  
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .inputField {
-    padding: 8px;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-  }
-
-  .yearInput {
-    padding: 8px;
-    height: 45px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .textArea {
-    padding: 8px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    height: 150px;
-  }
-  
-  .label {
-    font-size: 20px;
-  }
-  
-  .previewImage {
-    max-width: 40%;
-    height: auto;
-    padding: 5px;
-    border-radius: 8px;
-    margin-top: 10px;
-    
-  }
-  
-  .submitButton {
-   max-width: 200px;
-   padding: 10px 20px;
-   border-radius: 8px;
-   background-color: var(--primary-text);
-   color: white;
-   align-self: flex-end;
-  }
-  
-  .submitButton:hover {
-    background-color: var(--hover-text);
-  }
+  }  
 
   @media only screen and (max-width: 1000px) {
-
-    .title {
-        text-align: center;
-        margin-top: 15px;
-    }
     .uploadSection {
         padding: 0;
     }
