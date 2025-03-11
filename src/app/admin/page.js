@@ -44,7 +44,7 @@ const AdminPage = () => {
       unsubscribeImages();
       unsubscribeTexts();
     };
-  }, [activeSection]);
+  }, [activeSection], db);
 
   const handleImageUpload = async (newImage) => {
     try {
