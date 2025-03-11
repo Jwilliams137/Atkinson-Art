@@ -26,6 +26,8 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
+    const db = getFirestore();
+
     localStorage.setItem("activeSection", activeSection);
 
     const imageQuery = query(collection(db, "uploads"), where("pageType", "==", activeSection));
@@ -44,7 +46,7 @@ const AdminPage = () => {
       unsubscribeImages();
       unsubscribeTexts();
     };
-  }, [activeSection], db);
+  }, [activeSection]);
 
   const handleImageUpload = async (newImage) => {
     try {
