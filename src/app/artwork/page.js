@@ -8,7 +8,6 @@ import useTextUploads from "../../hooks/useTextUploads";
 import TextSection from "../../components/TextSection/TextSection";
 import styles from './page.module.css';
 
-// Move sortImagesByPageLinks function outside the component
 const sortImagesByPageLinks = (images, pageLinks) => {
   const pageLinkTitles = Object.keys(pageLinks);
   return images.sort((a, b) => {
@@ -20,7 +19,6 @@ const ArtworkPage = () => {
   const [images, setImages] = useState([]);
   const artworkTextUploads = useTextUploads("artwork");
 
-  // Define pageLinks inside the component
   const pageLinks = {
     'Click to visit the New Work page': '/artwork/new-work',
     'Click to visit the Houses page': '/artwork/houses',
@@ -50,7 +48,7 @@ const ArtworkPage = () => {
     };
 
     fetchImages();
-  }, []);  // No need to include sortImagesByPageLinks in the dependency array
+  }, [pageLinks]);
 
   return (
     <div className={styles.artworkPage}>
