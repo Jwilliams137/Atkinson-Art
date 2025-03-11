@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from "./UnderConstruction.module.css";
 
 export default function UnderConstruction() {

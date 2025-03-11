@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 const AdminNotes = ({ section, fieldsForPage }) => {
   if (!section || !Array.isArray(fieldsForPage?.[section])) return null;
 

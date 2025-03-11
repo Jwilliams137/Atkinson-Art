@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import { signInWithGoogle } from "../../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useState, useEffect } from "react";

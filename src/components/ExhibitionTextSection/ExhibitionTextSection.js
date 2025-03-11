@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from "./ExhibitionTextSection.module.css";
 
 const ExhibitionTextSection = ({ textUploads, containerClass, sectionClass, textClass }) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from "./TextSection.module.css";
 
 const TextSection = ({ textUploads, containerClass, sectionClass, textClass }) => {

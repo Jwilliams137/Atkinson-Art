@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ContentUpload from "../../components/ContentUpload/ContentUpload";
 import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import styles from "./ContentUpload.module.css";
 import ImageUpload from "../ImageUpload/ImageUpload";
