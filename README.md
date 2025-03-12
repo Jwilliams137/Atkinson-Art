@@ -1,4 +1,4 @@
-This website was built using Next.js, Cloudinary, and Firebase to showcase the art of Linda Atkinson. It's designed with an admin page where content can be uploaded making it easy to display and update.  It has been renovated for deployment on Netlify.
+This website was built using Next.js, Cloudinary, and Firebase to showcase the art of Linda Atkinson. It's designed with an admin page where content can be uploaded making it easy to display and update.
 
 ## Getting Started
 
@@ -26,7 +26,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Netlify
-
-This project has been modified for deployment on Netlify.  You will need to add the relevant environment variables when uploading.
