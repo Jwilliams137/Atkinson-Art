@@ -71,6 +71,21 @@
   .deleteButton:hover {
     background-color: var(--hover-text);
   }
+
+  .editButton {
+    width: 100px;
+    padding: 8px 16px;
+    background-color: var(--primary-text);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .editButton:hover {
+    background-color: var(--hover-text);
+  }
   
   .reorderButtons {
     display: flex;

@@ -4,11 +4,35 @@ import styles from "./AdminTextDisplay.module.css";
 
 const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [expandedTextIds, setExpandedTextIds] = useState([]);
+  const [editingTextId, setEditingTextId] = useState(null);
+  const [editContent, setEditContent] = useState("");
 
   const toggleText = (id) => {
     setExpandedTextIds((prevIds) =>
       prevIds.includes(id) ? prevIds.filter((textId) => textId !== id) : [...prevIds, id]
     );
+  };
+
+  const startEditing = (text) => {
+    setEditingTextId(text.id);
+    setEditContent(text.content);
+  };
+
+  const saveEdit = async (id) => {
+    try {
+      const textRef = doc(db, "textUploads", id);
+      await updateDoc(textRef, { content: editContent });
+
+      setTexts((prevTexts) =>
+        prevTexts.map((text) =>
+          text.id === id ? { ...text, content: editContent } : text
+        )
+      );
+
+      setEditingTextId(null);
+    } catch (error) {
+      console.error("Error updating text:", error);
+    }
   };
 
   const deleteText = async (id) => {
@@ -46,21 +70,13 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     <div className={styles.textList}>
       {texts.map((text, index) => {
         const isExpanded = expandedTextIds.includes(text.id);
-
         const formattedContent = text.content
           .split("\n\n")
           .map((para) => para.trim())
           .join("\n\n");
-
         const displayedContent = isExpanded
           ? formattedContent
           : formattedContent.slice(0, 80);
-
-        const paragraphsToDisplay = displayedContent
-          .split("\n\n")
-          .map((para, idx) => (
-            <p key={idx} className={styles.paragraph}>{para}</p>
-          ));
 
         return (
           <div key={text.id || index} className={styles.textItem}>
@@ -68,9 +84,19 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
               {text.year && text.year !== "" && (
                 <p className={styles.year}>{text.year}</p>
               )}
-              <div className={styles.textSnippet}>
-                {paragraphsToDisplay}
-              </div>
+              {editingTextId === text.id ? (
+                <textarea
+                  className={styles.editInput}
+                  value={editContent}
+                  onChange={(e) => setEditContent(e.target.value)}
+                />
+              ) : (
+                <div className={styles.textSnippet}>
+                  {displayedContent.split("\n\n").map((para, idx) => (
+                    <p key={idx} className={styles.paragraph}>{para}</p>
+                  ))}
+                </div>
+              )}
               {formattedContent.length > 80 && (
                 <button
                   onClick={() => toggleText(text.id)}
@@ -81,6 +107,15 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
               )}
             </div>
             <div className={styles.textActions}>
+              {editingTextId === text.id ? (
+                <button onClick={() => saveEdit(text.id)} className={styles.editButton}>
+                  Save
+                </button>
+              ) : (
+                <button onClick={() => startEditing(text)} className={styles.editButton}>
+                  Edit
+                </button>
+              )}
               <button
                 onClick={() => deleteText(text.id)}
                 className={styles.deleteButton}
