@@ -7,9 +7,10 @@ const config = {
     "^firebase/auth$": process.env.NODE_ENV === "test" ? "<rootDir>/__mocks__/firebaseMock.js" : "firebase/auth",
     "^firebase/firestore$": process.env.NODE_ENV === "test" ? "<rootDir>/__mocks__/firebaseMock.js" : "firebase/firestore",
     "^firebase/storage$": process.env.NODE_ENV === "test" ? "<rootDir>/__mocks__/firebaseMock.js" : "firebase/storage",
+    '\\.module\\.css$': 'identity-obj-proxy', 
   },
   transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",  // This ensures Jest uses Babel to transform files
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
 };
 

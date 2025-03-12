@@ -5,6 +5,10 @@ const auth = {
   })),
   signInWithEmailAndPassword: jest.fn(),
   signOut: jest.fn(),
+  onAuthStateChanged: jest.fn((callback) => {
+    callback({ uid: "123", email: "test@example.com" }); // Mock user object
+    return () => {}; // Return a function to unsubscribe
+  }),
 };
 
 const firestore = {
