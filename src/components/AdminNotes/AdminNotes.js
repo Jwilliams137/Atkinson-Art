@@ -6,11 +6,11 @@ const AdminNotes = ({ section, fieldsForPage }) => {
   const notes = fieldsForPage[section]
     .filter((field) => field.notes)
     .map((field, index) => (
-      <li key={index} className="admin-note">{field.notes}</li>
+      <li key={index}>{field.notes}</li>
     ));
 
   return notes.length > 0 ? (
-    <div className="admin-notes"> 
+    <div> 
       <ul>{notes}</ul>
     </div>
   ) : null;
