@@ -5,7 +5,6 @@ module.exports = {
     "@babel/preset-typescript",
   ],
   plugins: [
-    // Enable the new JSX Transform
     ["@babel/plugin-transform-react-jsx", { "runtime": "automatic" }],
   ],
 };

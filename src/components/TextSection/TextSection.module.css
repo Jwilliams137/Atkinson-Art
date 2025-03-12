@@ -1,15 +1,14 @@
 .text {
-    font-size: 25px;
-    margin-bottom: 20px;
+  font-size: 25px;
+  margin-bottom: 20px;
 }
 
 .textEntry {
-    margin-bottom: 15px;
-  }
+  margin-bottom: 15px;
+}
 
-  @media only screen and (max-width: 800px) {
-    .text {
-      font-size: 22px;
-    }
+@media only screen and (max-width: 800px) {
+  .text {
+    font-size: 22px;
   }
-  
+}

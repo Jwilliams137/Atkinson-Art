@@ -34,7 +34,6 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       const querySnapshot = await getDocs(q);
       const fetchedImages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   
-      // Reset images if needed, otherwise append
       setImages(reset ? fetchedImages : [...fetchedImages]);
   
       setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);

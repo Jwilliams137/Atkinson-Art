@@ -3,10 +3,10 @@
 const AdminNotes = ({ section, fieldsForPage }) => {
   if (!section || !Array.isArray(fieldsForPage?.[section])) return null;
 
-  console.log("Fields in section:", fieldsForPage[section]); // Debugging
+  console.log("Fields in section:", fieldsForPage[section]);
 
   const notes = fieldsForPage[section]
-    .filter((field) => field.notes) // Ensure only fields with notes are included
+    .filter((field) => field.notes)
     .map((field, index) => (
       <li key={index} className="admin-note">{field.notes}</li>
     ));
