@@ -97,7 +97,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                   ))}
                 </div>
               )}
-              {formattedContent.length > 80 && (
+              {formattedContent.length > 80 && editingTextId !== text.id && (
                 <button
                   onClick={() => toggleText(text.id)}
                   className={styles.readMoreButton}
@@ -108,14 +108,23 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
             </div>
             <div className={styles.textActions}>
               {editingTextId === text.id ? (
-                <button onClick={() => saveEdit(text.id)} className={styles.editButton}>
-                  Save
-                </button>
+                <div>
+                  <button onClick={() => saveEdit(text.id)} className={styles.editButton}>
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEditingTextId(null)}
+                    className={styles.editButton}
+                  >
+                    Cancel
+                  </button>
+                </div>
               ) : (
                 <button onClick={() => startEditing(text)} className={styles.editButton}>
                   Edit
                 </button>
               )}
+
               <button
                 onClick={() => deleteText(text.id)}
                 className={styles.deleteButton}
