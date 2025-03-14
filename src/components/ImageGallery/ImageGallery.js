@@ -28,8 +28,8 @@ const ImageGallery = ({
                   className={imageClass || styles.galleryImage}
                   src={image.imageUrl}
                   alt={image.title || "Gallery Image"}
-                  width={image.width || 500}
-                  height={image.height || 500}
+                  width={image.width}
+                  height={image.height}
                   priority
                   onClick={() => onImageClick(index)}
                 />
