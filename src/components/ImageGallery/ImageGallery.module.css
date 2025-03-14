@@ -1,12 +1,8 @@
-.galleryContainer {
-    margin-bottom: 10px;
-}
-
 .paginationControls {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-top: 40px;
 }
 
 .buttonContainer {
