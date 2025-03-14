@@ -73,6 +73,10 @@
   display: none;
 }
 
+.text {
+  margin-top: 20px;
+}
+
 @media (max-width: 1350px) {
   .artworkItem {
     width: 300px;

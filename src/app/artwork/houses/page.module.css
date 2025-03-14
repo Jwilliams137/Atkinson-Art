@@ -1,3 +1,7 @@
+.text {
+  margin-top: 20px;
+}
+
 .textSection {
   font-size: 25px;
 }
@@ -46,6 +50,7 @@
   .housesContainer {
     display: block;
   }
+
   .housesGallery {
     flex-wrap: nowrap;
     flex-direction: column;
@@ -58,6 +63,7 @@
     height: auto;
     cursor: default;
   }
+
   .housesMobileLabel {
     display: block;
   }

@@ -30,6 +30,10 @@
   .shopMobileTitle {
     font-size: 25px;
   }
+
+  .text {
+    margin-top: 20px;
+  }
   
   @media only screen and (max-width: 1800px) {
     .shopGalleryImage {
