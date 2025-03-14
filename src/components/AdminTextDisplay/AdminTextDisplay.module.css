@@ -72,7 +72,7 @@
 }
 
 .moveButton:hover {
-  background-color: var(--hover-text);
+  color: var(--hover-text);
 }
 
 .textActions {
