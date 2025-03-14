@@ -106,6 +106,29 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                 </button>
               )}
             </div>
+
+            {/* Arrow Buttons for Moving Items */}
+            <div className={styles.moveArrows}>
+              {index > 0 && (
+                <button
+                  onClick={() => moveText(index, -1)}
+                  className={styles.moveButton}
+                  title="Move Up"
+                >
+                  ▲
+                </button>
+              )}
+              {index < texts.length - 1 && (
+                <button
+                  onClick={() => moveText(index, 1)}
+                  className={styles.moveButton}
+                  title="Move Down"
+                >
+                  ▼
+                </button>
+              )}
+            </div>
+
             <div className={styles.textActions}>
               {editingTextId === text.id ? (
                 <div>
@@ -131,24 +154,6 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
               >
                 Delete
               </button>
-              <div className={styles.reorderButtons}>
-                {index > 0 && (
-                  <button
-                    onClick={() => moveText(index, -1)}
-                    className={styles.moveButton}
-                  >
-                    Move Up
-                  </button>
-                )}
-                {index < texts.length - 1 && (
-                  <button
-                    onClick={() => moveText(index, 1)}
-                    className={styles.moveButton}
-                  >
-                    Move Down
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         );
