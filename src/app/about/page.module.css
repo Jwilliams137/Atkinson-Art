@@ -6,6 +6,10 @@
   display: none;
 }
 
+.aboutGalleryImage {
+  margin-top: 20px;
+}
+
 @media only screen and (max-width: 1000px) {
   .aboutContainer {
     padding: 0 20px;
