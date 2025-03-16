@@ -92,6 +92,7 @@ const AdminPage = () => {
                 images={images}
                 setImages={setImages}
                 isAdmin={isUserAllowed}
+                activeSection={activeSection}
               />
               <AdminTextDisplay
                 texts={texts}
