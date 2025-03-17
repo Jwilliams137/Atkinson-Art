@@ -8,7 +8,7 @@ const ImageGallery = ({
   imageClass,
   mobileLabelClass,
   mobileTitleClass,
-  onImageClick = () => {},
+  onImageClick = () => { },
   nextPage,
   prevPage,
   page,
@@ -38,7 +38,9 @@ const ImageGallery = ({
                 <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
                 <p>{image.description}</p>
                 <p>{image.dimensions}</p>
-                <p>{image.price}</p>
+                {!isNaN(image.price) && image.price !== null && (
+                  <p>${image.price}</p>
+                )}
               </div>
             </div>
           ))}
