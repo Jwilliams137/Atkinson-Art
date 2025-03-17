@@ -132,7 +132,7 @@ export async function POST(req) {
         title: title || "No Title",
         description: description || "",
         dimensions: dimensions || "",
-        price: price || "",
+        price: price ? Number(price) : null,
         imageUrl: uploadResponse.secure_url,
         cloudinaryId: uploadResponse.public_id,
         createdAt: new Date(),
