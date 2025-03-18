@@ -1,5 +1,8 @@
-.year {
-    margin-top: 20px;
+.yearGroup {
+    margin-bottom: 20px;
+}
+
+.year {    
     font-size: 25px;
 }
 
