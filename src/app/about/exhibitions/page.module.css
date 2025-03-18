@@ -3,7 +3,12 @@
 }
 
 .exhibitionsImageContainer {
-  margin-top: 30px;
+  margin-top: 40px;
+}
+
+.exhibitionsGalleryImage {
+  width: 70%;
+  height: auto;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -16,7 +21,7 @@
       margin: auto;
     }
     .exhibitionsGalleryImage {
-      max-width: 100%;
+      width: 85%;
       height: auto;
     }
 }
@@ -24,5 +29,10 @@
 @media only screen and (max-width: 600px) {
   .exhibitionsContainer {
     padding: 0 10px;
+    }
+
+    .exhibitionsGalleryImage {
+      width: 95%;
+      height: auto;
     }
 }

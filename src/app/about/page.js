@@ -1,9 +1,9 @@
 "use client";
 import usePageImages from "../../hooks/usePageImages";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
-import styles from "./page.module.css";
-import TextSection from '../../components/TextSection/TextSection';
 import useTextUploads from '../../hooks/useTextUploads';
+import TextSection from '../../components/TextSection/TextSection';
+import styles from "./page.module.css";
 
 const AboutPage = () => {
   const textUploads = useTextUploads("about")
