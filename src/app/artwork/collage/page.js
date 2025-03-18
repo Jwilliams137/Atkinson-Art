@@ -13,7 +13,7 @@ const CollagePage = () => {
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   return (
-    <div>
+    <div className={styles.collagePage}>
       <div className={styles.collageContainer}>
         <ImageGallery
           images={images}
