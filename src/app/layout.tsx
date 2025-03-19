@@ -4,7 +4,7 @@ import styles from './layout.module.css';
 import Nav from '../components/Nav/Nav';
 import Footer from '../components/Footer/Footer';
 import UnderConstruction from "../components/UnderConstruction/UnderConstruction"
-
+import Title from '../components/Title/Title'
 export const metadata: Metadata = {
   robots: "noindex, nofollow",
   title: "Atkinson Art",
@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={styles.wrapper}>
+        <Title />
         <Nav />
         <UnderConstruction />
         <div className={styles.children_container}>
