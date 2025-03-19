@@ -14,29 +14,31 @@ const CollagePage = () => {
 
   return (
     <div className={styles.collagePage}>
-      <div className={styles.collageContainer}>
-        <ImageGallery
-          images={images}
-          className={styles.collageGallery}
-          cardClass={styles.collageGalleryCard}
-          imageClass={styles.collageGalleryImage}
-          onImageClick={openModal}
-          mobileLabelClass={styles.collageMobileLabel}
-          mobileTitleClass={styles.collageMobileTitle}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          page={page}
-          hasMore={hasMore}
-          itemsPerPage={20}
-        />
-        {isModalOpen && shouldRenderModal && (
-          <Modal
+      {images.length > 0 && (
+        <div className={styles.collageContainer}>
+          <ImageGallery
             images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
+            className={styles.collageGallery}
+            cardClass={styles.collageGalleryCard}
+            imageClass={styles.collageGalleryImage}
+            onImageClick={openModal}
+            mobileLabelClass={styles.collageMobileLabel}
+            mobileTitleClass={styles.collageMobileTitle}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            page={page}
+            hasMore={hasMore}
+            itemsPerPage={20}
           />
-        )}
-      </div>
+          {isModalOpen && shouldRenderModal && (
+            <Modal
+              images={images}
+              currentImageIndex={currentImageIndex}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
+      )}
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}

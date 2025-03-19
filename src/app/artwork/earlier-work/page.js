@@ -13,30 +13,32 @@ const EarlierWorkPage = () => {
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   return (
-    <div>
-      <div className={styles.earlierWorkContainer}>
-        <ImageGallery
-          images={images}
-          className={styles.earlierWorkGallery}
-          cardClass={styles.earlierWorkGalleryCard}
-          imageClass={styles.earlierWorkGalleryImage}
-          onImageClick={openModal}
-          mobileLabelClass={styles.earlierWorkMobileLabel}
-          mobileTitleClass={styles.earlierWorkMobileTitle}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          page={page}
-          hasMore={hasMore}
-          itemsPerPage={20}
-        />
-        {isModalOpen && shouldRenderModal && (
-          <Modal
+    <div className={styles.earlierWorkPage}>
+      {images.length > 0 && (
+        <div className={styles.earlierWorkContainer}>
+          <ImageGallery
             images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
+            className={styles.earlierWorkGallery}
+            cardClass={styles.earlierWorkGalleryCard}
+            imageClass={styles.earlierWorkGalleryImage}
+            onImageClick={openModal}
+            mobileLabelClass={styles.earlierWorkMobileLabel}
+            mobileTitleClass={styles.earlierWorkMobileTitle}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            page={page}
+            hasMore={hasMore}
+            itemsPerPage={20}
           />
-        )}
-      </div>
+          {isModalOpen && shouldRenderModal && (
+            <Modal
+              images={images}
+              currentImageIndex={currentImageIndex}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
+      )}
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}

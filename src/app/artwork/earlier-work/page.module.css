@@ -1,79 +1,82 @@
+.earlierWorkPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .earlierWorkContainer {
-    display: flex;
-    width: 100%;
-  }
-  
-  .earlierWorkGallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-  }
-  
+  display: flex;
+  width: 100%;
+}
+
+.earlierWorkGallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.earlierWorkGalleryImage {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.earlierWorkMobileLabel {
+  display: none;
+  font-size: 20px;
+}
+
+.earlierWorkMobileTitle {
+  font-size: 25px;
+}
+
+@media only screen and (max-width: 1800px) {
   .earlierWorkGalleryImage {
-    width: 100%;
     height: 300px;
-    border-radius: 8px;
-    cursor: pointer;
+  }
+}
+
+@media (max-width: 1300px) {
+  .earlierWorkGalleryImage {
+    height: 200px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .earlierWorkContainer {
+    display: block;
+  }
+
+  .earlierWorkGallery {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .earlierWorkGalleryImage {
+    width: 60%;
+    height: auto;
+    cursor: default;
   }
 
   .earlierWorkMobileLabel {
-    display: none;
-    font-size: 20px;
+    display: block;
   }
+}
 
-  .earlierWorkMobileTitle {
-    font-size: 25px;
+@media (max-width: 800px) {
+  .earlierWorkGalleryImage {
+    width: 90%;
+    height: auto;
   }
-  
-  .text {
-    margin-top: 20px;
-  }
-  
-  @media only screen and (max-width: 1800px) {
-    .earlierWorkGalleryImage {
-      height: 300px;
-    }
-  }
-  
-  @media (max-width: 1300px) {
-    .earlierWorkGalleryImage {
-      height: 200px;
-    }
-  }
-  
-  @media (max-width: 1000px) {
-    .earlierWorkContainer {
-        display: block;
-    }
-    .earlierWorkGallery {
-      flex-wrap: nowrap;
-      flex-direction: column;
-      width: 100%;
-      text-align: center;
-    }
-  
-    .earlierWorkGalleryImage {
-      width: 60%;
-      height: auto;
-      cursor: default;
-    }
+}
 
-    .earlierWorkMobileLabel {
-        display: block;
-    }
+@media (max-width: 600px) {
+  .earlierWorkGalleryImage {
+    width: 100%;
+    height: auto;
   }
-  
-  @media (max-width: 800px) {
-    .earlierWorkGalleryImage {
-      width: 90%;
-      height: auto;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .earlierWorkGalleryImage {
-      width: 100%;
-      height: auto;
-    }
-  }
+}
