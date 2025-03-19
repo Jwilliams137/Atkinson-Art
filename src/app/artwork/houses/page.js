@@ -13,30 +13,32 @@ const HousesPage = () => {
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   return (
-    <div>
-      <div className={styles.housesContainer}>
-        <ImageGallery
-          images={images}
-          className={styles.housesGallery}
-          cardClass={styles.housesGalleryCard}
-          imageClass={styles.housesGalleryImage}
-          onImageClick={openModal}
-          mobileLabelClass={styles.housesMobileLabel}
-          mobileTitleClass={styles.housesMobileTitle}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          page={page}
-          hasMore={hasMore}
-          itemsPerPage={20}
-        />
-        {isModalOpen && shouldRenderModal && (
-          <Modal
+    <div className={styles.housesPage}>
+      {images.length > 0 && (
+        <div className={styles.housesContainer}>
+          <ImageGallery
             images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
+            className={styles.housesGallery}
+            cardClass={styles.housesGalleryCard}
+            imageClass={styles.housesGalleryImage}
+            onImageClick={openModal}
+            mobileLabelClass={styles.housesMobileLabel}
+            mobileTitleClass={styles.housesMobileTitle}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            page={page}
+            hasMore={hasMore}
+            itemsPerPage={20}
           />
-        )}
-      </div>
+          {isModalOpen && shouldRenderModal && (
+            <Modal
+              images={images}
+              currentImageIndex={currentImageIndex}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
+      )}
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}

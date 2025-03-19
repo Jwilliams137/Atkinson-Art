@@ -14,29 +14,31 @@ const NewWorkPage = () => {
 
   return (
     <div className={styles.newWorkPage}>
-      <div className={styles.newWorkContainer}>
-        <ImageGallery
-          images={images}
-          className={styles.newWorkGallery}
-          cardClass={styles.newWorkGalleryCard}
-          imageClass={styles.newWorkGalleryImage}
-          onImageClick={openModal}
-          mobileLabelClass={styles.newWorkMobileLabel}
-          mobileTitleClass={styles.newWorkMobileTitle}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          page={page}
-          hasMore={hasMore}
-          itemsPerPage={20}
-        />
-        {isModalOpen && shouldRenderModal && (
-          <Modal
+      {images.length > 0 && (
+        <div className={styles.newWorkContainer}>
+          <ImageGallery
             images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
+            className={styles.newWorkGallery}
+            cardClass={styles.newWorkGalleryCard}
+            imageClass={styles.newWorkGalleryImage}
+            onImageClick={openModal}
+            mobileLabelClass={styles.newWorkMobileLabel}
+            mobileTitleClass={styles.newWorkMobileTitle}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            page={page}
+            hasMore={hasMore}
+            itemsPerPage={20}
           />
-        )}
-      </div>
+          {isModalOpen && shouldRenderModal && (
+            <Modal
+              images={images}
+              currentImageIndex={currentImageIndex}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
+      )}
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}

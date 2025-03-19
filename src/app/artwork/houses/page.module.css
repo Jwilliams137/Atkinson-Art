@@ -1,5 +1,7 @@
-.text {
-  margin-top: 20px;
+.housesPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .textSection {

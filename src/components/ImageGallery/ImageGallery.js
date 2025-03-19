@@ -15,7 +15,7 @@ const ImageGallery = ({
   hasMore,
   itemsPerPage
 }) => {
-  const showPagination = page > 1 || hasMore;
+  const showPagination = (page > 1) || (hasMore && images.length === itemsPerPage);
 
   return (
     <div>
@@ -64,7 +64,6 @@ const ImageGallery = ({
             {hasMore && (
               <button
                 onClick={nextPage}
-                disabled={!hasMore}
                 className={styles.arrowButton}
                 aria-label="Next Page"
               >
