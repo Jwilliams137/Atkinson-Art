@@ -18,7 +18,7 @@ const ImageGallery = ({
   const showPagination = (page > 1) || (hasMore && images.length === itemsPerPage);
 
   return (
-    <div>
+    <div className={styles.gallery}>
       <div className={`${styles.galleryContainer} ${className}`}>
         {images.length > 0 &&
           images.map((image, index) => (
