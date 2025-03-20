@@ -14,33 +14,39 @@ const ShopPage = () => {
 
   return (
     <div className={styles.shopPage}>
-      <div className={styles.shopContainer}>
-        <ImageGallery
-          images={images}
-          className={styles.shopGallery}
-          cardClass={styles.shopGalleryCard}
-          imageClass={styles.shopGalleryImage}
-          onImageClick={openModal}
-          mobileLabelClass={styles.shopMobileLabel}
-          mobileTitleClass={styles.shopMobileTitle}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          page={page}
-          hasMore={hasMore}
-          itemsPerPage={20}
-        />
-
-        {isModalOpen && shouldRenderModal && (
-          <Modal
+      {images.length > 0 && (
+        <div className={styles.shopContainer}>
+          <ImageGallery
             images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
+            className={styles.shopGallery}
+            cardClass={styles.shopGalleryCard}
+            imageClass={styles.shopGalleryImage}
+            onImageClick={openModal}
+            mobileLabelClass={styles.shopMobileLabel}
+            mobileTitleClass={styles.shopMobileTitle}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            page={page}
+            hasMore={hasMore}
+            itemsPerPage={20}
           />
-        )}
+          {isModalOpen && shouldRenderModal && (
+            <Modal
+              images={images}
+              currentImageIndex={currentImageIndex}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
+      )}
+      <div className={styles.text}>
+        <TextSection
+          textUploads={textUploads}
+          containerClass={styles.shopTextContainer}
+          sectionClass={styles.shopTextSection}
+          textClass={styles.shopTextClass}
+        />
       </div>
-      <div className={styles.text}><TextSection textUploads={textUploads} containerClass={styles.shopTextContainer}
-        sectionClass={styles.shopTextSection}
-        textClass={styles.shopTextClass} /></div>
     </div>
   );
 };

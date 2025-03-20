@@ -1,15 +1,15 @@
 'use client'
 import { useState, useEffect } from "react";
-import ContentUpload from "../../components/ContentUpload/ContentUpload";
-import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+import useAuth from "../../hooks/useAuth";
+import adminData from "../../data/admin.json";
 import AdminLogin from "../../components/AdminLogin/AdminLogin";
+import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+import { getFirestore, collection, query, where, getDocs, addDoc, onSnapshot } from "firebase/firestore";
+import ContentUpload from "../../components/ContentUpload/ContentUpload";
 import AdminImageDisplay from "../../components/AdminImageDisplay/AdminImageDisplay";
 import AdminTextDisplay from "../../components/AdminTextDisplay/AdminTextDisplay";
-import AdminNotes from '../../components/AdminNotes/AdminNotes'
+import AdminNotes from '../../components/AdminNotes/AdminNotes';
 import styles from "./page.module.css";
-import adminData from "../../data/admin.json";
-import useAuth from "../../hooks/useAuth";
-import { getFirestore, collection, query, where, getDocs, addDoc, onSnapshot } from "firebase/firestore";
 
 const AdminPage = () => {
   const { user, isUserAllowed } = useAuth();
@@ -90,6 +90,7 @@ const AdminPage = () => {
                 images={images}
                 setImages={setImages}
                 isAdmin={isUserAllowed}
+                activeSection={activeSection}
               />
               <AdminTextDisplay
                 texts={texts}

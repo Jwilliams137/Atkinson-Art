@@ -49,7 +49,7 @@ const ImageUpload = ({
         const color = formData.color || (fieldsList.find(field => field.name === "color")?.value || "#ffffff");
         const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "");
         const dimensions = formData.dimensions || "";
-        const price = formData.price || "";
+        const price = formData.price ?? null;
 
         const imageFormData = new FormData();
         imageFormData.append("file", formData.file);

@@ -1,3 +1,9 @@
+.housesPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .textSection {
   font-size: 25px;
 }
@@ -11,7 +17,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  width: 100%;
 }
 
 .housesGalleryImage {
@@ -46,6 +51,7 @@
   .housesContainer {
     display: block;
   }
+
   .housesGallery {
     flex-wrap: nowrap;
     flex-direction: column;
@@ -58,6 +64,7 @@
     height: auto;
     cursor: default;
   }
+
   .housesMobileLabel {
     display: block;
   }

@@ -1,7 +1,7 @@
 "use client";
 import usePageImages from "../../../hooks/usePageImages";
-import useTextUploads from "../../../hooks/useTextUploads";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
+import useTextUploads from "../../../hooks/useTextUploads";
 import ExhibitionTextSection from '../../../components/ExhibitionTextSection/ExhibitionTextSection'
 import styles from "./page.module.css";
 

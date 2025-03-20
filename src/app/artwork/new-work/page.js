@@ -1,9 +1,9 @@
 "use client";
 import usePageImages from "../../../hooks/usePageImages";
-import useTextUploads from "../../../hooks/useTextUploads";
 import useModal from "../../../hooks/useModal";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
 import Modal from "../../../components/Modal/Modal";
+import useTextUploads from "../../../hooks/useTextUploads";
 import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
@@ -13,30 +13,32 @@ const NewWorkPage = () => {
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   return (
-    <div>
-      <div className={styles.newWorkContainer}>
-        <ImageGallery
-          images={images}
-          className={styles.newWorkGallery}
-          cardClass={styles.newWorkGalleryCard}
-          imageClass={styles.newWorkGalleryImage}
-          onImageClick={openModal}
-          mobileLabelClass={styles.newWorkMobileLabel}
-          mobileTitleClass={styles.newWorkMobileTitle}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          page={page}
-          hasMore={hasMore}
-          itemsPerPage={20}
-        />
-        {isModalOpen && shouldRenderModal && (
-          <Modal
+    <div className={styles.newWorkPage}>
+      {images.length > 0 && (
+        <div className={styles.newWorkContainer}>
+          <ImageGallery
             images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
+            className={styles.newWorkGallery}
+            cardClass={styles.newWorkGalleryCard}
+            imageClass={styles.newWorkGalleryImage}
+            onImageClick={openModal}
+            mobileLabelClass={styles.newWorkMobileLabel}
+            mobileTitleClass={styles.newWorkMobileTitle}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            page={page}
+            hasMore={hasMore}
+            itemsPerPage={20}
           />
-        )}
-      </div>
+          {isModalOpen && shouldRenderModal && (
+            <Modal
+              images={images}
+              currentImageIndex={currentImageIndex}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
+      )}
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}

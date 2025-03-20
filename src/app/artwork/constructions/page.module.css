@@ -1,3 +1,9 @@
+.constructionsPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .constructionsContainer {
   display: flex;
   width: 100%;

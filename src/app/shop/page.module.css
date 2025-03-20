@@ -1,5 +1,8 @@
 .shopPage {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 .shopContainer {
     display: flex;
@@ -22,8 +25,7 @@
     cursor: pointer;
   }
   
-  .shopMobileLabel {
-    display: none;
+  .shopMobileLabel {    
     font-size: 20px;
   }
   

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getFirestore, doc, writeBatch } from "firebase/firestore";
 import styles from "./AdminImageDisplay.module.css";
 
-const AdminImageDisplay = ({ images, setImages, isAdmin }) => {
+const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const db = getFirestore();
 
   const deleteImage = async (imageId, cloudinaryId) => {
@@ -31,7 +31,6 @@ const AdminImageDisplay = ({ images, setImages, isAdmin }) => {
     [newImages[index], newImages[swapIndex]] = [newImages[swapIndex], newImages[index]];
     newImages[index].order = index;
     newImages[swapIndex].order = swapIndex;
-
     setImages([...newImages]);
     const batch = writeBatch(db);
     batch.update(doc(db, "uploads", newImages[index].id), { order: newImages[index].order });
@@ -50,30 +49,26 @@ const AdminImageDisplay = ({ images, setImages, isAdmin }) => {
             height={image.height || 200}
           />
           <p className={styles.title} style={{ border: `4px solid ${image.color}` }}>{image.title}</p>
+          {activeSection !== "artwork" && (
+          <div className={styles.reorderButtons}>
+            {index > 0 && (
+              <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
+                ▲
+              </button>
+            )}
+            {index < images.length - 1 && (
+              <button onClick={() => reorderImages(index, 1)} className={styles.moveButton}>
+                ▼
+              </button>
+            )}
+          </div>
+          )}
           <button
             onClick={() => deleteImage(image.id, image.cloudinaryId)}
             className={styles.deleteButton}
           >
             Delete
           </button>
-          <div className={styles.reorderButtons}>
-            {index > 0 && (
-              <button
-                onClick={() => reorderImages(index, -1)}
-                className={styles.moveButton}
-              >
-                Move Up
-              </button>
-            )}
-            {index < images.length - 1 && (
-              <button
-                onClick={() => reorderImages(index, 1)}
-                className={styles.moveButton}
-              >
-                Move Down
-              </button>
-            )}
-          </div>
         </div>
       ))}
     </div>

@@ -1,3 +1,9 @@
+.collagePage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .collageContainer {
     display: flex;
     width: 100%;
@@ -65,7 +71,7 @@
 }
 
 @media (max-width: 600px) {
-        .collageGalleryImage {
+    .collageGalleryImage {
         width: 100%;
         height: auto;
     }

@@ -41,7 +41,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
         try {
             if (uploadType === "image-upload" && formData.file) {
-                const { file, title, description, imageDimensions, color } = formData;
+                const { file, title, description, imageDimensions, color, price } = formData;
 
                 if (!imageDimensions) {
                     console.error("Image dimensions are missing.");

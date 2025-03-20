@@ -179,7 +179,7 @@
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
-          { "name": "price", "label": "Price", "type": "text" },
+          { "name": "price", "label": "Price", "type": "number" },
           { "name": "pageType", "type": "hidden", "value": "shop" }
         ]},
         {"text-upload": [

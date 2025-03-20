@@ -1,93 +1,106 @@
 .adminDisplayText {
-    max-width: 100%
+  max-width: 100%;
 }
 
 .textList {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 20px;
-  }
-  
-  .textItem {
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-  }
-  
-  .textContent {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 12px;
-  }
-  
-  .textSnippet {
-    line-height: 1.5;
-    font-size: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
 
-  .paragraph {
-    margin-bottom: 20px;
-    max-width: 100%;
-  }
-  
-  .readMoreButton {
-    font-size: 18px;
-    color: var(--hover-text);
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: underline;
-    padding: 0;
-  }
+.textItem {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  .year {
-    margin-bottom: 10x;
+.textContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.textSnippet {
+  line-height: 1.5;
+  font-size: 20px;
+}
+
+.paragraph {
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+
+.readMoreButton {
+  font-size: 18px;
+  color: var(--hover-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.year {
+  margin-bottom: 10px;
+}
+
+.moveArrows {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
+
+.moveButton {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.moveButton:hover {
+  color: var(--hover-text);
+}
+
+.textActions {
+  display: flex;
+  justify-content: right;
+}
+
+.deleteButton,
+.editButton {
+  width: 100px;
+  padding: 8px 16px;
+  background-color: var(--primary-text);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.deleteButton:hover,
+.editButton:hover {
+  background-color: var(--hover-text);
+}
+
+.editInput {
+  min-height: 200px;
+  font-size: 18px;
+  padding: 9px;
+}
+
+@media only screen and (max-width: 600px) {
+  .deleteButton,
+  .editButton {
+    width: auto;
   }
-  
-  .textActions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-end;
-  }
-  
-  .deleteButton {
-    width: 100px;
-    padding: 8px 16px;
-    background-color: var(--primary-text);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .deleteButton:hover {
-    background-color: var(--hover-text);
-  }
-  
-  .reorderButtons {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .moveButton {
-    width: 100px;
-    padding: 6px 12px;
-    background-color: var(--primary-text);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .moveButton:hover {
-    background-color: var(--hover-text);
-  }  
+}

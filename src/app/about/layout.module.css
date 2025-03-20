@@ -6,16 +6,10 @@
 
 .sidebar {
     width: 250px;
-    padding: 20px 0;
 }
 
 @media (max-width: 1000px) {
     .container {
         flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        padding: 0;
-    }
+    }    
 }

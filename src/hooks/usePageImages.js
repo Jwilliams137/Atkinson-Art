@@ -9,13 +9,9 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
   const [lastDoc, setLastDoc] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
 
-  useEffect(() => {
-    if (!pageType) return;
-    fetchImages(true);
-  }, [pageType]);
-
-  const fetchImages = async (reset = false) => {
+  const fetchImages = useCallback(async (reset = false) => {
     if (!pageType) return;
   
     setLoading(true);
@@ -33,22 +29,44 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
   
       const querySnapshot = await getDocs(q);
       const fetchedImages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  
-      setImages(reset ? fetchedImages : [...fetchedImages]);
-  
-      setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);
-  
+
+      setImages(fetchedImages);
+
       if (fetchedImages.length < itemsPerPage) {
         setLastDoc(null);
+        setHasMore(false);
+      } else {
+
+        const nextQuery = query(
+          collection(db, "uploads"),
+          where("pageType", "==", pageType),
+          orderBy("order"),
+          startAfter(querySnapshot.docs[querySnapshot.docs.length - 1]),
+          limit(1)
+        );
+        const nextQuerySnapshot = await getDocs(nextQuery);
+
+        if (nextQuerySnapshot.docs.length === 0) {
+          setHasMore(false);
+        } else {
+          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          setHasMore(true);
+        }
       }
+
     } catch (error) {
       console.error(`Error fetching ${pageType} images:`, error);
     }
     setLoading(false);
-  };  
+  }, [pageType, lastDoc, itemsPerPage]);
+
+
+  useEffect(() => {
+    fetchImages(true);
+  }, [pageType]);
 
   const nextPage = () => {
-    if (lastDoc) {
+    if (hasMore) {
       setPage(prev => prev + 1);
       fetchImages();
     }
@@ -60,8 +78,6 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       fetchImages(true);
     }
   };
-
-  const hasMore = !!lastDoc;
 
   return { images, nextPage, prevPage, loading, page, hasMore };
 };

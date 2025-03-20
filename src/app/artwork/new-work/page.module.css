@@ -1,3 +1,9 @@
+.newWorkPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .newWorkContainer {
   display: flex;
   flex-direction: column;

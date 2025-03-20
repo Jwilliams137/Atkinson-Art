@@ -24,7 +24,7 @@
 
 .reorderButtons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 5px;
 }
 
@@ -42,8 +42,22 @@
   background-color: var(--hover-text)
 }
 
+.moveButton {
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  text-align: center;
+  line-height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-text);
+  transition: background-color 0.3s ease;
+}
+
 .moveButton:hover {
-  background-color: var(--hover-text)
+  background: transparent;
+  border-radius: 4px;
 }
 
 .title {
