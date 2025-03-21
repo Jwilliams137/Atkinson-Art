@@ -1,15 +1,16 @@
 "use client";
 import { signInWithGoogle } from "../../utils/firebase";
-import { signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { auth } from "../../utils/firebase";
 import styles from './AdminLogin.module.css';
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
   const [allowedEmails, setAllowedEmails] = useState([]);
-
+  const auth = getAuth();
+  
+  // Fetch restricted users on mount
   useEffect(() => {
     fetch("/api/restricted-users")
       .then((res) => res.json())
@@ -17,6 +18,7 @@ export default function AdminLogin() {
       .catch(() => setError("Failed to load admin access list."));
   }, []);
 
+  // Listen for authentication state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user || null);
@@ -24,36 +26,42 @@ export default function AdminLogin() {
     return () => unsubscribe();
   }, []);
 
+  // Google login function
   const handleGoogleLogin = async () => {
-    setError("");
+    setError(""); // Reset error before login attempt
 
     try {
       const user = await signInWithGoogle();
       const { email } = user;
 
+      // Check if user email is allowed
       if (allowedEmails.includes(email)) {
-        setUser(user);
+        setUser(user); // Set user if email is allowed
       } else {
         setError("You are not authorized to access this page.");
-        await signOut(auth);
+        await signOut(auth); // Sign out if not authorized
       }
     } catch (err) {
       setError("Login failed. Please try again.");
     }
   };
 
+  // Logout function
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null);
+      setUser(null); // Clear user state after logout
     } catch (err) {
       setError("Logout failed. Please try again.");
     }
   };
 
+  // Display login button if no user, otherwise display user info
   const renderAuthButtons = () => (
     <div className={styles.authContainer}>
-      <button onClick={handleGoogleLogin} className={styles.button}>Sign in with Google</button>
+      <button onClick={handleGoogleLogin} className={styles.button}>
+        Sign in with Google
+      </button>
     </div>
   );
 
@@ -62,13 +70,19 @@ export default function AdminLogin() {
     return (
       <div className={styles.userContainer}>
         <p className={styles.welcomeText}>Welcome {displayName || email}!</p>
-        <button onClick={handleLogout} className={styles.button}>Logout</button>
+        <button onClick={handleLogout} className={styles.button}>
+          Logout
+        </button>
       </div>
     );
   };
 
   return (
     <div className={styles.container}>
+      {/* Show error message if it exists */}
+      {error && <p className={styles.errorMessage}>{error}</p>}
+
+      {/* Render login or user greeting based on authentication state */}
       {!user ? renderAuthButtons() : renderUserGreeting()}
     </div>
   );
