@@ -1,5 +1,5 @@
 import { render, screen, act } from "@testing-library/react";
-import AdminLogin from "../src/components/AdminLogin/AdminLogin";
+import AdminLogin from "../../src/components/AdminLogin/AdminLogin";
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
