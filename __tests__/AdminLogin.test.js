@@ -1,6 +1,5 @@
 import { render, screen, act } from "@testing-library/react";
 import AdminLogin from "../src/components/AdminLogin/AdminLogin";
-import { getAuth } from "firebase/auth";
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
