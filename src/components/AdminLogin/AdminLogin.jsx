@@ -46,17 +46,15 @@ export default function AdminLogin() {
     }
   };
 
-  // Logout function
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null); // Clear user state after logout
+      setUser(null);
     } catch (err) {
       setError("Logout failed. Please try again.");
     }
   };
 
-  // Display login button if no user, otherwise display user info
   const renderAuthButtons = () => (
     <div className={styles.authContainer}>
       <button onClick={handleGoogleLogin} className={styles.button}>
@@ -79,11 +77,11 @@ export default function AdminLogin() {
 
   return (
     <div className={styles.container}>
-      {/* Show error message if it exists */}
-      {error && <p className={styles.errorMessage}>{error}</p>}
-
-      {/* Render login or user greeting based on authentication state */}
-      {!user ? renderAuthButtons() : renderUserGreeting()}
+      {error ? (
+        <p className={styles.errorMessage}>{error}</p>
+      ) : (
+        !user ? renderAuthButtons() : renderUserGreeting()
+      )}
     </div>
-  );
+  );  
 }

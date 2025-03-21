@@ -7,12 +7,11 @@ global.fetch = jest.fn(() =>
   })
 );
 
-// Mock the auth object and onAuthStateChanged
 jest.mock("firebase/auth", () => ({
   getAuth: jest.fn(() => ({
     onAuthStateChanged: jest.fn((callback) => {
-      callback(null); // Simulate no user logged in
-      return jest.fn(); // Return a mock unsubscribe function
+      callback(null);
+      return jest.fn();
     }),
   })),
 }));

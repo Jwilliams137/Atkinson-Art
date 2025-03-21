@@ -7,12 +7,11 @@ global.fetch = jest.fn(() =>
   })
 );
 
-// Mock the auth object and onAuthStateChanged to simulate a logged-in user
 jest.mock("firebase/auth", () => ({
   getAuth: jest.fn(() => ({
     onAuthStateChanged: jest.fn((callback) => {
-      callback({ displayName: 'Test User', email: 'authorized@example.com' }); // Simulate a logged-in user
-      return jest.fn(); // Return a mock unsubscribe function
+      callback({ displayName: 'Test User', email: 'authorized@example.com' });
+      return jest.fn();
     }),
   })),
 }));
@@ -22,8 +21,8 @@ test("renders user greeting and logout button when user is logged in", async () 
     render(<AdminLogin />);
   });
 
-  const welcomeMessage = screen.getByText(/Welcome Test User/i); // Check if the greeting contains the user's name
-  const logoutButton = screen.getByText(/Logout/i); // Check if the logout button is rendered
+  const welcomeMessage = screen.getByText(/Welcome Test User/i);
+  const logoutButton = screen.getByText(/Logout/i);
 
   expect(welcomeMessage).toBeInTheDocument();
   expect(logoutButton).toBeInTheDocument();
