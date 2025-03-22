@@ -63,12 +63,12 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             )}
           </div>
           )}
-          <button
+          {isAdmin && <button
             onClick={() => deleteImage(image.id, image.cloudinaryId)}
             className={styles.deleteButton}
           >
             Delete
-          </button>
+          </button>}
         </div>
       ))}
     </div>
