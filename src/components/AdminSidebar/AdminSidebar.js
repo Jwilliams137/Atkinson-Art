@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./AdminSidebar.module.css";
-import sidebarData from "../../data/admin.json";
+import defaultSidebarData from "../../data/admin.json";
 
-const AdminSidebar = ({ setActiveSection }) => {
+const AdminSidebar = ({ setActiveSection, sidebarData }) => {
   const [activeKey, setActiveKey] = useState("home");
 
   useEffect(() => {
@@ -16,12 +16,19 @@ const AdminSidebar = ({ setActiveSection }) => {
   const handleClick = (key) => {
     setActiveKey(key);
     setActiveSection(key);
+    localStorage.setItem("activeSection", key);
   };
+
+  const sections = sidebarData?.sections ?? defaultSidebarData.sections;
+
+  if (!sections.length) {
+    return <p>No sections available</p>;
+  }
 
   return (
     <div className={styles.sidebar}>
       <ul>
-        {sidebarData.sections.map((section) => (
+        {sections.map((section) => (
           <li
             key={section.key}
             className={activeKey === section.key ? styles.active : ""}
