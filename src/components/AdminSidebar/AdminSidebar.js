@@ -19,20 +19,23 @@ const AdminSidebar = ({ setActiveSection, sidebarData }) => {
     localStorage.setItem("activeSection", key);
   };
 
-  const sections = sidebarData?.sections ?? defaultSidebarData.sections;
+  const sections = sidebarData?.sections?.filter((section) => section?.key && section?.label) 
+                   ?? defaultSidebarData.sections;
 
   if (!sections.length) {
-    return <p>No sections available</p>;
+    return <p role="alert">No sections available. Please check your settings.</p>;
   }
 
   return (
-    <div className={styles.sidebar}>
-      <ul>
+    <div className={styles.sidebar} role="navigation" aria-label="Admin Sidebar">
+      <ul role="list">
         {sections.map((section) => (
           <li
             key={section.key}
+            role="listitem"
             className={activeKey === section.key ? styles.active : ""}
             onClick={() => handleClick(section.key)}
+            aria-current={activeKey === section.key ? "true" : undefined}
           >
             {section.label}
           </li>

@@ -1,11 +1,11 @@
 jest.mock("../../src/data/admin.json", () => ({
     sections: [
-      { key: "home", label: "Home" },
-      { key: "gallery", label: "Gallery" },
-      { key: "settings", label: "Settings" },
+        { key: "home", label: "Home" },
+        { key: "gallery", label: "Gallery" },
+        { key: "settings", label: "Settings" },
     ],
-  }));
-  
+}));
+
 
 import { render, screen, fireEvent } from "@testing-library/react";
 import AdminSidebar from "../../src/components/AdminSidebar/AdminSidebar";
@@ -60,9 +60,31 @@ describe("AdminSidebar", () => {
     test("does not crash with empty sidebarData", () => {
         const emptyData = { sections: [] };
         render(<AdminSidebar sidebarData={emptyData} setActiveSection={mockSetActiveSection} />);
-        
-        expect(screen.getByText("No sections available")).toBeInTheDocument();
-      });
-      
-      
+
+        expect(screen.getByText(/No sections available/i)).toBeInTheDocument();
+    });
+
+    test("updates localStorage on section click", () => {
+        render(<AdminSidebar setActiveSection={mockSetActiveSection} />);
+        const galleryItem = screen.getByText("Gallery");
+        fireEvent.click(galleryItem);
+
+        expect(localStorage.getItem("activeSection")).toBe("gallery");
+    });
+
+    test("handles missing sidebarData gracefully", () => {
+        render(<AdminSidebar setActiveSection={mockSetActiveSection} sidebarData={{ sections: [] }} />);
+        expect(screen.getByRole("alert")).toHaveTextContent(/No sections available/i);
+    });
+
+    test("has appropriate aria roles and labels", () => {
+        render(<AdminSidebar setActiveSection={mockSetActiveSection} />);
+        expect(screen.getByRole("navigation", { name: /admin sidebar/i })).toBeInTheDocument();
+    });
+
+    test("does not crash with invalid or missing section data", () => {
+        render(<AdminSidebar setActiveSection={mockSetActiveSection} sidebarData={{ sections: [{}] }} />);
+        expect(screen.getByRole("alert")).toHaveTextContent(/no sections available/i);
+    });
+
 });
