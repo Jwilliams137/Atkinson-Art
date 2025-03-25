@@ -9,8 +9,7 @@ export default function AdminLogin() {
   const [user, setUser] = useState(null);
   const [allowedEmails, setAllowedEmails] = useState([]);
   const auth = getAuth();
-  
-  // Fetch restricted users on mount
+
   useEffect(() => {
     fetch("/api/restricted-users")
       .then((res) => res.json())
@@ -18,7 +17,6 @@ export default function AdminLogin() {
       .catch(() => setError("Failed to load admin access list."));
   }, []);
 
-  // Listen for authentication state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user || null);
@@ -26,20 +24,18 @@ export default function AdminLogin() {
     return () => unsubscribe();
   }, []);
 
-  // Google login function
   const handleGoogleLogin = async () => {
-    setError(""); // Reset error before login attempt
+    setError("");
 
     try {
       const user = await signInWithGoogle();
       const { email } = user;
 
-      // Check if user email is allowed
       if (allowedEmails.includes(email)) {
-        setUser(user); // Set user if email is allowed
+        setUser(user);
       } else {
         setError("You are not authorized to access this page.");
-        await signOut(auth); // Sign out if not authorized
+        await signOut(auth);
       }
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -83,5 +79,5 @@ export default function AdminLogin() {
         !user ? renderAuthButtons() : renderUserGreeting()
       )}
     </div>
-  );  
+  );
 }

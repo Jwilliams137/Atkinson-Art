@@ -12,7 +12,7 @@ const AdminNotes = ({ section, fieldsForPage }) => {
     ));
 
   return notes.length > 0 ? (
-    <div> 
+    <div>
       <ul>{notes}</ul>
     </div>
   ) : null;
