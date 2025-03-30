@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import styles from "./Title.module.css";
+import styles from "./Title3.module.css";
 import navData from "../../data/navData.json";
 
 const Title = () => {

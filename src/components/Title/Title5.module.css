@@ -1,0 +1,18 @@
+.title {
+    font-family: 'Arial', sans-serif;
+    font-size: 72px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 50px;
+  }
+  
+  .title:hover {
+    color: #c2357b;
+  }
+  
+  .space {
+    font-weight: normal;
+    color: #555;
+  }

@@ -1,0 +1,19 @@
+.title {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 66px;
+    letter-spacing: 1px;
+    color: #444;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+    padding: 50px;
+  }
+  
+  .title:hover {
+    color: #ff6347;
+  }
+  
+  .space {
+    color: #777;
+  }

@@ -1,66 +1,4 @@
-/*.title {
-    font-family: 'Arial', sans-serif;
-    font-size: 72px;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    padding: 50px;
-  }
-  
-  .title:hover {
-    color: #c2357b;
-  }
-  
-  .space {
-    font-weight: normal;
-    color: #555;
-  }*/
-
-
-
-  /*.title {
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 66px;
-    letter-spacing: 1px;
-    color: #444;
-    text-decoration: none;
-    text-transform: uppercase;
-    display: inline-block;
-    position: relative;
-    padding: 50px;
-  }
-  
-  .title:hover {
-    color: #ff6347;
-  }
-  
-  .space {
-    color: #777;
-  }*/
-
-  /*.title {
-    font-family: 'Georgia', serif;
-    font-size: 62px;
-    font-weight: normal;
-    color: #2d3436;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 50px;
-  }
-  
-  .title:hover {
-    color: #e74c3c;
-  }
-  
-  .space {
-    font-weight: bold;
-    color: #bdc3c7;
-  }
-  */
-
-  /*.title {
+  .title {
     font-family: 'Verdana', sans-serif;
     font-size: 70px;
     font-weight: 600;
@@ -79,29 +17,4 @@
   .space {
     font-weight: lighter;
     color: #7f8c8d;
-  }*/
-
-
-  .title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 68px;
-    font-weight: normal;
-    color: #555;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    padding: 50px;
   }
-  
-  .title:hover {
-    color: #2980b9;
-    transform: scale(1.02);
-  }
-  
-  .space {
-    color: #34495e;
-  }
-  
-  
-  
-  
-

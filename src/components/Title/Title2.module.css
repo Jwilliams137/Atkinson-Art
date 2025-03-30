@@ -1,0 +1,18 @@
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 68px;
+    font-weight: normal;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 50px;
+  }
+  
+  .title:hover {
+    color: #2980b9;
+    transform: scale(1.02);
+  }
+  
+  .space {
+    color: #34495e;
+  }
