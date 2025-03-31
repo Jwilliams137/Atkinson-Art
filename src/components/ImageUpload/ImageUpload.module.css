@@ -34,15 +34,17 @@
     margin-top: 10px;    
   }
 
-  .submitButton {
+  .buttons {
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+  }
+
+  .button {
     max-width: 200px;
     padding: 10px 20px;
     border-radius: 8px;
     background-color: var(--primary-text);
     color: white;
     align-self: flex-end;
-   }
-   
-   .submitButton:hover {
-     background-color: var(--hover-text);
    }

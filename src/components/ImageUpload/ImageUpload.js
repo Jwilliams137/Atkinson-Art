@@ -11,13 +11,16 @@ const ImageUpload = ({
 }) => {
     const [formData, setFormData] = useState({});
     const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+    const [localImage, setLocalImage] = useState(null);
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const objectUrl = URL.createObjectURL(file);
+            setLocalImage(file);
             setSelectedImage(file);
+
+            const objectUrl = URL.createObjectURL(file);
             setFormData(prev => ({
                 ...prev,
                 file,
@@ -32,13 +35,22 @@ const ImageUpload = ({
         }
     };
 
+    const handleCancel = () => {
+        setLocalImage(null);
+        setImageDimensions({ width: 0, height: 0 });
+        setFormData({});
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => {
             const updatedData = { ...prevData, [name]: value };
             return updatedData;
         });
-    };    
+    };
 
     const handleImageUpload = async () => {
         if (imageDimensions.width === 0 || imageDimensions.height === 0) {
@@ -52,7 +64,7 @@ const ImageUpload = ({
         const price = formData.price ?? null;
 
         const imageFormData = new FormData();
-        imageFormData.append("file", formData.file);
+        imageFormData.append("file", localImage);
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
         imageFormData.append("title", title);
@@ -65,14 +77,10 @@ const ImageUpload = ({
 
         await handleSubmit("image-upload", sectionKey, { ...formData, title, description, dimensions, price, imageDimensions, color });
 
-        setSelectedImage(null);
-        setImageDimensions({ width: 0, height: 0 });
-        setFormData({});
-
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
+        handleCancel();
     };
+
+    const isFormFilled = localImage || Object.values(formData).some(value => value);
 
     return (
         <div className={styles.imageUpload}>
@@ -96,10 +104,10 @@ const ImageUpload = ({
                     />
                 </div>
             ))}
-            {selectedImage && (
+            {localImage && (
                 <div className={styles.imagePreview}>
                     <Image
-                        src={URL.createObjectURL(selectedImage)}
+                        src={URL.createObjectURL(localImage)}
                         alt="Selected Image"
                         className={styles.previewImage}
                         width={imageDimensions.width}
@@ -112,12 +120,17 @@ const ImageUpload = ({
                     <p>Selected Color Preview</p>
                 </div>
             )}
-            <button
-                className={styles.submitButton}
-                onClick={handleImageUpload}
-            >
-                Submit Image
-            </button>
+            <div className={styles.buttons}>
+                {isFormFilled && (
+                    <button onClick={handleCancel} className={styles.button}>Cancel</button>
+                )}
+                <button
+                    className={styles.button}
+                    onClick={handleImageUpload}
+                >
+                    Submit
+                </button>
+            </div>            
         </div>
     );
 };

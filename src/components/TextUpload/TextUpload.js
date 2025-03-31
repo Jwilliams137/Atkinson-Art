@@ -37,6 +37,14 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     setYear("");
   };
 
+  const handleCancel = () => {
+    handleTextChange({ target: { value: "" } });
+    setYear("");
+  };
+
+  // Check if any of the fields have content
+  const hasInput = textContent.trim() || year.trim();
+
   return (
     <div className={styles.textUpload}>
       <div className={styles.field}>
@@ -76,9 +84,12 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
         </div>
       </div>
 
-      <button className={styles.submitButton} onClick={handleTextUpload}>
-        Submit
-      </button>
+      <div className={styles.buttons}>
+        {hasInput && (
+          <button className={styles.button} onClick={handleCancel}>Cancel</button>
+        )}
+        <button className={styles.button} onClick={handleTextUpload}>Submit</button>
+      </div>
     </div>
   );
 };
