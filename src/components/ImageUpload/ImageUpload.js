@@ -11,18 +11,21 @@ const ImageUpload = ({
 }) => {
     const [formData, setFormData] = useState({});
     const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+    const [localImage, setLocalImage] = useState(null);
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const objectUrl = URL.createObjectURL(file);
+            setLocalImage(file); // Keep the actual File object
             setSelectedImage(file);
+    
+            const objectUrl = URL.createObjectURL(file);
             setFormData(prev => ({
                 ...prev,
                 file,
             }));
-
+    
             const image = new window.Image();
             image.src = objectUrl;
             image.onload = () => {
@@ -31,9 +34,10 @@ const ImageUpload = ({
             };
         }
     };
+    
 
     const handleCancel = () => {
-        setSelectedImage(null);
+        setLocalImage(null);
         setImageDimensions({ width: 0, height: 0 });
         setFormData({});
         if (fileInputRef.current) {
@@ -61,7 +65,7 @@ const ImageUpload = ({
         const price = formData.price ?? null;
 
         const imageFormData = new FormData();
-        imageFormData.append("file", formData.file);
+        imageFormData.append("file", localImage);
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
         imageFormData.append("title", title);
@@ -74,13 +78,7 @@ const ImageUpload = ({
 
         await handleSubmit("image-upload", sectionKey, { ...formData, title, description, dimensions, price, imageDimensions, color });
 
-        setSelectedImage(null);
-        setImageDimensions({ width: 0, height: 0 });
-        setFormData({});
-
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
+        handleCancel();
     };
 
     return (
@@ -105,10 +103,10 @@ const ImageUpload = ({
                     />
                 </div>
             ))}
-            {selectedImage && (
+            {localImage && (
                 <div className={styles.imagePreview}>
                     <Image
-                        src={URL.createObjectURL(selectedImage)}
+                        src={URL.createObjectURL(localImage)}
                         alt="Selected Image"
                         className={styles.previewImage}
                         width={imageDimensions.width}
@@ -122,15 +120,15 @@ const ImageUpload = ({
                 </div>
             )}
             <div className={styles.buttons}>
-                {selectedImage && (
+                {localImage && (
                     <button onClick={handleCancel} className={styles.button}>Cancel</button>
                 )}
-            <button
-                className={styles.button}
-                onClick={handleImageUpload}
-            >
-                Submit Image
-            </button>
+                <button
+                    className={styles.button}
+                    onClick={handleImageUpload}
+                >
+                    Submit Image
+                </button>
             </div>            
         </div>
     );
