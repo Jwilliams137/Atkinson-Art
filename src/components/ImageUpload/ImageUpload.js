@@ -17,15 +17,15 @@ const ImageUpload = ({
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setLocalImage(file); // Keep the actual File object
+            setLocalImage(file);
             setSelectedImage(file);
-    
+
             const objectUrl = URL.createObjectURL(file);
             setFormData(prev => ({
                 ...prev,
                 file,
             }));
-    
+
             const image = new window.Image();
             image.src = objectUrl;
             image.onload = () => {
@@ -34,7 +34,6 @@ const ImageUpload = ({
             };
         }
     };
-    
 
     const handleCancel = () => {
         setLocalImage(null);
@@ -81,6 +80,8 @@ const ImageUpload = ({
         handleCancel();
     };
 
+    const isFormFilled = localImage || Object.values(formData).some(value => value);
+
     return (
         <div className={styles.imageUpload}>
             {fieldsList.map((field, fieldIdx) => (
@@ -120,7 +121,7 @@ const ImageUpload = ({
                 </div>
             )}
             <div className={styles.buttons}>
-                {localImage && (
+                {isFormFilled && (
                     <button onClick={handleCancel} className={styles.button}>Cancel</button>
                 )}
                 <button
