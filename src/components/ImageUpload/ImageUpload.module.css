@@ -48,7 +48,3 @@
     color: white;
     align-self: flex-end;
    }
-   
-   .submitButton:hover {
-     background-color: var(--hover-text);
-   }
