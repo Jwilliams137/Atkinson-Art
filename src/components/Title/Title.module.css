@@ -6,7 +6,7 @@
     text-decoration: none;
     text-transform: capitalize;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 50px;
+    margin-bottom: 40px;
   }
   
   .title:hover {

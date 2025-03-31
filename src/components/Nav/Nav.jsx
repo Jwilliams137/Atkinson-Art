@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import styles from "./Nav.module.css";
 import navData from "../../data/navData.json";
+import Title from "../Title/Title";
 
 export default function Nav() {
   const { user, isUserAllowed } = useAuth();
@@ -41,9 +42,10 @@ export default function Nav() {
     <>
       <div className={styles.nav}>
         <div className={styles.leftNav}>
-          <Link href="/" className={styles.title}>
+          {/*<Link href="/" className={styles.title}>
             {splitTitle(title)}
-          </Link>
+          </Link>*/}
+          <Title />
           <div className={styles.linkContainer}>
             <ul className={styles.linkList}>
               {Object.keys(pages).map((key) => {
@@ -79,9 +81,10 @@ export default function Nav() {
           className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""
             }`}
         >
-          <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
+          {/*<Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
             {splitTitle(title)}
-          </Link>
+          </Link>*/}
+          <Title />
           <ul className={styles.burgerLinkList}>
             {Object.keys(pages).map((key) => {
               const page = pages[key];

@@ -5,7 +5,7 @@
     color: #555;
     text-decoration: none;
     transition: all 0.2s ease;
-    padding: 50px;
+    margin-bottom: 40px;
   }
   
   .title:hover {

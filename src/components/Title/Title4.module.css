@@ -7,7 +7,7 @@
     text-transform: uppercase;
     display: inline-block;
     position: relative;
-    padding: 50px;
+    margin-bottom: 40px;
   }
   
   .title:hover {
