@@ -127,7 +127,7 @@ const ImageUpload = ({
                     className={styles.button}
                     onClick={handleImageUpload}
                 >
-                    Submit Image
+                    Submit
                 </button>
             </div>            
         </div>
