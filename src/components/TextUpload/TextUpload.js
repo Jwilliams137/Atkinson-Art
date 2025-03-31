@@ -42,7 +42,6 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     setYear("");
   };
 
-  // Check if any of the fields have content
   const hasInput = textContent.trim() || year.trim();
 
   return (

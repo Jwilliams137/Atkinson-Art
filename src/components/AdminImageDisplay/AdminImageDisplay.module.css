@@ -13,6 +13,9 @@
   height: auto;
   gap: 15px;
   flex-shrink: 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 5px 5px 20px;
 }
 
 .imageItem img {
@@ -67,7 +70,7 @@
 }
 
 @media only screen and (max-width: 1000px) {
-.imagesGrid {
-  justify-content: center;
-}
+  .imagesGrid {
+    justify-content: center;
+  }
 }
