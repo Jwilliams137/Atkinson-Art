@@ -1,0 +1,37 @@
+.title {
+    font-family: 'Georgia', serif;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #b83030;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+  }
+  
+  .title span:first-child {
+    color: #7f9f9f;
+    animation: fadeInLeft 0.6s ease-out forwards;
+  }
+  
+  .title span:last-child {
+    color: #403b3b;
+    animation: fadeInRight 4.5s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+  
+  .title:hover {
+    color: #2c2c2c;
+  }
+  
+  @keyframes fadeInLeft {
+    0% { opacity: 0; transform: translateX(-10px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes fadeInRight {
+    0% { opacity: 0; transform: translateX(10px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
