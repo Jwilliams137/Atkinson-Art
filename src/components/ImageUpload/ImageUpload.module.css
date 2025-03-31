@@ -47,4 +47,5 @@
     background-color: var(--primary-text);
     color: white;
     align-self: flex-end;
+    font-size: 18px;
    }
