@@ -42,6 +42,9 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     setYear("");
   };
 
+  // Check if any of the fields have content
+  const hasInput = textContent.trim() || year.trim();
+
   return (
     <div className={styles.textUpload}>
       <div className={styles.field}>
@@ -82,7 +85,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
       </div>
 
       <div className={styles.buttons}>
-        {textContent.trim() && (
+        {hasInput && (
           <button className={styles.button} onClick={handleCancel}>Cancel</button>
         )}
         <button className={styles.button} onClick={handleTextUpload}>Submit</button>
