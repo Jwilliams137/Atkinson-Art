@@ -32,13 +32,22 @@ const ImageUpload = ({
         }
     };
 
+    const handleCancel = () => {
+        setSelectedImage(null);
+        setImageDimensions({ width: 0, height: 0 });
+        setFormData({});
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => {
             const updatedData = { ...prevData, [name]: value };
             return updatedData;
         });
-    };    
+    };
 
     const handleImageUpload = async () => {
         if (imageDimensions.width === 0 || imageDimensions.height === 0) {
@@ -112,12 +121,17 @@ const ImageUpload = ({
                     <p>Selected Color Preview</p>
                 </div>
             )}
+            <div className={styles.buttons}>
+                {selectedImage && (
+                    <button onClick={handleCancel} className={styles.button}>Cancel</button>
+                )}
             <button
-                className={styles.submitButton}
+                className={styles.button}
                 onClick={handleImageUpload}
             >
                 Submit Image
             </button>
+            </div>            
         </div>
     );
 };
