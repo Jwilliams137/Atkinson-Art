@@ -10,6 +10,7 @@
       { "key": "about", "label": "About" },
       { "key": "bio", "label": "Bio" },
       { "key": "exhibitions", "label": "Exhibitions" },
+      { "key": "resume", "label": "Resume" },
       { "key": "shop", "label": "Shop" }
     ],
     "fieldsForPage": {
@@ -136,42 +137,64 @@
       ],
       "about": [
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
+        {"text-upload": [
+          { "name": "generalStatement", "label": "Upload About Statement", "type": "text" },
+          { "name": "type", "value": "general-statement" },
+          { "name": "pageType", "type": "hidden", "value": "about" }
+        ]},
         {"image-upload": [
           { "name": "file", "label": "Upload About Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "about" }
-        ]},
-        {"text-upload": [
-          { "name": "generalStatement", "label": "Upload General Statement", "type": "text" },
-          { "name": "type", "value": "general-statement" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]}
       ],
       "bio": [
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
-        {"image-upload": [
-          { "name": "file", "label": "Upload Bio Image", "type": "file" },
-          { "name": "title", "label": "Title", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "bio" }
-        ]},
         {"text-upload": [
           { "name": "bio", "label": "Upload Biography", "type": "text" },
           { "name": "type", "value": "biography" },
+          { "name": "pageType", "type": "hidden", "value": "bio" }
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Upload Bio Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]}
       ],
       "exhibitions": [
         {"notes": "Exhibitions show up on your page sorted by year.  Without a year they wont show up."},
-         {"image-upload": [
-          { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
-          { "name": "title", "label": "Title", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
-        ]},
         {"text-upload": [
           { "name": "exhibition", "label": "Upload Exhibition", "type": "text" },
           { "name": "type", "value": "exhibition" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]}        
+      ],
+      "resume": [
+        {"text-upload": [
+          { "name": "groupMuseum", "label": "Selected Group Museum Exhibitions", "type": "text" },
+          { "name": "type", "value": "exhibition" },
+          { "name": "pageType", "type": "hidden", "value": "resume" }
+        ]},
+        {"text-upload": [
+          { "name": "group", "label": "Select Group Exhibitions", "type": "text" },
+          { "name": "type", "value": "exhibition" },
+          { "name": "pageType", "type": "hidden", "value": "resume" }
+        ]},
+        {"text-upload": [
+          { "name": "publications", "label": "Publications", "type": "text" },
+          { "name": "type", "value": "exhibition" },
+          { "name": "pageType", "type": "hidden", "value": "resume" }
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Upload Resume Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "resume" }
+        ]}     
       ],
       "shop": [
         {"image-upload": [

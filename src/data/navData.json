@@ -15,7 +15,8 @@
         "label": "About",
         "subPages": [
           { "label": "Bio", "href": "/about/bio" },
-          { "label": "Exhibitions", "href": "/about/exhibitions" }
+          { "label": "Exhibitions", "href": "/about/exhibitions" },
+          { "label": "Resume", "href": "/about/resume" }
         ]
       },
       "shop": { "label": "Shop", "href": "/shop" },      
