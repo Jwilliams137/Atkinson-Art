@@ -38,6 +38,14 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
             formData.title = titleField ? titleField.value : "Untitled";
         }
 
+        if (!formData.type) {
+            const typeField = sectionData.fieldsForPage[sectionKey]?.find(
+                (fieldGroup) => fieldGroup["text-upload"]
+            )?.["text-upload"]?.find((field) => field.name === "type");
+
+            formData.type = typeField ? typeField.value : "general";
+        }
+
         try {
             if (uploadType === "image-upload" && formData.file) {
                 const { file, title, description, imageDimensions, color, price } = formData;
@@ -58,6 +66,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 imageFormData.append("width", imageDimensions.width);
                 imageFormData.append("height", imageDimensions.height);
                 imageFormData.append("color", color);
+                imageFormData.append("type", formData.type);
 
                 const response = await fetch("/api/upload-image", {
                     method: "POST",
