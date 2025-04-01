@@ -177,17 +177,17 @@
       "resume": [
         {"text-upload": [
           { "name": "groupMuseum", "label": "Selected Group Museum Exhibitions", "type": "text" },
-          { "name": "type", "value": "exhibition" },
+          { "name": "type", "value": "group-museum" },
           { "name": "pageType", "type": "hidden", "value": "resume" }
         ]},
         {"text-upload": [
           { "name": "group", "label": "Select Group Exhibitions", "type": "text" },
-          { "name": "type", "value": "exhibition" },
+          { "name": "type", "value": "group" },
           { "name": "pageType", "type": "hidden", "value": "resume" }
         ]},
         {"text-upload": [
           { "name": "publications", "label": "Publications", "type": "text" },
-          { "name": "type", "value": "exhibition" },
+          { "name": "type", "value": "publications" },
           { "name": "pageType", "type": "hidden", "value": "resume" }
         ]},
         {"image-upload": [
