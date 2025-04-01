@@ -6,6 +6,7 @@ import styles from "./TextUpload.module.css";
 const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [order, setOrderState] = useState(1);
   const [year, setYear] = useState("");
+  const [localText, setLocalText] = useState(textContent); // Local state for preview only
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -25,7 +26,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     if (!textContent.trim()) return;
 
     const newTextData = {
-      content: textContent,
+      content: textContent, // Use the original prop so Firebase still gets the correct data
       pageType: sectionKey,
       order,
       ...(year && { year }),
@@ -33,16 +34,16 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
 
     await handleSubmit("text-upload", sectionKey, newTextData);
 
-    handleTextChange({ target: { value: "" } });
+    handleTextChange({ target: { value: "" } }); // Reset prop state in parent
+    setLocalText(""); // Reset local preview
     setYear("");
   };
 
   const handleCancel = () => {
-    handleTextChange({ target: { value: "" } });
+    handleTextChange({ target: { value: "" } }); // Reset prop state in parent
+    setLocalText(""); // Reset local preview
     setYear("");
   };
-
-  const hasInput = textContent.trim() || year.trim();
 
   return (
     <div className={styles.textUpload}>
@@ -53,8 +54,11 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
         <textarea
           className={styles.textArea}
           placeholder="Enter your text here"
-          value={textContent}
-          onChange={handleTextChange}
+          value={localText} // Only update local preview
+          onChange={(e) => {
+            setLocalText(e.target.value); // Only update preview
+            handleTextChange(e); // Still update the original prop for Firebase
+          }}
           id={fieldsList[0]?.name}
           rows={5}
         />
@@ -77,14 +81,14 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
       <div className={styles.preview}>
         <h3>Preview</h3>
         <div>
-          {textContent.split("\n").map((paragraph, index) =>
+          {localText.split("\n").map((paragraph, index) =>
             paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
           )}
         </div>
       </div>
 
       <div className={styles.buttons}>
-        {hasInput && (
+        {(localText.trim() || year.trim()) && (
           <button className={styles.button} onClick={handleCancel}>Cancel</button>
         )}
         <button className={styles.button} onClick={handleTextUpload}>Submit</button>
