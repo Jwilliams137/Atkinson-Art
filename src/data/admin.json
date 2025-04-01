@@ -17,12 +17,12 @@
       "home": [
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
-          { "name": "file", "label": "Upload Home Image", "type": "file" },
+          { "name": "file", "label": "Home Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },          
           { "name": "pageType", "type": "hidden", "value": "home" }
         ]},
         {"text-upload": [
-          { "name": "homeStatement", "label": "Upload Home Statement", "type": "text" },
+          { "name": "homeStatement", "label": "Home Statement", "type": "text" },
           { "name": "type", "value": "home-statement" },
           { "name": "pageType", "type": "hidden", "value": "home" }
         ]}    
@@ -30,107 +30,107 @@
       "artwork": [
         {"notes": "Titles already added for these.  They will end up being links to the subpages of Artwork and flip on mouse hover to show a solid color and the name of the page they link to."},
         {"image-upload": [
-          { "name": "file", "label": "Upload New Work Image", "type": "file" },
+          { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#c992e3" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Houses Image", "type": "file" },
+          { "name": "file", "label": "Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#640c26" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Constructions Image", "type": "file" },
+          { "name": "file", "label": "Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6d63f2" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Collage Image", "type": "file" },
+          { "name": "file", "label": "Collage Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e27474" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
+          { "name": "file", "label": "Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e3c94a" }
         ]},
         {"text-upload": [
-          { "name": "artworkStatement", "label": "Upload Artwork Statement", "type": "text" },
+          { "name": "artworkStatement", "label": "Artwork Statement", "type": "text" },
           { "name": "type", "value": "artwork-statement" },
           { "name": "pageType", "type": "hidden", "value": "artwork" }
         ]}         
       ],
       "new-work": [
         {"image-upload": [
-          { "name": "file", "label": "Upload New Work Image", "type": "file" },
+          { "name": "file", "label": "New Work Gallery Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "new-work" }
         ]},
         {"text-upload": [
-          { "name": "newWorkStatement", "label": "Upload New Work Statement", "type": "text" },
+          { "name": "newWorkStatement", "label": "New Work Statement", "type": "text" },
           { "name": "type", "value": "new-work-statement" },
           { "name": "pageType", "type": "hidden", "value": "new-work" }
         ]}       
       ],
       "houses": [
         {"image-upload": [
-          { "name": "file", "label": "Upload Houses Image", "type": "file" },
+          { "name": "file", "label": "Houses Gallery Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "houses" }
         ]},
         {"text-upload": [
-          { "name": "houses", "label": "Upload Houses Statement", "type": "text" },
+          { "name": "houses", "label": "Houses Statement", "type": "text" },
           { "name": "type", "value": "houses-statement" },
           { "name": "pageType", "type": "hidden", "value": "houses" }
         ]}        
       ],
       "constructions": [
         {"image-upload": [
-          { "name": "file", "label": "Upload Constructions Image", "type": "file" },
+          { "name": "file", "label": "Constructions Gallery Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "constructions" }
         ]},
         {"text-upload": [
-          { "name": "constructionsStatement", "label": "Upload Constructions Statement", "type": "text" },
+          { "name": "constructionsStatement", "label": "Constructions Statement", "type": "text" },
           { "name": "type", "value": "constructions-statement" },
           { "name": "pageType", "type": "hidden", "value": "constructions" }
         ]}      
       ],
       "collage": [
         {"image-upload": [
-          { "name": "file", "label": "Upload Collage Image", "type": "file" },
+          { "name": "file", "label": "Collage Gallery Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "collage" }
         ]},
         {"text-upload": [
-          { "name": "collageStatement", "label": "Upload Collage Statement", "type": "text" },
+          { "name": "collageStatement", "label": "Collage Statement", "type": "text" },
           { "name": "type", "value": "collage-statement" },
           { "name": "pageType", "type": "hidden", "value": "collage" }
         ]}       
       ],
       "earlier-work": [
         {"image-upload": [
-          { "name": "file", "label": "Upload Earlier Work Image", "type": "file" },
+          { "name": "file", "label": "Earlier Work Gallery Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "earlier-work" }
         ]},
         {"text-upload": [
-          { "name": "earlierWorkStatement", "label": "Upload Earlier Work Statement", "type": "text" },
+          { "name": "earlierWorkStatement", "label": "Earlier Work Statement", "type": "text" },
           { "name": "type", "value": "earlier-work-statement" },
           { "name": "pageType", "type": "hidden", "value": "earlier-work" }
         ]}      
@@ -138,12 +138,12 @@
       "about": [
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
-          { "name": "generalStatement", "label": "Upload About Statement", "type": "text" },
+          { "name": "generalStatement", "label": "About Statement", "type": "text" },
           { "name": "type", "value": "general-statement" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload About Image", "type": "file" },
+          { "name": "file", "label": "About Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]}
@@ -151,12 +151,12 @@
       "bio": [
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
-          { "name": "bio", "label": "Upload Biography", "type": "text" },
+          { "name": "bio", "label": "Biography", "type": "text" },
           { "name": "type", "value": "biography" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Bio Image", "type": "file" },
+          { "name": "file", "label": "Bio Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]}
@@ -164,12 +164,12 @@
       "exhibitions": [
         {"notes": "Exhibitions show up on your page sorted by year.  Without a year they wont show up."},
         {"text-upload": [
-          { "name": "exhibition", "label": "Upload Exhibition", "type": "text" },
+          { "name": "exhibition", "label": "Exhibition", "type": "text" },
           { "name": "type", "value": "exhibition" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Exhibitions Image", "type": "file" },
+          { "name": "file", "label": "Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]}        
@@ -191,14 +191,14 @@
           { "name": "pageType", "type": "hidden", "value": "resume" }
         ]},
         {"image-upload": [
-          { "name": "file", "label": "Upload Resume Image", "type": "file" },
+          { "name": "file", "label": "Resume Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "resume" }
         ]}     
       ],
       "shop": [
         {"image-upload": [
-          { "name": "file", "label": "Upload Shop Image", "type": "file" },
+          { "name": "file", "label": "Shop Gallery Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -206,7 +206,7 @@
           { "name": "pageType", "type": "hidden", "value": "shop" }
         ]},
         {"text-upload": [
-          { "name": "shopStatement", "label": "Upload Shop Statement", "type": "text" },
+          { "name": "shopStatement", "label": "Shop Statement", "type": "text" },
           { "name": "type", "value": "shop-statement" },
           { "name": "pageType", "type": "hidden", "value": "shop" }
         ]}       
