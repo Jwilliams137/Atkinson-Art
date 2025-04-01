@@ -6,7 +6,7 @@ import styles from "./TextUpload.module.css";
 const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [order, setOrderState] = useState(1);
   const [year, setYear] = useState("");
-  const [localText, setLocalText] = useState(textContent); // Local state for preview only
+  const [localText, setLocalText] = useState(textContent || ""); // Ensure local instance starts with correct text
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -23,10 +23,12 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
   }, [sectionKey, setOrder]);
 
   const handleTextUpload = async () => {
-    if (!textContent.trim()) return;
+    if (!localText.trim()) return;
+
+    handleTextChange({ target: { value: localText } }); // Send to parent before submitting
 
     const newTextData = {
-      content: textContent, // Use the original prop so Firebase still gets the correct data
+      content: localText, // Ensure Firebase gets the correct text
       pageType: sectionKey,
       order,
       ...(year && { year }),
@@ -34,14 +36,14 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
 
     await handleSubmit("text-upload", sectionKey, newTextData);
 
-    handleTextChange({ target: { value: "" } }); // Reset prop state in parent
-    setLocalText(""); // Reset local preview
+    handleTextChange({ target: { value: "" } }); // Reset parent state
+    setLocalText(""); // Reset only this instance
     setYear("");
   };
 
   const handleCancel = () => {
-    handleTextChange({ target: { value: "" } }); // Reset prop state in parent
-    setLocalText(""); // Reset local preview
+    handleTextChange({ target: { value: "" } }); // Reset parent state
+    setLocalText(""); // Reset only this instance
     setYear("");
   };
 
@@ -54,10 +56,10 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
         <textarea
           className={styles.textArea}
           placeholder="Enter your text here"
-          value={localText} // Only update local preview
+          value={localText}
           onChange={(e) => {
-            setLocalText(e.target.value); // Only update preview
-            handleTextChange(e); // Still update the original prop for Firebase
+            setLocalText(e.target.value); // Update only this instance
+            handleTextChange(e); // Ensure parent stays updated
           }}
           id={fieldsList[0]?.name}
           rows={5}
