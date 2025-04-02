@@ -8,12 +8,14 @@ const ImageUpload = ({
     setSelectedImage,
     handleSubmit,
     sectionKey,
-    currentSectionKey // New prop to track the current section
+    currentSectionKey
 }) => {
     const [formData, setFormData] = useState({});
     const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
     const [localImage, setLocalImage] = useState(null);
     const fileInputRef = useRef(null);
+    const defaultColor = fieldsList.find(field => field.name === "color")?.value || "#ffffff";
+    const previewColor = formData.color || defaultColor;
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -47,10 +49,7 @@ const ImageUpload = ({
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => {
-            const updatedData = { ...prevData, [name]: value };
-            return updatedData;
-        });
+        setFormData(prevData => ({ ...prevData, [name]: value }));
     };
 
     const handleImageUpload = async () => {
@@ -58,8 +57,8 @@ const ImageUpload = ({
             return;
         }
 
+        const color = formData.color || defaultColor;
         const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
-        const color = formData.color || (fieldsList.find(field => field.name === "color")?.value || "#ffffff");
         const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "");
         const dimensions = formData.dimensions || "";
         const price = formData.price ?? null;
@@ -85,26 +84,58 @@ const ImageUpload = ({
 
     return (
         <div className={styles.imageUpload}>
-            {fieldsList.map((field, fieldIdx) => (
-                <div key={fieldIdx} className={styles.field}>
-                    {field.type !== "hidden" && (
-                        <label htmlFor={field.name} className={styles.label}>
-                            {field.label}
-                        </label>
-                    )}
-                    <input
-                        ref={field.type === "file" ? fileInputRef : null}
-                        type={field.type}
-                        name={field.name}
-                        id={field.name}
-                        className={styles.inputField}
-                        {...(field.type === "file" ? { onChange: handleFileChange } : {
-                            value: formData[field.name] || "",
-                            onChange: handleInputChange,
-                        })}
-                    />
-                </div>
-            ))}
+            {fieldsList.map((field, fieldIdx) => {
+                if (field.type === "color") {
+                    return (
+                        <div
+                            key={fieldIdx}
+                            className={styles.field}
+                            style={{ display: "flex", alignItems: "center" }}
+                        >
+                            <input
+                                type="color"
+                                name={field.name}
+                                id={field.name}
+                                value={previewColor}
+                                onChange={handleInputChange}
+                                style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    border: "none",
+                                    padding: 0,
+                                    cursor: "pointer",
+                                }}
+                            />
+                            <span className={styles.colorLabel}>
+                                {field.label}
+                            </span>
+                        </div>
+                    );
+                }
+                return (
+                    <div key={fieldIdx} className={styles.field}>
+                        {field.type !== "hidden" && (
+                            <label htmlFor={field.name} className={styles.label}>
+                                {field.label}
+                            </label>
+                        )}
+                        <input
+                            ref={field.type === "file" ? fileInputRef : null}
+                            type={field.type}
+                            name={field.name}
+                            id={field.name}
+                            className={styles.inputField}
+                            {...(field.type === "file"
+                                ? { onChange: handleFileChange }
+                                : {
+                                    value: formData[field.name] || "",
+                                    onChange: handleInputChange,
+                                })}
+                        />
+                    </div>
+                );
+            })}
+
             {localImage && (
                 <div className={styles.imagePreview}>
                     <Image
@@ -114,11 +145,6 @@ const ImageUpload = ({
                         width={imageDimensions.width}
                         height={imageDimensions.height}
                     />
-                </div>
-            )}
-            {formData.color && (
-                <div className={styles.colorPreview} style={{ backgroundColor: formData.color }}>
-                    <span></span>
                 </div>
             )}
             <div className={styles.buttons}>
@@ -131,7 +157,7 @@ const ImageUpload = ({
                 >
                     Submit
                 </button>
-            </div>            
+            </div>
         </div>
     );
 };
