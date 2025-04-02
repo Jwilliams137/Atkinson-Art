@@ -176,6 +176,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                                             setSelectedImage={setSelectedImage}
                                             handleSubmit={handleUpload}
                                             sectionKey={sectionKey}
+                                            currentSectionKey={sectionKey}
                                         />
                                     )}
                                     {uploadType === "text-upload" && (

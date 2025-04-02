@@ -7,7 +7,8 @@ const ImageUpload = ({
     selectedImage,
     setSelectedImage,
     handleSubmit,
-    sectionKey
+    sectionKey,
+    currentSectionKey // New prop to track the current section
 }) => {
     const [formData, setFormData] = useState({});
     const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
@@ -75,7 +76,7 @@ const ImageUpload = ({
         imageFormData.append("height", imageDimensions.height);
         imageFormData.append("color", color);
 
-        await handleSubmit("image-upload", sectionKey, { ...formData, title, description, dimensions, price, imageDimensions, color });
+        await handleSubmit("image-upload", sectionKey, { ...formData, title, description, dimensions, price, imageDimensions, color }, currentSectionKey);
 
         handleCancel();
     };
