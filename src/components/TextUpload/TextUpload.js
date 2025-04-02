@@ -6,7 +6,7 @@ import styles from "./TextUpload.module.css";
 const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [order, setOrderState] = useState(1);
   const [year, setYear] = useState("");
-  const [localText, setLocalText] = useState(textContent || ""); // Ensure local instance starts with correct text
+  const [localText, setLocalText] = useState(textContent || "");
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -25,25 +25,26 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
   const handleTextUpload = async () => {
     if (!localText.trim()) return;
 
-    handleTextChange({ target: { value: localText } }); // Send to parent before submitting
+    handleTextChange({ target: { value: localText } });
 
     const newTextData = {
-      content: localText, // Ensure Firebase gets the correct text
-      pageType: sectionKey,
-      order,
-      ...(year && { year }),
+        content: localText,
+        pageType: sectionKey,
+        order,
+        type: fieldsList.find((field) => field.name === "type")?.value || "general",
+        ...(year && { year }),
     };
 
     await handleSubmit("text-upload", sectionKey, newTextData);
 
-    handleTextChange({ target: { value: "" } }); // Reset parent state
-    setLocalText(""); // Reset only this instance
+    handleTextChange({ target: { value: "" } });
+    setLocalText("");
     setYear("");
-  };
+};
 
   const handleCancel = () => {
-    handleTextChange({ target: { value: "" } }); // Reset parent state
-    setLocalText(""); // Reset only this instance
+    handleTextChange({ target: { value: "" } });
+    setLocalText("");
     setYear("");
   };
 
@@ -58,8 +59,8 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           placeholder="Enter your text here"
           value={localText}
           onChange={(e) => {
-            setLocalText(e.target.value); // Update only this instance
-            handleTextChange(e); // Ensure parent stays updated
+            setLocalText(e.target.value);
+            handleTextChange(e);
           }}
           id={fieldsList[0]?.name}
           rows={5}
