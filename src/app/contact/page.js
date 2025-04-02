@@ -3,7 +3,7 @@ import styles from './page.module.css'
 function ContactPage() {
   return (
     <div className={styles.container}>
-      <form action="https://formsubmit.co/jwilliams137.036@gmail.com" method="POST" className={styles.form}>
+      <form action="https://formsubmit.co/Linda.atkinson111@gmail.com" method="POST" className={styles.form}>
         <input 
           type="text" 
           name="name" 
