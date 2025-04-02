@@ -118,7 +118,7 @@ const ImageUpload = ({
             )}
             {formData.color && (
                 <div className={styles.colorPreview} style={{ backgroundColor: formData.color }}>
-                    <p>Selected Color Preview</p>
+                    <span></span>
                 </div>
             )}
             <div className={styles.buttons}>

@@ -49,3 +49,9 @@
     align-self: flex-end;
     font-size: 18px;
    }
+
+   .colorPreview {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+   }
