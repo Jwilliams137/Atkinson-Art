@@ -330,3 +330,9 @@
     right: 15px;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .burgerMenu {
+    background-color: #2e2c2e;
+  }
+}
