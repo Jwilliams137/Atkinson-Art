@@ -77,18 +77,15 @@
 
 @media (prefers-color-scheme: dark) {
   .imageItem {
-    background-color: #f7f6f8;
+    border: none;
   }
-  .title {
-    color: #2e2c2e;
-  }
+
   .deleteButton {
-    background-color: #2e2c2e;
+    background-color: #0c0b0c;
+    border: none;
   }
+
   .deleteButton:hover {
-    background-color: #2e2c2e;
-  }
-  .moveButton {
-    color: #2e2c2e;
+    background-color: #0c0b0c;
   }
 }

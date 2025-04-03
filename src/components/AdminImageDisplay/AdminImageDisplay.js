@@ -48,7 +48,8 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             width={image.width || 300}
             height={image.height || 200}
           />
-          <p className={styles.title} style={{ border: `4px solid ${image.color}` }}>{image.title}</p>
+          <p className={styles.title}>{image.title}</p>
+          {image.color !== "#ffffff" && <span style={{ backgroundColor: `${image.color}`, height: "20px", width: "50px" }}></span>}
           {activeSection !== "artwork" && (
           <div className={styles.reorderButtons}>
             {index > 0 && (

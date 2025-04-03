@@ -33,5 +33,10 @@
       gap: 0px 30px;
       border: solid var(--hover-text) 1px;
       border-radius: 8px;
+      margin-bottom: 20px;
     }
+  }
+
+  @media (prefers-color-scheme: dark) {
+
   }

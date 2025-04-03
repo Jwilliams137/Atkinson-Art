@@ -109,29 +109,23 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .paragraph {
-    color: #2e2c2e;
-  }
-
-  .readMoreButton {
-    color: #2e2c2e;
+  .textItem {
+    background-color: #2e2c2e;
+    border: none;
   }
 
   .deleteButton,
   .editButton {
-background-color: #2e2c2e;
+    background-color: #0c0b0c;
   }
 
   .deleteButton:hover,
   .editButton:hover {
-background-color: #2e2c2e;
+    background-color: #0c0b0c;
   }
 
   .editInput {
-    background-color: #f9f9f9;
-    color: #2e2c2e;
-  }
-  .moveButton {
+    background-color: #cccbcc;
     color: #2e2c2e;
   }
 

@@ -1,77 +1,82 @@
 .textUpload {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: #f7f6f8;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-  }
-  
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f7f6f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
 
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.textArea {
+  padding: 8px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  height: 150px;
+  resize: vertical;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.yearInput {
+  padding: 8px;
+  height: 45px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
+  gap: 20px;
+}
+
+.button {
+  max-width: 200px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: var(--primary-text);
+  color: white;
+  align-self: flex-end;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
   .textArea {
-    padding: 8px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    height: 150px;
-    resize: vertical;
-  }
-  
-  .label {
-    font-size: 20px;
-    font-weight: bold;
+    background-color: #cccbcc;
+    color: #2e2c2e;
   }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .yearInput {
-    padding: 8px;
-    height: 45px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: right;
-    gap: 20px;
+  .textUpload {
+    background-color: #2e2c2e;
+    border: none
   }
 
   .button {
-    max-width: 200px;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: var(--primary-text);
-    color: white;
-    align-self: flex-end;
-    font-size: 18px;
-    cursor: pointer;
-   }
-
-   @media (prefers-color-scheme: dark) {
-    .label {
-      color: #2e2c2e;
-    }
-    .textArea {
-      background-color:  white;
-      color: #2e2c2e;
-    }
-    .textUpload {
-      color: #2e2c2e;
-    }
-    .button {
-      background-color: #2e2c2e;
-    }
-   }
+    background-color: #0c0b0c;
+    border: none;
+  }
+  .yearInput {
+    background-color: #cccbcc;
+    color: #2e2c2e;
+  }
+}

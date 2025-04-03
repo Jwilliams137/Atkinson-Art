@@ -81,21 +81,21 @@
 
 @media (prefers-color-scheme: dark) {
   .button {
-    background-color: #2e2c2e;
-  }
-
-  .label {
-    color: #2e2c2e;
+    border: none;
+    background-color: #0c0b0c;
   }
 
   .inputField {
     color: #2e2c2e;
-    background-color: white;
+    background-color: #cccbcc;
   }
+
   .colorPreview {
-    background-color: #f7f6f8;
+    background-color: #2e2c2e;
   }
-  .colorLabel {
-    color: #2e2c2e;
+
+  .imageUpload {
+    background-color: #2e2c2e;
+    border: none;
   }
 }
