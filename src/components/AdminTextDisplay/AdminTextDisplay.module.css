@@ -97,11 +97,33 @@
   min-height: 200px;
   font-size: 18px;
   padding: 9px;
+  resize: vertical;
 }
 
 @media only screen and (max-width: 600px) {
+
   .deleteButton,
   .editButton {
     width: auto;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .paragraph {
+    color: #2e2c2e;
+  }
+
+  .readMoreButton {
+    color: #2e2c2e;
+  }
+
+  .deleteButton,
+  .editButton {
+background-color: #2e2c2e;
+  }
+
+  .deleteButton:hover,
+  .editButton:hover {
+background-color: #2e2c2e;
   }
 }

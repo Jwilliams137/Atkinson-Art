@@ -82,7 +82,6 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
       )}
 
       <div className={styles.preview}>
-        <h3>Preview</h3>
         <div>
           {localText.split("\n").map((paragraph, index) =>
             paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />

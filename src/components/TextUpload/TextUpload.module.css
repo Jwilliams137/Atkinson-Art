@@ -26,6 +26,7 @@
   
   .label {
     font-size: 20px;
+    font-weight: bold;
   }
 
   .field {
@@ -56,4 +57,21 @@
     color: white;
     align-self: flex-end;
     font-size: 18px;
+    cursor: pointer;
+   }
+
+   @media (prefers-color-scheme: dark) {
+    .label {
+      color: #2e2c2e;
+    }
+    .textArea {
+      background-color:  white;
+      color: #2e2c2e;
+    }
+    .textUpload {
+      color: #2e2c2e;
+    }
+    .button {
+      background-color: #2e2c2e;
+    }
    }
