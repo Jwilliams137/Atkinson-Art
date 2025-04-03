@@ -1,56 +1,72 @@
 .imageUpload {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: #f7f6f8;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f7f6f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
 
-  .field {
-    display: flex;
-    gap: 5px;
-  }
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .label {
-    font-size: 20px;
-  }
-  
-  .inputField {
-    padding: 8px;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-  }
+.label {
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
 
-  .previewImage {
-    max-width: 40%;
-    height: auto;
-    padding: 5px;
-    border-radius: 8px;
-    margin-top: 10px;    
-  }
 
-  .buttons {
-    display: flex;
-    justify-content: right;
-    gap: 20px;
-  }
+.inputField {
+  padding: 8px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 
-  .button {
-    max-width: 200px;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: var(--primary-text);
-    color: white;
-    align-self: flex-end;
-    font-size: 18px;
-   }
+}
 
-   .colorPreview {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-   }
+.previewImage {
+  max-width: 40%;
+  height: auto;
+  padding: 5px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
+  gap: 20px;
+}
+
+.button {
+  max-width: 200px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: var(--primary-text);
+  color: white;
+  align-self: flex-end;
+  font-size: 18px;
+}
+
+.colorField {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.colorPreview {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.colorLabel {
+  font-size: 18px;
+  font-weight: bold;
+}

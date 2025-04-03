@@ -87,31 +87,20 @@ const ImageUpload = ({
             {fieldsList.map((field, fieldIdx) => {
                 if (field.type === "color") {
                     return (
-                        <div
-                            key={fieldIdx}
-                            className={styles.field}
-                            style={{ display: "flex", alignItems: "center" }}
-                        >
+                        <div key={fieldIdx} className={styles.colorField}>
                             <input
                                 type="color"
                                 name={field.name}
                                 id={field.name}
                                 value={previewColor}
                                 onChange={handleInputChange}
-                                style={{
-                                    width: "50px",
-                                    height: "50px",
-                                    border: "none",
-                                    padding: 0,
-                                    cursor: "pointer",
-                                }}
+                                className={styles.colorPreview}
                             />
-                            <span className={styles.colorLabel}>
-                                {field.label}
-                            </span>
+                            <span className={styles.colorLabel}>{field.label}</span>
                         </div>
                     );
                 }
+
                 return (
                     <div key={fieldIdx} className={styles.field}>
                         {field.type !== "hidden" && (
