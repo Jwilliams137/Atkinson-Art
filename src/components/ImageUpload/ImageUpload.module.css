@@ -92,4 +92,10 @@
     color: #2e2c2e;
     background-color: white;
   }
+  .colorPreview {
+    background-color: #f7f6f8;
+  }
+  .colorLabel {
+    color: #2e2c2e;
+  }
 }

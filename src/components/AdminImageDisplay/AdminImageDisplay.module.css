@@ -74,3 +74,21 @@
     justify-content: center;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .imageItem {
+    background-color: #f7f6f8;
+  }
+  .title {
+    color: #2e2c2e;
+  }
+  .deleteButton {
+    background-color: #2e2c2e;
+  }
+  .deleteButton:hover {
+    background-color: #2e2c2e;
+  }
+  .moveButton {
+    color: #2e2c2e;
+  }
+}
