@@ -87,9 +87,11 @@
 
     .inputField {
         background-color: #cccbcc;
+        color: #2e2c2e;
     }
 
     .textarea {
         background-color: #cccbcc;
+        color: #2e2c2e;
     }
 }
