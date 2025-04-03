@@ -51,21 +51,36 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
   return (
     <div className={styles.textUpload}>
       <div className={styles.field}>
-        <label htmlFor={fieldsList[0]?.name} className={styles.label}>
-          {fieldsList[0]?.label}
-        </label>
-        <textarea
-          className={styles.textArea}
-          placeholder="Enter your text here"
-          value={localText}
-          onChange={(e) => {
-            setLocalText(e.target.value);
-            handleTextChange(e);
-          }}
-          id={fieldsList[0]?.name}
-          rows={5}
-        />
-      </div>
+  <label htmlFor={fieldsList[0]?.name} className={styles.label}>
+    {fieldsList[0]?.label}
+  </label>
+  {fieldsList[0]?.type === "link" ? (
+    <input
+      type="text"
+      className={styles.link}
+      placeholder="Enter a link"
+      value={localText}
+      onChange={(e) => {
+        setLocalText(e.target.value);
+        handleTextChange(e);
+      }}
+      id={fieldsList[0]?.name}
+    />
+  ) : (
+    <textarea
+      className={styles.textArea}
+      placeholder="Enter your text here"
+      value={localText}
+      onChange={(e) => {
+        setLocalText(e.target.value);
+        handleTextChange(e);
+      }}
+      id={fieldsList[0]?.name}
+      rows={5}
+    />
+  )}
+</div>
+
 
       {sectionKey === "exhibitions" && (
         <div className={styles.field}>

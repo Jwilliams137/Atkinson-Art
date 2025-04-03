@@ -24,6 +24,14 @@
   resize: vertical;
 }
 
+.link {
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 18px;
+  padding: 8px;
+}
+
 .label {
   font-size: 20px;
   font-weight: bold;
@@ -76,8 +84,13 @@
     background-color: #0c0b0c;
     border: none;
   }
+
   .yearInput {
     background-color: #cccbcc;
     color: #2e2c2e;
+  }
+
+  .link {
+    background-color: #cccbcc;
   }
 }

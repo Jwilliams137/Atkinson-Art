@@ -25,7 +25,12 @@
           { "name": "homeStatement", "label": "Home Statement", "type": "text" },
           { "name": "type", "value": "home-statement" },
           { "name": "pageType", "type": "hidden", "value": "home" }
-        ]}    
+        ]},
+        {"text-upload": [
+          { "name": "link", "label": "Link", "type": "link" },
+          { "name": "type", "value": "link" },
+          { "name": "pageType", "type": "hidden", "value": "home" }
+        ]}  
       ],
       "artwork": [
         {"notes": "Titles already added for these.  They will end up being links to the subpages of Artwork and flip on mouse hover to show a solid color and the name of the page they link to."},
