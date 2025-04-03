@@ -83,11 +83,12 @@
 .link {
   cursor: pointer;
   font-size: 30px;
+  transition: transform 0.2s ease-out;
 }
 
 .link:hover {
   color: var(--hover-text);
-  font-size: 31px;
+  transform: scale(1.05);
 }
 
 .hamburgerIcon {
