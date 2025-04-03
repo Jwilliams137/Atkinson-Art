@@ -1,4 +1,5 @@
 "use client";
+import styles from "./AdminNotes.module.css"
 
 const AdminNotes = ({ section, fieldsForPage }) => {
   if (!section || !Array.isArray(fieldsForPage?.[section])) return null;
@@ -11,7 +12,7 @@ const AdminNotes = ({ section, fieldsForPage }) => {
 
   return notes.length > 0 ? (
     <div> 
-      <ul>{notes}</ul>
+      <ul className={styles.notes}>{notes}</ul>
     </div>
   ) : null;
 };
