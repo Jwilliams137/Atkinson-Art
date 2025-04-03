@@ -7,7 +7,7 @@
 }
 
 html,
-body { 
+body {
   width: 100%;
   overflow-x: hidden;
 }
@@ -26,7 +26,8 @@ body {
   margin: 0;
 }
 
-ul, ol {
+ul,
+ol {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -37,12 +38,16 @@ a {
   text-decoration: none;
 }
 
-/*@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --background: #2e2c2e;
-    --primary-text: white;
+    --background: #1f1d1f;
+    --primary-text: #cccbcc;
+    --hover-text: #cccbcc;
+    --accent: #cccbcc;
+    --active-text: #680a80;
   }
+
   html {
     color-scheme: dark;
   }
-}*/
+}

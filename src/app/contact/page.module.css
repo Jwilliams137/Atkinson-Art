@@ -74,3 +74,22 @@
         width: 100%;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .button {
+        color: #2e2c2e;
+        background-color: #cccbcc;
+    }
+
+    .form {
+        background-color: rgb(37, 37, 37);
+    }
+
+    .inputField {
+        background-color: #cccbcc;
+    }
+
+    .textarea {
+        background-color: #cccbcc;
+    }
+}

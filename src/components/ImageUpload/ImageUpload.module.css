@@ -52,6 +52,7 @@
   color: white;
   align-self: flex-end;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .colorField {
@@ -76,4 +77,19 @@
 
 .colorLabel {
   font-size: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background-color: #2e2c2e;
+  }
+
+  .label {
+    color: #2e2c2e;
+  }
+
+  .inputField {
+    color: #2e2c2e;
+    background-color: white;
+  }
 }
