@@ -28,11 +28,11 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     handleTextChange({ target: { value: localText } });
 
     const newTextData = {
-        content: localText,
-        pageType: sectionKey,
-        order,
-        type: fieldsList.find((field) => field.name === "type")?.value || "general",
-        ...(year && { year }),
+      content: localText,
+      pageType: sectionKey,
+      order,
+      type: fieldsList.find((field) => field.name === "type")?.value || "general",
+      ...(year && { year }),
     };
 
     await handleSubmit("text-upload", sectionKey, newTextData);
@@ -40,7 +40,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     handleTextChange({ target: { value: "" } });
     setLocalText("");
     setYear("");
-};
+  };
 
   const handleCancel = () => {
     handleTextChange({ target: { value: "" } });
@@ -80,15 +80,15 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           />
         </div>
       )}
-
-      <div className={styles.preview}>
-        <div>
-          {localText.split("\n").map((paragraph, index) =>
-            paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
-          )}
+      {localText.trim() && (
+        <div className={styles.preview}>
+          <div>
+            {localText.split("\n").map((paragraph, index) =>
+              paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
+            )}
+          </div>
         </div>
-      </div>
-
+      )}
       <div className={styles.buttons}>
         {(localText.trim() || year.trim()) && (
           <button className={styles.button} onClick={handleCancel}>Cancel</button>
