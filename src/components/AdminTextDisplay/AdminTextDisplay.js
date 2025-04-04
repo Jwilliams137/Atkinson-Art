@@ -83,118 +83,126 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
 
   return (
     <div className={styles.textList}>
-      {texts.map((text, index) => {
-        const isExpanded = expandedTextIds.includes(text.id);
-        const formattedContent = text.content
-          .split("\n\n")
-          .map((para) => para.trim())
-          .join("\n\n");
-        const displayedContent = isExpanded
-          ? formattedContent
-          : formattedContent.slice(0, 80);
+      {[...texts]
+        .sort((a, b) => {
+          const yearA = parseInt(a.year) || 0;
+          const yearB = parseInt(b.year) || 0;
+          if (yearA !== yearB) return yearA - yearB;
+          return (a.order ?? 0) - (b.order ?? 0);
+        })
+        .map((text, index) => {
 
-        return (
-          <div key={text.id || index} className={styles.textItem}>
-            <div className={styles.moveArrows}>
-              {index > 0 && (
-                <button
-                  onClick={() => moveText(index, -1)}
-                  className={styles.moveButton}
-                  title="Move Up"
-                >
-                  ▲
-                </button>
-              )}
-              {index < texts.length - 1 && (
-                <button
-                  onClick={() => moveText(index, 1)}
-                  className={styles.moveButton}
-                  title="Move Down"
-                >
-                  ▼
-                </button>
-              )}
-            </div>
-            <div className={styles.textContent}>
-              {editingTextId === text.id ? (
-                <>
-                  <textarea
-                    className={styles.editTextarea}
-                    value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    className={styles.editInput}
-                    value={editLink}
-                    placeholder="Link"
-                    onChange={(e) => setEditLink(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    className={styles.editInput}
-                    value={editYear}
-                    placeholder="Year"
-                    onChange={(e) => setEditYear(e.target.value)}
-                  />
-                </>
-              ) : (
-                <>
-                  {text.year && <p className={styles.year}>{text.year}</p>}
+          const isExpanded = expandedTextIds.includes(text.id);
+          const formattedContent = text.content
+            .split("\n\n")
+            .map((para) => para.trim())
+            .join("\n\n");
+          const displayedContent = isExpanded
+            ? formattedContent
+            : formattedContent.slice(0, 80);
 
-                  <div className={styles.textSnippet}>
-                    {displayedContent.split("\n\n").map((para, idx) => (
-                      <p key={idx} className={styles.paragraph}>
-                        {para}
-                      </p>
-                    ))}
-                  </div>
-                  {text.link && <p className={styles.link}>{text.link}</p>}
-                </>
-              )}
-              {formattedContent.length > 80 && editingTextId !== text.id && (
-                <button
-                  onClick={() => toggleText(text.id)}
-                  className={styles.readMoreButton}
-                >
-                  {isExpanded ? "Read Less" : "Read More"}
-                </button>
-              )}
-            </div>
-            <div className={styles.textActions}>
-              {editingTextId === text.id ? (
-                <>
+          return (
+            <div key={text.id || index} className={styles.textItem}>
+              <div className={styles.moveArrows}>
+                {index > 0 && (
                   <button
-                    onClick={() => saveEdit(text.id)}
+                    onClick={() => moveText(index, -1)}
+                    className={styles.moveButton}
+                    title="Move Up"
+                  >
+                    ▲
+                  </button>
+                )}
+                {index < texts.length - 1 && (
+                  <button
+                    onClick={() => moveText(index, 1)}
+                    className={styles.moveButton}
+                    title="Move Down"
+                  >
+                    ▼
+                  </button>
+                )}
+              </div>
+              <div className={styles.textContent}>
+                {editingTextId === text.id ? (
+                  <>
+                    <textarea
+                      className={styles.editTextarea}
+                      value={editContent}
+                      onChange={(e) => setEditContent(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      className={styles.editInput}
+                      value={editLink}
+                      placeholder="Link"
+                      onChange={(e) => setEditLink(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      className={styles.editInput}
+                      value={editYear}
+                      placeholder="Year"
+                      onChange={(e) => setEditYear(e.target.value)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {text.year && <p className={styles.year}>{text.year}</p>}
+
+                    <div className={styles.textSnippet}>
+                      {displayedContent.split("\n\n").map((para, idx) => (
+                        <p key={idx} className={styles.paragraph}>
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                    {text.link && <p className={styles.link}>{text.link}</p>}
+                  </>
+                )}
+                {formattedContent.length > 80 && editingTextId !== text.id && (
+                  <button
+                    onClick={() => toggleText(text.id)}
+                    className={styles.readMoreButton}
+                  >
+                    {isExpanded ? "Read Less" : "Read More"}
+                  </button>
+                )}
+              </div>
+              <div className={styles.textActions}>
+                {editingTextId === text.id ? (
+                  <>
+                    <button
+                      onClick={() => saveEdit(text.id)}
+                      className={styles.editButton}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingTextId(null)}
+                      className={styles.editButton}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => startEditing(text)}
                     className={styles.editButton}
                   >
-                    Save
+                    Edit
                   </button>
-                  <button
-                    onClick={() => setEditingTextId(null)}
-                    className={styles.editButton}
-                  >
-                    Cancel
-                  </button>
-                </>
-              ) : (
+                )}
                 <button
-                  onClick={() => startEditing(text)}
-                  className={styles.editButton}
+                  onClick={() => deleteText(text.id)}
+                  className={styles.deleteButton}
                 >
-                  Edit
+                  Delete
                 </button>
-              )}
-              <button
-                onClick={() => deleteText(text.id)}
-                className={styles.deleteButton}
-              >
-                Delete
-              </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };
