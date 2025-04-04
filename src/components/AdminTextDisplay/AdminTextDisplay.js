@@ -141,7 +141,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
               ) : (
                 <>
                   {text.year && <p className={styles.year}>{text.year}</p>}
-                  {text.link && <p className={styles.link}>{text.link}</p>}
+
                   <div className={styles.textSnippet}>
                     {displayedContent.split("\n\n").map((para, idx) => (
                       <p key={idx} className={styles.paragraph}>
@@ -149,9 +149,9 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                       </p>
                     ))}
                   </div>
+                  {text.link && <p className={styles.link}>{text.link}</p>}
                 </>
               )}
-
               {formattedContent.length > 80 && editingTextId !== text.id && (
                 <button
                   onClick={() => toggleText(text.id)}

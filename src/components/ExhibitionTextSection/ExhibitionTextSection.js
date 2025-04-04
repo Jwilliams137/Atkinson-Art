@@ -4,11 +4,10 @@ import styles from "./ExhibitionTextSection.module.css";
 const ExhibitionTextSection = ({ textUploads, containerClass, sectionClass, textClass }) => {
     if (!textUploads.length) return null;
 
-    // Fix: store the full item, not just item.content
     const groupedByYear = textUploads.reduce((acc, item) => {
         if (item.year) {
             acc[item.year] = acc[item.year] || [];
-            acc[item.year].push(item); // Push full object so link is included
+            acc[item.year].push(item);
         }
         return acc;
     }, {});
