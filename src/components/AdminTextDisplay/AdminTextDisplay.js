@@ -87,7 +87,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
         .sort((a, b) => {
           const yearA = parseInt(a.year) || 0;
           const yearB = parseInt(b.year) || 0;
-          if (yearA !== yearB) return yearA - yearB;
+          if (yearA !== yearB) return yearB - yearA;
           return (a.order ?? 0) - (b.order ?? 0);
         })
         .map((text, index) => {
