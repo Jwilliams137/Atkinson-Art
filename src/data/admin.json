@@ -25,12 +25,7 @@
           { "name": "homeStatement", "label": "Home Statement", "type": "text" },
           { "name": "type", "value": "home-statement" },
           { "name": "pageType", "type": "hidden", "value": "home" }
-        ]},
-        {"text-upload": [
-          { "name": "link", "label": "Link", "type": "link" },
-          { "name": "type", "value": "link" },
-          { "name": "pageType", "type": "hidden", "value": "home" }
-        ]}  
+        ]} 
       ],
       "artwork": [
         {"notes": "Titles already added for these.  They will end up being links to the subpages of Artwork and flip on mouse hover to show a solid color and the name of the page they link to."},
@@ -172,13 +167,14 @@
           { "name": "exhibition", "label": "Exhibition", "type": "text" },
           { "name": "type", "value": "exhibition" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" },
-          { "name": "link", "label": "Add a link", "type": "text"}
+          { "name": "year", "label": "year", "type": "text"},
+          { "name": "link", "label": "Add a link", "type": "link"}
         ]},
         {"image-upload": [
           { "name": "file", "label": "Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
-        ]}        
+        ]}       
       ],
       "resume": [
         {"text-upload": [
