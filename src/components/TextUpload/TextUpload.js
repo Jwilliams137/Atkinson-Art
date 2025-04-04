@@ -62,7 +62,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
         {fieldsList[0]?.type === "link" ? (
           <input
             type="text"
-            className={styles.link}
+            className={styles.input}
             placeholder="Enter a link"
             value={localText}
             onChange={(e) => {

@@ -118,12 +118,10 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
             <div className={styles.textContent}>
               {editingTextId === text.id ? (
                 <>
-                  <input
-                    type="text"
-                    className={styles.editInput}
-                    value={editYear}
-                    placeholder="Year"
-                    onChange={(e) => setEditYear(e.target.value)}
+                  <textarea
+                    className={styles.editTextarea}
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
                   />
                   <input
                     type="text"
@@ -132,10 +130,12 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                     placeholder="Link"
                     onChange={(e) => setEditLink(e.target.value)}
                   />
-                  <textarea
-                    className={styles.editTextarea}
-                    value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
+                  <input
+                    type="text"
+                    className={styles.editInput}
+                    value={editYear}
+                    placeholder="Year"
+                    onChange={(e) => setEditYear(e.target.value)}
                   />
                 </>
               ) : (
