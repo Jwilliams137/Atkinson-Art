@@ -171,7 +171,8 @@
         {"text-upload": [
           { "name": "exhibition", "label": "Exhibition", "type": "text" },
           { "name": "type", "value": "exhibition" },
-          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+          { "name": "pageType", "type": "hidden", "value": "exhibitions" },
+          { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"image-upload": [
           { "name": "file", "label": "Exhibitions Image", "type": "file" },

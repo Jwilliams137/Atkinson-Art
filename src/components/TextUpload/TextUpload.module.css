@@ -69,6 +69,10 @@
   cursor: pointer;
 }
 
+.preview {
+  font-size: 18px;
+}
+
 @media (prefers-color-scheme: dark) {
   .textArea {
     background-color: #cccbcc;
@@ -92,5 +96,6 @@
 
   .link {
     background-color: #cccbcc;
+    color: #2e2c2e;
   }
 }
