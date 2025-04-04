@@ -165,10 +165,10 @@
         {"notes": "Exhibitions show up on your page sorted by year.  Without a year they wont show up."},
         {"text-upload": [
           { "name": "exhibition", "label": "Exhibition", "type": "text" },
-          { "name": "type", "value": "exhibition" },
+          { "name": "type", "type": "hidden", "value": "exhibition" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" },
           { "name": "year", "label": "year", "type": "text"},
-          { "name": "link", "label": "Add a link", "type": "link"}
+          { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"image-upload": [
           { "name": "file", "label": "Exhibitions Image", "type": "file" },

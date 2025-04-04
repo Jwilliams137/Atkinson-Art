@@ -44,7 +44,7 @@
   gap: 5px;
 }
 
-.yearInput {
+.input {
   padding: 8px;
   height: 45px;
   font-size: 18px;
@@ -89,7 +89,7 @@
     border: none;
   }
 
-  .yearInput {
+  .input {
     background-color: #cccbcc;
     color: #2e2c2e;
   }
