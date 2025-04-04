@@ -93,8 +93,13 @@
   background-color: var(--hover-text);
 }
 
-.editInput {
+.editTextarea {
   min-height: 200px;
+  font-size: 18px;
+  padding: 9px;
+  resize: vertical;
+}
+.editInput {
   font-size: 18px;
   padding: 9px;
   resize: vertical;

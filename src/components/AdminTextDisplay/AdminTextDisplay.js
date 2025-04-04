@@ -1,3 +1,4 @@
+'use client';
 import { useState } from "react";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import styles from "./AdminTextDisplay.module.css";
@@ -6,26 +7,38 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [expandedTextIds, setExpandedTextIds] = useState([]);
   const [editingTextId, setEditingTextId] = useState(null);
   const [editContent, setEditContent] = useState("");
+  const [editYear, setEditYear] = useState("");
+  const [editLink, setEditLink] = useState("");
 
   const toggleText = (id) => {
     setExpandedTextIds((prevIds) =>
-      prevIds.includes(id) ? prevIds.filter((textId) => textId !== id) : [...prevIds, id]
+      prevIds.includes(id)
+        ? prevIds.filter((textId) => textId !== id)
+        : [...prevIds, id]
     );
   };
 
   const startEditing = (text) => {
     setEditingTextId(text.id);
-    setEditContent(text.content);
+    setEditContent(text.content || "");
+    setEditYear(text.year || "");
+    setEditLink(text.link || "");
   };
 
   const saveEdit = async (id) => {
     try {
       const textRef = doc(db, "textUploads", id);
-      await updateDoc(textRef, { content: editContent });
+      await updateDoc(textRef, {
+        content: editContent,
+        year: editYear,
+        link: editLink,
+      });
 
       setTexts((prevTexts) =>
         prevTexts.map((text) =>
-          text.id === id ? { ...text, content: editContent } : text
+          text.id === id
+            ? { ...text, content: editContent, year: editYear, link: editLink }
+            : text
         )
       );
 
@@ -49,9 +62,11 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     if (newIndex < 0 || newIndex >= texts.length) return;
 
     const newTexts = [...texts];
-    [newTexts[index], newTexts[newIndex]] = [newTexts[newIndex], newTexts[index]];
+    [newTexts[index], newTexts[newIndex]] = [
+      newTexts[newIndex],
+      newTexts[index],
+    ];
     setTexts(newTexts);
-
     await updateTextOrder(newTexts);
   };
 
@@ -101,22 +116,42 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
               )}
             </div>
             <div className={styles.textContent}>
-              {text.year && text.year !== "" && (
-                <p className={styles.year}>{text.year}</p>
-              )}
               {editingTextId === text.id ? (
-                <textarea
-                  className={styles.editInput}
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                />
+                <>
+                  <input
+                    type="text"
+                    className={styles.editInput}
+                    value={editYear}
+                    placeholder="Year"
+                    onChange={(e) => setEditYear(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className={styles.editInput}
+                    value={editLink}
+                    placeholder="Link"
+                    onChange={(e) => setEditLink(e.target.value)}
+                  />
+                  <textarea
+                    className={styles.editTextarea}
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                  />
+                </>
               ) : (
-                <div className={styles.textSnippet}>
-                  {displayedContent.split("\n\n").map((para, idx) => (
-                    <p key={idx} className={styles.paragraph}>{para}</p>
-                  ))}
-                </div>
+                <>
+                  {text.year && <p className={styles.year}>{text.year}</p>}
+                  {text.link && <p className={styles.link}>{text.link}</p>}
+                  <div className={styles.textSnippet}>
+                    {displayedContent.split("\n\n").map((para, idx) => (
+                      <p key={idx} className={styles.paragraph}>
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                </>
               )}
+
               {formattedContent.length > 80 && editingTextId !== text.id && (
                 <button
                   onClick={() => toggleText(text.id)}
@@ -128,8 +163,11 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
             </div>
             <div className={styles.textActions}>
               {editingTextId === text.id ? (
-                <div>
-                  <button onClick={() => saveEdit(text.id)} className={styles.editButton}>
+                <>
+                  <button
+                    onClick={() => saveEdit(text.id)}
+                    className={styles.editButton}
+                  >
                     Save
                   </button>
                   <button
@@ -138,13 +176,15 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                   >
                     Cancel
                   </button>
-                </div>
+                </>
               ) : (
-                <button onClick={() => startEditing(text)} className={styles.editButton}>
+                <button
+                  onClick={() => startEditing(text)}
+                  className={styles.editButton}
+                >
                   Edit
                 </button>
               )}
-
               <button
                 onClick={() => deleteText(text.id)}
                 className={styles.deleteButton}
