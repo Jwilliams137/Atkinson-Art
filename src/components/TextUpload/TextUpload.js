@@ -90,7 +90,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           <label htmlFor="year" className={styles.label}>Year</label>
           <input
             type="text"
-            className={styles.yearInput}
+            className={styles.input}
             placeholder="Enter year or date"
             value={year}
             onChange={(e) => setYear(e.target.value)}
@@ -103,7 +103,7 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
           <label htmlFor="link" className={styles.label}>Link</label>
           <input
             type="text"
-            className={styles.yearInput}
+            className={styles.input}
             placeholder="Add link"
             value={link}
             onChange={(e) => setLink(e.target.value)}
