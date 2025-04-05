@@ -39,17 +39,19 @@ export async function POST(req) {
     }
 
     const textPageType = pageType || "general";
-    const textType = type || "untitled";  
+    const textType = type || "untitled";
 
-    const newTextRef = await db.collection("textUploads").add({
+    const data = {
       content,
       pageType: textPageType,
       type: textType,
       createdAt: new Date(),
       order: order || 1,
-      year: year || '',
-      link: link
-    });
+      ...(year ? { year } : {}),
+      ...(link ? { link } : {}),
+    };
+
+    const newTextRef = await db.collection("textUploads").add(data);
 
     return NextResponse.json({
       message: "Text uploaded successfully",
