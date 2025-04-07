@@ -9,6 +9,8 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [editContent, setEditContent] = useState("");
   const [editYear, setEditYear] = useState("");
   const [editLink, setEditLink] = useState("");
+  const [showYearField, setShowYearField] = useState(false);
+  const [showLinkField, setShowLinkField] = useState(false);
 
   const toggleText = (id) => {
     setExpandedTextIds((prevIds) =>
@@ -23,6 +25,8 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     setEditContent(text.content || "");
     setEditYear(text.year || "");
     setEditLink(text.link || "");
+    setShowYearField("year" in text);
+    setShowLinkField("link" in text);
   };
 
   const saveEdit = async (id) => {
@@ -131,20 +135,25 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
                     />
-                    <input
-                      type="text"
-                      className={styles.editInput}
-                      value={editLink}
-                      placeholder="Link"
-                      onChange={(e) => setEditLink(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      className={styles.editInput}
-                      value={editYear}
-                      placeholder="Year"
-                      onChange={(e) => setEditYear(e.target.value)}
-                    />
+                    {showLinkField && (
+                      <input
+                        type="text"
+                        className={styles.editInput}
+                        value={editLink}
+                        placeholder="Link"
+                        onChange={(e) => setEditLink(e.target.value)}
+                      />
+                    )}
+                    {showYearField && (
+                      <input
+                        type="text"
+                        className={styles.editInput}
+                        value={editYear}
+                        placeholder="Year"
+                        onChange={(e) => setEditYear(e.target.value)}
+                      />
+                    )}
+
                   </>
                 ) : (
                   <>
