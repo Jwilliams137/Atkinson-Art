@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import styles from "./Modal.module.css";
 
 const Modal = ({ images, currentImageIndex, closeModal }) => {
   const [selectedIndex, setSelectedIndex] = useState(currentImageIndex);
+  const scrollTimeoutRef = useRef(null);
 
   const goToNextImage = useCallback(() => {
     setSelectedIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -18,11 +19,19 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
   const handleScroll = useCallback(
     (event) => {
       event.preventDefault();
+      if (scrollTimeoutRef.current) {
+        return;
+      }
+  
       if (event.deltaY > 0) {
         goToNextImage();
       } else if (event.deltaY < 0) {
         goToPrevImage();
       }
+  
+      scrollTimeoutRef.current = setTimeout(() => {
+        scrollTimeoutRef.current = null;
+      }, 500);
     },
     [goToNextImage, goToPrevImage]
   );
@@ -32,6 +41,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
 
     return () => {
       window.removeEventListener("wheel", handleScroll);
+      clearTimeout(scrollTimeoutRef.current);
     };
   }, [handleScroll]);
 
