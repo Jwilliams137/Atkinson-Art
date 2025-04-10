@@ -49,7 +49,7 @@
 
 @media (max-width: 1000px) {
   .shopContainer {
-      padding: 0 20px;
+    padding: 0 20px;
   }
 
   .shopGallery {
@@ -62,7 +62,7 @@
 
   .shopGalleryCard {
     display: block;
-    width: 100%;
+    min-width: 60%;
   }
 
   .shopGalleryImage {
@@ -81,14 +81,22 @@
     width: 90%;
     height: auto;
   }
+
+  .shopGalleryCard {
+    min-width: 95%;
+  }
 }
 
 @media (max-width: 600px) {
   .shopContainer {
-      padding: 0 10px;
+    padding: 0 10px;
   }
+
   .shopGalleryImage {
     width: 100%;
     height: auto;
+  }
+  .shopGalleryCard {
+    min-width: 100%;
   }
 }
