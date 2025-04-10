@@ -54,6 +54,7 @@
     flex-direction: column;
     width: 100%;
     text-align: center;
+    gap: 50px;
   }
 
   .earlierWorkGalleryImage {
