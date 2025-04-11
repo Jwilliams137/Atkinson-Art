@@ -1,13 +1,12 @@
-.shopPage { 
+.shopPage {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 100%;
 }
 
 .shopContainer {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
   width: 100%;
 }
 
@@ -15,14 +14,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  width: 100%;
   justify-content: center;
 }
 
 .shopGalleryImage {
   height: 300px;
   width: auto;
-  object-fit: contain;
   border-radius: 8px;
   cursor: pointer;
 }
@@ -47,16 +44,11 @@
 }
 
 @media (max-width: 1000px) {
-  .shopContainer {
-    padding: 0 20px;
-  }
-
   .shopGallery {
     flex-direction: column;
     width: 100%;
-    text-align: center;
     align-items: center;
-    gap: 50px;
+    gap: 60px;
   }
 
   .shopGalleryCard {
@@ -76,26 +68,13 @@
 }
 
 @media (max-width: 800px) {
-  .shopGalleryImage {
-    width: 90%;
-    height: auto;
-  }
-
   .shopGalleryCard {
-    min-width: 95%;
+    min-width: 90%;
   }
 }
 
 @media (max-width: 600px) {
-  .shopContainer {
-    padding: 0 10px;
-  }
-
   .shopGalleryImage {
     width: 100%;
-    height: auto;
-  }
-  .shopGalleryCard {
-    min-width: 100%;
   }
 }
