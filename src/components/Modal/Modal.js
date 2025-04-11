@@ -31,7 +31,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
   
       scrollTimeoutRef.current = setTimeout(() => {
         scrollTimeoutRef.current = null;
-      }, 500);
+      }, 400);
     },
     [goToNextImage, goToPrevImage]
   );

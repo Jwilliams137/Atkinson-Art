@@ -1,9 +1,9 @@
 "use client";
 import usePageImages from "../../../hooks/usePageImages";
+import useTextUploads from "../../../hooks/useTextUploads";
 import useModal from "../../../hooks/useModal";
 import ImageGallery from "../../../components/ImageGallery/ImageGallery";
 import Modal from "../../../components/Modal/Modal";
-import useTextUploads from "../../../hooks/useTextUploads";
 import TextSection from "../../../components/TextSection/TextSection";
 import styles from "./page.module.css";
 
