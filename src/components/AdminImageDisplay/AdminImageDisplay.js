@@ -78,33 +78,41 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           />
           {editingId === image.id ? (
             <div className={styles.editForm}>
-              <input
-                type="text"
-                value={editFields.title}
-                onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
-                className={styles.editInput}
-                placeholder="Title"
-              />
-              <input
-                type="text"
-                value={editFields.price}
-                onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
-                className={styles.editInput}
-                placeholder="Price"
-              />
-              <input
-                type="text"
-                value={editFields.dimensions}
-                onChange={(e) => setEditFields({ ...editFields, dimensions: e.target.value })}
-                className={styles.editInput}
-                placeholder="Dimensions"
-              />
-              <textarea
-                value={editFields.description}
-                onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
-                className={styles.editTextarea}
-                placeholder="Description"
-              />
+              {image.title && (
+                <input
+                  type="text"
+                  value={editFields.title}
+                  onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
+                  className={styles.editInput}
+                  placeholder="Title"
+                />
+              )}
+              {typeof image.price === "number" && !isNaN(image.price) && (
+                <input
+                  type="text"
+                  value={editFields.price}
+                  onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
+                  className={styles.editInput}
+                  placeholder="Price"
+                />
+              )}
+              {image.dimensions && (
+                <input
+                  type="text"
+                  value={editFields.dimensions}
+                  onChange={(e) => setEditFields({ ...editFields, dimensions: e.target.value })}
+                  className={styles.editInput}
+                  placeholder="Dimensions"
+                />
+              )}
+              {image.description && (
+                <textarea
+                  value={editFields.description}
+                  onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
+                  className={styles.editTextarea}
+                  placeholder="Description"
+                />
+              )}
               <div className={styles.textActions}>
                 <button onClick={() => handleSave(image.id)} className={styles.button}>
                   Save
