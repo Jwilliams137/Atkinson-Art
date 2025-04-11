@@ -128,6 +128,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           ) : (
             <>
               <p className={styles.title}>{image.title}</p>
+              <p className={styles.title}>{image.price}</p>
               <div className={styles.reorderButtons}>
                 {activeSection !== "artwork" && index > 0 && (
                   <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
