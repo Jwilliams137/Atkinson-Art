@@ -1,5 +1,4 @@
-.shopPage {
-  width: 100%;
+.shopPage { 
   display: flex;
   flex-direction: column;
   gap: 40px;

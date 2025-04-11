@@ -1,13 +1,12 @@
 .earlierWorkPage {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
 }
 
 .earlierWorkContainer {
   display: flex;
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .earlierWorkGallery {
@@ -39,10 +38,6 @@
 }
 
 @media (max-width: 1000px) {
-  .earlierWorkContainer {
-    margin-bottom: 30px;
-  }
-
   .earlierWorkGallery {
     flex-wrap: nowrap;
     flex-direction: column;
