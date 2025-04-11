@@ -6,20 +6,18 @@
 
 .newWorkContainer {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .newWorkGallery {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  width: 100%;
 }
 
 .newWorkGalleryImage {
-  width: 100%;
+  width: auto;
   height: 300px;
   border-radius: 8px;
   cursor: pointer;
@@ -34,29 +32,22 @@
   font-size: 25px;
 }
 
-@media only screen and (max-width: 1800px) {
+@media only screen and (max-width: 1200px) {
   .newWorkGalleryImage {
-    height: 300px;
-  }
-}
-
-@media (max-width: 1300px) {
-  .newWorkGalleryImage {
-    height: 200px;
+    height: 400px;
   }
 }
 
 @media (max-width: 1000px) {
   .newWorkContainer {
-    display: block;
+    margin-bottom: 30px;
   }
 
   .newWorkGallery {
     flex-wrap: nowrap;
     flex-direction: column;
-    width: 100%;
     text-align: center;
-    gap: 50px;
+    gap: 60px;
   }
 
   .newWorkGalleryImage {
@@ -73,13 +64,11 @@
 @media (max-width: 800px) {
   .newWorkGalleryImage {
     width: 90%;
-    height: auto;
   }
 }
 
 @media (max-width: 600px) {
   .newWorkGalleryImage {
     width: 100%;
-    height: auto;
   }
 }

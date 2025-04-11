@@ -7,17 +7,17 @@
 .collageContainer {
     display: flex;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .collageGallery {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    width: 100%;
 }
 
 .collageGalleryImage {
-    width: 100%;
+    width: auto;
     height: 300px;
     border-radius: 8px;
     cursor: pointer;
@@ -32,19 +32,22 @@
     font-size: 25px;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1200px) {
     .collageGalleryImage {
-        height: 200px;
+        height: 400px;
     }
 }
 
 @media (max-width: 1000px) {
+    .colageContainer {
+        margin-bottom: 30px;
+    }
+
     .collageGallery {
         flex-wrap: nowrap;
         flex-direction: column;
-        width: 100%;
         text-align: center;
-        gap: 50px;
+        gap: 60px;
     }
 
     .collageGalleryImage {
@@ -61,13 +64,11 @@
 @media (max-width: 800px) {
     .collageGalleryImage {
         width: 90%;
-        height: auto;
     }
 }
 
 @media (max-width: 600px) {
     .collageGalleryImage {
         width: 100%;
-        height: auto;
     }
 }
