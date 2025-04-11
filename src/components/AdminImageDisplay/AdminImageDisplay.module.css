@@ -31,7 +31,7 @@
   gap: 5px;
 }
 
-.deleteButton,
+.button,
 .moveButton {
   padding: 5px 10px;
   font-size: 18px;
@@ -41,7 +41,7 @@
   border-radius: 8px;
 }
 
-.deleteButton:hover {
+.button:hover {
   background-color: var(--hover-text)
 }
 
@@ -69,6 +69,48 @@
   text-align: center;
 }
 
+.imageItem.editing {
+  width: 100%;
+  max-width: 100%;
+  margin: 20px auto;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 1;
+  position: relative;
+  background-color: var(--background);
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.editInput {
+  font-size: 18px;
+  padding: 9px;
+  resize: vertical;
+  border-radius: 4px;
+}
+
+.editTextarea {
+  min-height: 200px;
+  font-size: 18px;
+  padding: 9px;
+  resize: vertical;
+  border-radius: 4px;
+}
+
+.editInput,
+.editTextarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 @media only screen and (max-width: 1000px) {
   .imagesGrid {
     justify-content: center;
@@ -80,12 +122,12 @@
     border: none;
   }
 
-  .deleteButton {
+  .button {
     background-color: #0c0b0c;
     border: none;
   }
 
-  .deleteButton:hover {
+  .button:hover {
     background-color: #0c0b0c;
   }
 }
