@@ -6,7 +6,7 @@
     .container {
         flex-direction: column;
         padding: 0 20px;
-    }   
+    }
 }
 
 @media (max-width: 600px) {

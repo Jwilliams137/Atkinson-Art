@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { db } from '../../utils/firebase'; 
+import { db } from '../../utils/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import Image from 'next/image';  
+import Image from 'next/image';
 import styles from './page.module.css';
 
 function ThankYouPage() {
@@ -46,15 +46,15 @@ function ThankYouPage() {
         <p className={styles.success}>
           Your message has been sent. I will get back to you as soon as possible.
         </p>
-      </div>      
+      </div>
       {randomImage && (
         <div className={styles.imageContainer}>
           <Image
-            src={randomImage.imageUrl}  
+            src={randomImage.imageUrl}
             alt="Random Artwork"
             className={styles.randomImage}
-            width={randomImage.width}  
-            height={randomImage.height} 
+            width={randomImage.width}
+            height={randomImage.height}
             layout="intrinsic"
           />
         </div>

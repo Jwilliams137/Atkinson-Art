@@ -22,13 +22,13 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
       if (scrollTimeoutRef.current) {
         return;
       }
-  
+
       if (event.deltaY > 0) {
         goToNextImage();
       } else if (event.deltaY < 0) {
         goToPrevImage();
       }
-  
+
       scrollTimeoutRef.current = setTimeout(() => {
         scrollTimeoutRef.current = null;
       }, 400);

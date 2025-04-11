@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 20px;
 }
+
 .artworkContainer {
   display: flex;
   flex-wrap: wrap;
