@@ -34,15 +34,13 @@ export async function POST(req) {
     const body = await req.json();
     const { content, pageType, type, order, year, link } = body;
 
-    if (!content) {
-      return NextResponse.json({ error: "Content is required" }, { status: 400 });
-    }
+    
 
     const textPageType = pageType || "general";
     const textType = type || "untitled";
 
     const data = {
-      content,
+      content: content || "",
       pageType: textPageType,
       type: textType,
       createdAt: new Date(),

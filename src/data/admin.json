@@ -178,6 +178,10 @@
       ],
       "resume": [
         {"text-upload": [
+          { "name": "pageType", "type": "hidden", "value": "resume" },
+          { "name": "link", "label": "Add a link", "type": "text"}
+        ]},
+        {"text-upload": [
           { "name": "groupMuseum", "label": "Selected Group Museum Exhibitions", "type": "text" },
           { "name": "type", "value": "group-museum" },
           { "name": "pageType", "type": "hidden", "value": "resume" },

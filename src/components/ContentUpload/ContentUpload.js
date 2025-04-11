@@ -82,7 +82,8 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 }
             }
 
-            if (uploadType === "text-upload" && textContent.trim()) {
+            if (uploadType === "text-upload" && textContent !== null && textContent !== undefined) {
+
                 try {
                     const orderResponse = await fetch(`/api/get-max-text-order?pageType=${sectionKey}`, {
                         method: "GET",

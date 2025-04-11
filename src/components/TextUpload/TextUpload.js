@@ -3,11 +3,9 @@ import { useState, useEffect } from "react";
 import { getFirestore, query, collection, where, getDocs } from "firebase/firestore";
 import styles from "./TextUpload.module.css";
 
-const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
+const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [order, setOrderState] = useState(1);
-  const [year, setYear] = useState("");
-  const [link, setLink] = useState("");
-  const [localText, setLocalText] = useState(textContent || "");
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -23,105 +21,92 @@ const TextUpload = ({ fieldsList, textContent, handleTextChange, handleSubmit, s
     fetchOrder();
   }, [sectionKey, setOrder]);
 
-  const handleTextUpload = async () => {
-    if (!localText.trim()) return;
-
-    handleTextChange({ target: { value: localText } });
-
-    const newTextData = {
-      content: localText,
-      pageType: sectionKey,
-      order,
-      type: fieldsList.find((field) => field.name === "type")?.value || "general",
-      ...(year && { year }),
-      ...(link && { link }),
-    };
-
-
-    await handleSubmit("text-upload", sectionKey, newTextData);
-
-    handleTextChange({ target: { value: "" } });
-    setLocalText("");
-    setYear("");
-    setLink("");
+  const handleChange = (e, name) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === fieldsList[0]?.name) {
+      handleTextChange({ target: { value } });
+    }
   };
 
   const handleCancel = () => {
+    const cleared = {};
+    fieldsList.forEach(field => {
+      if (field?.name) cleared[field.name] = "";
+    });
+    setFormData(cleared);
     handleTextChange({ target: { value: "" } });
-    setLocalText("");
-    setYear("");
-    setLink("");
   };
+
+  const handleTextUpload = async () => {
+    const newTextData = {
+      ...formData,
+      content: formData["content"] ?? "",
+      pageType: sectionKey,
+      order,
+      type: fieldsList.find(f => f.name === "type")?.value || "general"
+    };
+  
+    console.log("Submitting:", newTextData);
+  
+    await handleSubmit("text-upload", sectionKey, newTextData);
+    handleCancel();
+  };  
 
   return (
     <div className={styles.textUpload}>
-      <div className={styles.field}>
-        <label htmlFor={fieldsList[0]?.name} className={styles.label}>
-          {fieldsList[0]?.label}
-        </label>
-        {fieldsList[0]?.type === "link" ? (
-          <input
-            type="text"
-            className={styles.input}
-            placeholder="Enter a link"
-            value={localText}
-            onChange={(e) => {
-              setLocalText(e.target.value);
-              handleTextChange(e);
-            }}
-            id={fieldsList[0]?.name}
-          />
-        ) : (
-          <textarea
-            className={styles.textArea}
-            placeholder="Enter your text here"
-            value={localText}
-            onChange={(e) => {
-              setLocalText(e.target.value);
-              handleTextChange(e);
-            }}
-            id={fieldsList[0]?.name}
-            rows={5}
-          />
-        )}
-      </div>
-      {fieldsList.some(field => field.name === "year") && (
-        <div className={styles.field}>
-          <label htmlFor="year" className={styles.label}>Year</label>
-          <input
-            type="text"
-            className={styles.input}
-            placeholder="Enter year or date"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            id="year"
-          />
-        </div>
-      )}
-      {fieldsList.some(field => field.name === "link") && (
-        <div className={styles.field}>
-          <label htmlFor="link" className={styles.label}>Link</label>
-          <input
-            type="text"
-            className={styles.input}
-            placeholder="Add link"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-            id="link"
-          />
-        </div>
-      )}
-      {localText.trim() && (
-        <div className={styles.preview}>
-          <div>
-            {localText.split("\n").map((paragraph, index) =>
-              paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
+      {fieldsList.map((field, index) => {
+        if (!field || !field.name || !field.label) return null;
+
+        if (field.type === "hidden") {
+          return (
+            <input
+              key={field.name}
+              type="hidden"
+              name={field.name}
+              value={field.value || ""}
+            />
+          );
+        }
+
+        const isTextArea = field.type === "text" && index === 0;
+
+        return (
+          <div className={styles.field} key={field.name}>
+            <label htmlFor={field.name} className={styles.label}>{field.label}</label>
+            {isTextArea ? (
+              <textarea
+                id={field.name}
+                className={styles.textArea}
+                placeholder={`Enter your ${field.label.toLowerCase()}`}
+                rows={5}
+                value={formData[field.name] || ""}
+                onChange={(e) => handleChange(e, field.name)}
+              />
+            ) : (
+              <input
+                id={field.name}
+                type={field.type || "text"}
+                className={styles.input}
+                placeholder={`Enter ${field.label.toLowerCase()}`}
+                value={formData[field.name] || ""}
+                onChange={(e) => handleChange(e, field.name)}
+              />
             )}
           </div>
+        );
+      })}
+
+      {formData[fieldsList[0]?.name]?.trim() && (
+        <div className={styles.preview}>
+          {formData[fieldsList[0]?.name]?.split("\n").map((p, i) =>
+            p.trim() ? <p key={i}>{p}</p> : <br key={i} />
+          )}
         </div>
       )}
+
       <div className={styles.buttons}>
-        {(localText.trim() || year.trim() || link.trim()) && (
+        {Object.values(formData).some(value => value?.trim()) && (
           <button className={styles.button} onClick={handleCancel}>Cancel</button>
         )}
         <button className={styles.button} onClick={handleTextUpload}>Submit</button>
