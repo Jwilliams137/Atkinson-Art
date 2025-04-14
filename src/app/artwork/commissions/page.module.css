@@ -1,0 +1,69 @@
+.commissionsPage {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.commissionsContainer {
+    display: flex;
+    width: 100%;
+}
+
+.commissionsGallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.commissionsGalleryImage {
+    width: auto;
+    height: 300px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.commissionsMobileLabel {
+    display: none;
+    font-size: 20px;
+}
+
+.commissionsMobileTitle {
+    font-size: 25px;
+}
+
+@media (max-width: 1200px) {
+    .commissionsGalleryImage {
+        height: 400px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .commissionsGallery {
+        flex-wrap: nowrap;
+        flex-direction: column;
+        text-align: center;
+        gap: 60px;
+    }
+
+    .commissionsGalleryImage {
+        width: 70%;
+        height: auto;
+        cursor: default;
+    }
+
+    .commissionsMobileLabel {
+        display: block;
+    }
+}
+
+@media (max-width: 800px) {
+    .commissionsGalleryImage {
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    .commissionsGalleryImage {
+        width: 100%;
+    }
+}

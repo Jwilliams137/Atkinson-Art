@@ -6,7 +6,9 @@
         "subPages": [
           { "label": "New Work", "href": "/artwork/new-work" },
           { "label": "Houses", "href": "/artwork/houses" },
+          { "label": "Tiny Houses", "href": "/artwork/tiny-houses" },
           { "label": "Constructions", "href": "/artwork/constructions" },
+          { "label": "Commissions", "href": "/artwork/commissions"},
           { "label": "Collage", "href": "/artwork/collage" },
           { "label": "Earlier Work", "href": "/artwork/earlier-work" }
         ]

@@ -4,8 +4,10 @@
       { "key": "artwork", "label": "Artwork" },
       { "key": "new-work", "label": "New Work" },
       { "key": "houses", "label": "Houses" },
+      { "key": "tiny-houses", "label": "Tiny Houses" },
       { "key": "constructions", "label": "Constructions" },
       { "key": "collage", "label": "Collage" },
+      { "key": "commissions", "label": "Commissions" },
       { "key": "earlier-work", "label": "Earlier Work" },
       { "key": "about", "label": "About" },
       { "key": "bio", "label": "Bio" },
@@ -42,6 +44,12 @@
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#640c26" }
         ]},
         {"image-upload": [
+          { "name": "file", "label": "Tiny Houses Image", "type": "file" },
+          { "name": "title", "type": "hidden", "value": "Click to visit the Tiny Houses page" },
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#44754f" }
+        ]},
+        {"image-upload": [
           { "name": "file", "label": "Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
@@ -52,6 +60,12 @@
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
           { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e27474" }
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Commissions Image", "type": "file" },
+          { "name": "title", "type": "hidden", "value": "Click to visit the Commissions page" },
+          { "name": "pageType", "type": "hidden", "value": "artwork" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#a82020" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Image", "type": "file" },
@@ -93,6 +107,20 @@
           { "name": "pageType", "type": "hidden", "value": "houses" }
         ]}        
       ],
+      "tiny-houses": [
+        {"image-upload": [
+          { "name": "file", "label": "Tiny Houses Gallery Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "dimensions", "label": "Dimensions", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "tiny-houses" }
+        ]},
+        {"text-upload": [
+          { "name": "tiny-houses", "label": "Tiny Houses Statement", "type": "text" },
+          { "name": "type", "value": "tiny-houses-statement" },
+          { "name": "pageType", "type": "hidden", "value": "tiny-houses" }
+        ]}        
+      ],
       "constructions": [
         {"image-upload": [
           { "name": "file", "label": "Constructions Gallery Image", "type": "file" },
@@ -119,6 +147,20 @@
           { "name": "collageStatement", "label": "Collage Statement", "type": "text" },
           { "name": "type", "value": "collage-statement" },
           { "name": "pageType", "type": "hidden", "value": "collage" }
+        ]}       
+      ],
+      "commissions": [
+        {"image-upload": [
+          { "name": "file", "label": "Commissions Gallery Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "dimensions", "label": "Dimensions", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "commissions" }
+        ]},
+        {"text-upload": [
+          { "name": "commissionsStatement", "label": "Commissions Statement", "type": "text" },
+          { "name": "type", "value": "commissions-statement" },
+          { "name": "pageType", "type": "hidden", "value": "commissions" }
         ]}       
       ],
       "earlier-work": [
