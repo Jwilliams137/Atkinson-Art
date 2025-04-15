@@ -38,7 +38,7 @@ const ImageGallery = ({
                 <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
                 <p>{image.description}</p>
                 <p>{image.dimensions}</p>
-                {!isNaN(image.price) && image.price !== null && (
+                {image.price !== null && (
                   <p>${image.price}</p>
                 )}
               </div>
