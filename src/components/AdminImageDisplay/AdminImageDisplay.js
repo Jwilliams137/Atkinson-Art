@@ -79,15 +79,18 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           {editingId === image.id ? (
             <div className={styles.editForm}>
               {image.title && (
+                <div><p>Title</p>
                 <input
                   type="text"
                   value={editFields.title}
                   onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
                   className={styles.editInput}
                   placeholder="Title"
-                />
+                /></div>                
               )}
-              {typeof image.price === "number" && !isNaN(image.price) && (
+              {typeof image.price && (
+                <div>
+                  <p>Price</p>
                 <input
                   type="text"
                   value={editFields.price}
@@ -95,8 +98,11 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                   className={styles.editInput}
                   placeholder="Price"
                 />
+                </div>
               )}
               {image.dimensions && (
+                <div>
+                  <p>Dimensions</p>
                 <input
                   type="text"
                   value={editFields.dimensions}
@@ -104,14 +110,18 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                   className={styles.editInput}
                   placeholder="Dimensions"
                 />
+                </div>
               )}
               {image.description && (
+                <div>
+                  <p>Description</p>
                 <textarea
                   value={editFields.description}
                   onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
                   className={styles.editTextarea}
                   placeholder="Description"
                 />
+                </div>
               )}
               <div className={styles.textActions}>
                 <button onClick={() => handleSave(image.id)} className={styles.button}>
@@ -128,8 +138,8 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           ) : (
             <>
               <p className={styles.title}>{image.title}</p>
-              {image.price > 1 &&
-              (<p className={styles.title}>${image.price}</p>)}
+              {image.price &&
+              (<p className={styles.title}>{image.price}</p>)}
               <div className={styles.reorderButtons}>
                 {activeSection !== "artwork" && index > 0 && (
                   <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
