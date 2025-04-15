@@ -111,6 +111,10 @@
   box-sizing: border-box;
 }
 
+.editingImage {
+  max-width: 30%;
+}
+
 @media only screen and (max-width: 1000px) {
   .imagesGrid {
     justify-content: center;

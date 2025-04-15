@@ -75,52 +75,55 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             alt={image.title || "Uploaded Image"}
             width={image.width || 300}
             height={image.height || 200}
+            className={editingId === image.id ? styles.editingImage : ""}
           />
           {editingId === image.id ? (
             <div className={styles.editForm}>
               {image.title && (
-                <div><p>Title</p>
-                <input
-                  type="text"
-                  value={editFields.title}
-                  onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
-                  className={styles.editInput}
-                  placeholder="Title"
-                /></div>                
+                <div>
+                  <p>Title</p>
+                  <input
+                    type="text"
+                    value={editFields.title}
+                    onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
+                    className={styles.editInput}
+                    placeholder="Title"
+                  />
+                </div>
               )}
               {typeof image.price && (
                 <div>
                   <p>Price</p>
-                <input
-                  type="text"
-                  value={editFields.price}
-                  onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
-                  className={styles.editInput}
-                  placeholder="Price"
-                />
+                  <input
+                    type="text"
+                    value={editFields.price}
+                    onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
+                    className={styles.editInput}
+                    placeholder="Price"
+                  />
                 </div>
               )}
               {image.dimensions && (
                 <div>
                   <p>Dimensions</p>
-                <input
-                  type="text"
-                  value={editFields.dimensions}
-                  onChange={(e) => setEditFields({ ...editFields, dimensions: e.target.value })}
-                  className={styles.editInput}
-                  placeholder="Dimensions"
-                />
+                  <input
+                    type="text"
+                    value={editFields.dimensions}
+                    onChange={(e) => setEditFields({ ...editFields, dimensions: e.target.value })}
+                    className={styles.editInput}
+                    placeholder="Dimensions"
+                  />
                 </div>
               )}
               {image.description && (
                 <div>
                   <p>Description</p>
-                <textarea
-                  value={editFields.description}
-                  onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
-                  className={styles.editTextarea}
-                  placeholder="Description"
-                />
+                  <textarea
+                    value={editFields.description}
+                    onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
+                    className={styles.editTextarea}
+                    placeholder="Description"
+                  />
                 </div>
               )}
               <div className={styles.textActions}>
@@ -139,7 +142,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             <>
               <p className={styles.title}>{image.title}</p>
               {image.price &&
-              (<p className={styles.title}>{image.price}</p>)}
+                (<p className={styles.title}>{image.price}</p>)}
               <div className={styles.reorderButtons}>
                 {activeSection !== "artwork" && index > 0 && (
                   <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
