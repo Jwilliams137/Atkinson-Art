@@ -32,7 +32,7 @@ export async function POST(req) {
     const token = authHeader.split("Bearer ")[1];
     const decodedToken = await getAuth().verifyIdToken(token);
     const userEmail = decodedToken.email;
-    const allowedAdmins = [process.env.ADMIN_EMAIL_1, process.env.ADMIN_EMAIL_2];
+    const allowedAdmins = [process.env.ADMIN_EMAIL_1, process.env.ADMIN_EMAIL_2, process.env.ADMIN_EMAIL_3];
 
     if (!allowedAdmins.includes(userEmail)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
