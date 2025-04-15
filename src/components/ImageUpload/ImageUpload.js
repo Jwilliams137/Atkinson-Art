@@ -61,7 +61,7 @@ const ImageUpload = ({
         const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
         const description = (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "");
         const dimensions = formData.dimensions || "";
-        const price = formData.price ?? null;
+        const price = formData.price || "";
 
         const imageFormData = new FormData();
         imageFormData.append("file", localImage);
