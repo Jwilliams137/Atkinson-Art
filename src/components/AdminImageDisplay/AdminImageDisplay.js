@@ -9,6 +9,8 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const [editingId, setEditingId] = useState(null);
   const [editFields, setEditFields] = useState({});
 
+  const excludedFields = ["id", "imageUrl", "cloudinaryId", "createdAt", "updatedAt", "order", "width", "height"];
+
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
     try {
@@ -42,13 +44,19 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   };
 
   const handleEdit = (image) => {
+    const editableFields = Object.entries(image)
+      .filter(
+        ([key, value]) =>
+          !["id", "imageUrl", "cloudinaryId", "width", "height", "order"].includes(key) &&
+          (typeof value === "string" || typeof value === "number")
+      )
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
+
     setEditingId(image.id);
-    setEditFields({
-      title: image.title || "",
-      price: image.price || "",
-      description: image.description || "",
-      dimensions: image.dimensions || ""
-    });
+    setEditFields(editableFields);
   };
 
   const handleSave = async (id) => {
@@ -79,53 +87,31 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           />
           {editingId === image.id ? (
             <div className={styles.editForm}>
-              {image.title && (
-                <div>
-                  <p>Title</p>
-                  <input
-                    type="text"
-                    value={editFields.title}
-                    onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
-                    className={styles.editInput}
-                    placeholder="Title"
-                  />
+              {Object.entries(editFields).map(([key, value]) => (
+                <div key={key}>
+                  <p>{key.charAt(0).toUpperCase() + key.slice(1)}</p>
+                  {key === "description" ? (
+                    <textarea
+                      value={value}
+                      onChange={(e) =>
+                        setEditFields({ ...editFields, [key]: e.target.value })
+                      }
+                      className={styles.editTextarea}
+                      placeholder={key}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      value={value}
+                      onChange={(e) =>
+                        setEditFields({ ...editFields, [key]: e.target.value })
+                      }
+                      className={styles.editInput}
+                      placeholder={key}
+                    />
+                  )}
                 </div>
-              )}
-              {typeof image.price && (
-                <div>
-                  <p>Price</p>
-                  <input
-                    type="text"
-                    value={editFields.price}
-                    onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
-                    className={styles.editInput}
-                    placeholder="Price"
-                  />
-                </div>
-              )}
-              {image.dimensions && (
-                <div>
-                  <p>Dimensions</p>
-                  <input
-                    type="text"
-                    value={editFields.dimensions}
-                    onChange={(e) => setEditFields({ ...editFields, dimensions: e.target.value })}
-                    className={styles.editInput}
-                    placeholder="Dimensions"
-                  />
-                </div>
-              )}
-              {image.description && (
-                <div>
-                  <p>Description</p>
-                  <textarea
-                    value={editFields.description}
-                    onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
-                    className={styles.editTextarea}
-                    placeholder="Description"
-                  />
-                </div>
-              )}
+              ))}
               <div className={styles.textActions}>
                 <button onClick={() => handleSave(image.id)} className={styles.button}>
                   Save
@@ -141,8 +127,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           ) : (
             <>
               <p className={styles.title}>{image.title}</p>
-              {image.price &&
-                (<p className={styles.title}>{image.price}</p>)}
+              {image.price && (<p className={styles.title}>{image.price}</p>)}
               <div className={styles.reorderButtons}>
                 {activeSection !== "artwork" && index > 0 && (
                   <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
