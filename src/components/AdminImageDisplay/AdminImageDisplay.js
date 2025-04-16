@@ -47,7 +47,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
     const editableFields = Object.entries(image)
       .filter(
         ([key, value]) =>
-          !["id", "imageUrl", "cloudinaryId", "width", "height", "order"].includes(key) &&
+          !["id", "imageUrl", "cloudinaryId", "width", "height", "order", "pageType"].includes(key) &&
           (typeof value === "string" || typeof value === "number")
       )
       .reduce((acc, [key, value]) => {
