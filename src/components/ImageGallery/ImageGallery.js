@@ -38,8 +38,8 @@ const ImageGallery = ({
                 <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
                 <p>{image.description}</p>
                 <p>{image.dimensions}</p>
-                {image.price !== null && (
-                  <p>${image.price}</p>
+                {image.price !== "" && (
+                  <p>{image.price}</p>
                 )}
               </div>
             </div>

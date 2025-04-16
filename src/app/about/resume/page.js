@@ -11,9 +11,6 @@ const ResumePage = () => {
 
   return (
     <div className={styles.resumeContainer}>
-      <a href="/Linda Atkinson Complete resume 2025 feb.docx.pdf" download>
-        Click here to download the PDF
-      </a>
       <TextSection
         textUploads={textUploads}
         containerClass={styles.resumeTextContainer}
