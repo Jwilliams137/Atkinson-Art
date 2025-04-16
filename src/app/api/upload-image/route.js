@@ -130,9 +130,6 @@ export async function POST(req) {
       const uploadData = {
         pageType: pageType || "home",
         title: title || "No Title",
-        description: description || "",
-        dimensions: dimensions || "",
-        price: price || "",
         imageUrl: uploadResponse.secure_url,
         cloudinaryId: uploadResponse.public_id,
         createdAt: new Date(),
@@ -143,6 +140,15 @@ export async function POST(req) {
 
       if (formData.has("color")) {
         uploadData.color = color || "default";
+      }
+      if (formData.has("dimensions")) {
+        uploadData.dimensions = dimensions || "";
+      }
+      if (formData.has("price")) {
+        uploadData.price = price || "";
+      }
+      if (formData.has("description")) {
+        uploadData.description = description || "";
       }
 
       await db.collection("uploads").add(uploadData);

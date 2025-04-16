@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import styles from "./Modal.module.css";
+import Link from "next/link";
 
 const Modal = ({ images, currentImageIndex, closeModal }) => {
   const [selectedIndex, setSelectedIndex] = useState(currentImageIndex);
@@ -62,9 +63,9 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
         <div className={styles.imageLabel}>
           <p className={styles.imageTitle}>{selectedImage.title}</p>
           <p>{selectedImage.description}</p>
-          <p>{selectedImage.dimensions}</p>
-          {!isNaN(selectedImage.price) && selectedImage.price !== null && (
-            <p>${selectedImage.price}</p>
+          {selectedImage.dimensions && (<p>{selectedImage.dimensions}</p>)}
+          {selectedImage.price && (
+            <Link href="/shop"><p>{selectedImage.price}</p></Link>
           )}
         </div>
       </div>
