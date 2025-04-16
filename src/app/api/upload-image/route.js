@@ -62,7 +62,7 @@ export async function POST(req) {
       pageType,
       color,
     });
-    
+
 
     if (!file && !imageId) {
       return NextResponse.json({ error: "No file or imageId provided" }, { status: 400 });
@@ -127,7 +127,7 @@ export async function POST(req) {
         folder: "uploads",
       });
 
-      await db.collection("uploads").add({
+      const uploadData = {
         pageType: pageType || "home",
         title: title || "No Title",
         description: description || "",
@@ -139,8 +139,13 @@ export async function POST(req) {
         width: width ? parseInt(width) : null,
         height: height ? parseInt(height) : null,
         order: newOrder,
-        color: color || "default",
-      });
+      };
+
+      if (formData.has("color")) {
+        uploadData.color = color || "default";
+      }
+
+      await db.collection("uploads").add(uploadData);
 
       return NextResponse.json({
         message: "Upload successful",

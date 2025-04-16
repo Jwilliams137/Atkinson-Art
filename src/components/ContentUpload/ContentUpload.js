@@ -65,8 +65,12 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 imageFormData.append("price", formData.price);
                 imageFormData.append("width", imageDimensions.width);
                 imageFormData.append("height", imageDimensions.height);
-                imageFormData.append("color", color);
                 imageFormData.append("type", formData.type);
+
+                if (color !== undefined && color !== null) {
+                    imageFormData.append("color", color);
+                }
+                
 
                 const response = await fetch("/api/upload-image", {
                     method: "POST",
