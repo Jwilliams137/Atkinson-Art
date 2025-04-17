@@ -203,7 +203,10 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                   </button>
                 )}
                 <button
-                  onClick={() => deleteText(text.id)}
+                  onClick={() => {
+                    const confirmed = window.confirm("Are you sure you want to delete this text?");
+                    if (confirmed) deleteText(text.id);
+                  }}
                   className={styles.deleteButton}
                 >
                   Delete
