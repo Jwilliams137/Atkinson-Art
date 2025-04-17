@@ -212,8 +212,6 @@
           { "name": "file", "label": "Bio Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
-          { "name": "dimensions", "label": "Dimensions", "type": "text" },
-          { "name": "price", "label": "Price", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]}
       ],
