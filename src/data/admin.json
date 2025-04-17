@@ -199,6 +199,11 @@
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "about" }
+        ]},
+        {"text-upload": [
+          { "name": "pageType", "type": "hidden", "value": "about" },
+          { "name": "type", "value": "about-links" },
+          { "name": "link", "label": "Links", "type": "text"}
         ]}
       ],
       "bio": [
@@ -228,8 +233,6 @@
           { "name": "file", "label": "Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
-          { "name": "dimensions", "label": "Dimensions", "type": "text" },
-          { "name": "price", "label": "Price", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]}       
       ],
@@ -272,8 +275,6 @@
           { "name": "file", "label": "Resume Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
-          { "name": "dimensions", "label": "Dimensions", "type": "text" },
-          { "name": "price", "label": "Price", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "resume" }
         ]}     
       ],
