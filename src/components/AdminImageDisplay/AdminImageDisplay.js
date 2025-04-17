@@ -45,19 +45,23 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
 
   const handleEdit = (image) => {
     const editableFields = Object.entries(image)
-      .filter(
-        ([key, value]) =>
-          !["id", "imageUrl", "cloudinaryId", "width", "height", "order", "pageType"].includes(key) &&
+      .filter(([key, value]) => {
+        const isExcluded =
+          ["id", "imageUrl", "cloudinaryId", "width", "height", "order", "pageType"].includes(key) ||
+          (activeSection === "artwork" && key === "title");
+        return (
+          !isExcluded &&
           (typeof value === "string" || typeof value === "number")
-      )
+        );
+      })
       .reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
       }, {});
-
+  
     setEditingId(image.id);
     setEditFields(editableFields);
-  };
+  };  
 
   const handleSave = async (id) => {
     try {
@@ -84,6 +88,18 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             width={image.width || 300}
             height={image.height || 200}
             className={editingId === image.id ? styles.editingImage : ""}
+            style={
+              activeSection === "artwork"
+                ? {
+                    border: `8px solid ${
+                      editingId === image.id
+                        ? editFields.color || image.color || "#ccc"
+                        : image.color || "#ccc"
+                    }`,
+                    borderRadius: "8px",
+                  }
+                : {}
+            }
           />
           {editingId === image.id ? (
             <div className={styles.editForm}>
@@ -99,6 +115,15 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                       className={styles.editTextarea}
                       placeholder={key}
                     />
+                  ) : key.toLowerCase().includes("color") ? (
+                    <input
+                      type="color"
+                      value={value}
+                      onChange={(e) =>
+                        setEditFields({ ...editFields, [key]: e.target.value })
+                      }
+                      className={styles.editColorPicker}
+                    />
                   ) : (
                     <input
                       type="text"
@@ -112,6 +137,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                   )}
                 </div>
               ))}
+
               <div className={styles.textActions}>
                 <button onClick={() => handleSave(image.id)} className={styles.button}>
                   Save
