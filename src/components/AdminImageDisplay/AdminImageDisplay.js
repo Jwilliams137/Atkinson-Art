@@ -58,10 +58,10 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
         acc[key] = value;
         return acc;
       }, {});
-  
+
     setEditingId(image.id);
     setEditFields(editableFields);
-  };  
+  };
 
   const handleSave = async (id) => {
     try {
@@ -91,13 +91,12 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             style={
               activeSection === "artwork"
                 ? {
-                    border: `8px solid ${
-                      editingId === image.id
-                        ? editFields.color || image.color || "#ccc"
-                        : image.color || "#ccc"
+                  border: `8px solid ${editingId === image.id
+                    ? editFields.color || image.color || "#ccc"
+                    : image.color || "#ccc"
                     }`,
-                    borderRadius: "8px",
-                  }
+                  borderRadius: "8px",
+                }
                 : {}
             }
           />
@@ -145,7 +144,14 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                 <button onClick={() => setEditingId(null)} className={styles.button}>
                   Cancel
                 </button>
-                <button onClick={() => deleteImage(image.id, image.cloudinaryId)} className={styles.button}>
+                <button
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to delete this?")) {
+                      deleteImage(image.id, image.cloudinaryId);
+                    }
+                  }}
+                  className={styles.button}
+                >
                   Delete
                 </button>
               </div>
@@ -172,7 +178,14 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                     <button onClick={() => handleEdit(image)} className={styles.button}>
                       Edit
                     </button>
-                    <button onClick={() => deleteImage(image.id, image.cloudinaryId)} className={styles.button}>
+                    <button
+                      onClick={() => {
+                        if (window.confirm("Are you sure you want to delete this?")) {
+                          deleteImage(image.id, image.cloudinaryId);
+                        }
+                      }}
+                      className={styles.button}
+                    >
                       Delete
                     </button>
                   </>
