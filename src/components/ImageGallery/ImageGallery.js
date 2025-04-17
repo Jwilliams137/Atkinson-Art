@@ -37,7 +37,7 @@ const ImageGallery = ({
               <div className={`${styles.mobileLabel} ${mobileLabelClass}`}>
                 <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
                 {image.description && (<p>{image.description}</p>)}
-                {image.dimnesions && (<p>{image.dimensions}</p>)}
+                {image.dimensions && (<p>{image.dimensions}</p>)}
                 {image.price !== "" && (<p>{image.price}</p>)}
               </div>
             </div>
