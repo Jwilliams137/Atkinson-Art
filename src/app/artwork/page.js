@@ -22,7 +22,9 @@ const ArtworkPage = () => {
   const pageLinks = useMemo(() => ({
     'Click to visit the New Work page': '/artwork/new-work',
     'Click to visit the Houses page': '/artwork/houses',
+    'Click to visit the Tiny Houses page': '/artwork/tiny-houses',
     'Click to visit the Constructions page': '/artwork/constructions',
+    'Click to visit the Commissions page': '/artwork/commissions',
     'Click to visit the Collage page': '/artwork/collage',
     'Click to visit the Earlier Work page': '/artwork/earlier-work'
   }), []);
