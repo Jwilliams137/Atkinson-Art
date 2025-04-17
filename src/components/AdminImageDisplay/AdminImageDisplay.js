@@ -159,6 +159,8 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           ) : (
             <>
               <p className={styles.title}>{image.title}</p>
+              {image.description && (<p className={styles.title}>{image.description}</p>)}
+              {image.dimensions && (<p className={styles.title}>{image.dimensions}</p>)}
               {image.price && (<p className={styles.title}>{image.price}</p>)}
               <div className={styles.reorderButtons}>
                 {activeSection !== "artwork" && index > 0 && (
