@@ -12,6 +12,7 @@
       { "key": "about", "label": "About" },
       { "key": "bio", "label": "Bio" },
       { "key": "exhibitions", "label": "Exhibitions" },
+      { "key": "podcasts", "label": "Podcasts" },
       { "key": "resume", "label": "Resume" },
       { "key": "shop", "label": "Shop" }
     ],
@@ -235,6 +236,24 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" }
         ]}       
+      ],
+      "podcasts": [
+        {"text-upload": [
+          { "name": "podcasts", "label": "Podcasts", "type": "text" },
+          { "name": "type", "value": "upcoming" },
+          { "name": "pageType", "type": "hidden", "value": "podcasts" },
+          { "name": "link", "label": "Add a link", "type": "text"}
+        ]},
+        {"text-upload": [
+          { "name": "pageType", "type": "hidden", "value": "podcasts" },
+          { "name": "link", "label": "Links", "type": "text"}
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Podcasts Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "podcasts" }
+        ]}
       ],
       "resume": [
         {"text-upload": [
