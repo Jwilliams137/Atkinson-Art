@@ -1,0 +1,38 @@
+.podcastsMobileTitle {
+    display: none;
+  }
+  
+  .podcastsImageContainer {
+    margin-top: 40px;
+  }
+  
+  .podcastsGalleryImage {
+    width: 70%;
+    height: auto;
+  }
+  
+  @media only screen and (max-width: 1000px) {
+    .podcastsContainer {
+      padding: 0 20px;
+      } 
+      .podcastsGallery {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+      }
+      .podcastsGalleryImage {
+        width: 85%;
+        height: auto;
+      }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .podcastsContainer {
+      padding: 0 10px;
+      }
+  
+      .podcastsGalleryImage {
+        width: 95%;
+        height: auto;
+      }
+  }
