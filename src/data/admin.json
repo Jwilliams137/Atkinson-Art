@@ -38,43 +38,43 @@
           { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#c992e3" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#33373B" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#640c26" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#8B7E74" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Tiny Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Tiny Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#44754f" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#7D9777" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6d63f2" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6B1F24" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Collage Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e27474" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#5A6D8D" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Commissions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Commissions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#a82020" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#C2A878" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#e3c94a" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#775B22" }
         ]},
         {"text-upload": [
           { "name": "artworkStatement", "label": "Artwork Statement", "type": "text" },
