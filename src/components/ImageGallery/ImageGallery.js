@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 
@@ -8,40 +10,77 @@ const ImageGallery = ({
   imageClass,
   mobileLabelClass,
   mobileTitleClass,
-  onImageClick = () => { },
+  onImageClick = () => {},
   nextPage,
   prevPage,
   page,
   hasMore,
-  itemsPerPage
+  itemsPerPage,
 }) => {
-  const showPagination = (page > 1) || (hasMore && images.length === itemsPerPage);
+  const showPagination =
+    page > 1 || (hasMore && images.length === itemsPerPage);
+
+  // Track toggle state per image
+  const [expandedDescriptions, setExpandedDescriptions] = useState({});
+
+  const toggleDescription = (index) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const truncate = (text, limit) => {
+    if (text.length <= limit) return text;
+    return text.substring(0, limit) + "...";
+  };
 
   return (
     <div className={styles.gallery}>
       <div className={`${styles.galleryContainer} ${className}`}>
         {images.length > 0 &&
-          images.map((image, index) => (
-            <div key={image.id || index} className={cardClass || styles.galleryCard}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  className={imageClass || styles.galleryImage}
-                  src={image.imageUrl}
-                  alt={image.title || "Gallery Image"}
-                  width={image.width}
-                  height={image.height}
-                  priority
-                  onClick={() => onImageClick(index)}
-                />
+          images.map((image, index) => {
+            const isExpanded = expandedDescriptions[index];
+            const description = image.description || "";
+
+            return (
+              <div key={image.id || index} className={cardClass || styles.galleryCard}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    className={imageClass || styles.galleryImage}
+                    src={image.imageUrl}
+                    alt={image.title || "Gallery Image"}
+                    width={image.width}
+                    height={image.height}
+                    priority
+                    onClick={() => onImageClick(index)}
+                  />
+                </div>
+                <div className={`${styles.mobileLabel} ${mobileLabelClass}`}>
+                  <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>
+                    {image.title}
+                  </p>
+                  {description && (
+                    <>
+                      <p>
+                        {isExpanded ? description : truncate(description, 50)}
+                        {description.length > 50 && (
+                          <button
+                            onClick={() => toggleDescription(index)}
+                            className={styles.readMoreToggle}
+                          >
+                            {isExpanded ? " Read less" : " Read more"}
+                          </button>
+                        )}
+                      </p>
+                    </>
+                  )}
+                  {image.dimensions && <p>{image.dimensions}</p>}
+                  {image.price !== "" && <p>{image.price}</p>}
+                </div>
               </div>
-              <div className={`${styles.mobileLabel} ${mobileLabelClass}`}>
-                <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
-                {image.description && (<p>{image.description}</p>)}
-                {image.dimensions && (<p>{image.dimensions}</p>)}
-                {image.price !== "" && (<p>{image.price}</p>)}
-              </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
       {showPagination && (
         <div className={styles.paginationControls}>

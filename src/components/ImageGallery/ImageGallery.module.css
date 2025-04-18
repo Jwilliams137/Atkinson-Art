@@ -35,3 +35,12 @@
     width: 100px;
     font-size: 20px;
 }
+
+.readMoreToggle {
+    background: none;
+    border: none;
+    color: var(--hover-text);
+    cursor: pointer;
+    padding-left: 5px;
+    font-size: 18px;
+  }  
