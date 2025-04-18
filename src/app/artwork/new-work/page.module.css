@@ -22,6 +22,17 @@
   cursor: pointer;
 }
 
+.newWorkGalleryCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 .newWorkMobileLabel {
   font-size: 20px;
 }
@@ -30,22 +41,21 @@
   font-size: 25px;
 }
 
-@media only screen and (max-width: 1200px) {
-  .newWorkGalleryImage {
-    height: 400px;
-  }
-}
-
 @media (max-width: 1000px) {
   .newWorkGallery {
-    flex-wrap: nowrap;
     flex-direction: column;
-    text-align: center;
+    width: 100%;
+    align-items: center;
     gap: 60px;
   }
 
+  .newWorkGalleryCard {
+    display: block;
+    min-width: 70%;
+  }
+
   .newWorkGalleryImage {
-    width: 70%;
+    width: 100%;
     height: auto;
     cursor: default;
   }
@@ -56,13 +66,7 @@
 }
 
 @media (max-width: 800px) {
-  .newWorkGalleryImage {
-    width: 90%;
-  }
-}
-
-@media (max-width: 600px) {
-  .newWorkGalleryImage {
-    width: 100%;
+  .newWorkGalleryCard {
+    min-width: 90%;
   }
 }

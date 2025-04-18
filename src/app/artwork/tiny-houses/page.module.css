@@ -2,67 +2,71 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
-}
-
-.tinyHousesContainer {
+  }
+  
+  .tinyHousesContainer {
     display: flex;
     width: 100%;
-}
-
-.tinyHousesGallery {
+  }
+  
+  .tinyHousesGallery {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
-
-.tinyHousesGalleryImage {
+  }
+  
+  .tinyHousesGalleryImage {
     width: auto;
     height: 300px;
     border-radius: 8px;
     cursor: pointer;
-}
-
-.tinyHousesMobileLabel {
+  }
+  
+  .tinyHousesGalleryCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .tinyHousesMobileLabel {
     font-size: 20px;
-}
-
-.tinyHousesMobileTitle {
+  }
+  
+  .tinyHousesMobileTitle {
     font-size: 25px;
-}
-
-@media (max-width: 1200px) {
-    .tinyHousesGalleryImage {
-        height: 400px;
-    }
-}
-
-@media (max-width: 1000px) {
+  }
+  
+  @media (max-width: 1000px) {
     .tinyHousesGallery {
-        flex-wrap: nowrap;
-        flex-direction: column;
-        text-align: center;
-        gap: 60px;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+      gap: 60px;
     }
-
+  
+    .tinyHousesGalleryCard {
+      display: block;
+      min-width: 70%;
+    }
+  
     .tinyHousesGalleryImage {
-        width: 70%;
-        height: auto;
-        cursor: default;
+      width: 100%;
+      height: auto;
+      cursor: default;
     }
-
+  
     .tinyHousesMobileLabel {
-        display: block;
+      display: block;
     }
-}
-
-@media (max-width: 800px) {
-    .tinyHousesGalleryImage {
-        width: 90%;
+  }
+  
+  @media (max-width: 800px) {
+    .tinyHousesGalleryCard {
+      min-width: 90%;
     }
-}
-
-@media (max-width: 600px) {
-    .tinyHousesGalleryImage {
-        width: 100%;
-    }
-}
+  }
