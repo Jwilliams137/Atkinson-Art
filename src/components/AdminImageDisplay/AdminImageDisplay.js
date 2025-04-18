@@ -8,8 +8,16 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const db = getFirestore();
   const [editingId, setEditingId] = useState(null);
   const [editFields, setEditFields] = useState({});
+  const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
   const excludedFields = ["id", "imageUrl", "cloudinaryId", "createdAt", "updatedAt", "order", "width", "height"];
+
+  const toggleDescription = (id) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   const deleteImage = async (imageId, cloudinaryId) => {
     if (!isAdmin) return;
@@ -159,9 +167,26 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           ) : (
             <>
               <p className={styles.title}>{image.title}</p>
-              {image.description && (<p className={styles.title}>{image.description}</p>)}
-              {image.dimensions && (<p className={styles.title}>{image.dimensions}</p>)}
-              {image.price && (<p className={styles.title}>{image.price}</p>)}
+              {image.description && (
+                <div className={styles.descriptionWrapper}>
+                  <p className={styles.info}>
+                    {expandedDescriptions[image.id]
+                      ? image.description
+                      : `${image.description.slice(0, 50)}${image.description.length > 50 ? "..." : ""}`}
+                  </p>
+                  {image.description.length > 150 && (
+                    <button
+                      onClick={() => toggleDescription(image.id)}
+                      className={styles.readMoreButton}
+                    >
+                      {expandedDescriptions[image.id] ? "Read less" : "Read more"}
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {image.dimensions && (<p className={styles.info}>{image.dimensions}</p>)}
+              {image.price && (<p className={styles.info}>{image.price}</p>)}
               <div className={styles.reorderButtons}>
                 {activeSection !== "artwork" && index > 0 && (
                   <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
