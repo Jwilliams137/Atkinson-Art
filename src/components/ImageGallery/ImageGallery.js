@@ -20,7 +20,6 @@ const ImageGallery = ({
   const showPagination =
     page > 1 || (hasMore && images.length === itemsPerPage);
 
-  // Track toggle state per image
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
   const toggleDescription = (index) => {
