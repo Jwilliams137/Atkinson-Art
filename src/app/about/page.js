@@ -13,9 +13,9 @@ const AboutPage = () => {
     <div className={styles.aboutContainer}>
       <TextSection
         textUploads={textUploads}
-        containerClass={styles.earlierWorkTextContainer}
-        sectionClass={styles.earlierWorkTextSection}
-        textClass={styles.earlierWorkTextClass}
+        containerClass={styles.aboutTextContainer}
+        sectionClass={styles.aboutTextSection}
+        textClass={styles.aboutTextClass}
       />
       <ImageGallery
         images={images}

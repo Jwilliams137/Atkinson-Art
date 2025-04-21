@@ -204,6 +204,22 @@
           { "name": "pageType", "type": "hidden", "value": "about" },
           { "name": "type", "value": "about-links" },
           { "name": "link", "label": "Links", "type": "text"}
+        ]},
+        {"image-upload": [
+          { "name": "file", "label": "Podcast Image", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "about" }
+        ]},
+        {"text-upload": [
+          { "name": "podcastStatement", "label": "Podcast Statement", "type": "text" },
+          { "name": "type", "value": "podcast-statement" },
+          { "name": "pageType", "type": "hidden", "value": "about" }
+        ]},
+        {"text-upload": [
+          { "name": "pageType", "type": "hidden", "value": "about" },
+          { "name": "type", "value": "podcast-links" },
+          { "name": "link", "label": "Podcast Links", "type": "text"}
         ]}
       ],
       "bio": [
