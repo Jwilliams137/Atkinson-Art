@@ -18,7 +18,6 @@
         "subPages": [
           { "label": "Bio", "href": "/about/bio" },
           { "label": "Exhibitions", "href": "/about/exhibitions" },
-          { "label": "Podcasts", "href": "/about/podcasts" },
           { "label": "Resume", "href": "/about/resume" }
         ]
       },
