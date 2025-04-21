@@ -40,11 +40,11 @@ export async function POST(req) {
     const textType = type || "untitled";
 
     const data = {
-      content: content || "",
       pageType: textPageType,
       type: textType,
       createdAt: new Date(),
       order: order || 1,
+      ...(content ? { content } : {}),
       ...(year ? { year } : {}),
       ...(link ? { link } : {}),
     };

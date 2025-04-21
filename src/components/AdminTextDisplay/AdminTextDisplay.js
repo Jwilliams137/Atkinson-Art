@@ -11,6 +11,8 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [editLink, setEditLink] = useState("");
   const [showYearField, setShowYearField] = useState(false);
   const [showLinkField, setShowLinkField] = useState(false);
+  const [showContentField, setShowContentField] = useState(false);
+
 
   const toggleText = (id) => {
     setExpandedTextIds((prevIds) =>
@@ -27,6 +29,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     setEditLink(text.link || "");
     setShowYearField("year" in text);
     setShowLinkField("link" in text);
+    setShowContentField("content" in text);
   };
 
   const saveEdit = async (id) => {
@@ -97,7 +100,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
         .map((text, index) => {
 
           const isExpanded = expandedTextIds.includes(text.id);
-          const formattedContent = text.content
+          const formattedContent = (text.content || "")
             .split("\n\n")
             .map((para) => para.trim())
             .join("\n\n");
@@ -130,11 +133,12 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
               <div className={styles.textContent}>
                 {editingTextId === text.id ? (
                   <>
-                    <textarea
+                    {showContentField && (
+                       <textarea
                       className={styles.editTextarea}
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                    />
+                    />)}
                     {showLinkField && (
                       <input
                         type="text"

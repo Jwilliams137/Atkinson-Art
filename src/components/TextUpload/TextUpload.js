@@ -39,19 +39,21 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
   };
 
   const handleTextUpload = async () => {
+    const includesContentField = fieldsList.some(f => f.name === "content");
+
     const newTextData = {
       ...formData,
-      content: formData["content"] ?? "",
+      ...(includesContentField ? { content: formData["content"] ?? "" } : {}),
       pageType: sectionKey,
       order,
       type: fieldsList.find(f => f.name === "type")?.value || "general"
     };
-  
+
     console.log("Submitting:", newTextData);
-  
+
     await handleSubmit("text-upload", sectionKey, newTextData);
     handleCancel();
-  };  
+  };
 
   return (
     <div className={styles.textUpload}>
