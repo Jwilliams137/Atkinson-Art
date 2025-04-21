@@ -31,12 +31,10 @@ function ContactPage() {
         <input type="hidden" name="_honey" className={styles.hidden} />
         <button type="submit" className={styles.button}>Send Message</button>
       </form>
-      <a href={`mailto:${email}`}>
-        {email}
-      </a>
-      <a href={`tel:${phoneNumber}`}>
-        {phoneNumber}
-      </a>
+      <div className={styles.contactInfo}>
+        <p><a href={`mailto:${email}`} className={styles.contactLink}>{email}</a></p>
+        <p><a href={`tel:${phoneNumber}`} className={styles.contactLink}>{phoneNumber}</a></p>
+      </div>
     </div>
   )
 }
