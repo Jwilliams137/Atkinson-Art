@@ -33,7 +33,7 @@ function ContactPage() {
       </form>
       <div className={styles.contactInfo}>
         <p><a href={`mailto:${email}`} className={styles.contactLink}>{email}</a></p>
-        <p><a href={`tel:${phoneNumber}`} className={styles.contactLink}>{phoneNumber}</a></p>
+        <p><a href={`tel:${phoneNumber}`} className={styles.contactLink}>540-312-8463</a></p>
       </div>
     </div>
   )
