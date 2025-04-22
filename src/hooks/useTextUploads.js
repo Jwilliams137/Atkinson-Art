@@ -19,18 +19,20 @@ const useTextUploads = (pageType) => {
             const data = doc.data();
             const year = data.year;
             const link = data.link;
-            const type = data.type
-            // Only return if at least one of them exists
-            if (year || link) {
+            const type = data.type;
+            const content = data.content;
+
+            if (year || link || content) {
               return {
                 ...(year && { year }),
                 ...(link && { link }),
-                ...(type && { type })
+                ...(type && { type }),
+                ...(content && { content })
               };
             }
             return null;
           })
-          .filter((item) => item !== null); // Remove nulls
+          .filter((item) => item !== null);
         setTextUploads(texts);
       } catch (error) {
         console.error("Error fetching text uploads:", error);

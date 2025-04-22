@@ -22,11 +22,17 @@ const ExhibitionTextSection = ({ textUploads, containerClass, sectionClass, text
                             <h3 className={styles.year}>{year}</h3>
                             {exhibitions.map((item, index) => (
                                 <div key={index} className={styles.entry}>
-                                    {item.content.split("\n\n").map((para, idx) => (
-                                        <p key={`${index}-${idx}`} className={`${styles.text} ${textClass || ""}`}>
-                                            {para.trim()}
+                                    {item.content && typeof item.content === 'string' && item.content.trim() !== "" ? (
+                                        item.content.split("\n\n").map((para, idx) => (
+                                            <p key={`${index}-${idx}`} className={`${styles.text} ${textClass || ""}`}>
+                                                {para.trim()}
+                                            </p>
+                                        ))
+                                    ) : (
+                                        <p className={`${styles.text} ${textClass || ""}`}>
+                                            No content available
                                         </p>
-                                    ))}
+                                    )}
                                     {item.link && (
                                         <p className={styles.link}>
                                             <Link href={item.link} target="_blank" rel="noopener noreferrer" >
