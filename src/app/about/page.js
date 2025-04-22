@@ -1,35 +1,67 @@
 "use client";
 import usePageImages from "../../hooks/usePageImages";
-import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import useTextUploads from '../../hooks/useTextUploads';
-import TextSection from '../../components/TextSection/TextSection';
+import Image from "next/image";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 const AboutPage = () => {
-  const textUploads = useTextUploads("about")
-  const { images, nextPage, prevPage, page, hasMore } = usePageImages("about");
+  const textUploads = useTextUploads("about");
+  const { images: imageUploads } = usePageImages("about");
+  const combined = [...textUploads, ...imageUploads];
+
+  console.log("Combined content:", combined);
+
+  const typeOrder = [
+    "general-statement",
+    "about-image",
+    "about-links",
+    "podcast-image",
+    "podcast-statement",
+    "podcast-links"
+  ];
+
+  const sortedContent = combined.sort((a, b) => {
+    return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
+  });
 
   return (
     <div className={styles.aboutContainer}>
-      <TextSection
-        textUploads={textUploads}
-        containerClass={styles.aboutTextContainer}
-        sectionClass={styles.aboutTextSection}
-        textClass={styles.aboutTextClass}
-      />
-      <ImageGallery
-        images={images}
-        className={styles.aboutGallery}
-        cardClass={styles.aboutGalleryCard}
-        imageClass={styles.aboutGalleryImage}
-        mobileLabelClass={styles.aboutMobileLabel}
-        mobileTitleClass={styles.aboutMobileTitle}
-        nextPage={nextPage}
-        prevPage={prevPage}
-        page={page}
-        hasMore={hasMore}
-        itemsPerPage={20}
-      />
+      {sortedContent.map((item, index) => {
+        if (item.type === "about-links" && index !== 0) {
+          // Insert "Podcasts" after the "about-links" section
+          return (
+            <>
+              <div key="podcasts" className={styles.podcastsHeading}>
+                <h2>Podcasts</h2>
+              </div>
+            </>
+          );
+        }
+
+        if (item.imageUrl) {
+          return (
+            <div key={index} className={styles.imageWrapper}>
+              <Image
+                src={item.imageUrl}
+                alt={item.title || item.type}
+                width={item.width}
+                height={item.height}
+                className={styles.aboutImage}
+              />
+              <p className={styles.imageCaption}>{item.title || "Untitled Image"}</p>
+            </div>
+          );
+        } else if (item.link) {
+          return (
+            <div key={index} className={styles.linkWrapper}>
+              <Link href={item.link} className={styles.aboutLink} target="_blank" rel="noopener noreferrer">
+                {item.link}
+              </Link>
+            </div>
+          );
+        }
+      })}
     </div>
   );
 };

@@ -191,7 +191,7 @@
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "generalStatement", "label": "About Statement", "type": "text" },
-          { "name": "type", "value": "general-statement" },
+          { "name": "type", "value": "general-statement", "type": "hidden" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]},
         {"image-upload": [
@@ -203,7 +203,7 @@
         ]},
         {"text-upload": [
           { "name": "pageType", "type": "hidden", "value": "about" },
-          { "name": "type", "value": "about-links" },
+          { "name": "type", "value": "about-links", "type": "hidden" },
           { "name": "link", "label": "Links", "type": "text"}
         ]},
         {"image-upload": [
@@ -215,7 +215,7 @@
         ]},
         {"text-upload": [
           { "name": "podcastStatement", "label": "Podcast Statement", "type": "text" },
-          { "name": "type", "value": "podcast-statement" },
+          { "name": "type", "value": "podcast-statement", "type": "hidden" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]},
         {"text-upload": [
