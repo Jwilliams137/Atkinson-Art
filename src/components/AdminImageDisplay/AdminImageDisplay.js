@@ -10,7 +10,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const [editFields, setEditFields] = useState({});
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
-  const excludedFields = ["id", "imageUrl", "cloudinaryId", "createdAt", "updatedAt", "order", "width", "height"];
+  const excludedFields = ["id", "imageUrl", "cloudinaryId", "createdAt", "updatedAt", "order", "width", "height", "type"];
 
   const toggleDescription = (id) => {
     setExpandedDescriptions((prev) => ({
@@ -55,7 +55,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
     const editableFields = Object.entries(image)
       .filter(([key, value]) => {
         const isExcluded =
-          ["id", "imageUrl", "cloudinaryId", "width", "height", "order", "pageType"].includes(key) ||
+          ["id", "imageUrl", "cloudinaryId", "width", "height", "order", "pageType", "type"].includes(key) ||
           (activeSection === "artwork" && key === "title");
         return (
           !isExcluded &&
