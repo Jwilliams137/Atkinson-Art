@@ -35,16 +35,20 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const saveEdit = async (id) => {
     try {
       const textRef = doc(db, "textUploads", id);
-      await updateDoc(textRef, {
+
+      const updatedFields = {
         content: editContent,
-        year: editYear,
-        link: editLink,
-      });
+      };
+
+      if (showYearField) updatedFields.year = editYear;
+      if (showLinkField) updatedFields.link = editLink;
+
+      await updateDoc(textRef, updatedFields);
 
       setTexts((prevTexts) =>
         prevTexts.map((text) =>
           text.id === id
-            ? { ...text, content: editContent, year: editYear, link: editLink }
+            ? { ...text, ...updatedFields }
             : text
         )
       );
@@ -134,11 +138,11 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                 {editingTextId === text.id ? (
                   <>
                     {showContentField && (
-                       <textarea
-                      className={styles.editTextarea}
-                      value={editContent}
-                      onChange={(e) => setEditContent(e.target.value)}
-                    />)}
+                      <textarea
+                        className={styles.editTextarea}
+                        value={editContent}
+                        onChange={(e) => setEditContent(e.target.value)}
+                      />)}
                     {showLinkField && (
                       <input
                         type="text"

@@ -47,6 +47,7 @@ export async function POST(req) {
     const width = formData.get("width");
     const height = formData.get("height");
     const pageType = formData.get("pageType");
+    const type = formData.get("type");
     const imageId = formData.get("imageId");
     const moveDirection = formData.get("moveDirection");
     const color = formData.get("color");
@@ -149,6 +150,9 @@ export async function POST(req) {
       }
       if (formData.has("description")) {
         uploadData.description = description || "";
+      }
+      if (formData.has("type")) {
+        uploadData.type = type || "";
       }
 
       await db.collection("uploads").add(uploadData);

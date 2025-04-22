@@ -57,6 +57,8 @@ const ImageUpload = ({
             return;
         }
 
+        const includeType = fieldsList.some(field => field.name === "type");
+        const type = includeType ? (formData.type || "") : undefined;
         const includeColor = fieldsList.some(field => field.name === "color");
         const color = includeColor ? (formData.color || defaultColor) : undefined;
         const includeDimensions = fieldsList.some(field => field.name === "dimensions");
@@ -86,12 +88,16 @@ const ImageUpload = ({
         if (description !== undefined) {
             imageFormData.append("description", description);
         }
+        if (type !== undefined) {
+            imageFormData.append("type", type);
+        }
 
         await handleSubmit("image-upload", sectionKey, {
             ...formData,
             title,
             imageDimensions,
             ...(color !== undefined ? { color } : {}),
+            ...(type !== undefined ? { type } : {}),
             ...(dimensions !== undefined ? { dimensions } : {}),
             ...(price !== undefined ? { price } : {}),
             ...(description !== undefined ? { description } : {})
