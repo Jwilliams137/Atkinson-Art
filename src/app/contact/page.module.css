@@ -19,14 +19,13 @@
     width: 100%;
     padding: 12px;
     font-size: 18px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--primary-text);
     border-radius: 6px;
-    transition: border 0.3s ease;
 }
 
 .inputField:focus,
 .textarea:focus {
-    border-color: var(--primary-text);
+    border: 3px solid var(--primary-text);
     outline: none;
 }
 
