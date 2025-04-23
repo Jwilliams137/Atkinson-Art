@@ -58,6 +58,7 @@ const AboutPage = () => {
                 className={styles.aboutImage}
               />
               <p className={styles.imageCaption}>{item.title || "Untitled Image"}</p>
+              <p className={styles.imageCaption}>{item.description || ""}</p>
             </div>
           );
         } else if (item.link) {

@@ -7,8 +7,7 @@ import styles from "./page.module.css";
 
 const BioPage = () => {
   const textUploads = useTextUploads('bio')
-  const { images, nextPage, prevPage, page, hasMore } = usePageImages("about");
-
+  const { images, nextPage, prevPage, page, hasMore } = usePageImages("bio")
   return (
     <div className={styles.bioContainer}>
       <h2>Biography</h2>
