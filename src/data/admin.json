@@ -24,11 +24,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },          
-          { "name": "pageType", "type": "hidden", "value": "home" }
+          { "name": "pageType", "type": "hidden", "value": "home" },
+          { "name": "type", "type": "hidden", "value": "home-image" }
         ]},
         {"text-upload": [
           { "name": "homeStatement", "label": "Home Statement", "type": "text" },
-          { "name": "type", "value": "home-statement" },
+          { "name": "type", "type": "hidden", "value": "home-statement" },
           { "name": "pageType", "type": "hidden", "value": "home" }
         ]} 
       ],
@@ -38,47 +39,54 @@
           { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#33373B" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#33373B" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#8B7E74" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#8B7E74" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Tiny Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Tiny Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#7D9777" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#7D9777" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6B1F24" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6B1F24" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Collage Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#5A6D8D" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#5A6D8D" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Commissions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Commissions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#C2A878" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#C2A878" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#775B22" }
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#775B22" },
+          { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"text-upload": [
           { "name": "artworkStatement", "label": "Artwork Statement", "type": "text" },
-          { "name": "type", "value": "artwork-statement" },
+          { "name": "type", "type": "hidden", "value": "artwork-statement" },
           { "name": "pageType", "type": "hidden", "value": "artwork" }
         ]}         
       ],
@@ -89,7 +97,8 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "new-work" }
+          { "name": "pageType", "type": "hidden", "value": "new-work" },
+          { "name": "type", "type": "hidden", "value": "new-work-image" }
         ]},
         {"text-upload": [
           { "name": "newWorkStatement", "label": "New Work Statement", "type": "text" },
@@ -104,11 +113,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "houses" }
+          { "name": "pageType", "type": "hidden", "value": "houses" },
+          { "name": "type", "type": "hidden", "value": "houses-image" }
         ]},
         {"text-upload": [
           { "name": "houses", "label": "Houses Statement", "type": "text" },
-          { "name": "type", "value": "houses-statement" },
+          { "name": "type", "type": "hidden", "value": "houses-statement" },
           { "name": "pageType", "type": "hidden", "value": "houses" }
         ]}        
       ],
@@ -119,11 +129,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "tiny-houses" }
+          { "name": "pageType", "type": "hidden", "value": "tiny-houses" },
+          { "name": "type", "type": "hidden", "value": "tiny-houses-image" }
         ]},
         {"text-upload": [
           { "name": "tiny-houses", "label": "Tiny Houses Statement", "type": "text" },
-          { "name": "type", "value": "tiny-houses-statement" },
+          { "name": "type", "type": "hidden", "value": "tiny-houses-statement" },
           { "name": "pageType", "type": "hidden", "value": "tiny-houses" }
         ]}        
       ],
@@ -134,11 +145,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "constructions" }
+          { "name": "pageType", "type": "hidden", "value": "constructions" },
+          { "name": "type", "type": "hidden", "value": "constructions-image" }
         ]},
         {"text-upload": [
           { "name": "constructionsStatement", "label": "Constructions Statement", "type": "text" },
-          { "name": "type", "value": "constructions-statement" },
+          { "name": "type", "type": "hidden", "value": "constructions-statement" },
           { "name": "pageType", "type": "hidden", "value": "constructions" }
         ]}      
       ],
@@ -149,11 +161,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "collage" }
+          { "name": "pageType", "type": "hidden", "value": "collage" },
+          { "name": "type", "type": "hidden", "value": "collage-image" }
         ]},
         {"text-upload": [
           { "name": "collageStatement", "label": "Collage Statement", "type": "text" },
-          { "name": "type", "value": "collage-statement" },
+          { "name": "type", "type": "hidden", "value": "collage-statement" },
           { "name": "pageType", "type": "hidden", "value": "collage" }
         ]}       
       ],
@@ -164,11 +177,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "commissions" }
+          { "name": "pageType", "type": "hidden", "value": "commissions" },
+          { "name": "type", "type": "hidden", "value": "commissions-image" }
         ]},
         {"text-upload": [
           { "name": "commissionsStatement", "label": "Commissions Statement", "type": "text" },
-          { "name": "type", "value": "commissions-statement" },
+          { "name": "type", "type": "hidden", "value": "commissions-statement" },
           { "name": "pageType", "type": "hidden", "value": "commissions" }
         ]}       
       ],
@@ -179,11 +193,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "earlier-work" }
+          { "name": "pageType", "type": "hidden", "value": "earlier-work" },
+          { "name": "type", "type": "hidden", "value": "earlier-work-image" }
         ]},
         {"text-upload": [
           { "name": "earlierWorkStatement", "label": "Earlier Work Statement", "type": "text" },
-          { "name": "type", "value": "earlier-work-statement" },
+          { "name": "type", "type": "hidden", "value": "earlier-work-statement" },
           { "name": "pageType", "type": "hidden", "value": "earlier-work" }
         ]}      
       ],
@@ -191,7 +206,7 @@
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "generalStatement", "label": "About Statement", "type": "text" },
-          { "name": "type", "value": "general-statement", "type": "hidden" },
+          { "name": "type", "type": "hidden", "value": "general-statement" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]},
         {"image-upload": [
@@ -203,7 +218,7 @@
         ]},
         {"text-upload": [
           { "name": "pageType", "type": "hidden", "value": "about" },
-          { "name": "type", "value": "about-links", "type": "hidden" },
+          { "name": "type", "type": "hidden", "value": "about-links" },
           { "name": "link", "label": "About Links", "type": "text"}
         ]},
         {"image-upload": [
@@ -215,12 +230,12 @@
         ]},
         {"text-upload": [
           { "name": "podcastStatement", "label": "Podcast Statement", "type": "text" },
-          { "name": "type", "value": "podcast-statement", "type": "hidden" },
+          { "name": "type", "type": "hidden", "value": "podcast-statement" },
           { "name": "pageType", "type": "hidden", "value": "about" }
         ]},
         {"text-upload": [
           { "name": "pageType", "type": "hidden", "value": "about" },
-          { "name": "type", "value": "podcast-links", "type": "hidden" },
+          { "name": "type", "type": "hidden", "value": "podcast-links" },
           { "name": "link", "label": "Podcast Links", "type": "text"}
         ]}
       ],
@@ -228,14 +243,15 @@
         {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "bio", "label": "Biography", "type": "text" },
-          { "name": "type", "value": "biography" },
+          { "name": "type", "type": "hidden", "value": "biography" },
           { "name": "pageType", "type": "hidden", "value": "bio" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Bio Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "bio" }
+          { "name": "pageType", "type": "hidden", "value": "bio" },
+          { "name": "type", "type": "hidden", "value": "bio-image" }
         ]}
       ],
       "exhibitions": [
@@ -251,49 +267,52 @@
           { "name": "file", "label": "Exhibitions Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "exhibitions" }
+          { "name": "pageType", "type": "hidden", "value": "exhibitions" },
+          { "name": "type", "type": "hidden", "value": "exhibitions-image" }
         ]}       
       ],
       "resume": [
         {"text-upload": [
           { "name": "groupMuseum", "label": "Selected Group Museum Exhibitions", "type": "text" },
-          { "name": "type", "value": "group-museum" },
+          { "name": "type", "type": "hidden", "value": "group-museum" },
           { "name": "pageType", "type": "hidden", "value": "resume" },
           { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"text-upload": [
           { "name": "group", "label": "Select Group Exhibitions", "type": "text" },
-          { "name": "type", "value": "group" },
+          { "name": "type", "type": "hidden", "value": "group" },
           { "name": "pageType", "type": "hidden", "value": "resume" },
           { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"text-upload": [
           { "name": "publications", "label": "Publications", "type": "text" },
-          { "name": "type", "value": "publications" },
+          { "name": "type", "type": "hidden", "value": "publications" },
           { "name": "pageType", "type": "hidden", "value": "resume" },
           { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"text-upload": [
           { "name": "podcasts", "label": "Podcasts", "type": "text" },
-          { "name": "type", "value": "podcasts" },
+          { "name": "type", "type": "hidden", "value": "podcasts" },
           { "name": "pageType", "type": "hidden", "value": "resume" },
           { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"text-upload": [
           { "name": "upcomingOngoing", "label": "Upcoming and ongoing", "type": "text" },
-          { "name": "type", "value": "upcoming" },
+          { "name": "type", "type": "hidden", "value": "upcoming" },
           { "name": "pageType", "type": "hidden", "value": "resume" },
           { "name": "link", "label": "Add a link", "type": "text"}
         ]},
         {"text-upload": [
           { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Links", "type": "text"}
+          { "name": "link", "label": "Links", "type": "text"},
+          { "name": "type", "type": "hidden", "value": "resume-links" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Resume Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "resume" }
+          { "name": "pageType", "type": "hidden", "value": "resume" },
+          { "name": "type", "type": "hidden", "value": "resume-image" }
         ]}     
       ],
       "shop": [
@@ -303,11 +322,12 @@
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "shop" }
+          { "name": "pageType", "type": "hidden", "value": "shop" },
+          { "name": "type", "type": "hidden", "value": "shop-gallery-image" }
         ]},
         {"text-upload": [
           { "name": "shopStatement", "label": "Shop Statement", "type": "text" },
-          { "name": "type", "value": "shop-statement" },
+          { "name": "type", "type": "hidden", "value": "shop-statement" },
           { "name": "pageType", "type": "hidden", "value": "shop" }
         ]}       
       ]

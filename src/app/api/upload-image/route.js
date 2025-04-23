@@ -62,6 +62,7 @@ export async function POST(req) {
       height,
       pageType,
       color,
+      type
     });
 
 
