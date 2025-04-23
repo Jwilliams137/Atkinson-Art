@@ -1,6 +1,7 @@
 {
     "title": "Linda Atkinson",
     "pages": {
+      "home": { "label": "Home", "href": "/" },
       "artwork": {
         "label": "Artwork",
         "subPages": [
