@@ -75,7 +75,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 if (description !== undefined && description !== null) {
                     imageFormData.append("description", description);
                 }
-                if (type !== undefined && type !== null) {
+                if (type !== undefined) {
                     imageFormData.append("type", type);
                 }
 

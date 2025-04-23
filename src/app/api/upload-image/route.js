@@ -151,9 +151,9 @@ export async function POST(req) {
       if (formData.has("description")) {
         uploadData.description = description || "";
       }
-      if (formData.has("type")) {
-        uploadData.type = type || "";
-      }
+      if (formData.has("type") && type?.trim()) {
+        uploadData.type = type;
+      }      
 
       await db.collection("uploads").add(uploadData);
 

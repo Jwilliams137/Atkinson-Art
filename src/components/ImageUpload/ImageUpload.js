@@ -57,8 +57,8 @@ const ImageUpload = ({
             return;
         }
 
-        const includeType = fieldsList.some(field => field.name === "type");
-        const type = includeType ? (formData.type || "") : undefined;
+        const typeField = fieldsList.find(field => field.name === "type");
+        const type = typeField ? (formData.type || typeField.value) : undefined;
         const includeColor = fieldsList.some(field => field.name === "color");
         const color = includeColor ? (formData.color || defaultColor) : undefined;
         const includeDimensions = fieldsList.some(field => field.name === "dimensions");
