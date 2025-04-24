@@ -1,7 +1,7 @@
 .aboutContainer {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 60px;
 }
 
 .imageWrapper {
@@ -38,5 +38,52 @@
 }
 
 .podcastsHeading {
-font-size: 25px;
+  font-size: 25px;
+}
+
+.podcastCarouselWrapper {}
+
+.carouselHeading {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.podcastCarousel {
+  display: flex;
+  flex-wrap: nowrap;  /* Prevent wrapping */
+  overflow-x: auto;   /* Enable horizontal scrolling */
+  scroll-behavior: smooth;
+  gap: 20px;          /* Space between images */
+  padding: 10px;
+  justify-content: flex-start;  /* Align items to the left */
+}
+
+.podcastCarousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.podcastCarousel::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.podcastCarousel::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.podcastImageCard {
+  flex: 0 0 auto;     /* Prevent growing/shrinking */
+  width: 300px;       /* Set fixed width to ensure no overflow */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.podcastImage {
+  height: 300px;      /* Set fixed height for images */
+  width: auto;        /* Maintain aspect ratio */
+  object-fit: cover;  /* Ensure image fills space properly without distortion */
+  border-radius: 8px;
 }
