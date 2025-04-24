@@ -174,7 +174,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                       ? image.description
                       : `${image.description.slice(0, 50)}${image.description.length > 50 ? "..." : ""}`}
                   </p>
-                  {image.description.length > 150 && (
+                  {image.description.length > 50 && (
                     <button
                       onClick={() => toggleDescription(image.id)}
                       className={styles.readMoreButton}
