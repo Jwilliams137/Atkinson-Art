@@ -51,9 +51,22 @@
 
 .imageLabel {
   font-size: 20px;
+  max-width: 100%;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
-
+.readMoreLessButton {
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1em;
+  margin-left: 4px;
+}
 
 @media (prefers-color-scheme: dark) {
   .modalBackdrop {

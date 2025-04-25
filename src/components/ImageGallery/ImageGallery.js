@@ -62,8 +62,8 @@ const ImageGallery = ({
                   {description && (
                     <>
                       <p>
-                        {isExpanded ? description : truncate(description, 65)}
-                        {description.length > 65 && (
+                        {isExpanded ? description : truncate(description, 40)}
+                        {description.length > 40 && (
                           <button
                             onClick={() => toggleDescription(index)}
                             className={styles.readMoreToggle}

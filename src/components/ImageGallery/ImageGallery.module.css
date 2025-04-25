@@ -39,7 +39,7 @@
 .readMoreToggle {
     background: none;
     border: none;
-    color: var(--hover-text);
+    font-weight: bold;
     cursor: pointer;
     padding-left: 5px;
     font-size: 18px;

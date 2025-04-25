@@ -5,13 +5,16 @@ import Link from "next/link";
 
 const Modal = ({ images, currentImageIndex, closeModal }) => {
   const [selectedIndex, setSelectedIndex] = useState(currentImageIndex);
+  const [isExpanded, setIsExpanded] = useState(false);
   const scrollTimeoutRef = useRef(null);
 
   const goToNextImage = useCallback(() => {
+    setIsExpanded(false);
     setSelectedIndex((prevIndex) => (prevIndex + 1) % images.length);
   }, [images.length]);
 
   const goToPrevImage = useCallback(() => {
+    setIsExpanded(false);
     setSelectedIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
@@ -48,6 +51,25 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
 
   const selectedImage = images[selectedIndex];
 
+  const renderDescription = () => {
+    const desc = selectedImage.description || "";
+    const shouldTruncate = desc.length > 50;
+
+    if (!shouldTruncate) return <p>{desc}</p>;
+
+    return (
+      <p>
+        {isExpanded ? desc : `${desc.slice(0, 50)}...`}
+        <button
+          className={styles.readMoreLessButton}
+          onClick={() => setIsExpanded((prev) => !prev)}
+        >
+          {isExpanded ? " Read less" : " Read more"}
+        </button>
+      </p>
+    );
+  };
+
   return (
     <div className={styles.modalBackdrop} onClick={closeModal}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -62,8 +84,8 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
         </div>
         <div className={styles.imageLabel}>
           <p className={styles.imageTitle}>{selectedImage.title}</p>
-          <p>{selectedImage.description}</p>
-          {selectedImage.dimensions && (<p>{selectedImage.dimensions}</p>)}
+          {renderDescription()}
+          {selectedImage.dimensions && <p>{selectedImage.dimensions}</p>}
           {selectedImage.price && (
             <Link href="/shop"><p>{selectedImage.price}</p></Link>
           )}
