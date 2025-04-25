@@ -14,9 +14,15 @@
   border-radius: 8px;
 }
 
+.imageTitle {
+  font-weight: 700;
+  font-size: 18px;
+  font-style: italic;
+  margin-top: 5px;
+}
+
 .imageCaption {
   font-size: 18px;
-  margin-top: 10px;
   font-style: italic;
 }
 
@@ -35,6 +41,12 @@
 
 .statementWrapper {
   font-size: 25px;
+}
+
+.podcastCarouselWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .podcastsHeading {

@@ -61,7 +61,7 @@ const AboutPage = () => {
                 height={item.height}
                 className={styles.aboutImage}
               />
-              <p className={styles.imageCaption}>{item.title || "Untitled Image"}</p>
+              <p className={styles.imageTitle}>{item.title || "Untitled Image"}</p>
               <p className={styles.imageCaption}>{item.description || ""}</p>
             </div>
           );
@@ -85,7 +85,7 @@ const AboutPage = () => {
                       height={200}
                       className={styles.podcastImage}
                     />
-                    <p className={styles.imageCaption}>{item.title || "Untitled Image"}</p>
+                    <p className={styles.imageTitle}>{item.title || "Untitled Image"}</p>
                     <p className={styles.imageCaption}>{item.description || ""}</p>
                   </div>
                 );
