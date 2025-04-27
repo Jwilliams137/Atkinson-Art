@@ -23,8 +23,6 @@ const AboutPage = () => {
     return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
   });
 
-  let podcastsHeadingShown = false;
-
   return (
     <div className={styles.aboutContainer}>
       {sortedContent.map((item, index) => {
@@ -93,20 +91,20 @@ const AboutPage = () => {
               return null;
             })}
           </div>
-
-          {sortedContent.map((item, index) => {
-            if (item.type === "podcast-statement") {
-              return (
-                <div key={index} className={styles.statementWrapper}>
-                  <p>{item.content}</p>
-                </div>
-              );
-            }
-            return null;
-          })}
-
         </div>
       )}
+
+      {sortedContent.map((item, index) => {
+        if (item.type === "podcast-statement") {
+          return (
+            <div key={index} className={styles.statementWrapper}>
+              <p>{item.content}</p>
+            </div>
+          );
+        }
+        return null;
+      })}
+
     </div>
   );
 };
