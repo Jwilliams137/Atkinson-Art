@@ -29,7 +29,7 @@
 }
 
 .aboutLink {
-  font-size: 25px;
+  font-size: 20px;
   text-decoration: none;
 }
 
@@ -92,6 +92,19 @@
 }
 
 @media (max-width: 1000px) {
+  .imageWrapper {
+    width: 100%;
+  }
+
+  .aboutImage {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .aboutLink {
+    font-size: 18px;
+  }
+
   .podcastCarouselWrapper {
     padding: none;
   }
