@@ -8,10 +8,11 @@
 .bioGallery {
   font-size: 18px;
   font-style: italic;
+  width: 60%;
 }
 
 .bioGalleryImage {
-  width: 60%;
+  width: 100%;
   height: auto;
 }
 
@@ -24,15 +25,12 @@
   .bioContainer {
     padding: 0 20px;
   }
+
   .bioGallery {
     display: flex;
     justify-content: center;
     margin: auto;
     width: 100%;
-  }
-  .bioGalleryImage {
-    width: 100%;
-    height: auto;
   }
 }
 

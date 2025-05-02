@@ -1,14 +1,20 @@
-.exhibitionsMobileTitle {
-  display: none;
-}
-
 .exhibitionsImageContainer {
   margin-top: 40px;
 }
 
+.exhibitionsGallery {
+  width: 60%;
+  font-size: 18px;
+  font-style: italic;
+}
+
 .exhibitionsGalleryImage {
-  width: 70%;
+  width: 100%;
   height: auto;
+}
+
+.exhibitionsMobileTitle {
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -16,13 +22,10 @@
     padding: 0 20px;
     } 
     .exhibitionsGallery {
+      width: 80%;
       display: flex;
       justify-content: center;
       margin: auto;
-    }
-    .exhibitionsGalleryImage {
-      width: 85%;
-      height: auto;
     }
 }
 
@@ -31,8 +34,7 @@
     padding: 0 10px;
     }
 
-    .exhibitionsGalleryImage {
-      width: 95%;
-      height: auto;
+    .exhibitionsGallery {
+      width: 100%;
     }
 }
