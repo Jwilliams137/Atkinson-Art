@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={styles.wrapper}>
         <Nav />
-        {/*<UnderConstruction />*/}
+        <UnderConstruction />
         <div className={styles.children_container}>
           {children}
         </div>
