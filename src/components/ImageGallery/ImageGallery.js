@@ -5,12 +5,7 @@ import styles from "./ImageGallery.module.css";
 
 const ImageGallery = ({
   images,
-  className,
-  cardClass,
-  imageClass,
-  mobileLabelClass,
-  mobileTitleClass,
-  onImageClick = () => { },
+  onImageClick = () => {},
   nextPage,
   prevPage,
   page,
@@ -36,17 +31,17 @@ const ImageGallery = ({
 
   return (
     <div className={styles.gallery}>
-      <div className={`${styles.galleryContainer} ${className}`}>
+      <div className={styles.galleryContainer}>
         {images.length > 0 &&
           images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
             const description = image.description || "";
 
             return (
-              <div key={image.id || index} className={cardClass || styles.galleryCard}>
+              <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
                   <Image
-                    className={imageClass || styles.galleryImage}
+                    className={styles.galleryImage}
                     src={image.imageUrl}
                     alt={image.title || "Gallery Image"}
                     width={image.width}
@@ -54,8 +49,8 @@ const ImageGallery = ({
                     priority
                     onClick={() => onImageClick(index)}
                   />
-                  <div className={`${styles.mobileLabel} ${mobileLabelClass}`}>
-                    <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
+                  <div className={styles.mobileLabel}>
+                    <p className={styles.mobileTitle}>{image.title}</p>
                     {description && (
                       <p>
                         {isExpanded ? description : truncate(description, 40)}
@@ -73,7 +68,6 @@ const ImageGallery = ({
                     {image.price !== "" && <p>{image.price}</p>}
                   </div>
                 </div>
-
               </div>
             );
           })}

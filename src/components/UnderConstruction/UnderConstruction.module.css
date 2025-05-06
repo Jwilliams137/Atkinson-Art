@@ -2,9 +2,13 @@
   text-align: center;
   background-color: #111;
   color: white;
-  padding: 20px;
+  padding: 10px;
   width: 100%;
   transition: opacity 0.5s ease-in-out;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
 }
 
 .title {

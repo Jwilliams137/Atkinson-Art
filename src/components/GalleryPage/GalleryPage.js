@@ -18,12 +18,7 @@ const GalleryPage = ({ collectionName }) => {
         <div className={styles.container}>
           <ImageGallery
             images={images}
-            className={styles.gallery}
-            cardClass={styles.galleryCard}
-            imageClass={styles.galleryImage}
             onImageClick={openModal}
-            mobileLabelClass={styles.mobileLabel}
-            mobileTitleClass={styles.mobileTitle}
             nextPage={nextPage}
             prevPage={prevPage}
             page={page}

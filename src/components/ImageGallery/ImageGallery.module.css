@@ -48,3 +48,49 @@
   .mobileLabel {
     text-align: left;
   }
+
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .galleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+  
+  .galleryImage {
+    width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin: auto;
+  }
+  
+  .mobileTitle {
+    font-size: 25px;
+  }
+  
+  .mobileLabel {
+    font-size: 20px;
+  }
+  
+  @media only screen and (max-width: 1000px) {
+    .galleryContainer {
+      display: block;
+      text-align: center;
+    }
+  
+    .galleryImage {
+      width: 80%;
+    }
+  
+    .mobileLabel {
+      text-align: center;
+    }
+  }
+  

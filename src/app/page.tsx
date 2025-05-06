@@ -13,11 +13,6 @@ const HomePage = () => {
     <div className={styles.homeContainer}>
       <ImageGallery
         images={images}
-        className={styles.homeGallery}
-        cardClass={styles.homeGalleryCard}
-        imageClass={styles.homeGalleryImage}
-        mobileLabelClass={styles.homeMobileLabel}
-        mobileTitleClass={styles.homeMobileTitle}
         nextPage={nextPage} 
         prevPage={prevPage} 
         page={page} 
