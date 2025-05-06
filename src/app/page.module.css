@@ -3,20 +3,21 @@
   flex-direction: column;
   gap: 20px;
   margin: 0 auto;
-  width: 55%;
+  width: 100%;
 }
 
 .homeGallery {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: 20px;
-  width: 100%;
 }
 
 .homeGalleryImage {
-  width: 100%;
+  width: 500px;
   height: auto;
   border-radius: 8px;
+  margin: auto;
 }
 
 .homeMobileTitle {
@@ -27,26 +28,16 @@
   font-size: 20px;
 }
 
-@media only screen and (max-width: 1500px) {
-  .homeContainer {
+@media only screen and (max-width: 1000px) {
+  .homeGallery {
+    display: block;
+    text-align: center;
+  }
+
+  .homeGalleryImage {
     width: 80%;
   }
-}
-
-@media only screen and (max-width: 700px) {
-  .homeContainer {
-    width: 90%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .homeContainer {
-    width: 95%;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .homeContainer {
-    width: 100%;
+  .homeMobileLabel {
+    text-align: center;
   }
 }

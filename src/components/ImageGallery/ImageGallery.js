@@ -10,7 +10,7 @@ const ImageGallery = ({
   imageClass,
   mobileLabelClass,
   mobileTitleClass,
-  onImageClick = () => {},
+  onImageClick = () => { },
   nextPage,
   prevPage,
   page,
@@ -54,13 +54,9 @@ const ImageGallery = ({
                     priority
                     onClick={() => onImageClick(index)}
                   />
-                </div>
-                <div className={`${styles.mobileLabel} ${mobileLabelClass}`}>
-                  <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>
-                    {image.title}
-                  </p>
-                  {description && (
-                    <>
+                  <div className={`${styles.mobileLabel} ${mobileLabelClass}`}>
+                    <p className={`${styles.mobileTitle} ${mobileTitleClass}`}>{image.title}</p>
+                    {description && (
                       <p>
                         {isExpanded ? description : truncate(description, 40)}
                         {description.length > 40 && (
@@ -72,11 +68,12 @@ const ImageGallery = ({
                           </button>
                         )}
                       </p>
-                    </>
-                  )}
-                  {image.dimensions && <p>{image.dimensions}</p>}
-                  {image.price !== "" && <p>{image.price}</p>}
+                    )}
+                    {image.dimensions && <p>{image.dimensions}</p>}
+                    {image.price !== "" && <p>{image.price}</p>}
+                  </div>
                 </div>
+
               </div>
             );
           })}
