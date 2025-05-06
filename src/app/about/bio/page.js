@@ -19,11 +19,6 @@ const BioPage = () => {
       />
       <ImageGallery
         images={images}
-        className={styles.bioGallery}
-        cardClass={styles.bioGalleryCard}
-        imageClass={styles.bioGalleryImage}
-        mobileLabelClass={styles.bioMobileLabel}
-        mobileTitleClass={styles.bioMobileTitle}
         nextPage={nextPage}
         prevPage={prevPage}
         page={page}

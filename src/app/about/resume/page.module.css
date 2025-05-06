@@ -1,38 +1,11 @@
-.resumeMobileTitle {
-  display: none;
-}
-
-.resumeImageContainer {
-  margin-top: 40px;
-}
-
-.resumeGalleryImage {
-  width: 70%;
-  height: auto;
-}
-
 @media only screen and (max-width: 1000px) {
   .resumeContainer {
     padding: 0 20px;
     } 
-    .resumeGallery {
-      display: flex;
-      justify-content: center;
-      margin: auto;
-    }
-    .resumeGalleryImage {
-      width: 85%;
-      height: auto;
-    }
 }
 
 @media only screen and (max-width: 600px) {
   .resumeContainer {
     padding: 0 10px;
-    }
-
-    .resumeGalleryImage {
-      width: 95%;
-      height: auto;
     }
 }

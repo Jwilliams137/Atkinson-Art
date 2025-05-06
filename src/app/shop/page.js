@@ -18,12 +18,7 @@ const ShopPage = () => {
         <div className={styles.shopContainer}>
           <ImageGallery
             images={images}
-            className={styles.shopGallery}
-            cardClass={styles.shopGalleryCard}
-            imageClass={styles.shopGalleryImage}
             onImageClick={openModal}
-            mobileLabelClass={styles.shopMobileLabel}
-            mobileTitleClass={styles.shopMobileTitle}
             nextPage={nextPage}
             prevPage={prevPage}
             page={page}

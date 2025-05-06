@@ -19,11 +19,6 @@ const ExhibitionsPage = () => {
       <div className={styles.exhibitionsImageContainer}>
         <ImageGallery
           images={images}
-          className={styles.exhibitionsGallery}
-          cardClass={styles.exhibitionsGalleryCard}
-          imageClass={styles.exhibitionsGalleryImage}
-          mobileLabelClass={styles.exhibitionsMobileLabel}
-          mobileTitleClass={styles.exhibitionsMobileTitle}
           nextPage={nextPage}
           prevPage={prevPage}
           page={page}

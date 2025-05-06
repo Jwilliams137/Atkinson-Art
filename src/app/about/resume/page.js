@@ -19,11 +19,6 @@ const ResumePage = () => {
       />
       <ImageGallery
         images={images}
-        className={styles.resumeGallery}
-        cardClass={styles.resumeGalleryCard}
-        imageClass={styles.resumeGalleryImage}
-        mobileLabelClass={styles.resumeMobileLabel}
-        mobileTitleClass={styles.resumeMobileTitle}
         nextPage={nextPage}
         prevPage={prevPage}
         page={page}
