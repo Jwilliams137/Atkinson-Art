@@ -24,9 +24,10 @@ const ImageGallery = ({
     }));
   };
 
-  const truncate = (text, limit) => {
-    if (text.length <= limit) return text;
-    return text.substring(0, limit) + "...";
+  const truncate = (text, wordLimit) => {
+    const words = text.split(" ");
+    if (words.length <= wordLimit) return text;
+    return words.slice(0, wordLimit).join(" ") + "...";
   };
 
   return (
@@ -53,8 +54,8 @@ const ImageGallery = ({
                     <p className={styles.mobileTitle}>{image.title}</p>
                     {description && (
                       <p>
-                        {isExpanded ? description : truncate(description, 40)}
-                        {description.length > 40 && (
+                        {isExpanded ? description : truncate(description, 6)}
+                        {description.split(" ").length > 8 && (
                           <button
                             onClick={() => toggleDescription(index)}
                             className={styles.readMoreToggle}
