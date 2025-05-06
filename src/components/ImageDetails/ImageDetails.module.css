@@ -1,0 +1,29 @@
+.mobileLabel {
+    text-align: left;
+    
+    margin: 0 auto;
+    word-wrap: break-word;
+    font-size: 20px;
+}
+
+.mobileTitle {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.readMoreToggle {
+    display: inline;
+    background: none;
+    border: none;
+    font-weight: normal;
+    font-size: 18px;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    font-style: italic;
+    color: rgb(59, 55, 55);
+}
+
+@media only screen and (max-width: 1000px) {
+    
+}

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
+import ImageDetails from "../ImageDetails/ImageDetails";
 
 const ImageGallery = ({
   images,
@@ -24,20 +25,12 @@ const ImageGallery = ({
     }));
   };
 
-  const truncate = (text, wordLimit) => {
-    const words = text.split(" ");
-    if (words.length <= wordLimit) return text;
-    return words.slice(0, wordLimit).join(" ") + "...";
-  };
-
   return (
     <div className={styles.gallery}>
       <div className={styles.galleryContainer}>
         {images.length > 0 &&
           images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
-            const description = image.description || "";
-
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
@@ -50,24 +43,14 @@ const ImageGallery = ({
                     priority
                     onClick={() => onImageClick(index)}
                   />
-                  <div className={styles.mobileLabel}>
-                    <p className={styles.mobileTitle}>{image.title}</p>
-                    {description && (
-                      <p>
-                        {isExpanded ? description : truncate(description, 6)}
-                        {description.split(" ").length > 8 && (
-                          <button
-                            onClick={() => toggleDescription(index)}
-                            className={styles.readMoreToggle}
-                          >
-                            {isExpanded ? " Read less" : " Read more"}
-                          </button>
-                        )}
-                      </p>
-                    )}
-                    {image.dimensions && <p>{image.dimensions}</p>}
-                    {image.price !== "" && <p>{image.price}</p>}
-                  </div>
+                  <ImageDetails
+                    title={image.title}
+                    description={image.description || ""}
+                    dimensions={image.dimensions}
+                    price={image.price}
+                    isExpanded={isExpanded}
+                    toggleDescription={() => toggleDescription(index)}
+                  />
                 </div>
               </div>
             );
