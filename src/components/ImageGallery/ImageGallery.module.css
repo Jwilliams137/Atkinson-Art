@@ -1,5 +1,31 @@
-.gallery {
+.galleryContainer {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto 50px;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 50px;
+}
+
+.galleryCard {
+    max-width: 300px;
+}
+
+.imageWrapper {
+    width: 100%;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: auto;
 }
 
 .paginationControls {
@@ -36,70 +62,19 @@
     font-size: 20px;
 }
 
-.readMoreToggle {
-    display: inline;
-    background: none;
-    border: none;
-    font-weight: normal;
-    font-size: 18px;
-    color: inherit;
-    cursor: pointer;
-    text-decoration: underline;
-    font-style: italic;
-    color: black;
-}
-
-
-.mobileLabel {
-    text-align: left;
-    max-width: 400px;
-    margin: 0 auto;
-    word-wrap: break-word;
-}
-
-
-.gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.galleryContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 50px;
-}
-
-.galleryImage {
-    width: 400px;
-    height: auto;
-    border-radius: 8px;
-    margin: auto;
-}
-
-.mobileTitle {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.mobileLabel {
-    font-size: 20px;
-}
-
 @media only screen and (max-width: 1000px) {
-    .galleryContainer {
+    .gallery {
         flex-direction: column;
-        text-align: center;
+        align-items: center;
     }
 
-    .galleryImage {
-        width: 80%;
+    .galleryCard {
+        max-width: 80%;
     }
+}
 
-    .mobileLabel {
-        text-align: center;
+@media only screen and (max-width: 500px) {
+    .galleryCard {
+        max-width: 100%;
     }
 }

@@ -1,12 +1,11 @@
-.mobileLabel {
-    text-align: left;
-    
+.label {
+    text-align: left;    
     margin: 0 auto;
     word-wrap: break-word;
     font-size: 20px;
 }
 
-.mobileTitle {
+.title {
     font-size: 25px;
     font-weight: bold;
 }

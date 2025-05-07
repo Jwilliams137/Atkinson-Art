@@ -16,8 +16,8 @@ const ImageDetails = ({
   };
 
   return (
-    <div className={styles.mobileLabel}>
-      <p className={styles.mobileTitle}>{title}</p>
+    <div className={styles.label}>
+      <p className={styles.title}>{title}</p>
       {description && (
         <p>
           {isExpanded ? description : truncate(description, 6)}
