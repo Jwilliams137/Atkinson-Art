@@ -20,13 +20,15 @@ const ImageDetails = ({
       <p className={styles.title}>{title}</p>
       {description && (
         <p>
+        <span className={styles.descriptionText}>
           {isExpanded ? description : truncate(description, 6)}
-          {description.split(" ").length > 6 && (
-            <button onClick={toggleDescription} className={styles.readMoreToggle}>
-              {isExpanded ? " Read less" : " Read more"}
-            </button>
-          )}
-        </p>
+        </span>
+        {description.split(" ").length > 6 && (
+          <button onClick={toggleDescription} className={styles.readMoreToggle}>
+            {isExpanded ? "Read less" : "Read more"}
+          </button>
+        )}
+      </p>      
       )}
       {dimensions && <p>{dimensions}</p>}
       {price !== "" && <p>{price}</p>}

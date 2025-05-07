@@ -10,6 +10,10 @@
     font-weight: bold;
 }
 
+.descriptionText {
+    margin-right: 8px;
+  } 
+
 .readMoreToggle {
     display: inline;
     background: none;
@@ -21,8 +25,4 @@
     text-decoration: underline;
     font-style: italic;
     color: rgb(59, 55, 55);
-}
-
-@media only screen and (max-width: 1000px) {
-    
 }
