@@ -42,7 +42,8 @@ const ImageGallery = ({
                     height={image.height}
                     priority
                     onClick={() => onImageClick(index)}
-                  /><div className={styles.imageDetails}>
+                  />
+                  <div className={styles.imageDetails}>
                     <ImageDetails
                       title={image.title}
                       description={image.description || ""}
