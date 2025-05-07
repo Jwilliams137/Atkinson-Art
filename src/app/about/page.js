@@ -1,9 +1,11 @@
 "use client";
+import { useState } from "react";
 import usePageImages from "../../hooks/usePageImages";
 import useTextUploads from '../../hooks/useTextUploads';
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
+import ImageDetails from "../../components/ImageDetails/ImageDetails";
 
 const AboutPage = () => {
   const textUploads = useTextUploads("about");
@@ -22,6 +24,15 @@ const AboutPage = () => {
   const sortedContent = combined.sort((a, b) => {
     return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
   });
+
+  const [expandedDescriptions, setExpandedDescriptions] = useState({});
+
+  const toggleDescription = (index) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   return (
     <div className={styles.aboutContainer}>
@@ -51,16 +62,26 @@ const AboutPage = () => {
 
         if (item.type === "about-image" && item.imageUrl) {
           return (
-            <div key={index} className={styles.imageWrapper}>
-              <Image
-                src={item.imageUrl}
-                alt={item.title || item.type}
-                width={item.width}
-                height={item.height}
-                className={styles.aboutImage}
-              />
-              <p className={styles.imageTitle}>{item.title || "Untitled Image"}</p>
-              <p className={styles.imageCaption}>{item.description || ""}</p>
+            <div className={styles.imageCard}>
+              <div key={index} className={styles.imageWrapper}>
+                <Image
+                  src={item.imageUrl}
+                  alt={item.title || item.type}
+                  width={item.width}
+                  height={item.height}
+                  className={styles.aboutImage}
+                />
+                <div className={styles.imageDetails}>
+                  <ImageDetails
+                    title={item.title || "Untitled Image"}
+                    description={item.description || ""}
+                    dimensions={item.dimensions || ""}
+                    price={item.price || ""}
+                    isExpanded={!!expandedDescriptions[index]}
+                    toggleDescription={() => toggleDescription(index)}
+                  />
+                </div>
+              </div>
             </div>
           );
         }
@@ -83,8 +104,14 @@ const AboutPage = () => {
                       height={200}
                       className={styles.podcastImage}
                     />
-                    <p className={styles.imageTitle}>{item.title || "Untitled Image"}</p>
-                    <p className={styles.imageCaption}>{item.description || ""}</p>
+                    <ImageDetails
+                      title={item.title || "Untitled Image"}
+                      description={item.description || ""}
+                      dimensions={item.dimensions || ""}
+                      price={item.price || ""}
+                      isExpanded={!!expandedDescriptions[index]}
+                      toggleDescription={() => toggleDescription(index)}
+                    />
                   </div>
                 );
               }
@@ -104,7 +131,6 @@ const AboutPage = () => {
         }
         return null;
       })}
-
     </div>
   );
 };
