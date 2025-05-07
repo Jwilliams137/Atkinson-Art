@@ -5,7 +5,7 @@
 }
 
 .imageCard {
-  max-width: 300px;
+  width: 300px;
   margin: auto;
 }
 
@@ -17,18 +17,6 @@
   border-radius: 8px;
 }
 
-.imageTitle {
-  font-weight: 700;
-  font-size: 18px;
-  font-style: italic;
-  margin-top: 5px;
-}
-
-.imageCaption {
-  font-size: 18px;
-  font-style: italic;
-}
-
 .linkWrapper {
   text-align: center;
 }
@@ -38,83 +26,27 @@
   text-decoration: none;
 }
 
-.textWrapper p {
-  font-size: 25px;
-}
-
 .statementWrapper {
   font-size: 25px;
 }
 
-.podcastCarouselWrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.carouselHeading {
-  font-size: 28px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.podcastCarousel {
-  display: flex;
-  gap: 20px;
-  padding: 10px;
-  scroll-behavior: smooth;
-  width: fit-content;
-  box-sizing: border-box;
-}
-
-.podcastImageCard {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-right: 20px;
-}
-
-.podcastImage {
-  height: 300px;
-  width: auto;
-  object-fit: contain;
-  border-radius: 8px;
-  display: block;
-}
-
-.podcastCarousel::-webkit-scrollbar {
-  height: 8px;
-}
-
-.podcastCarousel::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-.podcastCarousel::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 @media (max-width: 1000px) {
-  .imageWrapper {
-    width: 100%;
+  .imageCard {
+    width: 80%;
   }
 
   .aboutImage {
-    max-width: 100%;
+    width: 100%;
     height: auto;
   }
 
   .aboutLink {
     font-size: 18px;
   }
+}
 
-  .podcastCarouselWrapper {
-    padding: none;
-  }
-
-  .podcastImage {
-    height: 200px;
+@media (max-width: 500px) {
+  .imageCard {
+    width: 90%;
   }
 }

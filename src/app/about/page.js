@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import ImageDetails from "../../components/ImageDetails/ImageDetails";
+import PodcastCarousel from "../../components/PodcastCarousel/PodcastCarousel";
 
 const AboutPage = () => {
   const textUploads = useTextUploads("about");
@@ -89,37 +90,11 @@ const AboutPage = () => {
         return null;
       })}
 
-      {sortedContent.some(item => item.type === "podcast-image") && (
-        <div className={styles.podcastCarouselWrapper}>
-          <h3 className={styles.carouselHeading}>Podcasts</h3>
-          <div className={styles.podcastCarousel}>
-            {sortedContent.map((item, index) => {
-              if (item.type === "podcast-image" && item.imageUrl) {
-                return (
-                  <div key={index} className={styles.podcastImageCard}>
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title || item.type}
-                      width={200}
-                      height={200}
-                      className={styles.podcastImage}
-                    />
-                    <ImageDetails
-                      title={item.title || "Untitled Image"}
-                      description={item.description || ""}
-                      dimensions={item.dimensions || ""}
-                      price={item.price || ""}
-                      isExpanded={!!expandedDescriptions[index]}
-                      toggleDescription={() => toggleDescription(index)}
-                    />
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        </div>
-      )}
+      <PodcastCarousel
+        content={sortedContent}
+        expandedDescriptions={expandedDescriptions}
+        toggleDescription={toggleDescription}
+      />
 
       {sortedContent.map((item, index) => {
         if (item.type === "podcast-statement") {
