@@ -21,7 +21,7 @@ const ImageDetails = ({
       {description && (
         <p>
           {isExpanded ? description : truncate(description, 6)}
-          {description.split(" ").length > 8 && (
+          {description.split(" ").length > 6 && (
             <button onClick={toggleDescription} className={styles.readMoreToggle}>
               {isExpanded ? " Read less" : " Read more"}
             </button>

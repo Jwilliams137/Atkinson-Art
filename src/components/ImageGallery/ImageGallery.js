@@ -42,16 +42,16 @@ const ImageGallery = ({
                     height={image.height}
                     priority
                     onClick={() => onImageClick(index)}
-                  />
-                  <ImageDetails
-                    className={styles.imageDetails}
-                    title={image.title}
-                    description={image.description || ""}
-                    dimensions={image.dimensions}
-                    price={image.price}
-                    isExpanded={isExpanded}
-                    toggleDescription={() => toggleDescription(index)}
-                  />
+                  /><div className={styles.imageDetails}>
+                    <ImageDetails
+                      title={image.title}
+                      description={image.description || ""}
+                      dimensions={image.dimensions}
+                      price={image.price}
+                      isExpanded={isExpanded}
+                      toggleDescription={() => toggleDescription(index)}
+                    />
+                  </div>
                 </div>
               </div>
             );
