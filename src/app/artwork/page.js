@@ -116,9 +116,6 @@ const ArtworkPage = () => {
       <div className={styles.text}>
         <TextSection
           textUploads={artworkTextUploads}
-          containerClass={styles.artworkTextContainer}
-          sectionClass={styles.artworkTextSection}
-          textClass={styles.artworkText}
         />
       </div>
     </div>

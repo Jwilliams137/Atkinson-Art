@@ -37,9 +37,6 @@ const ShopPage = () => {
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}
-          containerClass={styles.shopTextContainer}
-          sectionClass={styles.shopTextSection}
-          textClass={styles.shopTextClass}
         />
       </div>
     </div>

@@ -13,9 +13,6 @@ const BioPage = () => {
       <h2>Biography</h2>
       <TextSection
         textUploads={textUploads}
-        containerClass={styles.bioTextContainer}
-        sectionClass={styles.bioTextSection}
-        textClass={styles.bioTextClass}
       />
       <ImageGallery
         images={images}

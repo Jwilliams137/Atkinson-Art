@@ -2,10 +2,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
-import ImageDetails from "@/components/ImageDetails/ImageDetails"; // adjust path if needed
-import TextSection from "@/components/TextSection/TextSection"; // assuming you're using this
-import usePageImages from "@/hooks/usePageImages"; // adjust if needed
-import useTextUploads from "@/hooks/useTextUploads"; // adjust if needed
+import ImageDetails from "@/components/ImageDetails/ImageDetails";
+import TextSection from "@/components/TextSection/TextSection";
+import usePageImages from "@/hooks/usePageImages";
+import useTextUploads from "@/hooks/useTextUploads";
 
 const HomePage = () => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages("home") as {
@@ -106,9 +106,6 @@ const HomePage = () => {
       <div className={styles.textSection}>
         <TextSection
           textUploads={homeTextUploads}
-          containerClass={styles.homeTextContainer}
-          sectionClass={styles.homeTextSection}
-          textClass={styles.homeText}
         />
       </div>
     </div>

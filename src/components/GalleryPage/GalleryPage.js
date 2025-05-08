@@ -37,9 +37,6 @@ const GalleryPage = ({ collectionName }) => {
       <div className={styles.text}>
         <TextSection
           textUploads={textUploads}
-          containerClass={styles.textContainer}
-          sectionClass={styles.textSection}
-          textClass={styles.textClass}
         />
       </div>
     </div>

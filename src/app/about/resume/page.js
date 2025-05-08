@@ -13,9 +13,6 @@ const ResumePage = () => {
     <div className={styles.resumeContainer}>
       <TextSection
         textUploads={textUploads}
-        containerClass={styles.resumeTextContainer}
-        sectionClass={styles.resumeTextSection}
-        textClass={styles.resumeTextClass}
       />
       <ImageGallery
         images={images}
