@@ -40,6 +40,8 @@
   height: 70vh;
   width: auto;
   object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 5px;
 }
 
 .imageTitle {
@@ -74,6 +76,14 @@
   }
 
   .modalContent {
+    background: rgba(39, 38, 38, 0.8);
+  }
+
+  .modalContent {
     color: #2e2c2e;
+  }
+
+  .imageLabel {
+    color: var(--primary-text);
   }
 }

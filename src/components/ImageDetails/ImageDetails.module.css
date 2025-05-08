@@ -36,3 +36,9 @@
         font-size: 18px;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .readMoreToggle {
+        color: var(--primary-text);
+    }
+  }
