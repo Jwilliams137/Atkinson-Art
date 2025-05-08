@@ -34,8 +34,8 @@
   @media only screen and (max-width: 1000px) {
 
       .podcastCarouselWrapper {
-          width: 80%;
-          margin: auto;
+        width: 80%;
+        margin: auto;
       }
 
       .podcastImageCard {
@@ -43,7 +43,7 @@
       }
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 500px) {
       .podcastCarouselWrapper {
           width: 95%;
       }
