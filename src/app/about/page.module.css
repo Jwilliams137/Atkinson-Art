@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 60px;
-  padding: 0 15px;
 }
 
 .imageCard {
@@ -49,11 +48,12 @@
 }
 
 @media (max-width: 500px) {
-  .aboutContainer {
-    padding: 5px;
-  }
 
   .imageCard {
     width: 90%;
+  }
+
+  .statementWrapper {
+    font-size: 18px;
   }
 }

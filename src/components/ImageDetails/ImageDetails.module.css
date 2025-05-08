@@ -1,5 +1,5 @@
 .label {
-    text-align: left;    
+    text-align: left;
     margin: 0 auto;
     word-wrap: break-word;
     font-size: 20px;
@@ -12,7 +12,7 @@
 
 .descriptionText {
     margin-right: 8px;
-  } 
+}
 
 .readMoreToggle {
     display: inline;
@@ -25,4 +25,14 @@
     text-decoration: underline;
     font-style: italic;
     color: rgb(59, 55, 55);
+}
+
+@media only screen and (max-width: 1000px) {
+    .label {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
 }
