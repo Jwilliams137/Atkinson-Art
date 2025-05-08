@@ -1,53 +1,50 @@
-.podcastCarouselWrapper {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  .podcastCarouselWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
   
   .carouselHeading {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
+      font-size: 25px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
   }
-  
+
   .podcastCarousel {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px 15px;
-    justify-content: space-around;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px 30px;
+      justify-content: space-around;
   }
-  
+
   .podcastImageCard {
-    background-color: white;
-    border-radius: 8px;
-    padding: 10px;
-    width: 400px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      width: 40%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .podcastImage {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-    object-fit: cover;
-    margin-bottom: 0.75rem;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
   }
 
-
-  
   @media only screen and (max-width: 1000px) {
-    .carouselHeading {
-      font-size: 1.5rem;
-    }
-  
-    .podcastCarousel {
-      gap: 1rem;
-    }
-  
-    .podcastImageCard {
-      width: 100%;
-      padding: 0.75rem;
-    }
-  }  
+
+      .podcastCarouselWrapper {
+          width: 80%;
+          margin: auto;
+      }
+
+      .podcastImageCard {
+          width: 100%;
+      }
+  }
+
+  @media only screen and (max-width: 1000px) {
+      .podcastCarouselWrapper {
+          width: 95%;
+      }
+  }

@@ -5,7 +5,7 @@
 }
 
 .imageCard {
-  width: 300px;
+  width: 400px;
   margin: auto;
 }
 
@@ -14,6 +14,8 @@
 }
 
 .aboutImage {
+  width: 100%;
+  height: auto;
   border-radius: 8px;
 }
 

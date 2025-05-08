@@ -106,6 +106,23 @@ const AboutPage = () => {
         }
         return null;
       })}
+      {sortedContent.map((item, index) => {
+        if (item.type === "podcast-links") {
+          return (
+            <div key={index} className={styles.linkWrapper}>
+              <Link
+                href={item.link}
+                className={styles.aboutLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {item.link}
+              </Link>
+            </div>
+          );
+        }
+        return null;
+      })}
     </div>
   );
 };
