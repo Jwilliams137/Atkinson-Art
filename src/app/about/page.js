@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import usePageImages from "../../hooks/usePageImages";
-import useTextUploads from '../../hooks/useTextUploads';
+import useTextUploads from "../../hooks/useTextUploads";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
@@ -38,9 +38,11 @@ const AboutPage = () => {
   return (
     <div className={styles.aboutContainer}>
       {sortedContent.map((item, index) => {
+        const key = `${item.type}-${index}`;
+
         if (item.type === "about-links") {
           return (
-            <div key={index} className={styles.linkWrapper}>
+            <div key={key} className={styles.linkWrapper}>
               <Link
                 href={item.link}
                 className={styles.aboutLink}
@@ -55,7 +57,7 @@ const AboutPage = () => {
 
         if (item.type === "general-statement") {
           return (
-            <div key={index} className={styles.statementWrapper}>
+            <div key={key} className={styles.statementWrapper}>
               <p>{item.content}</p>
             </div>
           );
@@ -63,8 +65,8 @@ const AboutPage = () => {
 
         if (item.type === "about-image" && item.imageUrl) {
           return (
-            <div className={styles.imageCard}>
-              <div key={index} className={styles.imageWrapper}>
+            <div key={key} className={styles.imageCard}>
+              <div className={styles.imageWrapper}>
                 <Image
                   src={item.imageUrl}
                   alt={item.title || item.type}
@@ -97,19 +99,24 @@ const AboutPage = () => {
       />
 
       {sortedContent.map((item, index) => {
+        const key = `${item.type}-${index}`;
+
         if (item.type === "podcast-statement") {
           return (
-            <div key={index} className={styles.statementWrapper}>
+            <div key={key} className={styles.statementWrapper}>
               <p>{item.content}</p>
             </div>
           );
         }
         return null;
       })}
+
       {sortedContent.map((item, index) => {
+        const key = `${item.type}-${index}`;
+
         if (item.type === "podcast-links") {
           return (
-            <div key={index} className={styles.linkWrapper}>
+            <div key={key} className={styles.linkWrapper}>
               <Link
                 href={item.link}
                 className={styles.aboutLink}
