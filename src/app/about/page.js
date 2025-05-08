@@ -19,12 +19,12 @@ const AboutPage = () => {
     "about-links",
     "podcast-image",
     "podcast-statement",
-    "podcast-links"
+    "podcast-links",
   ];
 
-  const sortedContent = combined.sort((a, b) => {
-    return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
-  });
+  const sortedContent = combined.sort(
+    (a, b) => typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type)
+  );
 
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
@@ -40,56 +40,59 @@ const AboutPage = () => {
       {sortedContent.map((item, index) => {
         const key = `${item.type}-${index}`;
 
-        if (item.type === "about-links") {
-          return (
-            <div key={key} className={styles.linkWrapper}>
-              <Link
-                href={item.link}
-                className={styles.aboutLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.link}
-              </Link>
-            </div>
-          );
-        }
+        switch (item.type) {
+          case "about-links":
+          case "podcast-links":
+            return (
+              <div key={key} className={styles.linkWrapper}>
+                <Link
+                  href={item.link}
+                  className={styles.aboutLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.link}
+                </Link>
+              </div>
+            );
 
-        if (item.type === "general-statement") {
-          return (
-            <div key={key} className={styles.statementWrapper}>
-              <p>{item.content}</p>
-            </div>
-          );
-        }
+          case "general-statement":
+          case "podcast-statement":
+            return (
+              <div key={key} className={styles.statementWrapper}>
+                <p>{item.content}</p>
+              </div>
+            );
 
-        if (item.type === "about-image" && item.imageUrl) {
-          return (
-            <div key={key} className={styles.imageCard}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={item.imageUrl}
-                  alt={item.title || item.type}
-                  width={item.width}
-                  height={item.height}
-                  className={styles.aboutImage}
-                />
-                <div className={styles.imageDetails}>
-                  <ImageDetails
-                    title={item.title || "Untitled Image"}
-                    description={item.description || ""}
-                    dimensions={item.dimensions || ""}
-                    price={item.price || ""}
-                    isExpanded={!!expandedDescriptions[index]}
-                    toggleDescription={() => toggleDescription(index)}
+          case "about-image":
+            if (!item.imageUrl) return null;
+            return (
+              <div key={key} className={styles.imageCard}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title || item.type}
+                    width={item.width}
+                    height={item.height}
+                    className={styles.aboutImage}
                   />
+                  <div className={styles.imageDetails}>
+                    <ImageDetails
+                      title={item.title || "Untitled Image"}
+                      description={item.description || ""}
+                      dimensions={item.dimensions || ""}
+                      price={item.price || ""}
+                      isExpanded={!!expandedDescriptions[index]}
+                      toggleDescription={() => toggleDescription(index)}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        }
+            );
 
-        return null;
+          default:
+            return null;
+        }
       })}
 
       <PodcastCarousel
@@ -97,39 +100,6 @@ const AboutPage = () => {
         expandedDescriptions={expandedDescriptions}
         toggleDescription={toggleDescription}
       />
-
-      {sortedContent.map((item, index) => {
-        const key = `${item.type}-${index}`;
-
-        if (item.type === "podcast-statement") {
-          return (
-            <div key={key} className={styles.statementWrapper}>
-              <p>{item.content}</p>
-            </div>
-          );
-        }
-        return null;
-      })}
-
-      {sortedContent.map((item, index) => {
-        const key = `${item.type}-${index}`;
-
-        if (item.type === "podcast-links") {
-          return (
-            <div key={key} className={styles.linkWrapper}>
-              <Link
-                href={item.link}
-                className={styles.aboutLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.link}
-              </Link>
-            </div>
-          );
-        }
-        return null;
-      })}
     </div>
   );
 };
