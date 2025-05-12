@@ -12,7 +12,6 @@
       { "key": "about", "label": "About" },
       { "key": "bio", "label": "Bio" },
       { "key": "exhibitions", "label": "Exhibitions" },
-      { "key": "resume", "label": "Resume" },
       { "key": "shop", "label": "Shop" }
     ],
     "fieldsForPage": {
@@ -270,50 +269,6 @@
           { "name": "pageType", "type": "hidden", "value": "exhibitions" },
           { "name": "type", "type": "hidden", "value": "exhibitions-image" }
         ]}       
-      ],
-      "resume": [
-        {"text-upload": [
-          { "name": "groupMuseum", "label": "Selected Group Museum Exhibitions", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "group-museum" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "group", "label": "Select Group Exhibitions", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "group" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "publications", "label": "Publications", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "publications" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "podcasts", "label": "Podcasts", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "podcasts" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "upcomingOngoing", "label": "Upcoming and ongoing", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "upcoming" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Links", "type": "text"},
-          { "name": "type", "type": "hidden", "value": "resume-links" }
-        ]},
-        {"image-upload": [
-          { "name": "file", "label": "Resume Image", "type": "file" },
-          { "name": "title", "label": "Title", "type": "text" },
-          { "name": "description", "label": "Description", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "type", "type": "hidden", "value": "resume-image" }
-        ]}     
       ],
       "shop": [
         {"image-upload": [
