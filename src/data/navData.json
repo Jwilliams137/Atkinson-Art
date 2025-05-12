@@ -11,7 +11,8 @@
           { "label": "Constructions", "href": "/artwork/constructions" },
           { "label": "Commissions", "href": "/artwork/commissions"},
           { "label": "Collage", "href": "/artwork/collage" },
-          { "label": "Earlier Work", "href": "/artwork/earlier-work" }
+          { "label": "Earlier Work", "href": "/artwork/earlier-work" },
+          { "label": "Test Gallery", "href": "/artwork/test-gallery" }
         ]
       },
       "about": {

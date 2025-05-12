@@ -13,7 +13,8 @@
       { "key": "bio", "label": "Bio" },
       { "key": "exhibitions", "label": "Exhibitions" },
       { "key": "resume", "label": "Resume" },
-      { "key": "shop", "label": "Shop" }
+      { "key": "shop", "label": "Shop" },
+      { "key": "test-modal", "label": "Test Modal" }
     ],
     "fieldsForPage": {
       "home": [
@@ -330,6 +331,20 @@
           { "name": "type", "type": "hidden", "value": "shop-statement" },
           { "name": "pageType", "type": "hidden", "value": "shop" }
         ]}       
+      ],
+      "test-modal": [
+        {"image-upload": [
+          { "name": "file", "label": "Test Modal Image", "type": "file" },
+          { "name": "file", "label": "Test Modal Detail", "type": "file" },
+          { "name": "file", "label": "Test Modal Detail 2", "type": "file" },
+          { "name": "file", "label": "Test Modal Detail 3", "type": "file" },
+          { "name": "title", "label": "Title", "type": "text" },
+          { "name": "description", "label": "Description", "type": "text" },
+          { "name": "dimensions", "label": "Dimensions", "type": "text" },
+          { "name": "price", "label": "Price", "type": "text" },
+          { "name": "pageType", "type": "hidden", "value": "shop" },
+          { "name": "type", "type": "hidden", "value": "shop-gallery-image" }
+        ]}      
       ]
     }
   }  
