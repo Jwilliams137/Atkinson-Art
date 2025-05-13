@@ -21,14 +21,7 @@ const PodcastCarousel = ({ content, expandedDescriptions, toggleDescription }) =
               height={200}
               className={styles.podcastImage}
             />
-            <ImageDetails
-              title={item.title || "Untitled Image"}
-              description={item.description || ""}
-              dimensions={item.dimensions || ""}
-              price={item.price || ""}
-              isExpanded={!!expandedDescriptions[index]}
-              toggleDescription={() => toggleDescription(index)}
-            />
+            {item.description}
           </div>
         ))}
       </div>

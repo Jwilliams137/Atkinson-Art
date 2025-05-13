@@ -19,6 +19,10 @@
   border-radius: 8px;
 }
 
+.imageDetails {
+  text-align: left;
+}
+
 .linkWrapper {
   text-align: center;
 }

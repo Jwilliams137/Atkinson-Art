@@ -75,14 +75,7 @@ const AboutPage = () => {
                   className={styles.aboutImage}
                 />
                 <div className={styles.imageDetails}>
-                  <ImageDetails
-                    title={item.title || "Untitled Image"}
-                    description={item.description || ""}
-                    dimensions={item.dimensions || ""}
-                    price={item.price || ""}
-                    isExpanded={!!expandedDescriptions[index]}
-                    toggleDescription={() => toggleDescription(index)}
-                  />
+                  {item.description}
                 </div>
               </div>
             </div>
