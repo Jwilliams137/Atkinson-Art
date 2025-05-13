@@ -9,7 +9,7 @@
 .artworkContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 40px;
   justify-content: center;
 }
 
@@ -83,7 +83,6 @@
   margin-top: 20px;
 }
 
-/* Medium screens */
 @media (max-width: 1000px) {
   .artworkItem {
     width: 100%;
@@ -119,7 +118,6 @@
   }
 }
 
-/* Small screens */
 @media (max-width: 500px) {
   .artworkItem {
     max-width: 100%;
