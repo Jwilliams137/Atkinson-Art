@@ -5,16 +5,18 @@ import useModal from "../../hooks/useModal";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Modal from "../Modal/Modal";
 import TextSection from "../TextSection/TextSection";
-import styles from './GalleryPage.module.css'
+import ComingSoon from "../ComingSoon/ComingSoon";
+import styles from './GalleryPage.module.css';
 
 const GalleryPage = ({ collectionName }) => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages(collectionName);
   const textUploads = useTextUploads(collectionName);
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
+  const hasImages = images && images.length > 0;
 
   return (
     <div className={styles.page}>
-      {images.length > 0 && (
+      {hasImages ? (
         <div className={styles.container}>
           <ImageGallery
             images={images}
@@ -33,11 +35,11 @@ const GalleryPage = ({ collectionName }) => {
             />
           )}
         </div>
+      ) : (
+        <ComingSoon collectionName={collectionName} />
       )}
       <div className={styles.text}>
-        <TextSection
-          textUploads={textUploads}
-        />
+        <TextSection textUploads={textUploads} />
       </div>
     </div>
   );
