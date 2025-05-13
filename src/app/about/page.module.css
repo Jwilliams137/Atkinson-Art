@@ -21,6 +21,7 @@
 
 .imageDetails {
   text-align: left;
+  font-size: 20px;
 }
 
 .linkWrapper {
@@ -41,18 +42,12 @@
     width: 80%;
   }
 
-  .aboutImage {
-    width: 100%;
-    height: auto;
-  }
-
   .aboutLink {
     font-size: 18px;
   }
 }
 
 @media (max-width: 500px) {
-
   .imageCard {
     width: 90%;
   }

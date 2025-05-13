@@ -4,3 +4,34 @@
   width: 100%;
   gap: 40px;
 }
+
+.imageCard {
+  width: 400px;
+}
+
+.imageWrapper {
+  text-align: center;
+}
+
+.bioImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.imageDetails {
+  text-align: left;
+  font-size: 20px;
+}
+
+@media (max-width: 1000px) {
+  .imageCard {
+    width: 80%;
+  }
+}
+
+@media (max-width: 500px) {
+  .imageCard {
+    width: 90%;
+  }
+}

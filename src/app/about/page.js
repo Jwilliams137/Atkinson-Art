@@ -5,7 +5,6 @@ import useTextUploads from "../../hooks/useTextUploads";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
-import ImageDetails from "../../components/ImageDetails/ImageDetails";
 import PodcastCarousel from "../../components/PodcastCarousel/PodcastCarousel";
 
 const AboutPage = () => {
