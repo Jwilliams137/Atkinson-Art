@@ -16,7 +16,6 @@
     ],
     "fieldsForPage": {
       "home": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Home Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -33,7 +32,7 @@
         ]} 
       ],
       "artwork": [
-        {"notes": "Titles already added for these.  They will end up being links to the subpages of Artwork and flip on mouse hover to show a solid color and the name of the page they link to."},
+        {"notes": "These will end up being links to the Artwork Galleries and flip on mouse hover to show a solid color and the name of the Gallery they link to"},
         {"image-upload": [
           { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
@@ -202,7 +201,6 @@
         ]}      
       ],
       "about": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "generalStatement", "label": "About Statement", "type": "text" },
           { "name": "type", "type": "hidden", "value": "general-statement" },
@@ -239,7 +237,6 @@
         ]}
       ],
       "bio": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "bio", "label": "Biography", "type": "text" },
           { "name": "type", "type": "hidden", "value": "biography" },
