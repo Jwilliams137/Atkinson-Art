@@ -16,6 +16,7 @@ const ImageUpload = ({
     const fileInputRef = useRef(null);
     const defaultColor = fieldsList.find(field => field.name === "color")?.value || "#ffffff";
     const previewColor = formData.color || defaultColor;
+    const [titleError, setTitleError] = useState(false);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -42,6 +43,7 @@ const ImageUpload = ({
         setLocalImage(null);
         setImageDimensions({ width: 0, height: 0 });
         setFormData({});
+        setTitleError(false);
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
@@ -50,10 +52,17 @@ const ImageUpload = ({
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
+        if (name === "title" && value.trim() !== "") {
+            setTitleError(false);
+        }
     };
 
     const handleImageUpload = async () => {
-        if (imageDimensions.width === 0 || imageDimensions.height === 0) {
+        if (imageDimensions.width === 0 || imageDimensions.height === 0) return;
+
+        const fallbackTitle = fieldsList.find(field => field.name === "title")?.value?.trim() || "";
+        if (!formData.title?.trim() && !fallbackTitle) {
+            setTitleError(true);
             return;
         }
 
@@ -67,7 +76,8 @@ const ImageUpload = ({
         const price = includePrice ? (formData.price || "") : undefined;
         const includeDescription = fieldsList.some(field => field.name === "description");
         const description = includeDescription ? (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "") : undefined;
-        const title = formData.title || (fieldsList.find(field => field.name === "title")?.value || "Untitled");
+        const title = formData.title?.trim() || fallbackTitle;
+
 
         const imageFormData = new FormData();
         imageFormData.append("file", localImage);
@@ -76,21 +86,11 @@ const ImageUpload = ({
         imageFormData.append("title", title);
         imageFormData.append("width", imageDimensions.width);
         imageFormData.append("height", imageDimensions.height);
-        if (color !== undefined) {
-            imageFormData.append("color", color);
-        }
-        if (dimensions !== undefined) {
-            imageFormData.append("dimensions", dimensions);
-        }
-        if (price !== undefined) {
-            imageFormData.append("price", price);
-        }
-        if (description !== undefined) {
-            imageFormData.append("description", description);
-        }
-        if (type !== undefined) {
-            imageFormData.append("type", type);
-        }
+        if (color !== undefined) imageFormData.append("color", color);
+        if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);
+        if (price !== undefined) imageFormData.append("price", price);
+        if (description !== undefined) imageFormData.append("description", description);
+        if (type !== undefined) imageFormData.append("type", type);
 
         await handleSubmit("image-upload", sectionKey, {
             ...formData,
@@ -134,19 +134,24 @@ const ImageUpload = ({
                                 {field.label}
                             </label>
                         )}
-                        <input
-                            ref={field.type === "file" ? fileInputRef : null}
-                            type={field.type}
-                            name={field.name}
-                            id={field.name}
-                            className={styles.inputField}
-                            {...(field.type === "file"
-                                ? { onChange: handleFileChange }
-                                : {
-                                    value: formData[field.name] || "",
-                                    onChange: handleInputChange,
-                                })}
-                        />
+                        <>
+                            <input
+                                ref={field.type === "file" ? fileInputRef : null}
+                                type={field.type}
+                                name={field.name}
+                                id={field.name}
+                                className={`${styles.inputField} ${field.name === "title" && titleError ? styles.errorInput : ""}`}
+                                {...(field.type === "file"
+                                    ? { onChange: handleFileChange }
+                                    : {
+                                        value: formData[field.name] || "",
+                                        onChange: handleInputChange,
+                                    })}
+                            />
+                            {field.name === "title" && titleError && (
+                                <p className={styles.errorText}>Title is required.</p>
+                            )}
+                        </>
                     </div>
                 );
             })}
@@ -162,6 +167,7 @@ const ImageUpload = ({
                     />
                 </div>
             )}
+
             <div className={styles.buttons}>
                 {isFormFilled && (
                     <button onClick={handleCancel} className={styles.button}>Cancel</button>
