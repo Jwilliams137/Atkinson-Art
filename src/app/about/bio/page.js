@@ -11,10 +11,8 @@ const BioPage = () => {
 
   return (
     <div className={styles.bioContainer}>
-      <h2>Biography</h2>
-
+      <h1>Biography</h1>
       <TextSection textUploads={textUploads} />
-
       <div className={styles.imageCard}>
         {images.length > 0 && (
           images.map((image, index) => (

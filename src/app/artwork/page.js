@@ -55,6 +55,7 @@ const ArtworkPage = () => {
 
   return (
     <div className={styles.artworkPage}>
+      <h1 className={styles.visuallyHidden}>Artwork by Linda Atkinson</h1>
       <div className={styles.artworkContainer}>
         {images.map((image) => {
           const pageLink = pageLinks[image.title];

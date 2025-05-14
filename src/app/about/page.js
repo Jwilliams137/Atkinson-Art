@@ -36,6 +36,7 @@ const AboutPage = () => {
 
   return (
     <div className={styles.aboutContainer}>
+      <h1 className={styles.visuallyHidden}>About Linda Atkinson</h1>
       {sortedContent.map((item, index) => {
         const key = `${item.type}-${index}`;
 

@@ -5,6 +5,7 @@ function ContactPage() {
   const email = 'linda.atkinson111@gmail.com';
   return (
     <div className={styles.container}>
+      <h1 className={styles.visuallyHidden}>Contact Linda Atkinson</h1>
       <form action="https://formsubmit.co/Linda.atkinson111@gmail.com" method="POST" className={styles.form}>
         <input
           type="text"

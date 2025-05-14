@@ -14,6 +14,7 @@ const ShopPage = () => {
 
   return (
     <div className={styles.shopPage}>
+      <h1 className={styles.visuallyHidden}>Artwork available for purchase by Linda Atkinson</h1>
       {images.length > 0 && (
         <div className={styles.shopContainer}>
           <ImageGallery

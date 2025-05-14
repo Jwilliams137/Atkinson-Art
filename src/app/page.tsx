@@ -44,6 +44,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.homeContainer}>
+      <h1 className={styles.visuallyHidden}>Linda Atkinson – Mixed Media Artist</h1>
       <div className={styles.galleryContainer}>
         <div className={styles.gallery}>
           {images.map((image, index) => {

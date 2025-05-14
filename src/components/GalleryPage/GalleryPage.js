@@ -8,7 +8,7 @@ import TextSection from "../TextSection/TextSection";
 import ComingSoon from "../ComingSoon/ComingSoon";
 import styles from './GalleryPage.module.css';
 
-const GalleryPage = ({ collectionName }) => {
+const GalleryPage = ({ collectionName, heading }) => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages(collectionName);
   const textUploads = useTextUploads(collectionName);
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
@@ -16,6 +16,7 @@ const GalleryPage = ({ collectionName }) => {
 
   return (
     <div className={styles.page}>
+      {heading && <h1 className={styles.visuallyHidden}>{heading}</h1>}
       {hasImages ? (
         <div className={styles.container}>
           <ImageGallery

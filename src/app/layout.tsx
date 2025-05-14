@@ -5,9 +5,33 @@ import Nav from '../components/Nav/Nav';
 import Footer from '../components/Footer/Footer';
 
 export const metadata: Metadata = {
-  robots: "noindex, nofollow",
-  title: "Atkinson Art",
-  description: "Art Studio of Linda Atkinson",
+  title: "Linda Atkinson | Art Studio & Gallery",
+  description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
+  robots: "index, follow",
+  openGraph: {
+    title: "Linda Atkinson | Art Studio & Gallery",
+    description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
+    url: "https://atkinson-art.netlify.app",
+    siteName: "Linda Atkinson Art",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Linda Atkinson | Art Studio & Gallery",
+    description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
+    images: ["/og-image.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
