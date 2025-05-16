@@ -5,7 +5,7 @@ import TextSection from '../../../components/TextSection/TextSection';
 import usePageImages from "../../../hooks/usePageImages";
 import styles from "./page.module.css";
 
-const BioPage = () => {
+const BiographyPage = () => {
   const textUploads = useTextUploads('bio');
   const { images } = usePageImages("bio");
 
@@ -35,4 +35,4 @@ const BioPage = () => {
   );
 };
 
-export default BioPage;
+export default BiographyPage;

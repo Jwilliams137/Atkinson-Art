@@ -10,7 +10,7 @@
       { "key": "commissions", "label": "Commissions" },
       { "key": "earlier-work", "label": "Earlier Work" },
       { "key": "about", "label": "About" },
-      { "key": "bio", "label": "Bio" },
+      { "key": "bio", "label": "Biography" },
       { "key": "exhibitions", "label": "Exhibitions" },
       { "key": "shop", "label": "Shop" }
     ],
