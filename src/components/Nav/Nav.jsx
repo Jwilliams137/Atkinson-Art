@@ -38,7 +38,7 @@ export default function Nav() {
   };
 
   return (
-    <>
+    <nav>
       <div className={styles.nav}>
         <div className={styles.leftNav}>
           <Link href="/" className={styles.title}>
@@ -121,6 +121,6 @@ export default function Nav() {
           </ul>
         </div>
       )}
-    </>
+    </nav>
   );
 }

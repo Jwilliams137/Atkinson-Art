@@ -6,7 +6,7 @@ export const metadata = {
     description: "Explore sculpture and mixed-media work by Linda Atkinson.",
   };
 
-export default function ArtworkLayout({ children }) {
+export default function Layout({ children }) {
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>

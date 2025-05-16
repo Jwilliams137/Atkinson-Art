@@ -51,7 +51,14 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
 
   return (
     <div className={styles.modalBackdrop} onClick={closeModal}>
-      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.modalContent}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.imageContent}>
           <div className={styles.imageWrapper}>
             <Image
@@ -63,6 +70,12 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
             />
           </div>
           <div className={styles.imageLabel}>
+            <h2 id="modal-title" className={styles.visuallyHidden}>
+              {selectedImage.title}
+            </h2>
+            <p id="modal-description" className={styles.visuallyHidden}>
+              {selectedImage.description}
+            </p>
             <ImageDetails
               title={selectedImage.title}
               description={selectedImage.description}
@@ -72,6 +85,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
               toggleDescription={() => setIsExpanded((prev) => !prev)}
             />
           </div>
+
         </div>
       </div>
     </div>

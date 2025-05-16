@@ -6,7 +6,7 @@ export const metadata = {
     description: "About Linda Atkinson.",
   };
 
-export default function AboutLayout({ children }) {
+export default function Layout({ children }) {
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>

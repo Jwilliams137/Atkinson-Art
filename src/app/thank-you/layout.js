@@ -5,6 +5,6 @@ export const metadata = {
   };
   
 
-export default function thankYouLayout({ children }) {
+export default function Layout({ children }) {
     return <>{children}</>;
 } 

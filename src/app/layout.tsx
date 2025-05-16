@@ -7,7 +7,7 @@ import Footer from '../components/Footer/Footer';
 export const metadata: Metadata = {
   title: "Linda Atkinson | Art Studio & Gallery",
   description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-  robots: "index, follow",
+  robots: "noindex, nofollow",
   openGraph: {
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
@@ -38,10 +38,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={styles.wrapper}>
+        <a href="#main-content" className={styles.skipLink}>Skip to content</a>
         <Nav />
-        <div className={styles.children_container}>
+        <main id="main-content" className={styles.children_container}>
           {children}
-        </div>
+        </main>
         <footer className={styles.footer}>
           <Footer />
         </footer>

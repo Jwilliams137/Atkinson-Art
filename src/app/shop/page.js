@@ -17,15 +17,17 @@ const ShopPage = () => {
       <h1 className={styles.visuallyHidden}>Artwork available for purchase by Linda Atkinson</h1>
       {images.length > 0 && (
         <div className={styles.shopContainer}>
-          <ImageGallery
-            images={images}
-            onImageClick={openModal}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            page={page}
-            hasMore={hasMore}
-            itemsPerPage={20}
-          />
+          <div className={styles.imageWrapper}>
+            <ImageGallery
+              images={images}
+              onImageClick={openModal}
+              nextPage={nextPage}
+              prevPage={prevPage}
+              page={page}
+              hasMore={hasMore}
+              itemsPerPage={20}
+            />
+          </div>
           {isModalOpen && shouldRenderModal && (
             <Modal
               images={images}
