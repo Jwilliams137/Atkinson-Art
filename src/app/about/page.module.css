@@ -6,7 +6,6 @@
 
 .imageCard {
   width: 400px;
-  margin: auto;
 }
 
 .imageWrapper {
@@ -22,10 +21,6 @@
 .imageDetails {
   text-align: left;
   font-size: 20px;
-}
-
-.linkWrapper {
-  text-align: center;
 }
 
 .aboutLink {

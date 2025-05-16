@@ -11,6 +11,7 @@
       { "key": "earlier-work", "label": "Earlier Work" },
       { "key": "about", "label": "About" },
       { "key": "bio", "label": "Biography" },
+      { "key": "podcasts", "label": "Podcasts" },
       { "key": "exhibitions", "label": "Exhibitions" },
       { "key": "shop", "label": "Shop" }
     ],
@@ -217,7 +218,9 @@
           { "name": "pageType", "type": "hidden", "value": "about" },
           { "name": "type", "type": "hidden", "value": "about-links" },
           { "name": "link", "label": "About Links", "type": "text"}
-        ]},
+        ]}
+      ],
+      "podcasts": [
         {"image-upload": [
           { "name": "file", "label": "Podcast Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },

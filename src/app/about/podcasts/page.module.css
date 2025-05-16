@@ -1,0 +1,39 @@
+.podcastContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.linkWrapper {
+    text-align: center;
+}
+
+.link {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.statementWrapper {
+    font-size: 25px;
+}
+
+.visuallyHidden {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@media (max-width: 1000px) {
+    .link {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 500px) {
+    .statementWrapper {
+        font-size: 18px;
+    }
+}

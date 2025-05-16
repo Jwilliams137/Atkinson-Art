@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-    url: "https://atkinson-art.netlify.app",
+    url: "https://lindaatkinson.art",
     siteName: "Linda Atkinson Art",
     images: [
       {

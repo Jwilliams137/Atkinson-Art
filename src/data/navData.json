@@ -18,7 +18,8 @@
         "label": "About",
         "subPages": [
           { "label": "Biography", "href": "/about/biography" },
-          { "label": "Exhibitions", "href": "/about/exhibitions" }
+          { "label": "Exhibitions", "href": "/about/exhibitions" },
+          { "label": "Podcasts", "href": "/about/podcasts" }
         ]
       },
       "shop": { "label": "Shop", "href": "/shop" },      
