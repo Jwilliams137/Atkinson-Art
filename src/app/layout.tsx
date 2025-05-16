@@ -15,9 +15,9 @@ export const metadata: Metadata = {
     siteName: "Linda Atkinson Art",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "/SharingImage.jpg",
+        width: 1138,
+        height: 675,
       },
     ],
     type: "website",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-    images: ["/og-image.jpg"],
+    images: ["/SharingImage.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
