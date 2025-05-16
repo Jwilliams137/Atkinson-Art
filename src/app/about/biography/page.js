@@ -5,16 +5,14 @@ import TextSection from '../../../components/TextSection/TextSection';
 import usePageImages from "../../../hooks/usePageImages";
 import styles from "./page.module.css";
 
-const BioPage = () => {
+const BiographyPage = () => {
   const textUploads = useTextUploads('bio');
   const { images } = usePageImages("bio");
 
   return (
     <div className={styles.bioContainer}>
-      <h2>Biography</h2>
-
+      <h1>Biography</h1>
       <TextSection textUploads={textUploads} />
-
       <div className={styles.imageCard}>
         {images.length > 0 && (
           images.map((image, index) => (
@@ -37,4 +35,4 @@ const BioPage = () => {
   );
 };
 
-export default BioPage;
+export default BiographyPage;

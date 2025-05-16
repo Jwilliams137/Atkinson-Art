@@ -40,9 +40,7 @@ function ThankYouPage() {
   return (
     <div className={styles.container}>
       <div className={styles.thanks}>
-        <header>
-          <h1>Thank You!</h1>
-        </header>
+        <h1>Thank You!</h1>
         <p className={styles.success}>
           Your message has been sent. I will get back to you as soon as possible.
         </p>
@@ -51,11 +49,10 @@ function ThankYouPage() {
         <div className={styles.imageContainer}>
           <Image
             src={randomImage.imageUrl}
-            alt="Random Artwork"
+            alt="Artwork by Linda Atkinson"
             className={styles.randomImage}
             width={randomImage.width}
             height={randomImage.height}
-            layout="intrinsic"
           />
         </div>
       )}

@@ -80,10 +80,20 @@
   margin: auto;
 }
 
+.visuallyHidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 1000px) {
   .galleryCard {
     max-width: 70%;
   }
+
   .textSection {
     width: 100%;
   }

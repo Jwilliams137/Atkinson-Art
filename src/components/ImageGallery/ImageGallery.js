@@ -34,15 +34,29 @@ const ImageGallery = ({
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
-                  <Image
-                    className={styles.image}
-                    src={image.imageUrl}
-                    alt={image.title || "Gallery Image"}
-                    width={image.width}
-                    height={image.height}
-                    priority
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={() => onImageClick(index)}
-                  />
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        onImageClick(index);
+                      }
+                    }}
+                    aria-label={`Open modal for ${image.title || "artwork"}`}
+                    className={styles.imageWrapper}
+                  >
+                    <Image
+                      className={styles.image}
+                      src={image.imageUrl}
+                      alt={image.title || "Gallery Image"}
+                      width={image.width}
+                      height={image.height}
+                      priority
+                    />
+                  </div>
+
                   <div className={styles.imageDetails}>
                     <ImageDetails
                       title={image.title}

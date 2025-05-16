@@ -6,7 +6,6 @@
 
 .imageCard {
   width: 400px;
-  margin: auto;
 }
 
 .imageWrapper {
@@ -24,10 +23,6 @@
   font-size: 20px;
 }
 
-.linkWrapper {
-  text-align: center;
-}
-
 .aboutLink {
   font-size: 20px;
   text-decoration: none;
@@ -35,6 +30,15 @@
 
 .statementWrapper {
   font-size: 25px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 @media (max-width: 1000px) {

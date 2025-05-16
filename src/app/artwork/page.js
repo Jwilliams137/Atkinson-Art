@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect, useMemo } from 'react';
 import { db } from '../../utils/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -55,6 +55,7 @@ const ArtworkPage = () => {
 
   return (
     <div className={styles.artworkPage}>
+      <h1 className={styles.visuallyHidden}>Artwork by Linda Atkinson</h1>
       <div className={styles.artworkContainer}>
         {images.map((image) => {
           const pageLink = pageLinks[image.title];
@@ -68,24 +69,27 @@ const ArtworkPage = () => {
 
           return (
             <div key={image.id} className={styles.artworkItem}>
-              <Link href={pageLink} passHref className={styles.desktopView}>
-                <div className={styles.flipCard}>
-                  <div className={styles.flipCardInner}>
-                    <div className={styles.flipCardFront}>
-                      <Image
-                        src={image.imageUrl}
-                        alt={image.title}
-                        className={styles.artworkImage}
-                        width={image.width}
-                        height={image.height}
-                      />
-                    </div>
-                    <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
-                      <p>{visibleTitle}</p>
+              <Link href={pageLink} passHref legacyBehavior>
+                <a className={styles.desktopView}>
+                  <div className={styles.flipCard}>
+                    <div className={styles.flipCardInner}>
+                      <div className={styles.flipCardFront}>
+                        <Image
+                          src={image.imageUrl}
+                          alt={image.title}
+                          className={styles.artworkImage}
+                          width={image.width}
+                          height={image.height}
+                        />
+                      </div>
+                      <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
+                        <p>{visibleTitle}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </Link>
+
               <div className={styles.mobileView}>
                 <div className={styles.mobileFlipCard}>
                   <div className={styles.mobileFlipCardInner}>
@@ -101,8 +105,8 @@ const ArtworkPage = () => {
                     </div>
                     <div className={styles.mobileFlipCardBack} style={{ backgroundColor: image.color }}>
                       <p>
-                        <Link href={pageLink} passHref>
-                          {visibleTitle}
+                        <Link href={pageLink} passHref legacyBehavior>
+                          <a>{visibleTitle}</a>
                         </Link>
                       </p>
                     </div>
@@ -114,9 +118,7 @@ const ArtworkPage = () => {
         })}
       </div>
       <div className={styles.text}>
-        <TextSection
-          textUploads={artworkTextUploads}
-        />
+        <TextSection textUploads={artworkTextUploads} />
       </div>
     </div>
   );

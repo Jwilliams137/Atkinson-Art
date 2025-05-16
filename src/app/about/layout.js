@@ -1,7 +1,12 @@
 import Sidebar from '../../components/Sidebar/Sidebar';
 import styles from './layout.module.css';
 
-export default function AboutLayout({ children }) {
+export const metadata = {
+    title: "About | Linda Atkinson",
+    description: "About Linda Atkinson.",
+  };
+
+export default function Layout({ children }) {
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>
