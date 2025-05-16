@@ -11,7 +11,7 @@ const ExhibitionsPage = () => {
 
   return (
     <div className={styles.exhibitionsContainer}>
-      <h1 className={styles.visuallyHidden}>Linda Atkinson's exhibitions</h1>
+      <h1 className={styles.visuallyHidden}>Linda Atkinson&apos;s exhibitions</h1>
       <div className={styles.text}>
         <ExhibitionTextSection textUploads={textUploads} />
       </div>
