@@ -63,7 +63,7 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
 
   useEffect(() => {
     fetchImages(true);
-  }, [pageType]);
+  }, [fetchImages, pageType]);
 
   const nextPage = () => {
     if (hasMore) {
