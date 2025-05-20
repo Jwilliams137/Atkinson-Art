@@ -2,19 +2,23 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .artworkContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
+  gap: 40px;
+  justify-content: center;
 }
 
 .artworkItem {
-  width: 450px;
   perspective: 1000px;
-  height: 450px;
+  width: 100%;
+  max-width: 300px;
+  flex: 1 1 300px;
+  height: 300px;
 }
 
 .flipCard {
@@ -55,6 +59,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  aspect-ratio: 4 / 3;
 }
 
 .flipCardBack {
@@ -62,7 +67,7 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 45px;
+  font-size: 32px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
   padding: 10px;
@@ -78,25 +83,19 @@
   margin-top: 20px;
 }
 
-@media (max-width: 1350px) {
-  .artworkItem {
-    width: 300px;
-    height: 300px;
-  }
-
-  .flipCardBack {
-    font-size: 38px;
-  }
+.visuallyHidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 @media (max-width: 1000px) {
-  .artworkContainer {
-    justify-content: center;
-    gap: 50px;
-  }
-
   .artworkItem {
-    width: 90%;
+    width: 100%;
+    max-width: 500px;
     height: auto;
   }
 
@@ -111,9 +110,9 @@
   }
 
   .mobileFlipCardBack {
-    padding: 30px 0;
+    padding: 20px;
     color: white;
-    font-size: 35px;
+    font-size: 24px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-align: center;
     border-radius: 8px;
@@ -122,11 +121,18 @@
   .mobileArtworkImage {
     border-radius: 8px;
     width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
   }
 }
 
 @media (max-width: 500px) {
   .artworkItem {
-    width: 100%;
+    max-width: 100%;
+  }
+
+  .flipCardBack {
+    font-size: 24px;
   }
 }

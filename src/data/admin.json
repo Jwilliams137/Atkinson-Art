@@ -10,15 +10,14 @@
       { "key": "commissions", "label": "Commissions" },
       { "key": "earlier-work", "label": "Earlier Work" },
       { "key": "about", "label": "About" },
-      { "key": "bio", "label": "Bio" },
+      { "key": "bio", "label": "Biography" },
+      { "key": "podcasts", "label": "Podcasts" },
       { "key": "exhibitions", "label": "Exhibitions" },
-      { "key": "resume", "label": "Resume" },
       { "key": "shop", "label": "Shop" },
       { "key": "test-modal", "label": "Test Modal" }
     ],
     "fieldsForPage": {
       "home": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"image-upload": [
           { "name": "file", "label": "Home Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -35,7 +34,7 @@
         ]} 
       ],
       "artwork": [
-        {"notes": "Titles already added for these.  They will end up being links to the subpages of Artwork and flip on mouse hover to show a solid color and the name of the page they link to."},
+        {"notes": "These will end up being links to the Artwork Galleries and flip on mouse hover to show a solid color and the name of the Gallery they link to"},
         {"image-upload": [
           { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
@@ -204,7 +203,6 @@
         ]}      
       ],
       "about": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "generalStatement", "label": "About Statement", "type": "text" },
           { "name": "type", "type": "hidden", "value": "general-statement" },
@@ -221,7 +219,9 @@
           { "name": "pageType", "type": "hidden", "value": "about" },
           { "name": "type", "type": "hidden", "value": "about-links" },
           { "name": "link", "label": "About Links", "type": "text"}
-        ]},
+        ]}
+      ],
+      "podcasts": [
         {"image-upload": [
           { "name": "file", "label": "Podcast Image", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
@@ -241,7 +241,6 @@
         ]}
       ],
       "bio": [
-        {"notes": "Add title to images even if one isn't supposed to appear visibly. This helps people who use screen readers and has benefits for search engine optimization."},
         {"text-upload": [
           { "name": "bio", "label": "Biography", "type": "text" },
           { "name": "type", "type": "hidden", "value": "biography" },
@@ -271,50 +270,6 @@
           { "name": "pageType", "type": "hidden", "value": "exhibitions" },
           { "name": "type", "type": "hidden", "value": "exhibitions-image" }
         ]}       
-      ],
-      "resume": [
-        {"text-upload": [
-          { "name": "groupMuseum", "label": "Selected Group Museum Exhibitions", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "group-museum" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "group", "label": "Select Group Exhibitions", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "group" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "publications", "label": "Publications", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "publications" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "podcasts", "label": "Podcasts", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "podcasts" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "upcomingOngoing", "label": "Upcoming and ongoing", "type": "text" },
-          { "name": "type", "type": "hidden", "value": "upcoming" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Add a link", "type": "text"}
-        ]},
-        {"text-upload": [
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "link", "label": "Links", "type": "text"},
-          { "name": "type", "type": "hidden", "value": "resume-links" }
-        ]},
-        {"image-upload": [
-          { "name": "file", "label": "Resume Image", "type": "file" },
-          { "name": "title", "label": "Title", "type": "text" },
-          { "name": "description", "label": "Description", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "resume" },
-          { "name": "type", "type": "hidden", "value": "resume-image" }
-        ]}     
       ],
       "shop": [
         {"image-upload": [

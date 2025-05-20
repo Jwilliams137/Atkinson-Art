@@ -18,13 +18,13 @@
       "about": {
         "label": "About",
         "subPages": [
-          { "label": "Bio", "href": "/about/bio" },
+          { "label": "Biography", "href": "/about/biography" },
           { "label": "Exhibitions", "href": "/about/exhibitions" },
-          { "label": "Resume", "href": "/about/resume" }
+          { "label": "Podcasts", "href": "/about/podcasts" }
         ]
       },
       "shop": { "label": "Shop", "href": "/shop" },      
       "contact": { "label": "Contact", "href": "/contact" },
       "admin": { "label": "Admin", "href": "/admin", "restricted": true }
     }
-  }  
+  }

@@ -1,0 +1,48 @@
+  .galleryWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+  }
+
+  .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px 30px;
+      justify-content: space-around;
+  }
+
+  .imageCard {
+      border-radius: 8px;
+      width: 40%;
+      font-size: 20px;
+  }
+
+  .image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+
+      .galleryWrapper {
+          width: 80%;
+          margin: auto;
+      }
+
+      .imageCard {
+          width: 100%;
+      }
+  }
+
+  @media only screen and (max-width: 500px) {
+      .galleryWrapper {
+          width: 95%;
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      .imageCard {
+          box-shadow: none;
+      }
+  }

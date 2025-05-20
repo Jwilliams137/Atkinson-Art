@@ -79,6 +79,17 @@
   font-size: 18px;
 }
 
+.errorText {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.errorInput {
+  border: 2px solid red;
+}
+
+
 @media (prefers-color-scheme: dark) {
   .button {
     border: none;

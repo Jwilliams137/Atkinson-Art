@@ -1,25 +1,28 @@
+.bioContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 40px;
+}
+
 .imageCard {
   width: 400px;
 }
 
-.exhibitionImage {
+.imageWrapper {
+  text-align: center;
+}
+
+.bioImage {
   width: 100%;
   height: auto;
   border-radius: 8px;
+  margin-bottom: 50px;
 }
 
 .imageDetails {
   text-align: left;
   font-size: 20px;
-}
-
-.visuallyHidden {
-  position: absolute;
-  left: -9999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
 }
 
 @media (max-width: 1000px) {

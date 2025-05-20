@@ -6,7 +6,6 @@
 
 .imageCard {
   width: 400px;
-  margin: auto;
 }
 
 .imageWrapper {
@@ -19,8 +18,9 @@
   border-radius: 8px;
 }
 
-.linkWrapper {
-  text-align: center;
+.imageDetails {
+  text-align: left;
+  font-size: 20px;
 }
 
 .aboutLink {
@@ -32,14 +32,18 @@
   font-size: 25px;
 }
 
+.visuallyHidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 @media (max-width: 1000px) {
   .imageCard {
     width: 80%;
-  }
-
-  .aboutImage {
-    width: 100%;
-    height: auto;
   }
 
   .aboutLink {
@@ -48,7 +52,6 @@
 }
 
 @media (max-width: 500px) {
-
   .imageCard {
     width: 90%;
   }

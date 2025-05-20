@@ -70,13 +70,22 @@
   margin-left: 4px;
 }
 
+.visuallyHidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 @media (prefers-color-scheme: dark) {
   .modalBackdrop {
     background: rgba(39, 38, 38, 0.8);
   }
 
   .modalContent {
-    background: rgba(39, 38, 38, 0.8);
+    background: rgba(39, 38, 38, 0.99);
   }
 
   .modalContent {
