@@ -1,10 +1,9 @@
 export const metadata = {
-    title: "Thank You | Linda Atkinson",
-    description: "Your message has been sent. Thank you for reaching out.",
-    robots: "noindex, nofollow"
-  };
-  
+  title: "Thank You | Linda Atkinson",
+  description: "Your message has been sent. Thank you for reaching out.",
+  robots: "noindex, nofollow"
+};
 
 export default function Layout({ children }) {
-    return <>{children}</>;
+  return <>{children}</>;
 } 
