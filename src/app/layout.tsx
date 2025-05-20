@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: "Linda Atkinson Art",
     images: [
       {
-        url: "/SharingImage.jpg",
+        url: "https://atkinson-art.netlify.app/SharingImage.jpg",
         width: 1138,
         height: 675,
       },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-    images: ["/SharingImage.jpg"],
+    images: ["https://atkinson-art.netlify.app/SharingImage.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
