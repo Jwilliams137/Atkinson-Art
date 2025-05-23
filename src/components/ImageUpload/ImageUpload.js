@@ -19,25 +19,30 @@ const ImageUpload = ({
     const [titleError, setTitleError] = useState(false);
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setLocalImage(file);
-            setSelectedImage(file);
+        const { files } = event.target;
+        if (!files || files.length === 0) return;
 
-            const objectUrl = URL.createObjectURL(file);
-            setFormData(prev => ({
-                ...prev,
-                file,
-            }));
+        const newFiles = Array.from(files);
 
-            const image = new window.Image();
-            image.src = objectUrl;
-            image.onload = () => {
-                setImageDimensions({ width: image.naturalWidth, height: image.naturalHeight });
+        setFormData(prev => ({
+            ...prev,
+            fileList: [...(prev.fileList || []), ...newFiles]
+        }));
+
+        // Keep the first selected image for things like dimensions
+        if (!localImage) {
+            const objectUrl = URL.createObjectURL(newFiles[0]);
+            const img = new window.Image();
+            img.src = objectUrl;
+            img.onload = () => {
+                setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
                 URL.revokeObjectURL(objectUrl);
             };
+            setLocalImage(newFiles[0]);
+            setSelectedImage(newFiles[0]);
         }
     };
+
 
     const handleCancel = () => {
         setLocalImage(null);
@@ -80,7 +85,14 @@ const ImageUpload = ({
 
 
         const imageFormData = new FormData();
-        imageFormData.append("file", localImage);
+        const imageFiles = formData.fileList || [];
+
+        if (imageFiles.length === 0) return;
+
+        imageFiles.forEach((file, i) => {
+            imageFormData.append(`file${i}`, file);
+        });
+
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
         imageFormData.append("title", title);
@@ -140,6 +152,7 @@ const ImageUpload = ({
                                 type={field.type}
                                 name={field.name}
                                 id={field.name}
+                                multiple={field.type === "file"}
                                 className={`${styles.inputField} ${field.name === "title" && titleError ? styles.errorInput : ""}`}
                                 {...(field.type === "file"
                                     ? { onChange: handleFileChange }
@@ -156,17 +169,17 @@ const ImageUpload = ({
                 );
             })}
 
-            {localImage && (
-                <div className={styles.imagePreview}>
+            {(formData.fileList || []).map((file, index) => (
+                <div key={index} className={styles.imagePreview}>
                     <Image
-                        src={URL.createObjectURL(localImage)}
-                        alt="Selected Image"
+                        src={URL.createObjectURL(file)}
+                        alt={`Preview ${index}`}
+                        width={150}
+                        height={100}
                         className={styles.previewImage}
-                        width={imageDimensions.width}
-                        height={imageDimensions.height}
                     />
                 </div>
-            )}
+            ))}
 
             <div className={styles.buttons}>
                 {isFormFilled && (

@@ -47,8 +47,17 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         }
 
         try {
-            if (uploadType === "image-upload" && formData.file) {
-                const { file, title, description, imageDimensions, color, price, dimensions, type } = formData;
+            if (uploadType === "image-upload" && formData.fileList?.length > 0) {
+                const {
+                    fileList,
+                    title,
+                    description,
+                    imageDimensions,
+                    color,
+                    price,
+                    dimensions,
+                    type
+                } = formData;
 
                 if (!imageDimensions) {
                     console.error("Image dimensions are missing.");
@@ -56,28 +65,22 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 }
 
                 const imageFormData = new FormData();
-                imageFormData.append("file", selectedImage);
+
+                fileList.forEach((file, i) => {
+                    imageFormData.append(`file${i}`, file);
+                });
+
                 imageFormData.append("section", sectionKey);
                 imageFormData.append("pageType", sectionKey);
-                imageFormData.append("title", formData.title);
+                imageFormData.append("title", title);
                 imageFormData.append("width", imageDimensions.width);
                 imageFormData.append("height", imageDimensions.height);
 
-                if (color !== undefined && color !== null) {
-                    imageFormData.append("color", color);
-                }
-                if (dimensions !== undefined && dimensions !== null) {
-                    imageFormData.append("dimensions", dimensions);
-                }
-                if (price !== undefined && price !== null) {
-                    imageFormData.append("price", price);
-                }
-                if (description !== undefined && description !== null) {
-                    imageFormData.append("description", description);
-                }
-                if (type !== undefined) {
-                    imageFormData.append("type", type);
-                }
+                if (color !== undefined) imageFormData.append("color", color);
+                if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);
+                if (price !== undefined) imageFormData.append("price", price);
+                if (description !== undefined) imageFormData.append("description", description);
+                if (type !== undefined) imageFormData.append("type", type);
 
                 const response = await fetch("/api/upload-image", {
                     method: "POST",
