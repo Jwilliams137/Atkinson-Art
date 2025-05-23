@@ -68,13 +68,14 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
 
                 fileList.forEach((file, i) => {
                     imageFormData.append(`file${i}`, file);
+                    const dims = imageDimensions[file.name] || { width: 0, height: 0 };
+                    imageFormData.append(`width${i}`, dims.width);
+                    imageFormData.append(`height${i}`, dims.height);
                 });
 
                 imageFormData.append("section", sectionKey);
                 imageFormData.append("pageType", sectionKey);
                 imageFormData.append("title", title);
-                imageFormData.append("width", imageDimensions.width);
-                imageFormData.append("height", imageDimensions.height);
 
                 if (color !== undefined) imageFormData.append("color", color);
                 if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);

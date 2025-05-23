@@ -44,11 +44,19 @@ export async function POST(req) {
 
     const formData = await req.formData();
 
+    // Build the image list using known indexes
     const imageFiles = [];
-    for (const [key, value] of formData.entries()) {
-      if (key.startsWith("file") && value instanceof File) {
-        imageFiles.push(value);
+    let index = 0;
+    while (formData.has(`file${index}`)) {
+      const file = formData.get(`file${index}`);
+      const width = parseInt(formData.get(`width${index}`), 10) || null;
+      const height = parseInt(formData.get(`height${index}`), 10) || null;
+
+      if (file instanceof File) {
+        imageFiles.push({ file, width, height });
       }
+
+      index++;
     }
 
     if (imageFiles.length === 0) {
@@ -59,14 +67,13 @@ export async function POST(req) {
     const description = formData.get("description");
     const dimensions = formData.get("dimensions");
     const price = formData.get("price");
-    const width = formData.get("width");
-    const height = formData.get("height");
     const pageType = formData.get("pageType");
     const type = formData.get("type");
     const color = formData.get("color");
+
     const imageUrls = [];
 
-    for (const file of imageFiles) {
+    for (const { file, width, height } of imageFiles) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
@@ -78,6 +85,8 @@ export async function POST(req) {
       imageUrls.push({
         url: uploadResponse.secure_url,
         cloudinaryId: uploadResponse.public_id,
+        width,
+        height,
       });
     }
 
@@ -92,8 +101,6 @@ export async function POST(req) {
       description: description || "",
       dimensions: dimensions || "",
       price: price || "",
-      width: width ? parseInt(width) : null,
-      height: height ? parseInt(height) : null,
       color: color || "default",
       type: type || "general",
       createdAt: new Date(),
@@ -109,8 +116,7 @@ export async function POST(req) {
       order: newOrder,
     });
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.error("Upload failed:", errorMessage);
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    console.error("Upload failed:", error);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
