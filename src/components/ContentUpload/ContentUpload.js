@@ -71,6 +71,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     const dims = imageDimensions[file.name] || { width: 0, height: 0 };
                     imageFormData.append(`width${i}`, dims.width);
                     imageFormData.append(`height${i}`, dims.height);
+                    imageFormData.append(`detailOrder${i}`, i);
                 });
 
                 imageFormData.append("section", sectionKey);

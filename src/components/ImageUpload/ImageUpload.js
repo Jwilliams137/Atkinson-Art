@@ -93,6 +93,7 @@ const ImageUpload = ({
             imageFormData.append(`file${i}`, file);
             imageFormData.append(`width${i}`, dims.width);
             imageFormData.append(`height${i}`, dims.height);
+            imageFormData.append(`detailOrder${i}`, i);
         });
 
         imageFormData.append("section", sectionKey);

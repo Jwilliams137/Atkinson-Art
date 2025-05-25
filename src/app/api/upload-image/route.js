@@ -44,16 +44,17 @@ export async function POST(req) {
 
     const formData = await req.formData();
 
-    // Build the image list using known indexes
     const imageFiles = [];
     let index = 0;
     while (formData.has(`file${index}`)) {
       const file = formData.get(`file${index}`);
       const width = parseInt(formData.get(`width${index}`), 10) || null;
       const height = parseInt(formData.get(`height${index}`), 10) || null;
+      const parsed = parseInt(formData.get(`detailOrder${index}`), 10);
+      const detailOrder = isNaN(parsed) ? index : parsed;
 
       if (file instanceof File) {
-        imageFiles.push({ file, width, height });
+        imageFiles.push({ file, width, height, detailOrder });
       }
 
       index++;
@@ -73,7 +74,7 @@ export async function POST(req) {
 
     const imageUrls = [];
 
-    for (const { file, width, height } of imageFiles) {
+    for (const { file, width, height, detailOrder } of imageFiles) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
@@ -87,6 +88,7 @@ export async function POST(req) {
         cloudinaryId: uploadResponse.public_id,
         width,
         height,
+        detailOrder,
       });
     }
 
