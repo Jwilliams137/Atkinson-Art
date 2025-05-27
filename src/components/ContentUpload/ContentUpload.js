@@ -4,7 +4,6 @@ import { getAuth } from "firebase/auth";
 import styles from "./ContentUpload.module.css";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import TextUpload from "../TextUpload/TextUpload";
-import ResumeUpload from "../ResumeUpload/ResumeUpload";
 
 const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [textContent, setTextContent] = useState("");
@@ -22,7 +21,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const handleUpload = async (uploadType, sectionKey, formData = {}) => {
         const auth = getAuth();
         const user = auth.currentUser;
-
         if (!user) {
             console.error("User not authenticated");
             return;
@@ -59,11 +57,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     type
                 } = formData;
 
-                if (!imageDimensions) {
-                    console.error("Image dimensions are missing.");
-                    return;
-                }
-
                 const imageFormData = new FormData();
 
                 fileList.forEach((file, i) => {
@@ -78,7 +71,15 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 imageFormData.append("pageType", sectionKey);
                 imageFormData.append("title", title);
 
-                if (color !== undefined) imageFormData.append("color", color);
+                const hasColorField = sectionData.fieldsForPage[sectionKey]
+                    ?.find(group => group["image-upload"])
+                    ?.["image-upload"]
+                    ?.some(field => field.name === "color");
+
+                if (hasColorField && color !== undefined) {
+                    imageFormData.append("color", color);
+                }
+
                 if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);
                 if (price !== undefined) imageFormData.append("price", price);
                 if (description !== undefined) imageFormData.append("description", description);
@@ -99,53 +100,48 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
             }
 
             if (uploadType === "text-upload" && textContent !== null && textContent !== undefined) {
+                const orderResponse = await fetch(`/api/get-max-text-order?pageType=${sectionKey}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
-                try {
-                    const orderResponse = await fetch(`/api/get-max-text-order?pageType=${sectionKey}`, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
+                if (!orderResponse.ok) {
+                    console.error("Failed to fetch order data:", orderResponse.status);
+                    return;
+                }
 
-                    if (!orderResponse.ok) {
-                        console.error("Failed to fetch order data:", orderResponse.status);
-                        return;
-                    }
+                const data = await orderResponse.json();
+                const nextOrder = data.nextOrder;
 
-                    const data = await orderResponse.json();
-                    const nextOrder = data.nextOrder;
+                const textData = {
+                    content: textContent,
+                    pageType: sectionKey,
+                    section: sectionKey,
+                    title: formData.title || "Untitled",
+                    type: formData.type || "general",
+                    timestamp: new Date().toISOString(),
+                    order: nextOrder,
+                    year: formData.year || '',
+                    link: formData.link || ''
+                };
 
-                    const textData = {
-                        content: textContent,
-                        pageType: sectionKey,
-                        section: sectionKey,
-                        title: formData.title || "Untitled",
-                        type: formData.type || "general",
-                        timestamp: new Date().toISOString(),
-                        order: nextOrder,
-                        year: formData.year || '',
-                        link: formData.link || ''
-                    };
+                const textUploadResponse = await fetch("/api/upload-text", {
+                    method: "POST",
+                    body: JSON.stringify(textData),
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
-                    const textUploadResponse = await fetch("/api/upload-text", {
-                        method: "POST",
-                        body: JSON.stringify(textData),
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-
-                    const result = await textUploadResponse.json();
-                    if (textUploadResponse.ok) {
-                        setTextContent("");
-                    } else {
-                        console.error("Text upload failed:", result.error);
-                    }
-                } catch (error) {
-                    console.error("Error uploading text:", error);
+                const result = await textUploadResponse.json();
+                if (textUploadResponse.ok) {
+                    setTextContent("");
+                } else {
+                    console.error("Text upload failed:", result.error);
                 }
             }
 
@@ -175,12 +171,8 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     return (
         <div className={styles.container}>
             {Object.entries(sectionData.fieldsForPage).map(([sectionKey, fields], index) => {
-                const sectionLabel =
-                    sectionData.sections?.find((section) => section.key === sectionKey)?.label || "Unknown Section";
-
                 return (
                     <div key={index} className={styles.uploadSection}>
-
                         {fields.map((fieldGroup, idx) => {
                             const uploadType = Object.keys(fieldGroup)[0];
                             const fieldsList = fieldGroup[uploadType];

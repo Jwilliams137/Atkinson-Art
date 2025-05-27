@@ -14,8 +14,6 @@ const ImageUpload = ({
     const [imageDimensions, setImageDimensions] = useState({});
     const [localImage, setLocalImage] = useState(null);
     const fileInputRef = useRef(null);
-    const defaultColor = fieldsList.find(field => field.name === "color")?.value || "#ffffff";
-    const previewColor = formData.color || defaultColor;
     const [titleError, setTitleError] = useState(false);
     const [fileInputKey, setFileInputKey] = useState(Date.now());
 
@@ -72,18 +70,25 @@ const ImageUpload = ({
             return;
         }
 
+        const hasColorField = fieldsList.some(field => field.name === "color");
+        const colorValue = hasColorField
+            ? (formData.color?.trim() || fieldsList.find(field => field.name === "color")?.value || "").trim()
+            : undefined;
+
         const typeField = fieldsList.find(field => field.name === "type");
         const type = typeField ? (formData.type || typeField.value) : undefined;
-        const includeColor = fieldsList.some(field => field.name === "color");
-        const color = includeColor ? (formData.color || defaultColor) : undefined;
+
         const includeDimensions = fieldsList.some(field => field.name === "dimensions");
         const dimensions = includeDimensions ? (formData.dimensions || "") : undefined;
+
         const includePrice = fieldsList.some(field => field.name === "price");
         const price = includePrice ? (formData.price || "") : undefined;
+
         const includeDescription = fieldsList.some(field => field.name === "description");
         const description = includeDescription
             ? (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "")
             : undefined;
+
         const title = formData.title?.trim() || fallbackTitle;
 
         const imageFormData = new FormData();
@@ -99,7 +104,7 @@ const ImageUpload = ({
         imageFormData.append("section", sectionKey);
         imageFormData.append("pageType", sectionKey);
         imageFormData.append("title", title);
-        if (color !== undefined) imageFormData.append("color", color);
+        if (hasColorField && colorValue) imageFormData.append("color", colorValue);
         if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);
         if (price !== undefined) imageFormData.append("price", price);
         if (description !== undefined) imageFormData.append("description", description);
@@ -110,7 +115,7 @@ const ImageUpload = ({
                 ...formData,
                 title,
                 imageDimensions,
-                ...(color !== undefined ? { color } : {}),
+                ...(hasColorField && colorValue ? { color: colorValue } : {}),
                 ...(type !== undefined ? { type } : {}),
                 ...(dimensions !== undefined ? { dimensions } : {}),
                 ...(price !== undefined ? { price } : {}),
@@ -135,7 +140,7 @@ const ImageUpload = ({
                                 type="color"
                                 name={field.name}
                                 id={field.name}
-                                value={previewColor}
+                                value={formData.color || (fieldsList.find(f => f.name === "color")?.value || "#ffffff")}
                                 onChange={handleInputChange}
                                 className={styles.colorPreview}
                             />

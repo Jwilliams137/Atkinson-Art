@@ -71,6 +71,7 @@ export async function POST(req) {
     const pageType = formData.get("pageType");
     const type = formData.get("type");
     const color = formData.get("color");
+    const includeColor = formData.has("color"); // ← key change here
 
     const imageUrls = [];
 
@@ -103,11 +104,11 @@ export async function POST(req) {
       description: description || "",
       dimensions: dimensions || "",
       price: price || "",
-      color: color || "default",
       type: type || "general",
       createdAt: new Date(),
       order: newOrder,
       imageUrls,
+      ...(includeColor && color?.trim() ? { color } : {}),
     };
 
     await db.collection("uploads").add(uploadData);

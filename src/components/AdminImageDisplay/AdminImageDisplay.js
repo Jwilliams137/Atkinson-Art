@@ -3,15 +3,16 @@ import { useState } from "react";
 import Image from "next/image";
 import { getFirestore, doc, writeBatch, updateDoc } from "firebase/firestore";
 import styles from "./AdminImageDisplay.module.css";
+import AdminModal from "../AdminModal/AdminModal";
 
 const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const db = getFirestore();
-  const [editingId, setEditingId] = useState(null);
-  const [editFields, setEditFields] = useState({});
+  const [editingImage, setEditingImage] = useState(null);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
-  const [previewIndexes, setPreviewIndexes] = useState({});
 
-  const excludedFields = ["id", "imageUrl", "cloudinaryId", "createdAt", "updatedAt", "order", "width", "height", "type"];
+  const excludedFields = [
+    "id", "imageUrl", "cloudinaryId", "createdAt", "updatedAt", "order", "width", "height", "type"
+  ];
 
   const toggleDescription = (id) => {
     setExpandedDescriptions((prev) => ({
@@ -23,12 +24,11 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const deleteImage = async (imageId, cloudinaryIdOrArray) => {
     if (!isAdmin) return;
 
-    const cloudinaryIds =
-      Array.isArray(cloudinaryIdOrArray)
-        ? cloudinaryIdOrArray
-        : cloudinaryIdOrArray
-          ? [cloudinaryIdOrArray]
-          : [];
+    const cloudinaryIds = Array.isArray(cloudinaryIdOrArray)
+      ? cloudinaryIdOrArray
+      : cloudinaryIdOrArray
+        ? [cloudinaryIdOrArray]
+        : [];
 
     try {
       const response = await fetch("/api/delete-image", {
@@ -62,35 +62,16 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   };
 
   const handleEdit = (image) => {
-    const editableFields = Object.entries(image)
-      .filter(([key, value]) => {
-        const isExcluded =
-          ["id", "imageUrl", "cloudinaryId", "width", "height", "order", "pageType", "type"].includes(key) ||
-          (activeSection === "artwork" && key === "title");
-        return (
-          !isExcluded &&
-          (typeof value === "string" || typeof value === "number")
-        );
-      })
-      .reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-      }, {});
-
-    setEditingId(image.id);
-    setEditFields(editableFields);
+    setEditingImage(image);
   };
 
-  const handleSave = async (id) => {
+  const handleSave = async (updatedFields) => {
     try {
-      await updateDoc(doc(db, "uploads", id), editFields);
+      await updateDoc(doc(db, "uploads", editingImage.id), updatedFields);
       setImages((prev) =>
-        prev.map((img) =>
-          img.id === id ? { ...img, ...editFields } : img
-        )
+        prev.map((img) => (img.id === editingImage.id ? { ...img, ...updatedFields } : img))
       );
-      setEditingId(null);
-      setEditFields({});
+      setEditingImage(null);
     } catch (error) {
       console.error("Error saving image:", error);
     }
@@ -101,21 +82,17 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
       {images.map((image, index) => {
         const mainImageUrl = image.imageUrls?.[0]?.url || image.imageUrl;
         return (
-          <div key={image.id || index} className={`${styles.imageItem} ${editingId === image.id ? styles.editing : ""}`}>
+          <div key={image.id || index} className={styles.imageItem}>
             {mainImageUrl ? (
               <Image
                 src={mainImageUrl}
                 alt={image.title || "Uploaded Image"}
                 width={image.width || 300}
                 height={image.height || 200}
-                className={editingId === image.id ? styles.editingImage : ""}
                 style={
                   activeSection === "artwork"
                     ? {
-                      border: `8px solid ${editingId === image.id
-                        ? editFields.color || image.color || "#ccc"
-                        : image.color || "#ccc"
-                        }`,
+                      border: `8px solid ${image.color || "#ccc"}`,
                       borderRadius: "8px",
                     }
                     : {}
@@ -125,128 +102,68 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
               <div className={styles.imagePlaceholder}>No image available</div>
             )}
 
-            {editingId === image.id ? (
-              <div className={styles.editForm}>
-                {Object.entries(editFields).map(([key, value]) => (
-                  <div key={key}>
-                    <p>{key.charAt(0).toUpperCase() + key.slice(1)}</p>
-                    {key === "description" ? (
-                      <textarea
-                        value={value}
-                        onChange={(e) =>
-                          setEditFields({ ...editFields, [key]: e.target.value })
-                        }
-                        className={styles.editTextarea}
-                        placeholder={key}
-                      />
-                    ) : key.toLowerCase().includes("color") ? (
-                      <input
-                        type="color"
-                        value={value}
-                        onChange={(e) =>
-                          setEditFields({ ...editFields, [key]: e.target.value })
-                        }
-                        className={styles.editColorPicker}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        value={value}
-                        onChange={(e) =>
-                          setEditFields({ ...editFields, [key]: e.target.value })
-                        }
-                        className={styles.editInput}
-                        placeholder={key}
-                      />
-                    )}
-                  </div>
-                ))}
-
-                <div className={styles.textActions}>
-                  <button onClick={() => handleSave(image.id)} className={styles.button}>
-                    Save
-                  </button>
-                  <button onClick={() => setEditingId(null)} className={styles.button}>
-                    Cancel
-                  </button>
+            <p className={styles.title}>{image.title}</p>
+            {image.description && (
+              <div className={styles.descriptionWrapper}>
+                <p className={styles.info}>
+                  {expandedDescriptions[image.id]
+                    ? image.description
+                    : `${image.description.slice(0, 50)}${image.description.length > 50 ? "..." : ""}`}
+                </p>
+                {image.description.length > 50 && (
                   <button
-                    onClick={() => {
-                      if (window.confirm("Are you sure you want to delete this?")) {
-                        deleteImage(
-                          image.id,
-                          image.imageUrls?.map(img => img.cloudinaryId) || [image.cloudinaryId]
-                        );
-                      }
-                    }}
-                    className={styles.button}
+                    onClick={() => toggleDescription(image.id)}
+                    className={styles.readMoreButton}
                   >
-                    Delete
+                    {expandedDescriptions[image.id] ? "Read less" : "Read more"}
                   </button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <p className={styles.title}>{image.title}</p>
-                {image.description && (
-                  <div className={styles.descriptionWrapper}>
-                    <p className={styles.info}>
-                      {expandedDescriptions[image.id]
-                        ? image.description
-                        : `${image.description.slice(0, 50)}${image.description.length > 50 ? "..." : ""}`}
-                    </p>
-                    {image.description.length > 50 && (
-                      <button
-                        onClick={() => toggleDescription(image.id)}
-                        className={styles.readMoreButton}
-                      >
-                        {expandedDescriptions[image.id] ? "Read less" : "Read more"}
-                      </button>
-                    )}
-                  </div>
                 )}
+              </div>
+            )}
 
-                {image.dimensions && (<p className={styles.info}>{image.dimensions}</p>)}
-                {image.price && (<p className={styles.info}>{image.price}</p>)}
-                <div className={styles.reorderButtons}>
-                  {activeSection !== "artwork" && index > 0 && (
-                    <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>
-                      ▲
-                    </button>
-                  )}
-                  {activeSection !== "artwork" && index < images.length - 1 && (
-                    <button onClick={() => reorderImages(index, 1)} className={styles.moveButton}>
-                      ▼
-                    </button>
-                  )}
-                </div>
-                <div className={styles.textActions}>
-                  {isAdmin && (
-                    <>
-                      <button onClick={() => handleEdit(image)} className={styles.button}>
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (window.confirm("Are you sure you want to delete this?")) {
-                            deleteImage(
-                              image.id,
-                              image.imageUrls?.map(img => img.cloudinaryId) || [image.cloudinaryId]
-                            );
-                          }
-                        }}
-                        className={styles.button}
-                      >
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </div>
-              </>
+            {image.dimensions && <p className={styles.info}>{image.dimensions}</p>}
+            {image.price && <p className={styles.info}>{image.price}</p>}
+
+            <div className={styles.reorderButtons}>
+              {activeSection !== "artwork" && index > 0 && (
+                <button onClick={() => reorderImages(index, -1)} className={styles.moveButton}>▲</button>
+              )}
+              {activeSection !== "artwork" && index < images.length - 1 && (
+                <button onClick={() => reorderImages(index, 1)} className={styles.moveButton}>▼</button>
+              )}
+            </div>
+
+            {isAdmin && (
+              <div className={styles.textActions}>
+                <button onClick={() => handleEdit(image)} className={styles.button}>Edit</button>
+                <button
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to delete this?")) {
+                      deleteImage(
+                        image.id,
+                        image.imageUrls?.map(img => img.cloudinaryId) || [image.cloudinaryId]
+                      );
+                    }
+                  }}
+                  className={styles.button}
+                >
+                  Delete
+                </button>
+              </div>
             )}
           </div>
         );
       })}
 
+      {editingImage && (
+        <AdminModal
+          item={editingImage}
+          onClose={() => setEditingImage(null)}
+          onSave={handleSave}
+          section={activeSection}
+          excludedFields={excludedFields}
+        />
+      )}
     </div>
   );
 };
