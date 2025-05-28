@@ -44,7 +44,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
     };
 
     const handleSubmit = () => {
-        onSave(item.id, formState);
+        onSave(formState);
     };
 
     if (!item) return null;
