@@ -51,7 +51,7 @@ function ContactPage() {
         <input
           type="hidden"
           name="_next"
-          value="https://atkinson-art.netlify.app/thank-you"
+          value="https://lindaatkinsonart.com/thank-you"
           className={styles.hidden}
         />
         <input
