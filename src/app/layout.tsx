@@ -7,7 +7,7 @@ import Footer from '../components/Footer/Footer';
 export const metadata: Metadata = {
   title: "Linda Atkinson | Art Studio & Gallery",
   description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-  robots: "noindex, nofollow",
+  robots: "index, follow",
   openGraph: {
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
