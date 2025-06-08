@@ -7,15 +7,15 @@ import Footer from '../components/Footer/Footer';
 export const metadata: Metadata = {
   title: "Linda Atkinson | Art Studio & Gallery",
   description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-  robots: "noindex, nofollow",
+  robots: "index, follow",
   openGraph: {
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-    url: "https://atkinson-art.netlify.app/",
+    url: "https://lindaatkinsonart.com",
     siteName: "Linda Atkinson Art",
     images: [
       {
-        url: "https://atkinson-art.netlify.app/SharingImage.jpg",
+        url: "https://lindaatkinsonart.com/SharingImage.jpg",
         width: 1138,
         height: 675,
       },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Linda Atkinson | Art Studio & Gallery",
     description: "Explore mixed media and sculptural works by Linda Atkinson. Available for purchase.",
-    images: ["https://atkinson-art.netlify.app/SharingImage.jpg"],
+    images: ["https://lindaatkinsonart.com/SharingImage.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -37,6 +37,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={styles.wrapper}>
         <a href="#main-content" className={styles.skipLink}>Skip to content</a>
         <Nav />
