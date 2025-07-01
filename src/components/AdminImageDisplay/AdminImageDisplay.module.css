@@ -136,6 +136,17 @@
   color: black;
 }
 
+.addImageButton {
+  display: block;
+  width: 100%;
+  height: 200px;
+  background-color: #eee;
+  color: #333;
+  font-size: 1rem;
+  border: 2px dashed #aaa;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
 @media only screen and (max-width: 1000px) {
   .imagesGrid {

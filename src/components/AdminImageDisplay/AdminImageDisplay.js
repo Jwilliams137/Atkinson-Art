@@ -83,20 +83,49 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
         const mainImageUrl = image.imageUrls?.[0]?.url || image.imageUrl;
         return (
           <div key={image.id || index} className={styles.imageItem}>
-            {mainImageUrl ? (
+            {Array.isArray(image.imageUrls) && image.imageUrls.length > 0 ? (
+              <div className={styles.imageGroup}>
+                {image.imageUrls.map((imgObj, i) => {
+                  const hasImage = imgObj?.url;
+                  return hasImage ? (
+                    <Image
+                      key={i}
+                      src={imgObj.url}
+                      alt={`${image.title || "Uploaded Image"} - View ${i + 1}`}
+                      width={imgObj.width || 300}
+                      height={imgObj.height || 200}
+                      style={{
+                        marginBottom: "8px",
+                        border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
+                        borderRadius: "8px",
+                      }}
+                    />
+                  ) : (
+                    <button
+                      key={i}
+                      className={styles.addImageButton}
+                      onClick={() =>
+                        setEditingImage({
+                          ...image,
+                          editIndex: i,
+                        })
+                      }
+                    >
+                      + Add Image
+                    </button>
+                  );
+                })}
+              </div>
+            ) : image.imageUrl ? (
               <Image
-                src={mainImageUrl}
+                src={image.imageUrl}
                 alt={image.title || "Uploaded Image"}
                 width={image.width || 300}
                 height={image.height || 200}
-                style={
-                  activeSection === "artwork"
-                    ? {
-                      border: `8px solid ${image.color || "#ccc"}`,
-                      borderRadius: "8px",
-                    }
-                    : {}
-                }
+                style={{
+                  border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
+                  borderRadius: "8px",
+                }}
               />
             ) : (
               <div className={styles.imagePlaceholder}>No image available</div>
