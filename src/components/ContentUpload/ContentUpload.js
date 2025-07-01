@@ -45,49 +45,18 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
         }
 
         try {
-            if (uploadType === "image-upload" && formData.fileList?.length > 0) {
-                const {
-                    fileList,
-                    title,
-                    description,
-                    imageDimensions,
-                    color,
-                    price,
-                    dimensions,
-                    type
-                } = formData;
+            if (uploadType === "image-upload") {
 
-                const imageFormData = new FormData();
-
-                fileList.forEach((file, i) => {
-                    imageFormData.append(`file${i}`, file);
-                    const dims = imageDimensions[file.name] || { width: 0, height: 0 };
-                    imageFormData.append(`width${i}`, dims.width);
-                    imageFormData.append(`height${i}`, dims.height);
-                    imageFormData.append(`detailOrder${i}`, i);
-                });
-
-                imageFormData.append("section", sectionKey);
-                imageFormData.append("pageType", sectionKey);
-                imageFormData.append("title", title);
-
-                const hasColorField = sectionData.fieldsForPage[sectionKey]
-                    ?.find(group => group["image-upload"])
-                    ?.["image-upload"]
-                    ?.some(field => field.name === "color");
-
-                if (hasColorField && color !== undefined) {
-                    imageFormData.append("color", color);
+                if (!(formData instanceof FormData)) {
+                    console.error("Expected FormData but got:", typeof formData);
+                    return;
                 }
 
-                if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);
-                if (price !== undefined) imageFormData.append("price", price);
-                if (description !== undefined) imageFormData.append("description", description);
-                if (type !== undefined) imageFormData.append("type", type);
+                formData.append("pageType", sectionKey);
 
                 const response = await fetch("/api/upload-image", {
                     method: "POST",
-                    body: imageFormData,
+                    body: formData,
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

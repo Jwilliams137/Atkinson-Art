@@ -44,23 +44,44 @@ export async function POST(req) {
 
     const formData = await req.formData();
 
-    const imageFiles = [];
-    let index = 0;
-    while (formData.has(`file${index}`)) {
-      const file = formData.get(`file${index}`);
-      const width = parseInt(formData.get(`width${index}`), 10) || null;
-      const height = parseInt(formData.get(`height${index}`), 10) || null;
-      const parsed = parseInt(formData.get(`detailOrder${index}`), 10);
-      const detailOrder = isNaN(parsed) ? index : parsed;
+    const imageUrls = [];
 
-      if (file instanceof File) {
-        imageFiles.push({ file, width, height, detailOrder });
+    for (const [key, value] of formData.entries()) {
+      if (!(value instanceof File)) continue;
+      if (key.startsWith("width_") || key.startsWith("height_") || key.startsWith("detailOrder_")) continue;
+
+      const width = parseInt(formData.get(`width_${key}`), 10) || null;
+      const height = parseInt(formData.get(`height_${key}`), 10) || null;
+      const detailOrder = parseInt(formData.get(`detailOrder_${key}`), 10) || 0;
+
+      if (value.size > 0) {
+        const arrayBuffer = await value.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const base64Image = `data:${value.type};base64,${buffer.toString("base64")}`;
+
+        const uploadResponse = await cloudinary.v2.uploader.upload(base64Image, {
+          folder: "uploads",
+        });
+
+        imageUrls.push({
+          url: uploadResponse.secure_url,
+          cloudinaryId: uploadResponse.public_id,
+          width,
+          height,
+          detailOrder,
+        });
+      } else {
+        imageUrls.push({
+          url: null,
+          cloudinaryId: null,
+          width,
+          height,
+          detailOrder,
+        });
       }
-
-      index++;
     }
 
-    if (imageFiles.length === 0) {
+    if (imageUrls.length === 0) {
       return NextResponse.json({ error: "No image files found" }, { status: 400 });
     }
 
@@ -71,27 +92,7 @@ export async function POST(req) {
     const pageType = formData.get("pageType");
     const type = formData.get("type");
     const color = formData.get("color");
-    const includeColor = formData.has("color"); // ← key change here
-
-    const imageUrls = [];
-
-    for (const { file, width, height, detailOrder } of imageFiles) {
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
-
-      const uploadResponse = await cloudinary.v2.uploader.upload(base64Image, {
-        folder: "uploads",
-      });
-
-      imageUrls.push({
-        url: uploadResponse.secure_url,
-        cloudinaryId: uploadResponse.public_id,
-        width,
-        height,
-        detailOrder,
-      });
-    }
+    const includeColor = formData.has("color");
 
     const uploadsRef = db.collection("uploads").where("pageType", "==", pageType);
     const snapshot = await uploadsRef.orderBy("order", "desc").limit(1).get();

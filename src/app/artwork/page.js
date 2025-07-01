@@ -38,9 +38,30 @@ const ArtworkPage = () => {
 
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          if (data.title && data.imageUrl && data.color && data.width && data.height) {
-            fetchedImages.push({ ...data, id: doc.id });
+          if (data.title && data.color) {
+            let image = {
+              title: data.title,
+              color: data.color,
+              id: doc.id,
+            };
+
+            if (data.imageUrls && data.imageUrls.length > 0) {
+              const firstImage = data.imageUrls[0];
+              image.imageUrl = firstImage.url;
+              image.width = firstImage.width;
+              image.height = firstImage.height;
+            } else if (data.imageUrl && data.width && data.height) {
+              image.imageUrl = data.imageUrl;
+              image.width = data.width;
+              image.height = data.height;
+            } else {
+              console.warn("No usable image format found for document:", doc.id);
+              return;
+            }
+
+            fetchedImages.push(image);
           }
+
         });
 
         const sortedImages = sortImagesByPageLinks(fetchedImages, pageLinks);
@@ -69,25 +90,23 @@ const ArtworkPage = () => {
 
           return (
             <div key={image.id} className={styles.artworkItem}>
-              <Link href={pageLink} passHref legacyBehavior>
-                <a className={styles.desktopView}>
-                  <div className={styles.flipCard}>
-                    <div className={styles.flipCardInner}>
-                      <div className={styles.flipCardFront}>
-                        <Image
-                          src={image.imageUrl}
-                          alt={image.title}
-                          className={styles.artworkImage}
-                          width={image.width}
-                          height={image.height}
-                        />
-                      </div>
-                      <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
-                        <p>{visibleTitle}</p>
-                      </div>
+              <Link href={pageLink} className={styles.desktopView}>
+                <div className={styles.flipCard}>
+                  <div className={styles.flipCardInner}>
+                    <div className={styles.flipCardFront}>
+                      <Image
+                        src={image.imageUrl}
+                        alt={image.title}
+                        className={styles.artworkImage}
+                        width={image.width}
+                        height={image.height}
+                      />
+                    </div>
+                    <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
+                      <p>{visibleTitle}</p>
                     </div>
                   </div>
-                </a>
+                </div>
               </Link>
 
               <div className={styles.mobileView}>
@@ -105,9 +124,7 @@ const ArtworkPage = () => {
                     </div>
                     <div className={styles.mobileFlipCardBack} style={{ backgroundColor: image.color }}>
                       <p>
-                        <Link href={pageLink} passHref legacyBehavior>
-                          <a>{visibleTitle}</a>
-                        </Link>
+                        <Link href={pageLink}>{visibleTitle}</Link>
                       </p>
                     </div>
                   </div>
