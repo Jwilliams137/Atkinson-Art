@@ -11,17 +11,8 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
         if (item) {
             const editableFields = Object.entries(item).reduce((acc, [key, value]) => {
                 const alwaysExclude = [
-                    "id",
-                    "imageUrl",
-                    "cloudinaryId",
-                    "width",
-                    "height",
-                    "order",
-                    "pageType",
-                    "type",
-                    "createdAt",
-                    "updatedAt",
-                    "imageUrls"
+                    "id", "imageUrl", "cloudinaryId", "width", "height",
+                    "order", "pageType", "type", "createdAt", "updatedAt", "imageUrls"
                 ];
 
                 const skipTitle = section === "artwork" && key === "title";
@@ -39,7 +30,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
             }, {});
             setFormState(editableFields);
 
-            // Image slots
             const imageArray = item.imageUrls || [];
             setImageEdits(imageArray.map((img, index) => ({
                 file: null,
@@ -58,24 +48,27 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
         const objectUrl = URL.createObjectURL(file);
         setImageEdits(prev =>
             prev.map((slot, i) =>
-                i === index
-                    ? { ...slot, file, previewUrl: objectUrl }
-                    : slot
+                i === index ? { ...slot, file, previewUrl: objectUrl } : slot
             )
         );
     };
 
+    const moveImageSlot = (index, direction) => {
+        const newEdits = [...imageEdits];
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= newEdits.length) return;
+        [newEdits[index], newEdits[targetIndex]] = [newEdits[targetIndex], newEdits[index]];
+        setImageEdits(newEdits.map((slot, idx) => ({ ...slot, index: idx })));
+    };
+
     const handleSubmit = async () => {
-        // Bundle updated text fields
         const updatedFields = { ...formState };
 
-        // Bundle updated images — you can enhance this to upload images later
         const updatedImages = await Promise.all(
             imageEdits.map(async (slot) => {
                 if (slot.file) {
-                    // NOTE: You may want to actually upload the file here and get Cloudinary URL.
                     return {
-                        url: slot.previewUrl, // temp! Replace with actual Cloudinary URL
+                        url: slot.previewUrl,
                         cloudinaryId: "placeholder-id",
                         width: null,
                         height: null,
@@ -147,6 +140,10 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                                 type="file"
                                 onChange={(e) => handleFileChange(index, e.target.files[0])}
                             />
+                            <div className={styles.reorderButtons}>
+                                <button onClick={() => moveImageSlot(index, -1)}>▲</button>
+                                <button onClick={() => moveImageSlot(index, 1)}>▼</button>
+                            </div>
                         </div>
                     ))}
                 </div>
