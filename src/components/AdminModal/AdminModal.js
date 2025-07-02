@@ -9,25 +9,12 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
 
     useEffect(() => {
         if (item) {
-            const editableFields = Object.entries(item).reduce((acc, [key, value]) => {
-                const alwaysExclude = [
-                    "id", "imageUrl", "cloudinaryId", "width", "height",
-                    "order", "pageType", "type", "createdAt", "updatedAt", "imageUrls"
-                ];
-
-                const skipTitle = section === "artwork" && key === "title";
-
-                if (
-                    !alwaysExclude.includes(key) &&
-                    !excludedFields.includes(key) &&
-                    !skipTitle &&
-                    (typeof value === "string" || typeof value === "number")
-                ) {
-                    acc[key] = value;
-                }
-
-                return acc;
-            }, {});
+            const editableFields = {
+                title: item.title || "",
+                price: item.price || "",
+                description: item.description || "",
+                dimensions: item.dimensions || ""
+            };
             setFormState(editableFields);
 
             const imageArray = item.imageUrls || [];
@@ -35,10 +22,10 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                 file: null,
                 previewUrl: img?.url || null,
                 existingData: img || {},
-                index
+                detailOrder: img?.detailOrder ?? index
             })));
         }
-    }, [item, excludedFields, section]);
+    }, [item]);
 
     const handleFieldChange = (key, value) => {
         setFormState((prev) => ({ ...prev, [key]: value }));
@@ -58,36 +45,55 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
         const targetIndex = index + direction;
         if (targetIndex < 0 || targetIndex >= newEdits.length) return;
         [newEdits[index], newEdits[targetIndex]] = [newEdits[targetIndex], newEdits[index]];
-        setImageEdits(newEdits.map((slot, idx) => ({ ...slot, index: idx })));
+        setImageEdits(newEdits.map((slot, idx) => ({ ...slot, detailOrder: idx })));
     };
 
     const handleSubmit = async () => {
-        const updatedFields = { ...formState };
+        const formData = new FormData();
 
-        const updatedImages = await Promise.all(
-            imageEdits.map(async (slot) => {
-                if (slot.file) {
-                    return {
-                        url: slot.previewUrl,
-                        cloudinaryId: "placeholder-id",
-                        width: null,
-                        height: null,
-                        detailOrder: slot.index
-                    };
-                } else {
-                    return slot.existingData || {
-                        url: null,
-                        cloudinaryId: null,
-                        width: null,
-                        height: null,
-                        detailOrder: slot.index
-                    };
-                }
-            })
-        );
+        formData.append("docId", item.id);
+        for (const [key, value] of Object.entries(formState)) {
+            formData.append(key, value);
+        }
 
-        updatedFields.imageUrls = updatedImages;
-        onSave(updatedFields);
+        const imageData = [];
+
+        imageEdits.forEach((slot, index) => {
+            const fileKey = `file${index}`;
+            imageData.push({
+                fileKey,
+                oldCloudinaryId: slot.existingData?.cloudinaryId || "",
+                detailOrder: slot.detailOrder
+            });
+
+            if (slot.file) {
+                formData.append(fileKey, slot.file);
+            } else {
+                formData.append(fileKey, new Blob([], { type: "application/octet-stream" }));
+            }
+        });
+
+        formData.append("imageData", JSON.stringify(imageData));
+
+        try {
+            const res = await fetch("/api/edit-images", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error("Upload failed:", data.error);
+                return;
+            }
+
+            onSave(data.imageUrls);
+            onClose();
+
+        } catch (err) {
+            console.error("Error uploading images:", err);
+        }
     };
 
     if (!item) return null;
@@ -97,25 +103,19 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
             <div className={styles.modal}>
                 <h2>Edit {section}</h2>
 
-                {Object.entries(formState).map(([key, value]) => (
-                    <div key={key} className={styles.field}>
-                        <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
-                        {key === 'description' ? (
+                {["title", "price", "description", "dimensions"].map((field) => (
+                    <div key={field} className={styles.field}>
+                        <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                        {field === 'description' ? (
                             <textarea
-                                value={value}
-                                onChange={(e) => handleFieldChange(key, e.target.value)}
-                            />
-                        ) : key.toLowerCase().includes('color') ? (
-                            <input
-                                type="color"
-                                value={value}
-                                onChange={(e) => handleFieldChange(key, e.target.value)}
+                                value={formState[field] || ""}
+                                onChange={(e) => handleFieldChange(field, e.target.value)}
                             />
                         ) : (
                             <input
                                 type="text"
-                                value={value}
-                                onChange={(e) => handleFieldChange(key, e.target.value)}
+                                value={formState[field] || ""}
+                                onChange={(e) => handleFieldChange(field, e.target.value)}
                             />
                         )}
                     </div>
