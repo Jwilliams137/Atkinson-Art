@@ -49,9 +49,17 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
     const moveImageSlot = (index, direction) => {
         const newEdits = [...imageEdits];
         const targetIndex = index + direction;
+
         if (targetIndex < 0 || targetIndex >= newEdits.length) return;
+
         [newEdits[index], newEdits[targetIndex]] = [newEdits[targetIndex], newEdits[index]];
-        setImageEdits(newEdits.map((slot, idx) => ({ ...slot, detailOrder: idx })));
+
+        const reordered = newEdits.map((slot, idx) => ({
+            ...slot,
+            detailOrder: idx
+        }));
+
+        setImageEdits(reordered);
     };
 
     const handleDelete = (index) => {
@@ -79,8 +87,8 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
 
         const imageData = [];
 
-        imageEdits.forEach((slot, index) => {
-            const fileKey = `file${index}`;
+        imageEdits.forEach((slot) => {
+            const fileKey = `file${slot.detailOrder}`;
             imageData.push({
                 fileKey,
                 oldCloudinaryId: slot.existingData?.cloudinaryId || "",
