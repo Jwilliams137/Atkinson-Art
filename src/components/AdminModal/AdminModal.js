@@ -87,12 +87,12 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
 
         const imageData = [];
 
-        imageEdits.forEach((slot) => {
-            const fileKey = `file${slot.detailOrder}`;
+        imageEdits.forEach((slot, index) => {
+            const fileKey = `file${index}`;
             imageData.push({
                 fileKey,
                 oldCloudinaryId: slot.existingData?.cloudinaryId || "",
-                detailOrder: slot.detailOrder,
+                detailOrder: index,
                 delete: slot.markedForDeletion
             });
 

@@ -32,19 +32,28 @@ export async function POST(req) {
         }
 
         const imageData = JSON.parse(imageDataRaw);
-        const updatedImagesMap = new Map();
+        const docRef = db.collection("uploads").doc(docId);
+        const docSnap = await docRef.get();
 
-        for (const { fileKey, oldCloudinaryId, detailOrder, delete: shouldDelete } of imageData) {
+        if (!docSnap.exists) {
+            return NextResponse.json({ error: "Document not found" }, { status: 404 });
+        }
+
+        const existingImages = docSnap.data().imageUrls || [];
+        const resultImages = [];
+
+        for (let i = 0; i < imageData.length; i++) {
+            const { fileKey, oldCloudinaryId, delete: shouldDelete } = imageData[i];
             const file = formData.get(fileKey);
 
             if (shouldDelete && oldCloudinaryId) {
                 await cloudinary.v2.uploader.destroy(oldCloudinaryId);
-                updatedImagesMap.set(detailOrder, {
+                resultImages.push({
                     url: null,
                     cloudinaryId: null,
                     width: null,
                     height: null,
-                    detailOrder,
+                    detailOrder: i,
                 });
                 continue;
             }
@@ -62,43 +71,51 @@ export async function POST(req) {
                     folder: "uploads",
                 });
 
-                updatedImagesMap.set(detailOrder, {
+                resultImages.push({
                     url: uploadResponse.secure_url,
                     cloudinaryId: uploadResponse.public_id,
                     width: uploadResponse.width,
                     height: uploadResponse.height,
-                    detailOrder,
+                    detailOrder: i,
+                });
+            } else {
+                // Reuse existing image if not deleted or replaced
+                const existing = existingImages.find(
+                    (img) => img?.cloudinaryId === oldCloudinaryId
+                ) || {
+                    url: null,
+                    cloudinaryId: null,
+                    width: null,
+                    height: null,
+                };
+
+                resultImages.push({
+                    ...existing,
+                    detailOrder: i,
                 });
             }
         }
 
-        const docRef = db.collection("uploads").doc(docId);
-        const docSnap = await docRef.get();
-
-        if (!docSnap.exists) {
-            return NextResponse.json({ error: "Document not found" }, { status: 404 });
+        const desiredSlotCount = 4;
+        for (let i = 0; i < desiredSlotCount; i++) {
+            if (!resultImages[i]) {
+                resultImages[i] = {
+                    url: null,
+                    cloudinaryId: null,
+                    width: null,
+                    height: null,
+                    detailOrder: i,
+                };
+            } else {
+                resultImages[i].detailOrder = i;
+            }
         }
 
-        const existingData = docSnap.data();
-        const currentImages = [...(existingData.imageUrls || [])];
-
-        for (const [detailOrder, update] of updatedImagesMap.entries()) {
-            currentImages[detailOrder] = {
-                ...currentImages[detailOrder],
-                ...update
-            };
-        }
-
-        const reordered = currentImages
-            .filter(img => img !== undefined)
-            .sort((a, b) => a.detailOrder - b.detailOrder)
-            .map((img, index) => ({ ...img, detailOrder: index }));
-
-        await docRef.update({ imageUrls: reordered });
+        await docRef.update({ imageUrls: resultImages });
 
         return NextResponse.json({
             message: "Images updated successfully",
-            imageUrls: reordered,
+            imageUrls: resultImages,
         });
     } catch (error) {
         console.error("Error editing images:", error);
