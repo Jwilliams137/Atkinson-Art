@@ -34,17 +34,28 @@ export async function POST(req) {
     const imageData = JSON.parse(imageDataRaw);
     const updatedImages = [];
 
-    for (const { fileKey, oldCloudinaryId, detailOrder } of imageData) {
+    for (const { fileKey, oldCloudinaryId, detailOrder, delete: shouldDelete } of imageData) {
       const file = formData.get(fileKey);
 
-      if (!(file instanceof File)) continue;
-
-      // If replacing an existing image, delete it from Cloudinary
-      if (file.size > 0 && oldCloudinaryId) {
+      // Handle delete
+      if (shouldDelete && oldCloudinaryId) {
         await cloudinary.v2.uploader.destroy(oldCloudinaryId);
+        updatedImages.push({
+          url: null,
+          cloudinaryId: null,
+          width: null,
+          height: null,
+          detailOrder,
+        });
+        continue;
       }
 
-      if (file.size > 0) {
+      // Handle replace
+      if (file instanceof File && file.size > 0) {
+        if (oldCloudinaryId) {
+          await cloudinary.v2.uploader.destroy(oldCloudinaryId);
+        }
+
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
@@ -63,7 +74,6 @@ export async function POST(req) {
       }
     }
 
-    // Get existing imageUrls array
     const docRef = db.collection("uploads").doc(docId);
     const docSnap = await docRef.get();
 
@@ -74,7 +84,6 @@ export async function POST(req) {
     const existingData = docSnap.data();
     const newImageUrls = [...(existingData.imageUrls || [])];
 
-    // Replace only the image slots with new uploads
     for (const updated of updatedImages) {
       newImageUrls[updated.detailOrder] = updated;
     }

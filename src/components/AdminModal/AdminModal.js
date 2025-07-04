@@ -22,7 +22,8 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                 file: null,
                 previewUrl: img?.url || null,
                 existingData: img || {},
-                detailOrder: img?.detailOrder ?? index
+                detailOrder: img?.detailOrder ?? index,
+                markedForDeletion: false
             })));
         }
     }, [item]);
@@ -35,7 +36,12 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
         const objectUrl = URL.createObjectURL(file);
         setImageEdits(prev =>
             prev.map((slot, i) =>
-                i === index ? { ...slot, file, previewUrl: objectUrl } : slot
+                i === index ? {
+                    ...slot,
+                    file,
+                    previewUrl: objectUrl,
+                    markedForDeletion: false
+                } : slot
             )
         );
     };
@@ -46,6 +52,21 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
         if (targetIndex < 0 || targetIndex >= newEdits.length) return;
         [newEdits[index], newEdits[targetIndex]] = [newEdits[targetIndex], newEdits[index]];
         setImageEdits(newEdits.map((slot, idx) => ({ ...slot, detailOrder: idx })));
+    };
+
+    const handleDelete = (index) => {
+        setImageEdits(prev =>
+            prev.map((slot, i) =>
+                i === index
+                    ? {
+                        ...slot,
+                        file: null,
+                        previewUrl: null,
+                        markedForDeletion: true
+                    }
+                    : slot
+            )
+        );
     };
 
     const handleSubmit = async () => {
@@ -63,10 +84,13 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
             imageData.push({
                 fileKey,
                 oldCloudinaryId: slot.existingData?.cloudinaryId || "",
-                detailOrder: slot.detailOrder
+                detailOrder: slot.detailOrder,
+                delete: slot.markedForDeletion
             });
 
-            if (slot.file) {
+            if (slot.markedForDeletion) {
+                formData.append(fileKey, new Blob([], { type: "application/octet-stream" }));
+            } else if (slot.file) {
                 formData.append(fileKey, slot.file);
             } else {
                 formData.append(fileKey, new Blob([], { type: "application/octet-stream" }));
@@ -88,7 +112,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                 return;
             }
 
-            onSave(data.imageUrls);
+            onSave({ imageUrls: data.imageUrls });
             onClose();
 
         } catch (err) {
@@ -125,7 +149,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                     <h3>Images</h3>
                     {imageEdits.map((slot, index) => (
                         <div key={index} className={styles.imageSlot}>
-                            {slot.previewUrl ? (
+                            {slot.previewUrl && !slot.markedForDeletion ? (
                                 <Image
                                     src={slot.previewUrl}
                                     alt={`Image ${index}`}
@@ -136,14 +160,24 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                             ) : (
                                 <div className={styles.imagePlaceholder}>No image</div>
                             )}
+
                             <input
                                 type="file"
                                 onChange={(e) => handleFileChange(index, e.target.files[0])}
+                                disabled={slot.markedForDeletion}
                             />
+
                             <div className={styles.reorderButtons}>
                                 <button onClick={() => moveImageSlot(index, -1)}>▲</button>
                                 <button onClick={() => moveImageSlot(index, 1)}>▼</button>
                             </div>
+
+                            <button
+                                className={styles.deleteButton}
+                                onClick={() => handleDelete(index)}
+                            >
+                                Delete Image
+                            </button>
                         </div>
                     ))}
                 </div>
