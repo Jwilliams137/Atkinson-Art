@@ -79,7 +79,6 @@ export async function POST(req) {
                     detailOrder: i,
                 });
             } else {
-                // Reuse existing image if not deleted or replaced
                 const existing = existingImages.find(
                     (img) => img?.cloudinaryId === oldCloudinaryId
                 ) || {

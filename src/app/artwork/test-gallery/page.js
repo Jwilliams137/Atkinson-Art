@@ -1,7 +1,7 @@
 import TestGalleryPage from "../../../components/TestGalleryPage/TestGalleryPage";
 
-const TinyHousesPage = () => (
+const TestPage = () => (
     <TestGalleryPage collectionName="test-gallery" />
 );
 
-export default TinyHousesPage;
+export default TestPage;

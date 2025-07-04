@@ -5,7 +5,7 @@ import TextSection from "../TextSection/TextSection";
 import useModal from "../../hooks/useModal";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import TestModal from "../TestModal/TestModal";
-import styles from './TestGalleryPage.module.css'
+import styles from './TestGalleryPage.module.css';
 
 const TestGalleryPage = ({ collectionName }) => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages(collectionName);
@@ -14,7 +14,7 @@ const TestGalleryPage = ({ collectionName }) => {
 
   return (
     <div className={styles.page}>
-      {images.length > 0 && (
+      {images?.length > 0 ? (
         <div className={styles.container}>
           <ImageGallery
             images={images}
@@ -33,11 +33,14 @@ const TestGalleryPage = ({ collectionName }) => {
             />
           )}
         </div>
+      ) : (
+        <div className={styles.emptyMessage}>
+          {images ? "No images found." : "Loading..."}
+        </div>
       )}
+
       <div className={styles.text}>
-        <TextSection
-          textUploads={textUploads}
-        />
+        <TextSection textUploads={textUploads} />
       </div>
     </div>
   );
