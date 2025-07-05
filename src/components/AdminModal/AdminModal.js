@@ -17,14 +17,26 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
             };
             setFormState(editableFields);
 
-            const imageArray = item.imageUrls || [];
-            setImageEdits(imageArray.map((img, index) => ({
+            const imageArray = item.imageUrls || (item.imageUrl ? [{ url: item.imageUrl }] : []);
+            const filledSlots = imageArray.map((img, index) => ({
                 file: null,
                 previewUrl: img?.url || null,
                 existingData: img || {},
                 detailOrder: img?.detailOrder ?? index,
                 markedForDeletion: false
-            })));
+            }));
+
+            while (filledSlots.length < 4) {
+                filledSlots.push({
+                    file: null,
+                    previewUrl: null,
+                    existingData: {},
+                    detailOrder: filledSlots.length,
+                    markedForDeletion: false
+                });
+            }
+
+            setImageEdits(filledSlots);
         }
     }, [item]);
 
@@ -135,7 +147,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
             <div className={styles.modal}>
                 <h2>Edit {section}</h2>
 
-                {["title", "price", "description", "dimensions"].map((field) => (
+                {['title', 'price', 'description', 'dimensions'].map((field) => (
                     <div key={field} className={styles.field}>
                         <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                         {field === 'description' ? (

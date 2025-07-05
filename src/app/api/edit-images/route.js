@@ -110,7 +110,13 @@ export async function POST(req) {
             }
         }
 
-        await docRef.update({ imageUrls: resultImages });
+        await docRef.update({
+            imageUrls: resultImages,
+            title: formData.get("title") || "",
+            price: formData.get("price") || "",
+            description: formData.get("description") || "",
+            dimensions: formData.get("dimensions") || ""
+        });
 
         return NextResponse.json({
             message: "Images updated successfully",

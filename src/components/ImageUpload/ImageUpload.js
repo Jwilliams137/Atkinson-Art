@@ -12,7 +12,15 @@ const ImageUpload = ({
     currentSectionKey
 }) => {
     const [formData, setFormData] = useState({});
-    const [fileInputs, setFileInputs] = useState({});
+    const [fileInputs, setFileInputs] = useState(() => {
+        const initial = {};
+        fieldsList?.forEach(field => {
+            if (field.type === "file") {
+                initial[field.name] = null;
+            }
+        });
+        return initial;
+    });
     const [imageDimensions, setImageDimensions] = useState({});
     const fileInputRef = useRef(null);
     const [titleError, setTitleError] = useState(false);
@@ -125,12 +133,17 @@ const ImageUpload = ({
                                 type="file"
                                 id={field.name}
                                 name={field.name}
+                                key={`file-${field.name}`}
                                 onChange={(e) => handleFileChange(e, field.name)}
                             />
                             {fileInputs[field.name] && (
                                 <div className={styles.imagePreview}>
                                     <Image
-                                        src={URL.createObjectURL(fileInputs[field.name])}
+                                        src={
+                                            fileInputs[field.name] instanceof File
+                                                ? URL.createObjectURL(fileInputs[field.name])
+                                                : fileInputs[field.name]
+                                        }
                                         alt={`Preview ${field.name}`}
                                         width={imageDimensions[field.name]?.width || 150}
                                         height={imageDimensions[field.name]?.height || 100}

@@ -6,7 +6,7 @@ import ImageDetails from "../ImageDetails/ImageDetails";
 
 const ImageGallery = ({
   images,
-  onImageClick = () => { },
+  onImageClick = () => {},
   nextPage,
   prevPage,
   page,
@@ -31,6 +31,14 @@ const ImageGallery = ({
         {images.length > 0 &&
           images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
+
+            const displayUrl =
+              image.imageUrls?.[0]?.url || image.imageUrl;
+            const width =
+              image.imageUrls?.[0]?.width || image.width || 300;
+            const height =
+              image.imageUrls?.[0]?.height || image.height || 200;
+
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
@@ -49,10 +57,10 @@ const ImageGallery = ({
                   >
                     <Image
                       className={styles.image}
-                      src={image.imageUrl}
+                      src={displayUrl}
                       alt={image.title || "Gallery Image"}
-                      width={image.width}
-                      height={image.height}
+                      width={width}
+                      height={height}
                       priority
                     />
                   </div>

@@ -61,13 +61,17 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
       >
         <div className={styles.imageContent}>
           <div className={styles.imageWrapper}>
-            <Image
-              src={selectedImage.imageUrl}
-              alt={`Image ${selectedIndex + 1}`}
-              width={selectedImage.width}
-              height={selectedImage.height}
-              className={styles.fullSizeImage}
-            />
+            {selectedImage?.imageUrl ? (
+              <Image
+                src={selectedImage.imageUrl}
+                alt={`Image ${selectedIndex + 1}`}
+                width={selectedImage.width}
+                height={selectedImage.height}
+                className={styles.fullSizeImage}
+              />
+            ) : (
+              <div className={styles.imagePlaceholder}>No image available</div>
+            )}
           </div>
           <div className={styles.imageLabel}>
             <h2 id="modal-title" className={styles.visuallyHidden}>
