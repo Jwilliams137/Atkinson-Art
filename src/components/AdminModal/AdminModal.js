@@ -3,18 +3,21 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './AdminModal.module.css';
 
-const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => {
+const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], config }) => {
     const [formState, setFormState] = useState({});
     const [imageEdits, setImageEdits] = useState([]);
 
     useEffect(() => {
         if (item) {
-            const editableFields = {
-                title: item.title || "",
-                price: item.price || "",
-                description: item.description || "",
-                dimensions: item.dimensions || ""
-            };
+            const allowedFields = ['title', 'price', 'description', 'dimensions'];
+            const editableFields = {};
+
+            allowedFields.forEach((field) => {
+                const shouldInclude = config?.pageSettings?.[section]?.editableFields?.includes(field);
+                if (shouldInclude) {
+                    editableFields[field] = item[field] || "";
+                }
+            });
             setFormState(editableFields);
 
             const imageArray = item.imageUrls || (item.imageUrl ? [{ url: item.imageUrl }] : []);
@@ -142,12 +145,15 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
 
     if (!item) return null;
 
+    const isSingleImageOnly = config?.pageSettings?.[section]?.singleImageOnly === true;
+    const visibleImageEdits = isSingleImageOnly ? imageEdits.slice(0, 1) : imageEdits;
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
                 <h2>Edit {section}</h2>
 
-                {['title', 'price', 'description', 'dimensions'].map((field) => (
+                {Object.keys(formState).map((field) => (
                     <div key={field} className={styles.field}>
                         <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                         {field === 'description' ? (
@@ -167,7 +173,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
 
                 <div className={styles.imageEditSection}>
                     <h3>Images</h3>
-                    {imageEdits.map((slot, index) => (
+                    {visibleImageEdits.map((slot, index) => (
                         <div key={index} className={styles.imageSlot}>
                             {slot.previewUrl && !slot.markedForDeletion ? (
                                 <Image
@@ -187,17 +193,21 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [] }) => 
                                 disabled={slot.markedForDeletion}
                             />
 
-                            <div className={styles.reorderButtons}>
-                                <button onClick={() => moveImageSlot(index, -1)}>▲</button>
-                                <button onClick={() => moveImageSlot(index, 1)}>▼</button>
-                            </div>
+                            {!isSingleImageOnly && (
+                                <div className={styles.reorderButtons}>
+                                    <button onClick={() => moveImageSlot(index, -1)}>▲</button>
+                                    <button onClick={() => moveImageSlot(index, 1)}>▼</button>
+                                </div>
+                            )}
 
-                            <button
-                                className={styles.deleteButton}
-                                onClick={() => handleDelete(index)}
-                            >
-                                Delete Image
-                            </button>
+                            {!isSingleImageOnly && (
+                                <button
+                                    className={styles.deleteButton}
+                                    onClick={() => handleDelete(index)}
+                                >
+                                    Delete Image
+                                </button>
+                            )}
                         </div>
                     ))}
                 </div>

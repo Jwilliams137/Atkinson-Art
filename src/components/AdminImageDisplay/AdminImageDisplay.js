@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getFirestore, doc, writeBatch, updateDoc } from "firebase/firestore";
 import styles from "./AdminImageDisplay.module.css";
 import AdminModal from "../AdminModal/AdminModal";
+import config from "../../data/admin.json";
 
 const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const db = getFirestore();
@@ -191,6 +192,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
           onSave={handleSave}
           section={activeSection}
           excludedFields={excludedFields}
+          config={config}
         />
       )}
     </div>

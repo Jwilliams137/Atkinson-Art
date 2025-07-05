@@ -16,6 +16,23 @@
       { "key": "shop", "label": "Shop" },
       { "key": "test-modal", "label": "Test Modal" }
     ],
+    "pageSettings": {
+      "home": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "artwork": { "singleImageOnly": true, "editableFields": [] },
+      "new-work": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "houses": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "tiny-houses": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "constructions": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "collage": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "commissions": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "earlier-work": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "about": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "bio": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "podcasts": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "exhibitions": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "shop": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "test-modal": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] }
+    },
     "fieldsForPage": {
       "home": [
         {"image-upload": [
