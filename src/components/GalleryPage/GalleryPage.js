@@ -6,7 +6,7 @@ import ImageGallery from "../ImageGallery/ImageGallery";
 import Modal from "../Modal/Modal";
 import TextSection from "../TextSection/TextSection";
 import ComingSoon from "../ComingSoon/ComingSoon";
-import styles from './GalleryPage.module.css';
+import styles from "./GalleryPage.module.css"
 
 const GalleryPage = ({ collectionName, heading }) => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages(collectionName);

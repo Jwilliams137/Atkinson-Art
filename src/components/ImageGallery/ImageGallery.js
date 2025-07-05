@@ -6,7 +6,7 @@ import ImageDetails from "../ImageDetails/ImageDetails";
 
 const ImageGallery = ({
   images,
-  onImageClick = () => {},
+  onImageClick = () => { },
   nextPage,
   prevPage,
   page,
@@ -32,8 +32,7 @@ const ImageGallery = ({
           images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
 
-            const displayUrl =
-              image.imageUrls?.[0]?.url || image.imageUrl;
+            const displayUrl = image.imageUrls?.[0]?.url || image.imageUrl || null;
             const width =
               image.imageUrls?.[0]?.width || image.width || 300;
             const height =
@@ -55,14 +54,18 @@ const ImageGallery = ({
                     aria-label={`Open modal for ${image.title || "artwork"}`}
                     className={styles.imageWrapper}
                   >
-                    <Image
-                      className={styles.image}
-                      src={displayUrl}
-                      alt={image.title || "Gallery Image"}
-                      width={width}
-                      height={height}
-                      priority
-                    />
+                    {displayUrl ? (
+                      <Image
+                        className={styles.image}
+                        src={displayUrl}
+                        alt={image.title || "Gallery Image"}
+                        width={width}
+                        height={height}
+                        priority
+                      />
+                    ) : (
+                      <div className={styles.imagePlaceholder}>No image</div>
+                    )}
                   </div>
 
                   <div className={styles.imageDetails}>
