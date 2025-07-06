@@ -23,20 +23,37 @@ const AboutPage = () => {
 
       {images
         .filter(item => item.type === "about-image")
-        .map((item, index) => (
-          <div key={`about-image-${index}`} className={styles.imageCard}>
-            <div className={styles.imageWrapper}>
-              <Image
-                src={item.imageUrl}
-                alt={item.title || "About Image"}
-                width={item.width}
-                height={item.height}
-                className={styles.aboutImage}
-              />
-              <div className={styles.imageDetails}>{item.description}</div>
+        .map((item, index) => {
+          const displayImage =
+            item.imageUrls?.length && item.imageUrls[0]?.url
+              ? item.imageUrls[0]
+              : item.imageUrl
+                ? {
+                  url: item.imageUrl,
+                  width: item.width,
+                  height: item.height,
+                }
+                : null;
+
+          return (
+            <div key={`about-image-${index}`} className={styles.imageCard}>
+              <div className={styles.imageWrapper}>
+                {displayImage ? (
+                  <Image
+                    src={displayImage.url}
+                    alt={item.title || "About Image"}
+                    width={displayImage.width || 600}
+                    height={displayImage.height || 400}
+                    className={styles.aboutImage}
+                  />
+                ) : (
+                  <div className={styles.imagePlaceholder}>No image available</div>
+                )}
+                <div className={styles.imageDetails}>{item.description}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
       {textUploads
         .filter(item => item.type === "about-links")

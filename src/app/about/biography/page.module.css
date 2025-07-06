@@ -11,18 +11,20 @@
 
 .imageWrapper {
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .bioImage {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  margin-bottom: 50px;
 }
 
 .imageDetails {
   text-align: left;
   font-size: 20px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 1000px) {

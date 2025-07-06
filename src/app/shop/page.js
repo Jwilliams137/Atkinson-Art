@@ -12,14 +12,41 @@ const ShopPage = () => {
   const textUploads = useTextUploads("shop");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
+  const normalizedImages = images
+    .map((item) => {
+      const displayImage =
+        item.imageUrls?.length && item.imageUrls[0]?.url
+          ? item.imageUrls[0]
+          : item.imageUrl
+          ? {
+              url: item.imageUrl,
+              width: item.width,
+              height: item.height,
+            }
+          : null;
+
+      if (!displayImage) return null;
+
+      return {
+        ...item,
+        imageUrl: displayImage.url,
+        width: displayImage.width,
+        height: displayImage.height,
+      };
+    })
+    .filter(Boolean);
+
   return (
     <div className={styles.shopPage}>
-      <h1 className={styles.visuallyHidden}>Artwork available for purchase by Linda Atkinson</h1>
-      {images.length > 0 && (
+      <h1 className={styles.visuallyHidden}>
+        Artwork available for purchase by Linda Atkinson
+      </h1>
+
+      {normalizedImages.length > 0 && (
         <div className={styles.shopContainer}>
           <div className={styles.imageWrapper}>
             <ImageGallery
-              images={images}
+              images={normalizedImages}
               onImageClick={openModal}
               nextPage={nextPage}
               prevPage={prevPage}
@@ -28,19 +55,19 @@ const ShopPage = () => {
               itemsPerPage={20}
             />
           </div>
+
           {isModalOpen && shouldRenderModal && (
             <Modal
-              images={images}
+              images={normalizedImages}
               currentImageIndex={currentImageIndex}
               closeModal={closeModal}
             />
           )}
         </div>
       )}
+
       <div className={styles.text}>
-        <TextSection
-          textUploads={textUploads}
-        />
+        <TextSection textUploads={textUploads} />
       </div>
     </div>
   );
