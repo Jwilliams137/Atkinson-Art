@@ -21,16 +21,21 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const singleImageSections = ["artwork", "about", "biography", "podcasts", "exhibitions"];
+
 export async function POST(req) {
     try {
         const formData = await req.formData();
         const docId = formData.get("docId");
         const imageDataRaw = formData.get("imageData");
+        const color = formData.get("color");
+        const pageType = formData.get("pageType");
 
-        if (!docId || !imageDataRaw) {
-            return NextResponse.json({ error: "Missing docId or imageData" }, { status: 400 });
+        if (!docId || !imageDataRaw || !pageType) {
+            return NextResponse.json({ error: "Missing docId, pageType, or imageData" }, { status: 400 });
         }
 
+        const isSingleImageOnly = singleImageSections.includes(pageType);
         const imageData = JSON.parse(imageDataRaw);
         const docRef = db.collection("uploads").doc(docId);
         const docSnap = await docRef.get();
@@ -40,21 +45,20 @@ export async function POST(req) {
         }
 
         const existingImages = docSnap.data().imageUrls || [];
-        const resultImages = [];
+        const tempImages = {};
 
         for (let i = 0; i < imageData.length; i++) {
-            const { fileKey, oldCloudinaryId, delete: shouldDelete } = imageData[i];
+            const { fileKey, oldCloudinaryId, detailOrder, delete: shouldDelete } = imageData[i];
             const file = formData.get(fileKey);
 
             if (shouldDelete && oldCloudinaryId) {
                 await cloudinary.v2.uploader.destroy(oldCloudinaryId);
-                resultImages.push({
+                tempImages[detailOrder] = {
                     url: null,
                     cloudinaryId: null,
                     width: null,
                     height: null,
-                    detailOrder: i,
-                });
+                };
                 continue;
             }
 
@@ -71,56 +75,77 @@ export async function POST(req) {
                     folder: "uploads",
                 });
 
-                resultImages.push({
+                tempImages[detailOrder] = {
                     url: uploadResponse.secure_url,
                     cloudinaryId: uploadResponse.public_id,
                     width: uploadResponse.width,
                     height: uploadResponse.height,
-                    detailOrder: i,
-                });
+                };
             } else {
-                const existing = existingImages.find(
-                    (img) => img?.cloudinaryId === oldCloudinaryId
-                ) || {
+                const existing = existingImages.find((img) => img?.cloudinaryId === oldCloudinaryId);
+                if (existing) {
+                    tempImages[detailOrder] = existing;
+                }
+            }
+        }
+
+        let finalImages = imageData
+            .sort((a, b) => a.detailOrder - b.detailOrder)
+            .map((entry, i) => {
+                const fallback = isSingleImageOnly
+                    ? existingImages[0] || {
+                        url: null,
+                        cloudinaryId: null,
+                        width: null,
+                        height: null,
+                    }
+                    : {
+                        url: null,
+                        cloudinaryId: null,
+                        width: null,
+                        height: null,
+                    };
+
+                return {
+                    ...(tempImages[entry.detailOrder] || fallback),
+                    detailOrder: i,
+                };
+            });
+
+        if (!isSingleImageOnly) {
+            while (finalImages.length < 4) {
+                finalImages.push({
                     url: null,
                     cloudinaryId: null,
                     width: null,
                     height: null,
-                };
-
-                resultImages.push({
-                    ...existing,
-                    detailOrder: i,
+                    detailOrder: finalImages.length,
                 });
             }
+        } else {
+            finalImages = finalImages.slice(0, 1);
         }
 
-        const desiredSlotCount = 4;
-        for (let i = 0; i < desiredSlotCount; i++) {
-            if (!resultImages[i]) {
-                resultImages[i] = {
-                    url: null,
-                    cloudinaryId: null,
-                    width: null,
-                    height: null,
-                    detailOrder: i,
-                };
-            } else {
-                resultImages[i].detailOrder = i;
+        const updatePayload = {
+            imageUrls: finalImages,
+        };
+
+        ["price", "description", "dimensions"].forEach((field) => {
+            const value = formData.get(field);
+            if (value !== null) {
+                updatePayload[field] = value;
             }
-        }
-
-        await docRef.update({
-            imageUrls: resultImages,
-            title: formData.get("title") || "",
-            price: formData.get("price") || "",
-            description: formData.get("description") || "",
-            dimensions: formData.get("dimensions") || ""
         });
+
+        if (color && pageType === "artwork") {
+            updatePayload.color = color;
+        }
+
+        await docRef.update(updatePayload);
 
         return NextResponse.json({
             message: "Images updated successfully",
-            imageUrls: resultImages,
+            imageUrls: finalImages,
         });
     } catch (error) {
         console.error("Error editing images:", error);

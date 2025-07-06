@@ -52,15 +52,19 @@ const HomePage = () => {
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
-                  <Image
-                    className={styles.image}
-                    src={image.imageUrl}
-                    alt={image.title || "Gallery Image"}
-                    width={image.width}
-                    height={image.height}
-                    priority
-                    onClick={() => toggleDescription(index)}
-                  />
+                  {image.imageUrl ? (
+                    <Image
+                      className={styles.image}
+                      src={image.imageUrl}
+                      alt={image.title || "Gallery Image"}
+                      width={image.width}
+                      height={image.height}
+                      priority
+                      onClick={() => toggleDescription(index)}
+                    />
+                  ) : (
+                    <div className={styles.imagePlaceholder}>No image available</div>
+                  )}
                   <div className={styles.imageDetails}>
                     <ImageDetails
                       title={image.title}

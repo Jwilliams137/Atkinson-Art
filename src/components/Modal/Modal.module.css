@@ -25,6 +25,39 @@
   overflow: hidden;
 }
 
+.arrowLeft,
+.arrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 100px;
+  background-color: white;
+  color: black;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  user-select: none;
+}
+
+.arrowLeft {
+  left: 0;
+  margin-left: 10px;
+}
+
+.arrowRight {
+  right: 0;
+  margin-right: 10px;
+}
+
 .imageWrapper {
   display: flex;
   justify-content: center;

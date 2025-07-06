@@ -6,12 +6,12 @@ import styles from './AdminModal.module.css';
 const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], config }) => {
     const [formState, setFormState] = useState({});
     const [imageEdits, setImageEdits] = useState([]);
+    const [color, setColor] = useState("#2e2c2e");
 
     useEffect(() => {
         if (item) {
             const allowedFields = ['title', 'price', 'description', 'dimensions'];
             const editableFields = {};
-
             allowedFields.forEach((field) => {
                 const shouldInclude = config?.pageSettings?.[section]?.editableFields?.includes(field);
                 if (shouldInclude) {
@@ -29,7 +29,8 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                 markedForDeletion: false
             }));
 
-            while (filledSlots.length < 4) {
+            const maxSlots = config?.pageSettings?.[section]?.singleImageOnly ? 1 : 4;
+            while (filledSlots.length < maxSlots) {
                 filledSlots.push({
                     file: null,
                     previewUrl: null,
@@ -40,8 +41,12 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
             }
 
             setImageEdits(filledSlots);
+
+            if (section === "artwork") {
+                setColor(item.color || "#2e2c2e");
+            }
         }
-    }, [item]);
+    }, [item, config, section]);
 
     const handleFieldChange = (key, value) => {
         setFormState((prev) => ({ ...prev, [key]: value }));
@@ -96,13 +101,19 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         const formData = new FormData();
 
         formData.append("docId", item.id);
+        formData.append("pageType", section);
+
         for (const [key, value] of Object.entries(formState)) {
             formData.append(key, value);
         }
 
+        if (section === "artwork") {
+            formData.append("color", color);
+        }
+
         const imageData = [];
 
-        imageEdits.forEach((slot, index) => {
+        visibleImageEdits.forEach((slot, index) => {
             const fileKey = `file${index}`;
             imageData.push({
                 fileKey,
@@ -170,6 +181,17 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                         )}
                     </div>
                 ))}
+
+                {section === "artwork" && (
+                    <div className={styles.field}>
+                        <label>Flip Side Color</label>
+                        <input
+                            type="color"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
+                        />
+                    </div>
+                )}
 
                 <div className={styles.imageEditSection}>
                     <h3>Images</h3>

@@ -1,7 +1,7 @@
-import TestGalleryPage from "../../../components/TestGalleryPage/TestGalleryPage";
+import GalleryPage from "../../../components/GalleryPage/GalleryPage";
 
 const TestPage = () => (
-    <TestGalleryPage collectionName="test-modal" />
+    <GalleryPage collectionName="test-modal" />
 );
 
 export default TestPage;

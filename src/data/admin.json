@@ -37,6 +37,9 @@
       "home": [
         {"image-upload": [
           { "name": "file", "label": "Home Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -110,6 +113,9 @@
       "new-work": [
         {"image-upload": [
           { "name": "file", "label": "New Work Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -126,6 +132,9 @@
       "houses": [
         {"image-upload": [
           { "name": "file", "label": "Houses Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -142,6 +151,9 @@
       "tiny-houses": [
         {"image-upload": [
           { "name": "file", "label": "Tiny Houses Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -158,6 +170,9 @@
       "constructions": [
         {"image-upload": [
           { "name": "file", "label": "Constructions Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -174,6 +189,9 @@
       "collage": [
         {"image-upload": [
           { "name": "file", "label": "Collage Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -190,6 +208,9 @@
       "commissions": [
         {"image-upload": [
           { "name": "file", "label": "Commissions Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -206,6 +227,9 @@
       "earlier-work": [
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -291,6 +315,9 @@
       "shop": [
         {"image-upload": [
           { "name": "file", "label": "Shop Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -307,15 +334,15 @@
       "test-modal": [
         {"image-upload": [
           { "name": "file", "label": "Test Modal Image", "type": "file" },
-          { "name": "file1", "label": "Test Modal Detail", "type": "file" },
-          { "name": "file2", "label": "Test Modal Detail 2", "type": "file" },
-          { "name": "file3", "label": "Test Modal Detail 3", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
           { "name": "price", "label": "Price", "type": "text" },
           { "name": "pageType", "type": "hidden", "value": "shop" },
-          { "name": "type", "type": "hidden", "value": "shop-gallery-image" }
+          { "name": "type", "type": "hidden", "value": "test-gallery-image" }
         ]}      
       ]
     }
