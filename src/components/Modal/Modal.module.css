@@ -30,32 +30,32 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 100px;
-  background-color: white;
-  color: black;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 1;
+  background: white;
   border: none;
   cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-  user-select: none;
+  color: #222;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .arrowLeft {
-  left: 0;
-  margin-left: 10px;
+  left: 5px;
 }
 
 .arrowRight {
-  right: 0;
-  margin-right: 10px;
+  right: 5px;
+}
+
+.arrowLeft:hover,
+.arrowRight:hover {
+  background: #f0f0f0;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .imageWrapper {
@@ -75,6 +75,22 @@
   object-fit: contain;
   border-radius: 8px;
   margin-bottom: 5px;
+}
+
+.thumbnailRow {
+  margin-top: 5px;
+}
+
+.thumbnailImage {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.thumbnailButton {
+  border: none;
+  padding: 0;
+  background: none;
+  margin-right: 10px;
 }
 
 .imageTitle {

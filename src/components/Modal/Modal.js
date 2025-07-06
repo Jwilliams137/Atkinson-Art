@@ -101,7 +101,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
                       src={img.url}
                       alt={`Thumbnail ${index + 1}`}
                       width={80}
-                      height={60}
+                      height={80}
                       className={styles.thumbnailImage}
                     />
                   </button>

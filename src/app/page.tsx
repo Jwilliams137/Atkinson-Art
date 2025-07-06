@@ -6,16 +6,24 @@ import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import TextSection from "@/components/TextSection/TextSection";
 import usePageImages from "@/hooks/usePageImages";
 import useTextUploads from "@/hooks/useTextUploads";
+import useModal from "@/hooks/useModal";
+import Modal from "@/components/Modal/Modal";
 
 const HomePage = () => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages("home") as {
     images: {
       id: string;
-      imageUrl: string;
+      imageUrl?: string;
+      imageUrls?: {
+        url: string;
+        width: number;
+        height: number;
+        detailOrder?: number;
+      }[];
       title?: string;
       description?: string;
-      width: number;
-      height: number;
+      width?: number;
+      height?: number;
       dimensions?: string;
       price?: string;
     }[];
@@ -26,21 +34,19 @@ const HomePage = () => {
   };
 
   const homeTextUploads = useTextUploads("home");
-  const itemsPerPage = 20;
+  const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   const [expandedDescriptions, setExpandedDescriptions] = useState<Record<number, boolean>>({});
-
+  const itemsPerPage = 20;
 
   const toggleDescription = (index: number) => {
-
     setExpandedDescriptions((prev) => ({
       ...prev,
       [index]: !prev[index],
     }));
   };
 
-  const showPagination =
-    page > 1 || (hasMore && images.length === itemsPerPage);
+  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
 
   return (
     <div className={styles.homeContainer}>
@@ -49,18 +55,29 @@ const HomePage = () => {
         <div className={styles.gallery}>
           {images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
+            const displayImage =
+              image.imageUrls?.length && image.imageUrls[0]?.url
+                ? image.imageUrls[0]
+                : image.imageUrl
+                  ? {
+                    url: image.imageUrl,
+                    width: image.width,
+                    height: image.height,
+                  }
+                  : null;
+
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
-                  {image.imageUrl ? (
+                  {displayImage ? (
                     <Image
                       className={styles.image}
-                      src={image.imageUrl}
+                      src={displayImage.url}
                       alt={image.title || "Gallery Image"}
-                      width={image.width}
-                      height={image.height}
+                      width={displayImage.width || 600}
+                      height={displayImage.height || 400}
                       priority
-                      onClick={() => toggleDescription(index)}
+                      onClick={() => openModal(index)}
                     />
                   ) : (
                     <div className={styles.imagePlaceholder}>No image available</div>
@@ -80,6 +97,7 @@ const HomePage = () => {
             );
           })}
         </div>
+
         {showPagination && (
           <div className={styles.paginationControls}>
             <div className={styles.buttonContainer}>
@@ -107,11 +125,18 @@ const HomePage = () => {
             </div>
           </div>
         )}
+
+        {isModalOpen && shouldRenderModal && (
+          <Modal
+            images={images}
+            currentImageIndex={currentImageIndex}
+            closeModal={closeModal}
+          />
+        )}
       </div>
+
       <div className={styles.textSection}>
-        <TextSection
-          textUploads={homeTextUploads}
-        />
+        <TextSection textUploads={homeTextUploads} />
       </div>
     </div>
   );
