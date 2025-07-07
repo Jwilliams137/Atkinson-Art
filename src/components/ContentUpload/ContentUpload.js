@@ -7,7 +7,6 @@ import TextUpload from "../TextUpload/TextUpload";
 
 const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
     const [textContent, setTextContent] = useState("");
-    const [selectedResume, setSelectedResume] = useState(null);
     const [order, setOrder] = useState(null);
 
     const handleTextChange = (event) => {
@@ -114,24 +113,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 }
             }
 
-            if (uploadType === "resume-upload" && selectedResume) {
-                const resumeFormData = new FormData();
-                resumeFormData.append("file", selectedResume);
-                resumeFormData.append("section", sectionKey);
-
-                const response = await fetch("/api/upload-resume", {
-                    method: "POST",
-                    body: resumeFormData,
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
-                const result = await response.json();
-                if (response.ok) {
-                    setSelectedResume(null);
-                } else {
-                    console.error("Resume upload failed:", result.error);
-                }
-            }
         } catch (error) {
             console.error("Error uploading file:", error);
         }
@@ -166,15 +147,6 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                                             handleSubmit={handleUpload}
                                             sectionKey={sectionKey}
                                             setOrder={setOrder}
-                                        />
-                                    )}
-                                    {uploadType === "resume-upload" && (
-                                        <ResumeUpload
-                                            fieldsList={fieldsList}
-                                            selectedResume={selectedResume}
-                                            setSelectedResume={setSelectedResume}
-                                            handleSubmit={handleUpload}
-                                            sectionKey={sectionKey}
                                         />
                                     )}
                                 </div>
