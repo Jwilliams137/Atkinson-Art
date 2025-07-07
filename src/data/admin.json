@@ -13,8 +13,7 @@
       { "key": "bio", "label": "Biography" },
       { "key": "podcasts", "label": "Podcasts" },
       { "key": "exhibitions", "label": "Exhibitions" },
-      { "key": "shop", "label": "Shop" },
-      { "key": "test-modal", "label": "Test Modal" }
+      { "key": "shop", "label": "Shop" }
     ],
     "pageSettings": {
       "home": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
@@ -30,8 +29,7 @@
       "bio": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
       "podcasts": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
       "exhibitions": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
-      "shop": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
-      "test-modal": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] }
+      "shop": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] }
     },
     "fieldsForPage": {
       "home": [
@@ -330,20 +328,6 @@
           { "name": "type", "type": "hidden", "value": "shop-statement" },
           { "name": "pageType", "type": "hidden", "value": "shop" }
         ]}       
-      ],
-      "test-modal": [
-        {"image-upload": [
-          { "name": "file", "label": "Test Modal Image", "type": "file" },
-          { "name": "file1", "label": "Detail", "type": "file" },
-          { "name": "file2", "label": "Detail 2", "type": "file" },
-          { "name": "file3", "label": "Detail 3", "type": "file" },
-          { "name": "title", "label": "Title", "type": "text" },
-          { "name": "description", "label": "Description", "type": "text" },
-          { "name": "dimensions", "label": "Dimensions", "type": "text" },
-          { "name": "price", "label": "Price", "type": "text" },
-          { "name": "pageType", "type": "hidden", "value": "shop" },
-          { "name": "type", "type": "hidden", "value": "test-gallery-image" }
-        ]}      
       ]
     }
   }  
