@@ -14,24 +14,29 @@ const ShopPage = () => {
 
   const normalizedImages = images
     .map((item) => {
-      const displayImage =
-        item.imageUrls?.length && item.imageUrls[0]?.url
-          ? item.imageUrls[0]
-          : item.imageUrl
-          ? {
-              url: item.imageUrl,
-              width: item.width,
-              height: item.height,
-            }
-          : null;
+      let displayImage = null;
 
-      if (!displayImage) return null;
+      if (Array.isArray(item.imageUrls) && item.imageUrls.length > 0) {
+        const sorted = [...item.imageUrls].sort((a, b) => {
+          const orderA = a.detailOrder ?? 999;
+          const orderB = b.detailOrder ?? 999;
+          return orderA - orderB;
+        });
+
+        displayImage = sorted.find((img) => img.detailOrder === 0 && img.url) || sorted.find((img) => img.url);
+      } else if (item.imageUrl) {
+        displayImage = {
+          url: item.imageUrl,
+          width: item.width,
+          height: item.height,
+        };
+      }
+
+      if (!displayImage || !displayImage.url) return null;
 
       return {
         ...item,
-        imageUrl: displayImage.url,
-        width: displayImage.width,
-        height: displayImage.height,
+        displayImage,
       };
     })
     .filter(Boolean);

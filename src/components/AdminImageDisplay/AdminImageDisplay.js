@@ -123,13 +123,19 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                   })()}
                 </div>
 
-                {image.imageUrls.filter((img) => img.detailOrder !== 0 && img.url).length > 0 && (
+                {!config.pageSettings?.[activeSection]?.singleImageOnly && (
                   <button
                     className={styles.moreViewsButton}
                     onClick={() => setEditingImage(image)}
                   >
-                    {image.imageUrls.filter((img) => img.detailOrder !== 0 && img.url).length} more view
-                    {image.imageUrls.filter((img) => img.detailOrder !== 0 && img.url).length > 1 ? "s" : ""}
+                    {(() => {
+                      const extraViews = image.imageUrls.filter(
+                        (img) => img.detailOrder !== 0 && img.url
+                      ).length;
+                      return extraViews > 0
+                        ? `${extraViews} more view${extraViews > 1 ? "s" : ""}`
+                        : "+ Add more views";
+                    })()}
                   </button>
                 )}
               </>
