@@ -13,9 +13,7 @@ const ImageGallery = ({
   hasMore,
   itemsPerPage,
 }) => {
-  const showPagination =
-    page > 1 || (hasMore && images.length === itemsPerPage);
-
+  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
   const toggleDescription = (index) => {
@@ -31,12 +29,7 @@ const ImageGallery = ({
         {images.length > 0 &&
           images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
-
-            const displayUrl = image.imageUrls?.[0]?.url || image.imageUrl || null;
-            const width =
-              image.imageUrls?.[0]?.width || image.width || 300;
-            const height =
-              image.imageUrls?.[0]?.height || image.height || 200;
+            const displayImage = image.displayImage || null;
 
             return (
               <div key={image.id || index} className={styles.galleryCard}>
@@ -54,13 +47,13 @@ const ImageGallery = ({
                     aria-label={`Open modal for ${image.title || "artwork"}`}
                     className={styles.imageWrapper}
                   >
-                    {displayUrl ? (
+                    {displayImage?.url ? (
                       <Image
                         className={styles.image}
-                        src={displayUrl}
+                        src={displayImage.url}
                         alt={image.title || "Gallery Image"}
-                        width={width}
-                        height={height}
+                        width={displayImage.width || 300}
+                        height={displayImage.height || 200}
                         priority
                       />
                     ) : (
@@ -83,6 +76,7 @@ const ImageGallery = ({
             );
           })}
       </div>
+
       {showPagination && (
         <div className={styles.paginationControls}>
           <div className={styles.buttonContainer}>

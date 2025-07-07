@@ -183,12 +183,14 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                 ))}
 
                 {section === "artwork" && (
-                    <div className={styles.field}>
-                        <label>Flip Side Color</label>
+                    <div className={styles.colorSwatch} style={{ backgroundColor: color }} onClick={() => document.getElementById('hiddenColorInput').click()}>
+                        Flip Side Color
                         <input
+                            id="hiddenColorInput"
                             type="color"
                             value={color}
                             onChange={(e) => setColor(e.target.value)}
+                            style={{ display: "none" }}
                         />
                     </div>
                 )}

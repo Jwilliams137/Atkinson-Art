@@ -170,3 +170,18 @@
 .customFileInput input[type="file"] {
   display: none;
 }
+
+.colorSwatch {
+  width: 160px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
