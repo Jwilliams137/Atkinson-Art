@@ -28,6 +28,17 @@
   align-items: center;
 }
 
+.imagePlaceholder {
+  width: 300px;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-style: italic;
+}
+
 .imageWrapper {
   display: flex;
   flex-direction: column;

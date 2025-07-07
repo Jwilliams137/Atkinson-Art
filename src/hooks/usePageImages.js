@@ -1,5 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { getFirestore, collection, query, where, orderBy, limit, getDocs, startAfter } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  orderBy,
+  limit,
+  getDocs,
+  startAfter
+} from "firebase/firestore";
 import { app } from "../utils/firebase";
 
 const db = getFirestore(app);
@@ -28,7 +37,29 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       }
 
       const querySnapshot = await getDocs(q);
-      const fetchedImages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+      const fetchedImages = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+
+        const normalizedImageUrls = Array.isArray(data.imageUrls)
+          ? data.imageUrls
+          : [
+            {
+              url: data.imageUrl || null,
+              cloudinaryId: data.cloudinaryId || null,
+              width: data.width || null,
+              height: data.height || null,
+              detailOrder: 0,
+            },
+          ];
+
+        return {
+          id: doc.id,
+          ...data,
+          imageUrls: normalizedImageUrls,
+          displayUrl: normalizedImageUrls.find(img => img?.url)?.url || null,
+        };
+      });
 
       setImages(fetchedImages);
 
@@ -36,7 +67,6 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
         setLastDoc(null);
         setHasMore(false);
       } else {
-
         const nextQuery = query(
           collection(db, "uploads"),
           where("pageType", "==", pageType),
@@ -59,7 +89,6 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
     }
     setLoading(false);
   }, [pageType, lastDoc, itemsPerPage]);
-
 
   useEffect(() => {
     fetchImages(true);

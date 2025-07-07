@@ -5,6 +5,13 @@
   justify-content: flex-start;
 }
 
+.imageGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
 .imageItem {
   display: flex;
   flex-direction: column;
@@ -16,6 +23,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 5px 5px 20px;
+  align-self: flex-start;
 }
 
 .imageItem img {
@@ -23,6 +31,19 @@
   height: auto;
   object-fit: contain;
   border-radius: 8px;
+}
+
+.moreViewsButton {
+  background-color: var(--primary-text);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 14px;
+  margin-top: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
 }
 
 .reorderButtons {
@@ -136,6 +157,17 @@
   color: black;
 }
 
+.addImageButton {
+  display: block;
+  width: 100%;
+  height: 200px;
+  background-color: #eee;
+  color: #333;
+  font-size: 1rem;
+  border: 2px dashed #aaa;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
 @media only screen and (max-width: 1000px) {
   .imagesGrid {

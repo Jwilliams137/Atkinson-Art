@@ -1,53 +1,68 @@
 "use client";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import styles from "./Modal.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
 
 const Modal = ({ images, currentImageIndex, closeModal }) => {
-  const [selectedIndex, setSelectedIndex] = useState(currentImageIndex);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [activeDocIndex, setActiveDocIndex] = useState(currentImageIndex);
   const [isExpanded, setIsExpanded] = useState(false);
-  const scrollTimeoutRef = useRef(null);
 
-  const goToNextImage = useCallback(() => {
-    setIsExpanded(false);
-    setSelectedIndex((prevIndex) => (prevIndex + 1) % images.length);
-  }, [images.length]);
+  const selectedDocument = images[activeDocIndex];
 
-  const goToPrevImage = useCallback(() => {
-    setIsExpanded(false);
-    setSelectedIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  }, [images.length]);
+  const imageArray = (() => {
+    if (Array.isArray(selectedDocument.imageUrls)) {
+      return selectedDocument.imageUrls
+        .slice()
+        .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
+        .filter((img) => img?.url);
+    }
 
-  const handleScroll = useCallback(
-    (event) => {
-      event.preventDefault();
-      if (scrollTimeoutRef.current) return;
+    if (selectedDocument.imageUrl) {
+      return [
+        {
+          url: selectedDocument.imageUrl,
+          width: selectedDocument.width,
+          height: selectedDocument.height,
+        },
+      ];
+    }
 
-      if (event.deltaY > 0) {
-        goToNextImage();
-      } else if (event.deltaY < 0) {
-        goToPrevImage();
-      }
+    return [];
+  })();
 
-      scrollTimeoutRef.current = setTimeout(() => {
-        scrollTimeoutRef.current = null;
-      }, 400);
-    },
-    [goToNextImage, goToPrevImage]
-  );
+  const mainImage = imageArray[mainImageIndex];
 
   useEffect(() => {
-    window.addEventListener("wheel", handleScroll, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", handleScroll);
-      clearTimeout(scrollTimeoutRef.current);
-    };
-  }, [handleScroll]);
+    setActiveDocIndex(currentImageIndex);
+    setMainImageIndex(0);
+    setIsExpanded(false);
+  }, [currentImageIndex]);
 
-  const selectedImage = images[selectedIndex];
+  const goToPreviousDocument = useCallback(() => {
+    const prevIndex = activeDocIndex === 0 ? images.length - 1 : activeDocIndex - 1;
+    setActiveDocIndex(prevIndex);
+    setMainImageIndex(0);
+    setIsExpanded(false);
+  }, [activeDocIndex, images.length]);
+
+  const goToNextDocument = useCallback(() => {
+    const nextIndex = (activeDocIndex + 1) % images.length;
+    setActiveDocIndex(nextIndex);
+    setMainImageIndex(0);
+    setIsExpanded(false);
+  }, [activeDocIndex, images.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowLeft") goToPreviousDocument();
+      if (e.key === "ArrowRight") goToNextDocument();
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [goToPreviousDocument, goToNextDocument, closeModal]);
 
   return (
     <div className={styles.modalBackdrop} onClick={closeModal}>
@@ -59,34 +74,71 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
         aria-describedby="modal-description"
         onClick={(e) => e.stopPropagation()}
       >
+        <button className={styles.arrowLeft} onClick={goToPreviousDocument} aria-label="Previous Item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="15,6 9,12 15,18" />
+          </svg>
+        </button>
+
         <div className={styles.imageContent}>
           <div className={styles.imageWrapper}>
-            <Image
-              src={selectedImage.imageUrl}
-              alt={`Image ${selectedIndex + 1}`}
-              width={selectedImage.width}
-              height={selectedImage.height}
-              className={styles.fullSizeImage}
-            />
+            {mainImage?.url && (
+              <Image
+                src={mainImage.url}
+                alt={selectedDocument.title || "Artwork Image"}
+                width={mainImage.width}
+                height={mainImage.height}
+                className={styles.fullSizeImage}
+              />
+            )}
           </div>
+
+          {imageArray.length > 1 && (
+            <div className={styles.thumbnailRow} role="tablist" aria-label="Other views of this item">
+              {imageArray.map((img, index) => (
+                <button
+                  key={index}
+                  className={`${styles.thumbnailButton} ${index === mainImageIndex ? styles.active : ""}`}
+                  onClick={() => setMainImageIndex(index)}
+                  aria-label={`View image ${index + 1}`}
+                  role="tab"
+                  aria-selected={index === mainImageIndex}
+                >
+                  <Image
+                    src={img.url}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={80}
+                    height={80}
+                    className={styles.thumbnailImage}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className={styles.imageLabel}>
             <h2 id="modal-title" className={styles.visuallyHidden}>
-              {selectedImage.title}
+              {selectedDocument.title}
             </h2>
             <p id="modal-description" className={styles.visuallyHidden}>
-              {selectedImage.description}
+              {selectedDocument.description}
             </p>
             <ImageDetails
-              title={selectedImage.title}
-              description={selectedImage.description}
-              dimensions={selectedImage.dimensions}
-              price={selectedImage.price}
+              title={selectedDocument.title}
+              description={selectedDocument.description}
+              dimensions={selectedDocument.dimensions}
+              price={selectedDocument.price}
               isExpanded={isExpanded}
               toggleDescription={() => setIsExpanded((prev) => !prev)}
             />
           </div>
-
         </div>
+
+        <button className={styles.arrowRight} onClick={goToNextDocument} aria-label="Next Item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="9,6 15,12 9,18" />
+          </svg>
+        </button>
       </div>
     </div>
   );

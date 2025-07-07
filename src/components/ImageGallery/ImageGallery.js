@@ -13,9 +13,7 @@ const ImageGallery = ({
   hasMore,
   itemsPerPage,
 }) => {
-  const showPagination =
-    page > 1 || (hasMore && images.length === itemsPerPage);
-
+  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
   const toggleDescription = (index) => {
@@ -31,6 +29,8 @@ const ImageGallery = ({
         {images.length > 0 &&
           images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
+            const displayImage = image.displayImage || null;
+
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
@@ -47,14 +47,18 @@ const ImageGallery = ({
                     aria-label={`Open modal for ${image.title || "artwork"}`}
                     className={styles.imageWrapper}
                   >
-                    <Image
-                      className={styles.image}
-                      src={image.imageUrl}
-                      alt={image.title || "Gallery Image"}
-                      width={image.width}
-                      height={image.height}
-                      priority
-                    />
+                    {displayImage?.url ? (
+                      <Image
+                        className={styles.image}
+                        src={displayImage.url}
+                        alt={image.title || "Gallery Image"}
+                        width={displayImage.width || 300}
+                        height={displayImage.height || 200}
+                        priority
+                      />
+                    ) : (
+                      <div className={styles.imagePlaceholder}>No image</div>
+                    )}
                   </div>
 
                   <div className={styles.imageDetails}>
@@ -72,6 +76,7 @@ const ImageGallery = ({
             );
           })}
       </div>
+
       {showPagination && (
         <div className={styles.paginationControls}>
           <div className={styles.buttonContainer}>

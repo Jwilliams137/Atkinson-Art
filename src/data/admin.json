@@ -15,10 +15,29 @@
       { "key": "exhibitions", "label": "Exhibitions" },
       { "key": "shop", "label": "Shop" }
     ],
+    "pageSettings": {
+      "home": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "artwork": { "singleImageOnly": true, "editableFields": [] },
+      "new-work": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "houses": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "tiny-houses": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "constructions": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "collage": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "commissions": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "earlier-work": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] },
+      "about": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "bio": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "podcasts": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "exhibitions": { "singleImageOnly": true, "editableFields": [ "title", "description" ] },
+      "shop": { "singleImageOnly": false, "editableFields": [ "title", "description", "dimensions", "price" ] }
+    },
     "fieldsForPage": {
       "home": [
         {"image-upload": [
           { "name": "file", "label": "Home Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -38,49 +57,49 @@
           { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#33373B" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#8B7E74" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Tiny Houses Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Tiny Houses page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#7D9777" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Constructions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Constructions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#6B1F24" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Collage Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Collage page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#5A6D8D" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Commissions Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Commissions page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#C2A878" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the Earlier Work page" },
           { "name": "pageType", "type": "hidden", "value": "artwork" },
-          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#775B22" },
+          { "name": "color", "label": "Pick a flip side color", "type": "color", "value": "#2e2c2e" },
           { "name": "type", "type": "hidden", "value": "artwork-image" }
         ]},
         {"text-upload": [
@@ -92,6 +111,9 @@
       "new-work": [
         {"image-upload": [
           { "name": "file", "label": "New Work Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -108,6 +130,9 @@
       "houses": [
         {"image-upload": [
           { "name": "file", "label": "Houses Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -124,6 +149,9 @@
       "tiny-houses": [
         {"image-upload": [
           { "name": "file", "label": "Tiny Houses Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -140,6 +168,9 @@
       "constructions": [
         {"image-upload": [
           { "name": "file", "label": "Constructions Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -156,6 +187,9 @@
       "collage": [
         {"image-upload": [
           { "name": "file", "label": "Collage Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -172,6 +206,9 @@
       "commissions": [
         {"image-upload": [
           { "name": "file", "label": "Commissions Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -188,6 +225,9 @@
       "earlier-work": [
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },
@@ -273,6 +313,9 @@
       "shop": [
         {"image-upload": [
           { "name": "file", "label": "Shop Gallery Image", "type": "file" },
+          { "name": "file1", "label": "Detail", "type": "file" },
+          { "name": "file2", "label": "Detail 2", "type": "file" },
+          { "name": "file3", "label": "Detail 3", "type": "file" },
           { "name": "title", "label": "Title", "type": "text" },
           { "name": "description", "label": "Description", "type": "text" },
           { "name": "dimensions", "label": "Dimensions", "type": "text" },

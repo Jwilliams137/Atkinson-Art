@@ -25,6 +25,39 @@
   overflow: hidden;
 }
 
+.arrowLeft,
+.arrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #222;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.arrowLeft {
+  left: 5px;
+}
+
+.arrowRight {
+  right: 5px;
+}
+
+.arrowLeft:hover,
+.arrowRight:hover {
+  background: #f0f0f0;
+  transform: translateY(-50%) scale(1.1);
+}
+
 .imageWrapper {
   display: flex;
   justify-content: center;
@@ -42,6 +75,22 @@
   object-fit: contain;
   border-radius: 8px;
   margin-bottom: 5px;
+}
+
+.thumbnailRow {
+  margin-top: 5px;
+}
+
+.thumbnailImage {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.thumbnailButton {
+  border: none;
+  padding: 0;
+  background: none;
+  margin-right: 10px;
 }
 
 .imageTitle {

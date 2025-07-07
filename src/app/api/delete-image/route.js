@@ -23,15 +23,20 @@ cloudinary.v2.config({
 
 export async function DELETE(req) {
   try {
-    const { cloudinaryId, imageId } = await req.json();
+    const rawBody = await req.text();
+    const { cloudinaryIds, imageId } = JSON.parse(rawBody);
 
-    if (!cloudinaryId || !imageId) {
-      return NextResponse.json({ error: "Missing data" }, { status: 400 });
+    if (!Array.isArray(cloudinaryIds) || !imageId) {
+      return NextResponse.json({ error: "Missing or invalid data" }, { status: 400 });
     }
 
-    const cloudinaryResponse = await cloudinary.v2.uploader.destroy(cloudinaryId);
-    if (cloudinaryResponse.result !== "ok") {
-      return NextResponse.json({ error: "Failed to delete image from Cloudinary" }, { status: 500 });
+    for (const id of cloudinaryIds) {
+      if (id) {
+        const result = await cloudinary.v2.uploader.destroy(id);
+        if (result.result !== "ok" && result.result !== "not found") {
+          return NextResponse.json({ error: `Failed to delete Cloudinary image: ${id}` }, { status: 500 });
+        }
+      }
     }
 
     await db.collection("uploads").doc(imageId).delete();

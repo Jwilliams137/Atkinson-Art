@@ -17,8 +17,24 @@ function ThankYouPage() {
         const images = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          if (data.imageUrl && data.width && data.height) {
-            images.push(data);
+
+          const displayImage =
+            data.imageUrls?.length && data.imageUrls[0]?.url
+              ? {
+                imageUrl: data.imageUrls[0].url,
+                width: data.imageUrls[0].width,
+                height: data.imageUrls[0].height,
+              }
+              : data.imageUrl && data.width && data.height
+                ? {
+                  imageUrl: data.imageUrl,
+                  width: data.width,
+                  height: data.height,
+                }
+                : null;
+
+          if (displayImage) {
+            images.push(displayImage);
           }
         });
 
@@ -45,6 +61,7 @@ function ThankYouPage() {
           Your message has been sent. I will get back to you as soon as possible.
         </p>
       </div>
+
       {randomImage && (
         <div className={styles.imageContainer}>
           <Image

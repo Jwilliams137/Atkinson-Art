@@ -1,3 +1,4 @@
+'use client';
 import { useState, useRef } from "react";
 import Image from 'next/image';
 import styles from "./ImageUpload.module.css";
@@ -11,114 +12,111 @@ const ImageUpload = ({
     currentSectionKey
 }) => {
     const [formData, setFormData] = useState({});
-    const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
-    const [localImage, setLocalImage] = useState(null);
+    const [fileInputs, setFileInputs] = useState(() => {
+        const initial = {};
+        fieldsList?.forEach(field => {
+            if (field.type === "file") {
+                initial[field.name] = null;
+            }
+        });
+        return initial;
+    });
+    const [imageDimensions, setImageDimensions] = useState({});
     const fileInputRef = useRef(null);
-    const defaultColor = fieldsList.find(field => field.name === "color")?.value || "#ffffff";
-    const previewColor = formData.color || defaultColor;
     const [titleError, setTitleError] = useState(false);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
+    const handleFileChange = (e, fieldName) => {
+        const file = e.target.files[0];
+        setFileInputs(prev => ({ ...prev, [fieldName]: file || null }));
+
         if (file) {
-            setLocalImage(file);
-            setSelectedImage(file);
-
             const objectUrl = URL.createObjectURL(file);
-            setFormData(prev => ({
-                ...prev,
-                file,
-            }));
-
-            const image = new window.Image();
-            image.src = objectUrl;
-            image.onload = () => {
-                setImageDimensions({ width: image.naturalWidth, height: image.naturalHeight });
+            const img = new window.Image();
+            img.src = objectUrl;
+            img.onload = () => {
+                setImageDimensions(prev => ({
+                    ...prev,
+                    [fieldName]: { width: img.naturalWidth, height: img.naturalHeight }
+                }));
                 URL.revokeObjectURL(objectUrl);
             };
-        }
-    };
-
-    const handleCancel = () => {
-        setLocalImage(null);
-        setImageDimensions({ width: 0, height: 0 });
-        setFormData({});
-        setTitleError(false);
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
+            setSelectedImage(file);
         }
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevData => ({ ...prevData, [name]: value }));
+        setFormData(prev => ({ ...prev, [name]: value }));
         if (name === "title" && value.trim() !== "") {
             setTitleError(false);
         }
     };
 
-    const handleImageUpload = async () => {
-        if (imageDimensions.width === 0 || imageDimensions.height === 0) return;
+    const handleCancel = () => {
+        setFormData({});
+        setFileInputs({});
+        setImageDimensions({});
+        setTitleError(false);
+    };
 
-        const fallbackTitle = fieldsList.find(field => field.name === "title")?.value?.trim() || "";
-        if (!formData.title?.trim() && !fallbackTitle) {
+    const handleImageUpload = async () => {
+        const title = formData.title?.trim() || fieldsList.find(f => f.name === "title")?.value || "";
+        if (!title) {
             setTitleError(true);
             return;
         }
 
-        const typeField = fieldsList.find(field => field.name === "type");
-        const type = typeField ? (formData.type || typeField.value) : undefined;
-        const includeColor = fieldsList.some(field => field.name === "color");
-        const color = includeColor ? (formData.color || defaultColor) : undefined;
-        const includeDimensions = fieldsList.some(field => field.name === "dimensions");
-        const dimensions = includeDimensions ? (formData.dimensions || "") : undefined;
-        const includePrice = fieldsList.some(field => field.name === "price");
-        const price = includePrice ? (formData.price || "") : undefined;
-        const includeDescription = fieldsList.some(field => field.name === "description");
-        const description = includeDescription ? (formData.description?.trim() || fieldsList.find(field => field.name === "description")?.value || "") : undefined;
-        const title = formData.title?.trim() || fallbackTitle;
+        const form = new FormData();
+        form.append("section", sectionKey);
+        form.append("pageType", sectionKey);
+        form.append("title", title);
 
+        fieldsList.forEach((field, index) => {
+            const name = field.name;
 
-        const imageFormData = new FormData();
-        imageFormData.append("file", localImage);
-        imageFormData.append("section", sectionKey);
-        imageFormData.append("pageType", sectionKey);
-        imageFormData.append("title", title);
-        imageFormData.append("width", imageDimensions.width);
-        imageFormData.append("height", imageDimensions.height);
-        if (color !== undefined) imageFormData.append("color", color);
-        if (dimensions !== undefined) imageFormData.append("dimensions", dimensions);
-        if (price !== undefined) imageFormData.append("price", price);
-        if (description !== undefined) imageFormData.append("description", description);
-        if (type !== undefined) imageFormData.append("type", type);
+            if (field.type === "file") {
+                const file = fileInputs[name];
+                const fileKey = `file${index}`;
+                if (file instanceof File && file.size > 0) {
+                    const dims = imageDimensions[name] || { width: null, height: null };
+                    form.append(fileKey, file);
+                    form.append(`width_${fileKey}`, dims.width);
+                    form.append(`height_${fileKey}`, dims.height);
+                    form.append(`detailOrder_${fileKey}`, index);
+                } else {
+                    form.append(fileKey, new Blob([], { type: "application/octet-stream" }));
+                    form.append(`width_${fileKey}`, null);
+                    form.append(`height_${fileKey}`, null);
+                    form.append(`detailOrder_${fileKey}`, index);
+                }
+            }
+            else if (field.type !== "hidden") {
+                form.append(name, formData[name] || "");
+            } else {
+                form.append(name, field.value || "");
+            }
+        });
 
-        await handleSubmit("image-upload", sectionKey, {
-            ...formData,
-            title,
-            imageDimensions,
-            ...(color !== undefined ? { color } : {}),
-            ...(type !== undefined ? { type } : {}),
-            ...(dimensions !== undefined ? { dimensions } : {}),
-            ...(price !== undefined ? { price } : {}),
-            ...(description !== undefined ? { description } : {})
-        }, currentSectionKey);
+        try {
+            form.append("formReady", "true");
+            await handleSubmit("image-upload", sectionKey, form, currentSectionKey);
 
-        handleCancel();
+            handleCancel();
+        } catch (err) {
+            console.error("Upload failed:", err);
+        }
     };
-
-    const isFormFilled = localImage || Object.values(formData).some(value => value);
 
     return (
         <div className={styles.imageUpload}>
-            {fieldsList.map((field, fieldIdx) => {
+            {fieldsList.map((field, index) => {
                 if (field.type === "color") {
                     return (
-                        <div key={fieldIdx} className={styles.colorField}>
+                        <div key={index} className={styles.colorField}>
                             <input
                                 type="color"
                                 name={field.name}
-                                id={field.name}
-                                value={previewColor}
+                                value={formData[field.name] || field.value || "#ffffff"}
                                 onChange={handleInputChange}
                                 className={styles.colorPreview}
                             />
@@ -127,57 +125,59 @@ const ImageUpload = ({
                     );
                 }
 
-                return (
-                    <div key={fieldIdx} className={styles.field}>
-                        {field.type !== "hidden" && (
-                            <label htmlFor={field.name} className={styles.label}>
-                                {field.label}
-                            </label>
-                        )}
-                        <>
+                if (field.type === "file") {
+                    return (
+                        <div key={index} className={styles.field}>
+                            <label htmlFor={field.name} className={styles.label}>{field.label}</label>
                             <input
-                                ref={field.type === "file" ? fileInputRef : null}
-                                type={field.type}
-                                name={field.name}
+                                type="file"
                                 id={field.name}
-                                className={`${styles.inputField} ${field.name === "title" && titleError ? styles.errorInput : ""}`}
-                                {...(field.type === "file"
-                                    ? { onChange: handleFileChange }
-                                    : {
-                                        value: formData[field.name] || "",
-                                        onChange: handleInputChange,
-                                    })}
+                                name={field.name}
+                                key={`file-${field.name}`}
+                                onChange={(e) => handleFileChange(e, field.name)}
                             />
-                            {field.name === "title" && titleError && (
-                                <p className={styles.errorText}>Title is required.</p>
+                            {fileInputs[field.name] && (
+                                <div className={styles.imagePreview}>
+                                    <Image
+                                        src={
+                                            fileInputs[field.name] instanceof File
+                                                ? URL.createObjectURL(fileInputs[field.name])
+                                                : fileInputs[field.name]
+                                        }
+                                        alt={`Preview ${field.name}`}
+                                        width={imageDimensions[field.name]?.width || 150}
+                                        height={imageDimensions[field.name]?.height || 100}
+                                        className={styles.previewImage}
+                                    />
+                                </div>
                             )}
-                        </>
+                        </div>
+                    );
+                }
+
+                return (
+                    <div key={index} className={styles.field}>
+                        {field.type !== "hidden" && (
+                            <label htmlFor={field.name} className={styles.label}>{field.label}</label>
+                        )}
+                        <input
+                            type={field.type}
+                            id={field.name}
+                            name={field.name}
+                            value={formData[field.name] || ""}
+                            onChange={handleInputChange}
+                            className={`${styles.inputField} ${field.name === "title" && titleError ? styles.errorInput : ""}`}
+                        />
+                        {field.name === "title" && titleError && (
+                            <p className={styles.errorText}>Title is required.</p>
+                        )}
                     </div>
                 );
             })}
 
-            {localImage && (
-                <div className={styles.imagePreview}>
-                    <Image
-                        src={URL.createObjectURL(localImage)}
-                        alt="Selected Image"
-                        className={styles.previewImage}
-                        width={imageDimensions.width}
-                        height={imageDimensions.height}
-                    />
-                </div>
-            )}
-
             <div className={styles.buttons}>
-                {isFormFilled && (
-                    <button onClick={handleCancel} className={styles.button}>Cancel</button>
-                )}
-                <button
-                    className={styles.button}
-                    onClick={handleImageUpload}
-                >
-                    Submit
-                </button>
+                <button onClick={handleCancel} className={styles.button}>Cancel</button>
+                <button onClick={handleImageUpload} className={styles.button}>Submit</button>
             </div>
         </div>
     );
