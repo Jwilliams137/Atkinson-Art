@@ -55,16 +55,26 @@ const HomePage = () => {
         <div className={styles.gallery}>
           {images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
-            const displayImage =
-              image.imageUrls?.length && image.imageUrls[0]?.url
-                ? image.imageUrls[0]
-                : image.imageUrl
-                  ? {
-                    url: image.imageUrl,
-                    width: image.width,
-                    height: image.height,
-                  }
-                  : null;
+
+            const displayImage = (() => {
+              if (Array.isArray(image.imageUrls)) {
+                const fallback = image.imageUrls
+                  .slice()
+                  .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
+                  .find((img) => img?.url);
+                return fallback || null;
+              }
+
+              if (image.imageUrl) {
+                return {
+                  url: image.imageUrl,
+                  width: image.width,
+                  height: image.height,
+                };
+              }
+
+              return null;
+            })();
 
             return (
               <div key={image.id || index} className={styles.galleryCard}>

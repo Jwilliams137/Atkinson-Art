@@ -198,45 +198,52 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                     {visibleImageEdits.map((slot, index) => (
                         <div key={index} className={styles.imageSlot}>
                             {slot.previewUrl && !slot.markedForDeletion ? (
-                                <Image
-                                    src={slot.previewUrl}
-                                    alt={`Image ${index}`}
-                                    width={150}
-                                    height={100}
-                                    className={styles.preview}
-                                />
+                                <div className={styles.previewWrapper}>
+                                    <Image
+                                        src={slot.previewUrl}
+                                        alt={`Image ${index}`}
+                                        width={slot.existingData?.width || 300}
+                                        height={slot.existingData?.height || 200}
+                                        className={styles.preview}
+                                    />
+                                </div>
                             ) : (
                                 <div className={styles.imagePlaceholder}>No image</div>
                             )}
 
-                            <input
-                                type="file"
-                                onChange={(e) => handleFileChange(index, e.target.files[0])}
-                                disabled={slot.markedForDeletion}
-                            />
+                            <div className={styles.imageControls}>
+                                <label className={styles.customFileInput}>
+                                    Choose File
+                                    <input
+                                        type="file"
+                                        onChange={(e) => handleFileChange(index, e.target.files[0])}
+                                        disabled={slot.markedForDeletion}
+                                    />
+                                </label>
 
-                            {!isSingleImageOnly && (
-                                <div className={styles.reorderButtons}>
-                                    <button onClick={() => moveImageSlot(index, -1)}>▲</button>
-                                    <button onClick={() => moveImageSlot(index, 1)}>▼</button>
-                                </div>
-                            )}
+                                {!isSingleImageOnly && (
+                                    <button
+                                        className={styles.deleteButton}
+                                        onClick={() => handleDelete(index)}
+                                    >
+                                        Delete Image
+                                    </button>
+                                )}
 
-                            {!isSingleImageOnly && (
-                                <button
-                                    className={styles.deleteButton}
-                                    onClick={() => handleDelete(index)}
-                                >
-                                    Delete Image
-                                </button>
-                            )}
+                                {!isSingleImageOnly && (
+                                    <div className={styles.reorderButtons}>
+                                        <button onClick={() => moveImageSlot(index, -1)}>▲</button>
+                                        <button onClick={() => moveImageSlot(index, 1)}>▼</button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>
 
                 <div className={styles.buttons}>
-                    <button onClick={handleSubmit}>Save</button>
-                    <button onClick={onClose}>Cancel</button>
+                    <button className={styles.button} onClick={handleSubmit}>Save</button>
+                    <button className={styles.button} onClick={onClose}>Cancel</button>
                 </div>
             </div>
         </div>

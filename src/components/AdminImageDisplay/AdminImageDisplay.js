@@ -85,38 +85,54 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
         return (
           <div key={image.id || index} className={styles.imageItem}>
             {Array.isArray(image.imageUrls) && image.imageUrls.length > 0 ? (
-              <div className={styles.imageGroup}>
-                {image.imageUrls.map((imgObj, i) => {
-                  const hasImage = imgObj?.url;
-                  return hasImage ? (
-                    <Image
-                      key={i}
-                      src={imgObj.url}
-                      alt={`${image.title || "Uploaded Image"} - View ${i + 1}`}
-                      width={imgObj.width || 300}
-                      height={imgObj.height || 200}
-                      style={{
-                        marginBottom: "8px",
-                        border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
-                        borderRadius: "8px",
-                      }}
-                    />
-                  ) : (
-                    <button
-                      key={i}
-                      className={styles.addImageButton}
-                      onClick={() =>
-                        setEditingImage({
-                          ...image,
-                          editIndex: i,
-                        })
-                      }
-                    >
-                      + Add Image
-                    </button>
-                  );
-                })}
-              </div>
+              <>
+                <div className={styles.imageGroup}>
+                  {(() => {
+                    const fallbackImage = image.imageUrls
+                      .slice()
+                      .sort((a, b) => a.detailOrder - b.detailOrder)
+                      .find(img => img.url);
+
+                    const displayImage = image.imageUrls.find(img => img.detailOrder === 0 && img.url) || fallbackImage;
+
+                    return displayImage ? (
+                      <Image
+                        src={displayImage.url}
+                        alt={`${image.title || "Uploaded Image"} - Main View`}
+                        width={displayImage.width || 300}
+                        height={displayImage.height || 200}
+                        style={{
+                          marginBottom: "8px",
+                          border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
+                          borderRadius: "8px",
+                        }}
+                      />
+                    ) : (
+                      <button
+                        className={styles.addImageButton}
+                        onClick={() =>
+                          setEditingImage({
+                            ...image,
+                            editIndex: 0,
+                          })
+                        }
+                      >
+                        + Add Image
+                      </button>
+                    );
+                  })()}
+                </div>
+
+                {image.imageUrls.filter((img) => img.detailOrder !== 0 && img.url).length > 0 && (
+                  <button
+                    className={styles.moreViewsButton}
+                    onClick={() => setEditingImage(image)}
+                  >
+                    {image.imageUrls.filter((img) => img.detailOrder !== 0 && img.url).length} more view
+                    {image.imageUrls.filter((img) => img.detailOrder !== 0 && img.url).length > 1 ? "s" : ""}
+                  </button>
+                )}
+              </>
             ) : image.imageUrl ? (
               <Image
                 src={image.imageUrl}

@@ -11,18 +11,26 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
 
   const selectedDocument = images[activeDocIndex];
 
-  const imageArray =
-    selectedDocument.imageUrls && Array.isArray(selectedDocument.imageUrls)
-      ? selectedDocument.imageUrls
-      : selectedDocument.imageUrl
-        ? [
-          {
-            url: selectedDocument.imageUrl,
-            width: selectedDocument.width,
-            height: selectedDocument.height,
-          },
-        ]
-        : [];
+  const imageArray = (() => {
+    if (Array.isArray(selectedDocument.imageUrls)) {
+      return selectedDocument.imageUrls
+        .slice()
+        .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
+        .filter((img) => img?.url);
+    }
+
+    if (selectedDocument.imageUrl) {
+      return [
+        {
+          url: selectedDocument.imageUrl,
+          width: selectedDocument.width,
+          height: selectedDocument.height,
+        },
+      ];
+    }
+
+    return [];
+  })();
 
   const mainImage = imageArray[mainImageIndex];
 
@@ -88,24 +96,22 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
           {imageArray.length > 1 && (
             <div className={styles.thumbnailRow} role="tablist" aria-label="Other views of this item">
               {imageArray.map((img, index) => (
-                img?.url && (
-                  <button
-                    key={index}
-                    className={`${styles.thumbnailButton} ${index === mainImageIndex ? styles.active : ""}`}
-                    onClick={() => setMainImageIndex(index)}
-                    aria-label={`View image ${index + 1}`}
-                    role="tab"
-                    aria-selected={index === mainImageIndex}
-                  >
-                    <Image
-                      src={img.url}
-                      alt={`Thumbnail ${index + 1}`}
-                      width={80}
-                      height={80}
-                      className={styles.thumbnailImage}
-                    />
-                  </button>
-                )
+                <button
+                  key={index}
+                  className={`${styles.thumbnailButton} ${index === mainImageIndex ? styles.active : ""}`}
+                  onClick={() => setMainImageIndex(index)}
+                  aria-label={`View image ${index + 1}`}
+                  role="tab"
+                  aria-selected={index === mainImageIndex}
+                >
+                  <Image
+                    src={img.url}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={80}
+                    height={80}
+                    className={styles.thumbnailImage}
+                  />
+                </button>
               ))}
             </div>
           )}
