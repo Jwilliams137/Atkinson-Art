@@ -88,7 +88,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
                 alt={selectedDocument.title || "Artwork Image"}
                 width={mainImage.width}
                 height={mainImage.height}
-                className={styles.fullSizeImage}
+                className={`${styles.fullSizeImage} ${imageArray.length > 1 ? styles.withThumbnails : ""}`}
               />
             )}
           </div>

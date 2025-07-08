@@ -82,6 +82,8 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
     <div className={styles.imagesGrid}>
       {images.map((image, index) => {
         const mainImageUrl = image.imageUrls?.[0]?.url || image.imageUrl;
+        const isMultiImageEnabled = !config.pageSettings?.[activeSection]?.singleImageOnly;
+
         return (
           <div key={image.id || index} className={styles.imageItem}>
             {Array.isArray(image.imageUrls) && image.imageUrls.length > 0 ? (
@@ -123,7 +125,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                   })()}
                 </div>
 
-                {!config.pageSettings?.[activeSection]?.singleImageOnly && (
+                {isMultiImageEnabled && (
                   <button
                     className={styles.moreViewsButton}
                     onClick={() => setEditingImage(image)}
@@ -140,16 +142,40 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                 )}
               </>
             ) : image.imageUrl ? (
-              <Image
-                src={image.imageUrl}
-                alt={image.title || "Uploaded Image"}
-                width={image.width || 300}
-                height={image.height || 200}
-                style={{
-                  border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
-                  borderRadius: "8px",
-                }}
-              />
+              <>
+                <Image
+                  src={image.imageUrl}
+                  alt={image.title || "Uploaded Image"}
+                  width={image.width || 300}
+                  height={image.height || 200}
+                  style={{
+                    border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
+                    borderRadius: "8px",
+                  }}
+                />
+
+                {isAdmin && isMultiImageEnabled && (
+                  <button
+                    className={styles.moreViewsButton}
+                    onClick={() =>
+                      setEditingImage({
+                        ...image,
+                        imageUrls: [
+                          {
+                            url: image.imageUrl,
+                            width: image.width,
+                            height: image.height,
+                            detailOrder: 0,
+                            cloudinaryId: image.cloudinaryId || null,
+                          },
+                        ],
+                      })
+                    }
+                  >
+                    + Add more views
+                  </button>
+                )}
+              </>
             ) : (
               <div className={styles.imagePlaceholder}>No image available</div>
             )}
