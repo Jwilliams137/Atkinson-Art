@@ -9,16 +9,14 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [editContent, setEditContent] = useState("");
   const [editYear, setEditYear] = useState("");
   const [editLink, setEditLink] = useState("");
+  const [editButtonText, setEditButtonText] = useState("");
   const [showYearField, setShowYearField] = useState(false);
   const [showLinkField, setShowLinkField] = useState(false);
   const [showContentField, setShowContentField] = useState(false);
 
-
   const toggleText = (id) => {
-    setExpandedTextIds((prevIds) =>
-      prevIds.includes(id)
-        ? prevIds.filter((textId) => textId !== id)
-        : [...prevIds, id]
+    setExpandedTextIds((prev) =>
+      prev.includes(id) ? prev.filter((textId) => textId !== id) : [...prev, id]
     );
   };
 
@@ -27,29 +25,28 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     setEditContent(text.content || "");
     setEditYear(text.year || "");
     setEditLink(text.link || "");
+    setEditButtonText(text.buttonText || "");
     setShowYearField("year" in text);
-    setShowLinkField("link" in text);
+    setShowLinkField("link" in text || "buttonText" in text);
     setShowContentField("content" in text);
   };
 
   const saveEdit = async (id) => {
     try {
       const textRef = doc(db, "textUploads", id);
-
-      const updatedFields = {
-        content: editContent,
-      };
+      const updatedFields = { content: editContent };
 
       if (showYearField) updatedFields.year = editYear;
-      if (showLinkField) updatedFields.link = editLink;
+      if (showLinkField) {
+        updatedFields.link = editLink;
+        updatedFields.buttonText = editButtonText;
+      }
 
       await updateDoc(textRef, updatedFields);
 
       setTexts((prevTexts) =>
         prevTexts.map((text) =>
-          text.id === id
-            ? { ...text, ...updatedFields }
-            : text
+          text.id === id ? { ...text, ...updatedFields } : text
         )
       );
 
@@ -73,10 +70,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     if (newIndex < 0 || newIndex >= texts.length) return;
 
     const newTexts = [...texts];
-    [newTexts[index], newTexts[newIndex]] = [
-      newTexts[newIndex],
-      newTexts[index],
-    ];
+    [newTexts[index], newTexts[newIndex]] = [newTexts[newIndex], newTexts[index]];
     setTexts(newTexts);
     await updateTextOrder(newTexts);
   };
@@ -102,7 +96,6 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
           return (a.order ?? 0) - (b.order ?? 0);
         })
         .map((text, index) => {
-
           const isExpanded = expandedTextIds.includes(text.id);
           const formattedContent = (text.content || "")
             .split("\n\n")
@@ -134,6 +127,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                   </button>
                 )}
               </div>
+
               <div className={styles.textContent}>
                 {editingTextId === text.id ? (
                   <>
@@ -142,15 +136,25 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                         className={styles.editTextarea}
                         value={editContent}
                         onChange={(e) => setEditContent(e.target.value)}
-                      />)}
-                    {showLinkField && (
-                      <input
-                        type="text"
-                        className={styles.editInput}
-                        value={editLink}
-                        placeholder="Link"
-                        onChange={(e) => setEditLink(e.target.value)}
                       />
+                    )}
+                    {showLinkField && (
+                      <>
+                        <input
+                          type="text"
+                          className={styles.editInput}
+                          value={editLink}
+                          placeholder="Link"
+                          onChange={(e) => setEditLink(e.target.value)}
+                        />
+                        <input
+                          type="text"
+                          className={styles.editInput}
+                          value={editButtonText}
+                          placeholder="Button Text"
+                          onChange={(e) => setEditButtonText(e.target.value)}
+                        />
+                      </>
                     )}
                     {showYearField && (
                       <input
@@ -161,12 +165,10 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                         onChange={(e) => setEditYear(e.target.value)}
                       />
                     )}
-
                   </>
                 ) : (
                   <>
                     {text.year && <p className={styles.year}>{text.year}</p>}
-
                     <div className={styles.textSnippet}>
                       {displayedContent.split("\n\n").map((para, idx) => (
                         <p key={idx} className={styles.paragraph}>
@@ -174,9 +176,18 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                         </p>
                       ))}
                     </div>
-                    {text.link && <p className={styles.link}>{text.link}</p>}
+
+                    {(text.link || text.buttonText) && (
+                      <div className={styles.linkPreview}>
+                        {text.buttonText && (
+                          <div className={styles.fakeButton}>{text.buttonText}</div>
+                        )}
+                        <div className={styles.linkText}>{text.link}</div>
+                      </div>
+                    )}
                   </>
                 )}
+
                 {formattedContent.length > 80 && editingTextId !== text.id && (
                   <button
                     onClick={() => toggleText(text.id)}
@@ -186,6 +197,7 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
                   </button>
                 )}
               </div>
+
               <div className={styles.textActions}>
                 {editingTextId === text.id ? (
                   <>

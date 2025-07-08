@@ -9,17 +9,18 @@ const AboutPage = () => {
   const textUploads = useTextUploads("about");
   const { images } = usePageImages("about");
 
+  const statementTexts = textUploads.filter(item => item.type === "general-statement");
+  const aboutLinks = textUploads.filter(item => item.type === "about-links" && item.link);
+
   return (
     <div className={styles.aboutContainer}>
       <h1 className={styles.visuallyHidden}>About Linda Atkinson</h1>
 
-      {textUploads
-        .filter(item => item.type === "general-statement")
-        .map((item, index) => (
-          <div key={`statement-${index}`} className={styles.statementWrapper}>
-            <p>{item.content}</p>
-          </div>
-        ))}
+      {statementTexts.map((item, index) => (
+        <div key={`statement-${index}`} className={styles.statementWrapper}>
+          <p>{item.content}</p>
+        </div>
+      ))}
 
       {images
         .filter(item => item.type === "about-image")
@@ -28,12 +29,12 @@ const AboutPage = () => {
             item.imageUrls?.length && item.imageUrls[0]?.url
               ? item.imageUrls[0]
               : item.imageUrl
-                ? {
+              ? {
                   url: item.imageUrl,
                   width: item.width,
                   height: item.height,
                 }
-                : null;
+              : null;
 
           return (
             <div key={`about-image-${index}`} className={styles.imageCard}>
@@ -58,15 +59,21 @@ const AboutPage = () => {
           );
         })}
 
-      {textUploads
-        .filter(item => item.type === "about-links")
-        .map((item, index) => (
-          <div key={`about-link-${index}`} className={styles.linkWrapper}>
-            <Link href={item.link} className={styles.aboutLink} target="_blank" rel="noopener noreferrer">
-              {item.link}
+      {aboutLinks.length > 0 && (
+        <div className={styles.linksRow}>
+          {aboutLinks.map((item, index) => (
+            <Link
+              key={`about-link-${index}`}
+              href={item.link}
+              className={styles.buttonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item.buttonText || item.link}
             </Link>
-          </div>
-        ))}
+          ))}
+        </div>
+      )}
     </div>
   );
 };

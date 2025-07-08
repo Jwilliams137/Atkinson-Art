@@ -32,7 +32,7 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { content, pageType, type, order, year, link } = body;
+    const { content, pageType, type, order, year, link, buttonText } = body;
 
     
 
@@ -47,6 +47,7 @@ export async function POST(req) {
       ...(content ? { content } : {}),
       ...(year ? { year } : {}),
       ...(link ? { link } : {}),
+      ...(buttonText ? { buttonText } : {})
     };
 
     const newTextRef = await db.collection("textUploads").add(data);

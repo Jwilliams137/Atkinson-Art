@@ -21,13 +21,16 @@ const useTextUploads = (pageType) => {
             const link = data.link;
             const type = data.type;
             const content = data.content;
+            const buttonText = data.buttonText;
 
-            if (year || link || content) {
+            if (year || link || content || buttonText) {
               return {
+                id: doc.id,
                 ...(year && { year }),
                 ...(link && { link }),
                 ...(type && { type }),
-                ...(content && { content })
+                ...(content && { content }),
+                ...(buttonText && { buttonText }),
               };
             }
             return null;

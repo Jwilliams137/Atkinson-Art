@@ -257,7 +257,8 @@
         {"text-upload": [
           { "name": "pageType", "type": "hidden", "value": "about" },
           { "name": "type", "type": "hidden", "value": "about-links" },
-          { "name": "link", "label": "About Links", "type": "text"}
+          { "name": "link", "label": "About Links", "type": "text"},
+          { "name": "buttonText", "label": "Button Text", "type": "text"}
         ]}
       ],
       "podcasts": [
