@@ -19,8 +19,26 @@
 }
 
 .imageDetails {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 10px;
   text-align: left;
-  font-size: 20px;
+}
+
+.imageTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  display: inline;
+}
+
+.imageDescription {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+  display: inline;
 }
 
 .aboutLink {

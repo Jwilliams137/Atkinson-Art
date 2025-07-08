@@ -49,7 +49,10 @@ const AboutPage = () => {
                 ) : (
                   <div className={styles.imagePlaceholder}>No image available</div>
                 )}
-                <div className={styles.imageDetails}>{item.description}</div>
+                <div className={styles.imageDetails}>
+                  {item.title && <h2 className={styles.imageTitle}>{item.title}</h2>}
+                  {item.description && <p className={styles.imageDescription}>{item.description}</p>}
+                </div>
               </div>
             </div>
           );
