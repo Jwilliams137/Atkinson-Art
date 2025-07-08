@@ -43,30 +43,30 @@ const PodcastPage = () => {
     })
     .filter(Boolean);
 
+  const podcastLinks = textUploads.filter((item) => item.type === "podcast-links" && item.link);
+
   return (
     <div className={styles.podcastContainer}>
       <h1 className={styles.visuallyHidden}>Podcasts</h1>
 
-      {textUploads
-        .filter((item) => item.type === "podcast-links")
-        .map((item, index) => (
-          <div key={`podcast-link-${index}`} className={styles.linkWrapper}>
+      {podcastLinks.length > 0 && (
+        <div className={styles.linksRow}>
+          {podcastLinks.map((item, index) => (
             <Link
+              key={`podcast-link-${index}`}
               href={item.link}
-              className={styles.link}
+              className={styles.buttonLink}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {item.link}
+              {item.buttonText || item.link}
             </Link>
-          </div>
-        ))}
+          ))}
+        </div>
+      )}
 
       <PodcastCarousel
-        content={[
-          ...textUploads.filter((item) => item.type === "podcast-links"),
-          ...normalizedImages,
-        ]}
+        content={[...podcastLinks, ...normalizedImages]}
         expandedDescriptions={expandedDescriptions}
         toggleDescription={toggleDescription}
       />

@@ -4,6 +4,29 @@
     gap: 50px;
 }
 
+.linksRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.buttonLink {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-text);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buttonLink:hover {
+    background-color: var(--hover-text);
+}
+
 .linkWrapper {
     text-align: center;
 }

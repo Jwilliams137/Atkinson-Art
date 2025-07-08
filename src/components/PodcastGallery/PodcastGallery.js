@@ -15,11 +15,14 @@ const PodcastGallery = ({ content, expandedDescriptions, toggleDescription }) =>
             <Image
               src={item.imageUrl}
               alt={item.title || item.type}
-              width={200}
-              height={200}
+              width={item.width || 600}
+              height={item.height || 400}
               className={styles.image}
             />
-            {item.description}
+            <div className={styles.imageDetails}>
+              {item.title && <h2 className={styles.imageTitle}>{item.title}</h2>}
+              {item.description && <p className={styles.imageDescription}>{item.description}</p>}
+            </div>
           </div>
         ))}
       </div>
