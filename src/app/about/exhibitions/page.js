@@ -23,12 +23,12 @@ const ExhibitionsPage = () => {
               image.imageUrls?.length && image.imageUrls[0]?.url
                 ? image.imageUrls[0]
                 : image.imageUrl
-                ? {
+                  ? {
                     url: image.imageUrl,
                     width: image.width,
                     height: image.height,
                   }
-                : null;
+                  : null;
 
             return (
               <div className={styles.imageWrapper} key={index}>
@@ -44,7 +44,8 @@ const ExhibitionsPage = () => {
                   <div className={styles.imagePlaceholder}>No image available</div>
                 )}
                 <div className={styles.imageDetails}>
-                  {image.description}
+                  {image.title && <span className={styles.imageTitle}>{image.title}</span>}
+                  {image.description && <span className={styles.imageDescription}>{image.description}</span>}
                 </div>
               </div>
             );
