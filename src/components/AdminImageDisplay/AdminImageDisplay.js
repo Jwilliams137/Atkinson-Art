@@ -81,104 +81,73 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   return (
     <div className={styles.imagesGrid}>
       {images.map((image, index) => {
-        const mainImageUrl = image.imageUrls?.[0]?.url || image.imageUrl;
+        const hasValidImageUrl0 = image.imageUrls?.[0]?.url;
+        const mainImageUrl = hasValidImageUrl0 ? image.imageUrls[0].url : image.imageUrl;
         const isMultiImageEnabled = !config.pageSettings?.[activeSection]?.singleImageOnly;
 
         return (
           <div key={image.id || index} className={styles.imageItem}>
-            {Array.isArray(image.imageUrls) && image.imageUrls.length > 0 ? (
-              <>
-                <div className={styles.imageGroup}>
-                  {(() => {
-                    const fallbackImage = image.imageUrls
-                      .slice()
-                      .sort((a, b) => a.detailOrder - b.detailOrder)
-                      .find(img => img.url);
+            {(() => {
+  // First, check for a usable image in imageUrls[]
+  const validImageFromArray = Array.isArray(image.imageUrls)
+    ? image.imageUrls
+        .filter((img) => img?.url)
+        .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))[0]
+    : null;
 
-                    const displayImage = image.imageUrls.find(img => img.detailOrder === 0 && img.url) || fallbackImage;
+  // If not found, fallback to single imageUrl
+  const displayImage = validImageFromArray || (image.imageUrl
+    ? {
+        url: image.imageUrl,
+        width: image.width,
+        height: image.height,
+        cloudinaryId: image.cloudinaryId || null,
+        detailOrder: 0,
+      }
+    : null);
 
-                    return displayImage ? (
-                      <Image
-                        src={displayImage.url}
-                        alt={`${image.title || "Uploaded Image"} - Main View`}
-                        width={displayImage.width || 300}
-                        height={displayImage.height || 200}
-                        style={{
-                          marginBottom: "8px",
-                          border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
-                          borderRadius: "8px",
-                        }}
-                      />
-                    ) : (
-                      <button
-                        className={styles.addImageButton}
-                        onClick={() =>
-                          setEditingImage({
-                            ...image,
-                            editIndex: 0,
-                          })
-                        }
-                      >
-                        + Add Image
-                      </button>
-                    );
-                  })()}
-                </div>
+  if (!displayImage) {
+    return <div className={styles.imagePlaceholder}>No image available</div>;
+  }
 
-                {isMultiImageEnabled && (
-                  <button
-                    className={styles.moreViewsButton}
-                    onClick={() => setEditingImage(image)}
-                  >
-                    {(() => {
-                      const extraViews = image.imageUrls.filter(
-                        (img) => img.detailOrder !== 0 && img.url
-                      ).length;
-                      return extraViews > 0
-                        ? `${extraViews} more view${extraViews > 1 ? "s" : ""}`
-                        : "+ Add more views";
-                    })()}
-                  </button>
-                )}
-              </>
-            ) : image.imageUrl ? (
-              <>
-                <Image
-                  src={image.imageUrl}
-                  alt={image.title || "Uploaded Image"}
-                  width={image.width || 300}
-                  height={image.height || 200}
-                  style={{
-                    border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
-                    borderRadius: "8px",
-                  }}
-                />
+  return (
+    <>
+      <Image
+        src={displayImage.url}
+        alt={`${image.title || "Uploaded Image"} - Main View`}
+        width={displayImage.width || 300}
+        height={displayImage.height || 200}
+        style={{
+          marginBottom: "8px",
+          border: activeSection === "artwork" ? `4px solid ${image.color || "#ccc"}` : undefined,
+          borderRadius: "8px",
+        }}
+      />
 
-                {isAdmin && isMultiImageEnabled && (
-                  <button
-                    className={styles.moreViewsButton}
-                    onClick={() =>
-                      setEditingImage({
-                        ...image,
-                        imageUrls: [
-                          {
-                            url: image.imageUrl,
-                            width: image.width,
-                            height: image.height,
-                            detailOrder: 0,
-                            cloudinaryId: image.cloudinaryId || null,
-                          },
-                        ],
-                      })
-                    }
-                  >
-                    + Add more views
-                  </button>
-                )}
-              </>
-            ) : (
-              <div className={styles.imagePlaceholder}>No image available</div>
-            )}
+      {isAdmin && !config.pageSettings?.[activeSection]?.singleImageOnly && (
+        <button
+          className={styles.moreViewsButton}
+          onClick={() => setEditingImage({
+            ...image,
+            imageUrls: validImageFromArray
+              ? image.imageUrls
+              : [
+                  {
+                    url: image.imageUrl,
+                    width: image.width,
+                    height: image.height,
+                    detailOrder: 0,
+                    cloudinaryId: image.cloudinaryId || null,
+                  },
+                ],
+          })}
+        >
+          + Add more views
+        </button>
+      )}
+    </>
+  );
+})()}
 
             <p className={styles.title}>{image.title}</p>
             {image.description && (

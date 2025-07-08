@@ -20,7 +20,20 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
             });
             setFormState(editableFields);
 
-            const imageArray = item.imageUrls || (item.imageUrl ? [{ url: item.imageUrl }] : []);
+            const hasValidImageUrls = Array.isArray(item.imageUrls) && item.imageUrls.some(img => img?.url);
+
+            const imageArray = hasValidImageUrls
+                ? item.imageUrls
+                : item.imageUrl
+                    ? [{
+                        url: item.imageUrl,
+                        width: item.width,
+                        height: item.height,
+                        cloudinaryId: item.cloudinaryId || null,
+                        detailOrder: 0
+                    }]
+                    : [];
+
             const filledSlots = imageArray.map((img, index) => ({
                 file: null,
                 previewUrl: img?.url || null,
