@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import cloudinary from "cloudinary";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 
 if (!getApps().length) {
     initializeApp({
@@ -128,6 +129,10 @@ export async function POST(req) {
 
         const updatePayload = {
             imageUrls: finalImages,
+            imageUrl: FieldValue.delete(),
+            cloudinaryId: FieldValue.delete(),
+            width: FieldValue.delete(),
+            height: FieldValue.delete(),
         };
 
         ["price", "description", "dimensions"].forEach((field) => {
