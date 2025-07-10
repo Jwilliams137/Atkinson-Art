@@ -2,7 +2,7 @@
 import { useState } from "react";
 import usePageImages from "../../../hooks/usePageImages";
 import useTextUploads from "../../../hooks/useTextUploads";
-import PodcastCarousel from "../../../components/PodcastGallery/PodcastGallery";
+import PodcastGallery from "../../../components/PodcastGallery/PodcastGallery";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -65,7 +65,7 @@ const PodcastPage = () => {
         </div>
       )}
 
-      <PodcastCarousel
+      <PodcastGallery
         content={[...podcastLinks, ...normalizedImages]}
         expandedDescriptions={expandedDescriptions}
         toggleDescription={toggleDescription}

@@ -1,15 +1,15 @@
 .galleryWrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
+ 
   margin-top: 40px;
 }
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px; /* Reduced gap between cards */
-  justify-content: center;
+  gap: 30px;
+  justify-content: space-between;
 }
 
 .imageCard {
@@ -30,7 +30,7 @@
 .imageDetails {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* Tighter space between title and description */
+  gap: 4px;
   margin-top: 10px;
 }
 
