@@ -9,55 +9,52 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
     const [color, setColor] = useState("#2e2c2e");
 
     useEffect(() => {
-        if (item) {
-            const allowedFields = ['title', 'price', 'description', 'dimensions'];
-            const editableFields = {};
-            allowedFields.forEach((field) => {
-                const shouldInclude = config?.pageSettings?.[section]?.editableFields?.includes(field);
-                if (shouldInclude) {
-                    editableFields[field] = item[field] || "";
-                }
-            });
-            setFormState(editableFields);
+        if (!item) return;
 
-            const hasValidImageUrls = Array.isArray(item.imageUrls) && item.imageUrls.some(img => img?.url);
+        const allowedFields = ['title', 'price', 'description', 'dimensions'];
+        const editableFields = {};
+        allowedFields.forEach((field) => {
+            const shouldInclude = config?.pageSettings?.[section]?.editableFields?.includes(field);
+            if (shouldInclude) editableFields[field] = item[field] || "";
+        });
+        setFormState(editableFields);
 
-            const imageArray = hasValidImageUrls
-                ? item.imageUrls
-                : item.imageUrl
-                    ? [{
-                        url: item.imageUrl,
-                        width: item.width,
-                        height: item.height,
-                        cloudinaryId: item.cloudinaryId || null,
-                        detailOrder: 0
-                    }]
-                    : [];
+        const hasValidImageUrls = Array.isArray(item.imageUrls) && item.imageUrls.some(img => img?.url);
 
-            const filledSlots = imageArray.map((img, index) => ({
+        const imageArray = hasValidImageUrls
+            ? item.imageUrls
+            : item.imageUrl
+                ? [{
+                    url: item.imageUrl,
+                    width: item.width,
+                    height: item.height,
+                    cloudinaryId: item.cloudinaryId || null,
+                    detailOrder: 0
+                }]
+                : [];
+
+        const filledSlots = imageArray.map((img, index) => ({
+            file: null,
+            previewUrl: img?.url || null,
+            existingData: img || {},
+            detailOrder: img?.detailOrder ?? index,
+            markedForDeletion: false
+        }));
+
+        const maxSlots = config?.pageSettings?.[section]?.singleImageOnly ? 1 : 4;
+        while (filledSlots.length < maxSlots) {
+            filledSlots.push({
                 file: null,
-                previewUrl: img?.url || null,
-                existingData: img || {},
-                detailOrder: img?.detailOrder ?? index,
+                previewUrl: null,
+                existingData: {},
+                detailOrder: filledSlots.length,
                 markedForDeletion: false
-            }));
+            });
+        }
 
-            const maxSlots = config?.pageSettings?.[section]?.singleImageOnly ? 1 : 4;
-            while (filledSlots.length < maxSlots) {
-                filledSlots.push({
-                    file: null,
-                    previewUrl: null,
-                    existingData: {},
-                    detailOrder: filledSlots.length,
-                    markedForDeletion: false
-                });
-            }
-
-            setImageEdits(filledSlots);
-
-            if (section === "artwork") {
-                setColor(item.color || "#2e2c2e");
-            }
+        setImageEdits(filledSlots);
+        if (section === "artwork") {
+            setColor(item.color || "#2e2c2e");
         }
     }, [item, config, section]);
 
@@ -69,12 +66,9 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         const objectUrl = URL.createObjectURL(file);
         setImageEdits(prev =>
             prev.map((slot, i) =>
-                i === index ? {
-                    ...slot,
-                    file,
-                    previewUrl: objectUrl,
-                    markedForDeletion: false
-                } : slot
+                i === index
+                    ? { ...slot, file, previewUrl: objectUrl, markedForDeletion: false }
+                    : slot
             )
         );
     };
@@ -82,29 +76,17 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
     const moveImageSlot = (index, direction) => {
         const newEdits = [...imageEdits];
         const targetIndex = index + direction;
-
         if (targetIndex < 0 || targetIndex >= newEdits.length) return;
 
         [newEdits[index], newEdits[targetIndex]] = [newEdits[targetIndex], newEdits[index]];
-
-        const reordered = newEdits.map((slot, idx) => ({
-            ...slot,
-            detailOrder: idx
-        }));
-
-        setImageEdits(reordered);
+        setImageEdits(newEdits.map((slot, i) => ({ ...slot, detailOrder: i })));
     };
 
     const handleDelete = (index) => {
         setImageEdits(prev =>
             prev.map((slot, i) =>
                 i === index
-                    ? {
-                        ...slot,
-                        file: null,
-                        previewUrl: null,
-                        markedForDeletion: true
-                    }
+                    ? { ...slot, file: null, previewUrl: null, markedForDeletion: true }
                     : slot
             )
         );
@@ -112,28 +94,30 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
 
     const handleSubmit = async () => {
         const formData = new FormData();
-
         formData.append("docId", item.id);
         formData.append("pageType", section);
-
         for (const [key, value] of Object.entries(formState)) {
             formData.append(key, value);
         }
-
         if (section === "artwork") {
             formData.append("color", color);
         }
 
         const imageData = [];
 
+        const visibleImageEdits = config?.pageSettings?.[section]?.singleImageOnly
+            ? imageEdits.slice(0, 1)
+            : imageEdits;
+
         visibleImageEdits.forEach((slot, index) => {
             const fileKey = `file${index}`;
-            imageData.push({
+
+            const entry = {
                 fileKey,
                 oldCloudinaryId: slot.existingData?.cloudinaryId || "",
                 detailOrder: index,
-                delete: slot.markedForDeletion
-            });
+                delete: slot.markedForDeletion,
+            };
 
             if (slot.markedForDeletion) {
                 formData.append(fileKey, new Blob([], { type: "application/octet-stream" }));
@@ -142,6 +126,8 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
             } else {
                 formData.append(fileKey, new Blob([], { type: "application/octet-stream" }));
             }
+
+            imageData.push(entry);
         });
 
         formData.append("imageData", JSON.stringify(imageData));
@@ -149,11 +135,10 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         try {
             const res = await fetch("/api/edit-images", {
                 method: "POST",
-                body: formData
+                body: formData,
             });
 
             const data = await res.json();
-
             if (!res.ok) {
                 console.error("Upload failed:", data.error);
                 return;
@@ -161,7 +146,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
 
             onSave({ imageUrls: data.imageUrls });
             onClose();
-
         } catch (err) {
             console.error("Error uploading images:", err);
         }
@@ -169,8 +153,9 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
 
     if (!item) return null;
 
-    const isSingleImageOnly = config?.pageSettings?.[section]?.singleImageOnly === true;
-    const visibleImageEdits = isSingleImageOnly ? imageEdits.slice(0, 1) : imageEdits;
+    const visibleImageEdits = config?.pageSettings?.[section]?.singleImageOnly
+        ? imageEdits.slice(0, 1)
+        : imageEdits;
 
     return (
         <div className={styles.modalOverlay}>
@@ -236,20 +221,20 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                                     />
                                 </label>
 
-                                {!isSingleImageOnly && (
-                                    <button
-                                        className={styles.deleteButton}
-                                        onClick={() => handleDelete(index)}
-                                    >
-                                        Delete Image
-                                    </button>
-                                )}
+                                {!config?.pageSettings?.[section]?.singleImageOnly && (
+                                    <>
+                                        <button
+                                            className={styles.deleteButton}
+                                            onClick={() => handleDelete(index)}
+                                        >
+                                            Delete Image
+                                        </button>
 
-                                {!isSingleImageOnly && (
-                                    <div className={styles.reorderButtons}>
-                                        <button onClick={() => moveImageSlot(index, -1)}>▲</button>
-                                        <button onClick={() => moveImageSlot(index, 1)}>▼</button>
-                                    </div>
+                                        <div className={styles.reorderButtons}>
+                                            <button onClick={() => moveImageSlot(index, -1)}>▲</button>
+                                            <button onClick={() => moveImageSlot(index, 1)}>▼</button>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                         </div>
