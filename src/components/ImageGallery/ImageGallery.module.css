@@ -64,6 +64,30 @@
     text-align: center;
 }
 
+.mobileThumbnails {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  cursor: pointer;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: border 0.2s ease;
+}
+
+.thumbnail:hover {
+  border-color: #aaa;
+}
+
+.activeThumbnail {
+  border-color: var(--highlight-color, #333);
+}
+
 @media only screen and (max-width: 1000px) {
     .gallery {
         flex-direction: column;

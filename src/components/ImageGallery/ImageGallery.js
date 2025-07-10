@@ -1,20 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
 
 const ImageGallery = ({
   images,
-  onImageClick = () => { },
+  onImageClick = () => {},
   nextPage,
   prevPage,
   page,
   hasMore,
   itemsPerPage,
 }) => {
-  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
+  const [isMobile, setIsMobile] = useState(false);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
+  const [selectedMobileImages, setSelectedMobileImages] = useState({});
+
+  useEffect(() => {
+    const updateIsMobile = () => {
+      setIsMobile(window.innerWidth < 1000);
+    };
+
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
+  }, []);
 
   const toggleDescription = (index) => {
     setExpandedDescriptions((prev) => ({
@@ -23,58 +34,85 @@ const ImageGallery = ({
     }));
   };
 
+  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
+
   return (
     <div className={styles.galleryContainer}>
       <div className={styles.gallery}>
-        {images.length > 0 &&
-          images.map((image, index) => {
-            const isExpanded = expandedDescriptions[index];
-            const displayImage = image.displayImage || null;
+        {images.map((image, index) => {
+          const isExpanded = expandedDescriptions[index];
+          const imageSet = Array.isArray(image.imageUrls)
+            ? [...image.imageUrls].filter((img) => img?.url).sort((a, b) => (a.detailOrder ?? 999) - (b.detailOrder ?? 999))
+            : [];
 
-            return (
-              <div key={image.id || index} className={styles.galleryCard}>
-                <div className={styles.imageWrapper}>
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => onImageClick(index)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        onImageClick(index);
-                      }
-                    }}
-                    aria-label={`Open modal for ${image.title || "artwork"}`}
-                    className={styles.imageWrapper}
-                  >
-                    {displayImage?.url ? (
-                      <Image
-                        className={styles.image}
-                        src={displayImage.url}
-                        alt={image.title || "Gallery Image"}
-                        width={displayImage.width || 300}
-                        height={displayImage.height || 200}
-                        priority
-                      />
-                    ) : (
-                      <div className={styles.imagePlaceholder}>No image</div>
-                    )}
-                  </div>
+          const currentImage = isMobile
+            ? selectedMobileImages[index] || imageSet[0] || image.displayImage
+            : image.displayImage;
 
-                  <div className={styles.imageDetails}>
-                    <ImageDetails
-                      title={image.title}
-                      description={image.description || ""}
-                      dimensions={image.dimensions}
-                      price={image.price}
-                      isExpanded={isExpanded}
-                      toggleDescription={() => toggleDescription(index)}
+          return (
+            <div key={image.id || index} className={styles.galleryCard}>
+              <div className={styles.imageWrapper}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => !isMobile && onImageClick(index)}
+                  onKeyDown={(e) => {
+                    if ((e.key === "Enter" || e.key === " ") && !isMobile) {
+                      e.preventDefault();
+                      onImageClick(index);
+                    }
+                  }}
+                  aria-label={`Open modal for ${image.title || "artwork"}`}
+                  className={styles.imageWrapper}
+                >
+                  {currentImage?.url ? (
+                    <Image
+                      className={styles.image}
+                      src={currentImage.url}
+                      alt={image.title || "Gallery Image"}
+                      width={currentImage.width || 300}
+                      height={currentImage.height || 200}
+                      priority
                     />
+                  ) : (
+                    <div className={styles.imagePlaceholder}>No image</div>
+                  )}
+                </div>
+
+                {isMobile && imageSet.length > 1 && (
+                  <div className={styles.mobileThumbnails}>
+                    {imageSet.map((thumb, thumbIndex) => (
+                      <Image
+                        key={thumb.url + thumbIndex}
+                        src={thumb.url}
+                        alt={`Thumbnail ${thumbIndex + 1}`}
+                        width={60}
+                        height={60}
+                        className={`${styles.thumbnail} ${
+                          selectedMobileImages[index]?.url === thumb.url ? styles.activeThumbnail : ""
+                        }`}
+                        onClick={() =>
+                          setSelectedMobileImages((prev) => ({ ...prev, [index]: thumb }))
+                        }
+                      />
+                    ))}
                   </div>
+                )}
+
+                <div className={styles.imageDetails}>
+                  <ImageDetails
+                    title={image.title}
+                    description={image.description || ""}
+                    dimensions={image.dimensions}
+                    price={image.price}
+                    isExpanded={isExpanded}
+                    toggleDescription={() => toggleDescription(index)}
+                  />
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
 
       {showPagination && (
