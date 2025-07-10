@@ -26,9 +26,13 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     setEditYear(text.year || "");
     setEditLink(text.link || "");
     setEditButtonText(text.buttonText || "");
+
+    const isLinkOnly = !!text.link || !!text.buttonText;
+    const isStatement = !!text.content && !isLinkOnly;
+
     setShowYearField("year" in text);
-    setShowLinkField("link" in text || "buttonText" in text);
-    setShowContentField("content" in text);
+    setShowLinkField(isLinkOnly);
+    setShowContentField(isStatement);
   };
 
   const saveEdit = async (id) => {
