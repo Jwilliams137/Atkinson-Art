@@ -1,13 +1,13 @@
 .podcastContainer {
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
 }
 
 .linksRow {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 30px;
     margin-top: 20px;
 }
 

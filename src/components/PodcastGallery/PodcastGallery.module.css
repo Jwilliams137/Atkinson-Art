@@ -1,15 +1,14 @@
 .galleryWrapper {
   width: 100%;
   display: flex;
- 
   margin-top: 40px;
 }
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  justify-content: space-between;
+  gap: 40px 60px;
+  justify-content: left;
 }
 
 .imageCard {
@@ -45,6 +44,17 @@
   color: #444;
   margin: 0;
   line-height: 1.4;
+}
+
+@media (max-width: 1250px) {
+   .imageCard {
+    max-width: 95%;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+  }
 }
 
 @media (max-width: 600px) {
