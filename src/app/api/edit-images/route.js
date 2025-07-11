@@ -49,12 +49,12 @@ export async function POST(req) {
       ? doc.imageUrls
       : doc.imageUrl
         ? [{
-            url: doc.imageUrl,
-            cloudinaryId: doc.cloudinaryId || null,
-            width: doc.width || null,
-            height: doc.height || null,
-            detailOrder: 0,
-          }]
+          url: doc.imageUrl,
+          cloudinaryId: doc.cloudinaryId || null,
+          width: doc.width || null,
+          height: doc.height || null,
+          detailOrder: 0,
+        }]
         : [];
 
     const tempImages = {};
@@ -62,6 +62,14 @@ export async function POST(req) {
     for (let i = 0; i < imageData.length; i++) {
       const { fileKey, oldCloudinaryId, detailOrder, delete: shouldDelete } = imageData[i];
       const file = formData.get(fileKey);
+
+      // 🔍 Add logs to check what's going on
+      console.log(`🧪 [${i}] fileKey:`, fileKey);
+      console.log(`🧪 [${i}] file:`, file);
+      console.log(`🧪 [${i}] file instanceof File:`, file instanceof File);
+      console.log(`🧪 [${i}] file size:`, file?.size);
+      console.log(`🧪 [${i}] shouldDelete:`, shouldDelete);
+      console.log(`🧪 [${i}] oldCloudinaryId:`, oldCloudinaryId);
 
       if (shouldDelete && oldCloudinaryId) {
         await cloudinary.v2.uploader.destroy(oldCloudinaryId);
@@ -79,20 +87,26 @@ export async function POST(req) {
           await cloudinary.v2.uploader.destroy(oldCloudinaryId);
         }
 
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          const buffer = Buffer.from(arrayBuffer);
+          const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
 
-        const uploadResponse = await cloudinary.v2.uploader.upload(base64Image, {
-          folder: "uploads",
-        });
+          console.log(`🧪 [${i}] Uploading to Cloudinary`);
+          const uploadResponse = await cloudinary.v2.uploader.upload(base64Image, {
+            folder: "uploads",
+          });
 
-        tempImages[detailOrder] = {
-          url: uploadResponse.secure_url,
-          cloudinaryId: uploadResponse.public_id,
-          width: uploadResponse.width,
-          height: uploadResponse.height,
-        };
+          tempImages[detailOrder] = {
+            url: uploadResponse.secure_url,
+            cloudinaryId: uploadResponse.public_id,
+            width: uploadResponse.width,
+            height: uploadResponse.height,
+          };
+        } catch (uploadErr) {
+          console.error(`💥 [${i}] Cloudinary upload failed:`, uploadErr);
+          return NextResponse.json({ error: "Cloudinary upload failed" }, { status: 500 });
+        }
       } else {
         let existing =
           existingImages.find((img) => img?.cloudinaryId === oldCloudinaryId) ??
@@ -110,17 +124,17 @@ export async function POST(req) {
       .map((entry, i) => {
         const fallback = isSingleImageOnly
           ? existingImages[0] || {
-              url: null,
-              cloudinaryId: null,
-              width: null,
-              height: null,
-            }
+            url: null,
+            cloudinaryId: null,
+            width: null,
+            height: null,
+          }
           : {
-              url: null,
-              cloudinaryId: null,
-              width: null,
-              height: null,
-            };
+            url: null,
+            cloudinaryId: null,
+            width: null,
+            height: null,
+          };
 
         return {
           ...(tempImages[entry.detailOrder] || fallback),
