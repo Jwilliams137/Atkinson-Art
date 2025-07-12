@@ -82,7 +82,7 @@ export async function POST(req) {
         continue;
       }
 
-      if (file instanceof File && file.size > 0) {
+      if (file && typeof file.arrayBuffer === "function" && file.size > 0) {
         if (oldCloudinaryId) {
           await cloudinary.v2.uploader.destroy(oldCloudinaryId);
         }
