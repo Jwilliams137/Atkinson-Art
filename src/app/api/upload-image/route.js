@@ -47,7 +47,7 @@ export async function POST(req) {
     const imageUrls = [];
 
     for (const [key, value] of formData.entries()) {
-      if (!(value instanceof File)) continue;
+      if (!value || typeof value.arrayBuffer !== "function" || typeof value.size !== "number") continue;
       if (key.startsWith("width_") || key.startsWith("height_") || key.startsWith("detailOrder_")) continue;
 
       const width = parseInt(formData.get(`width_${key}`), 10) || null;
