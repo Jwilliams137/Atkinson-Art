@@ -63,10 +63,8 @@ export async function POST(req) {
       const { fileKey, oldCloudinaryId, detailOrder, delete: shouldDelete } = imageData[i];
       const file = formData.get(fileKey);
 
-      // 🔍 Add logs to check what's going on
       console.log(`🧪 [${i}] fileKey:`, fileKey);
       console.log(`🧪 [${i}] file:`, file);
-      console.log(`🧪 [${i}] file instanceof File:`, file instanceof File);
       console.log(`🧪 [${i}] file size:`, file?.size);
       console.log(`🧪 [${i}] shouldDelete:`, shouldDelete);
       console.log(`🧪 [${i}] oldCloudinaryId:`, oldCloudinaryId);
