@@ -50,7 +50,7 @@ export async function POST(req) {
 
     for (const fileKey of fileKeys) {
       const file = formData.get(fileKey);
-      if (!value || typeof value.arrayBuffer !== "function" || typeof value.name !== "string") continue;
+      if (!file || typeof file.arrayBuffer !== "function" || typeof file.name !== "string") continue;
 
       const width = parseInt(formData.get(`width_${fileKey}`), 10) || null;
       const height = parseInt(formData.get(`height_${fileKey}`), 10) || null;
