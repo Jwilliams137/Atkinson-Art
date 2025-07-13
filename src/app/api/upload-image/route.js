@@ -123,6 +123,6 @@ export async function POST(req) {
     });
   } catch (error) {
     console.error("Upload failed:", error);
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Upload failed", full: String(error) }, { status: 500 });
   }
 }
