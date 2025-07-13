@@ -9,6 +9,10 @@ import useTextUploads from "@/hooks/useTextUploads";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/Modal/Modal";
 
+const fixCloudinaryUrl = (url: string) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
+
 const HomePage = () => {
   const { images, nextPage, prevPage, page, hasMore } = usePageImages("home") as {
     images: {
@@ -82,7 +86,7 @@ const HomePage = () => {
                   {displayImage ? (
                     <Image
                       className={styles.image}
-                      src={displayImage.url}
+                      src={fixCloudinaryUrl(displayImage.url)}
                       alt={image.title || "Gallery Image"}
                       width={displayImage.width || 600}
                       height={displayImage.height || 400}

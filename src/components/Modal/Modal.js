@@ -4,6 +4,9 @@ import Image from "next/image";
 import styles from "./Modal.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
 
+const fixCloudinaryUrl = (url) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
 const Modal = ({ images, currentImageIndex, closeModal }) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [activeDocIndex, setActiveDocIndex] = useState(currentImageIndex);
@@ -84,7 +87,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
           <div className={styles.imageWrapper}>
             {mainImage?.url && (
               <Image
-                src={mainImage.url}
+                src={fixCloudinaryUrl(mainImage.url)}
                 alt={selectedDocument.title || "Artwork Image"}
                 width={mainImage.width}
                 height={mainImage.height}
@@ -105,7 +108,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
                   aria-selected={index === mainImageIndex}
                 >
                   <Image
-                    src={img.url}
+                    src={fixCloudinaryUrl(img.url)}
                     alt={`Thumbnail ${index + 1}`}
                     width={80}
                     height={80}

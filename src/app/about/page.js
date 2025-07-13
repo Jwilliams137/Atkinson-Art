@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 
+const fixCloudinaryUrl = (url) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
 const AboutPage = () => {
   const textUploads = useTextUploads("about");
   const { images } = usePageImages("about");
@@ -41,7 +44,7 @@ const AboutPage = () => {
               <div className={styles.imageWrapper}>
                 {displayImage ? (
                   <Image
-                    src={displayImage.url}
+                    src={fixCloudinaryUrl(displayImage.url)}
                     alt={item.title || "About Image"}
                     width={displayImage.width || 600}
                     height={displayImage.height || 400}

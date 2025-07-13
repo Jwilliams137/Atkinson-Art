@@ -8,6 +8,9 @@ import useTextUploads from "../../hooks/useTextUploads";
 import TextSection from "../../components/TextSection/TextSection";
 import styles from './page.module.css';
 
+const fixCloudinaryUrl = (url) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
 const sortImagesByPageLinks = (images, pageLinks) => {
   const pageLinkTitles = Object.keys(pageLinks);
   return images.sort((a, b) => {
@@ -95,7 +98,7 @@ const ArtworkPage = () => {
                   <div className={styles.flipCardInner}>
                     <div className={styles.flipCardFront}>
                       <Image
-                        src={image.imageUrl}
+                        src={fixCloudinaryUrl(image.imageUrl)}
                         alt={image.title}
                         className={styles.artworkImage}
                         width={image.width}
@@ -114,7 +117,7 @@ const ArtworkPage = () => {
                   <div className={styles.mobileFlipCardInner}>
                     <div className={styles.mobileFlipCardFront}>
                       <Image
-                        src={image.imageUrl}
+                         src={fixCloudinaryUrl(image.imageUrl)}
                         alt={image.title}
                         className={styles.mobileArtworkImage}
                         width={image.width}

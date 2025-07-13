@@ -5,6 +5,9 @@ import TextSection from '../../../components/TextSection/TextSection';
 import usePageImages from "../../../hooks/usePageImages";
 import styles from "./page.module.css";
 
+const fixCloudinaryUrl = (url) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
 const BiographyPage = () => {
   const textUploads = useTextUploads('bio');
   const { images } = usePageImages("bio");
@@ -31,7 +34,7 @@ const BiographyPage = () => {
               <div className={styles.imageWrapper} key={index}>
                 {displayImage ? (
                   <Image
-                    src={displayImage.url}
+                    src={fixCloudinaryUrl(displayImage.url)}
                     alt={image.title || image.type || `Image ${index + 1}`}
                     width={displayImage.width || 400}
                     height={displayImage.height || 300}

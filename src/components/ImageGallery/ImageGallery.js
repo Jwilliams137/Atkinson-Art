@@ -4,9 +4,12 @@ import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
 
+const fixCloudinaryUrl = (url) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
 const ImageGallery = ({
   images,
-  onImageClick = () => {},
+  onImageClick = () => { },
   nextPage,
   prevPage,
   page,
@@ -68,7 +71,7 @@ const ImageGallery = ({
                   {currentImage?.url ? (
                     <Image
                       className={styles.image}
-                      src={currentImage.url}
+                      src={fixCloudinaryUrl(currentImage.url)}
                       alt={image.title || "Gallery Image"}
                       width={currentImage.width || 300}
                       height={currentImage.height || 200}
@@ -84,13 +87,12 @@ const ImageGallery = ({
                     {imageSet.map((thumb, thumbIndex) => (
                       <Image
                         key={thumb.url + thumbIndex}
-                        src={thumb.url}
+                        src={fixCloudinaryUrl(thumb.url)}
                         alt={`Thumbnail ${thumbIndex + 1}`}
                         width={60}
                         height={60}
-                        className={`${styles.thumbnail} ${
-                          selectedMobileImages[index]?.url === thumb.url ? styles.activeThumbnail : ""
-                        }`}
+                        className={`${styles.thumbnail} ${selectedMobileImages[index]?.url === thumb.url ? styles.activeThumbnail : ""
+                          }`}
                         onClick={() =>
                           setSelectedMobileImages((prev) => ({ ...prev, [index]: thumb }))
                         }

@@ -6,6 +6,9 @@ import styles from "./AdminImageDisplay.module.css";
 import AdminModal from "../AdminModal/AdminModal";
 import config from "../../data/admin.json";
 
+const fixCloudinaryUrl = (url) =>
+  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+
 const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const db = getFirestore();
   const [editingImage, setEditingImage] = useState(null);
@@ -111,7 +114,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
               return (
                 <>
                   <Image
-                    src={displayImage.url}
+                    src={fixCloudinaryUrl(displayImage.url)}
                     alt={`${image.title || "Uploaded Image"} - Main View`}
                     width={displayImage.width || 300}
                     height={displayImage.height || 200}
