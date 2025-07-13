@@ -46,18 +46,20 @@ export async function POST(req) {
 
     const imageUrls = [];
 
-    for (const [key, value] of formData.entries()) {
-      if (!value || typeof value.arrayBuffer !== "function" || typeof value.size !== "number") continue;
-      if (key.startsWith("width_") || key.startsWith("height_") || key.startsWith("detailOrder_")) continue;
+    const fileKeys = [...formData.keys()].filter((key) => key.startsWith("file"));
 
-      const width = parseInt(formData.get(`width_${key}`), 10) || null;
-      const height = parseInt(formData.get(`height_${key}`), 10) || null;
-      const detailOrder = parseInt(formData.get(`detailOrder_${key}`), 10) || 0;
+    for (const fileKey of fileKeys) {
+      const file = formData.get(fileKey);
+      if (!file || typeof file.arrayBuffer !== "function" || typeof file.size !== "number") continue;
 
-      if (value.size > 0) {
-        const arrayBuffer = await value.arrayBuffer();
+      const width = parseInt(formData.get(`width_${fileKey}`), 10) || null;
+      const height = parseInt(formData.get(`height_${fileKey}`), 10) || null;
+      const detailOrder = parseInt(formData.get(`detailOrder_${fileKey}`), 10) || 0;
+
+      if (file.size > 0) {
+        const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
-        const base64Image = `data:${value.type};base64,${buffer.toString("base64")}`;
+        const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
 
         const uploadResponse = await cloudinary.v2.uploader.upload(base64Image, {
           folder: "uploads",
