@@ -33,6 +33,7 @@
     },
     "fieldsForPage": {
       "home": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Home Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -109,6 +110,7 @@
         ]}         
       ],
       "new-work": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "New Work Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -128,6 +130,7 @@
         ]}       
       ],
       "houses": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Houses Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -147,6 +150,7 @@
         ]}        
       ],
       "tiny-houses": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Tiny Houses Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -166,6 +170,7 @@
         ]}        
       ],
       "constructions": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Constructions Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -185,6 +190,7 @@
         ]}      
       ],
       "collage": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Collage Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -204,6 +210,7 @@
         ]}       
       ],
       "commissions": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Commissions Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -223,6 +230,7 @@
         ]}       
       ],
       "earlier-work": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Earlier Work Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
@@ -312,6 +320,7 @@
         ]}       
       ],
       "shop": [
+        {"notes": "Multiple images can be uploaded but must be added one at a time.  Sorry for the inconvenience. After uploading one you can edit to add more."},
         {"image-upload": [
           { "name": "file", "label": "Shop Gallery Image", "type": "file" },
           { "name": "file1", "label": "Detail", "type": "file" },
