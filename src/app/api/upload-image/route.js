@@ -44,6 +44,12 @@ export async function POST(req) {
 
     const formData = await req.formData();
 
+    const entries = [...formData.entries()];
+    console.log("📝 FORM DATA RECEIVED:");
+    entries.forEach(([key, val]) => {
+      console.log("→", key, typeof val, val?.name || val);
+    });
+
     const imageUrls = [];
 
     const fileKeys = [...formData.keys()].filter((key) => key.startsWith("file"));
