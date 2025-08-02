@@ -32,9 +32,9 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { content, pageType, type, order, year, link, buttonText } = body;
+    const { content, pageType, type, order, snippetOrder, year, link, buttonText } = body;
 
-    
+
 
     const textPageType = pageType || "general";
     const textType = type || "untitled";
@@ -43,8 +43,9 @@ export async function POST(req) {
       pageType: textPageType,
       type: textType,
       createdAt: new Date(),
-      order: order || 1,
       ...(content ? { content } : {}),
+      ...(order !== null && order !== undefined ? { order } : {}),
+      ...(snippetOrder !== null && snippetOrder !== undefined ? { snippetOrder } : {}),
       ...(year ? { year } : {}),
       ...(link ? { link } : {}),
       ...(buttonText ? { buttonText } : {})
