@@ -34,18 +34,22 @@ export async function POST(req) {
     const body = await req.json();
     const { content, pageType, type, order, snippetOrder, year, link, buttonText } = body;
 
-
-
     const textPageType = pageType || "general";
     const textType = type || "untitled";
+    const cleanOrder = textPageType === "exhibitions" ? null : order;
 
     const data = {
       pageType: textPageType,
       type: textType,
       createdAt: new Date(),
       ...(content ? { content } : {}),
-      ...(order !== null && order !== undefined ? { order } : {}),
-      ...(snippetOrder !== null && snippetOrder !== undefined ? { snippetOrder } : {}),
+      ...(textPageType === "exhibitions"
+        ? snippetOrder !== null && snippetOrder !== undefined
+          ? { snippetOrder }
+          : {}
+        : cleanOrder !== null && cleanOrder !== undefined
+          ? { order: cleanOrder }
+          : {}),
       ...(year ? { year } : {}),
       ...(link ? { link } : {}),
       ...(buttonText ? { buttonText } : {})

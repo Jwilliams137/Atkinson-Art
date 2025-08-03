@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
 import styles from "./AdminTextDisplay.module.css";
 
 const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
@@ -70,20 +70,64 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   };
 
   const moveText = async (index, direction) => {
-    const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= texts.length) return;
+    const movingItem = texts[index];
+    const targetYear = movingItem.year || "unknown";
 
-    const newTexts = [...texts];
-    [newTexts[index], newTexts[newIndex]] = [newTexts[newIndex], newTexts[index]];
-    setTexts(newTexts);
-    await updateTextOrder(newTexts);
+    const sameYearTexts = texts.filter((item) => (item.year || "unknown") === targetYear);
+    const yearIndexes = sameYearTexts.map((item) => texts.indexOf(item));
+    const yearIndex = yearIndexes.indexOf(index);
+    const newYearIndex = yearIndex + direction;
+
+    if (newYearIndex < 0 || newYearIndex >= sameYearTexts.length) return;
+
+    const newYearTexts = [...sameYearTexts];
+    [newYearTexts[yearIndex], newYearTexts[newYearIndex]] = [
+      newYearTexts[newYearIndex],
+      newYearTexts[yearIndex],
+    ];
+
+    const updatedSameYearTexts = newYearTexts.map((item, i) => {
+      const isExhibition = item.pageType === "exhibitions" && item.type === "exhibition";
+      return {
+        ...item,
+        ...(isExhibition ? { snippetOrder: i + 1 } : { order: i + 1 }),
+      };
+    });
+
+    const updatedTexts = [...texts];
+    yearIndexes.forEach((textIndex, i) => {
+      updatedTexts[textIndex] = updatedSameYearTexts[i];
+    });
+
+    setTexts([...updatedTexts]);
+
+    await updateTextOrder(updatedTexts);
   };
 
-  const updateTextOrder = async (newTexts) => {
+  const updateTextOrder = async (allTexts) => {
     try {
-      for (let i = 0; i < newTexts.length; i++) {
-        const textRef = doc(db, "textUploads", newTexts[i].id);
-        await updateDoc(textRef, { order: i });
+      const textsByGroup = allTexts.reduce((acc, item) => {
+        const key = `${item.pageType || "unknown"}-${item.year || "unknown"}`;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(item);
+        return acc;
+      }, {});
+
+      for (const key in textsByGroup) {
+        const group = textsByGroup[key];
+        for (let i = 0; i < group.length; i++) {
+          const text = group[i];
+          const textRef = doc(db, "textUploads", text.id);
+
+          const isExhibition = text.pageType === "exhibitions" && text.type === "exhibition";
+
+          const updatedField = isExhibition
+            ? { snippetOrder: i + 1, order: deleteField() }
+            : { order: i + 1, snippetOrder: deleteField() };
+
+          console.log(`Updating ${text.id}`, updatedField);
+          await updateDoc(textRef, updatedField);
+        }
       }
     } catch (error) {
       console.error("Error updating text order:", error);
@@ -97,7 +141,16 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
           const yearA = parseInt(a.year) || 0;
           const yearB = parseInt(b.year) || 0;
           if (yearA !== yearB) return yearB - yearA;
-          return (a.order ?? 0) - (b.order ?? 0);
+
+          const getOrder = (item) => {
+            if (item.pageType === "exhibitions" && item.type === "exhibition") {
+              return item.snippetOrder ?? 0;
+            } else {
+              return item.order ?? 0;
+            }
+          };
+
+          return getOrder(a) - getOrder(b);
         })
         .map((text, index) => {
           const isExpanded = expandedTextIds.includes(text.id);

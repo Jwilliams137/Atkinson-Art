@@ -4,7 +4,7 @@ import { getFirestore, query, collection, where, getDocs } from "firebase/firest
 import styles from "./TextUpload.module.css";
 
 const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
-  const [order, setOrderState] = useState(1);
+  const [initialPosition, setInitialPosition] = useState(1);
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -14,8 +14,10 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
       const querySnapshot = await getDocs(q);
       const nextOrder = querySnapshot.size + 1;
 
-      setOrderState(nextOrder);
-      setOrder(nextOrder);
+      setInitialPosition(nextOrder);
+      if (sectionKey !== "exhibitions") {
+        setOrder(nextOrder);
+      }
     };
 
     fetchOrder();
@@ -45,7 +47,10 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
       ...formData,
       ...(includesContentField ? { content: formData["content"] ?? "" } : {}),
       pageType: sectionKey,
-      order,
+      ...(sectionKey === "exhibitions"
+        ? { snippetOrder: initialPosition }
+        : { order: initialPosition }
+      ),
       type: fieldsList.find(f => f.name === "type")?.value || "general"
     };
 

@@ -105,6 +105,9 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                 }
 
                 const isExhibition = sectionKey === "exhibitions";
+                if (isExhibition) {
+                    formData.type = "exhibition";
+                }
 
                 const textData = {
                     content: textContent,
@@ -116,8 +119,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     year: formData.year || '',
                     link: formData.link || '',
                     buttonText: formData.buttonText || '',
-                    order: isExhibition ? null : nextOrder,
-                    snippetOrder: isExhibition ? nextOrder : null
+                    ...(isExhibition ? { snippetOrder: nextOrder } : { order: nextOrder })
                 };
 
                 const textUploadResponse = await fetch("/api/upload-text", {
