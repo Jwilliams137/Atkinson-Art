@@ -1,18 +1,15 @@
 'use client';
 import { useState } from "react";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import styles from "./AdminTextDisplay.module.css";
+import { doc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
+import styles from "./ExhibitionAdminTextDisplay.module.css";
 
-const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
+const ExhibitionAdminTextDisplay = ({ texts = [], setTexts, db }) => {
   const [expandedTextIds, setExpandedTextIds] = useState([]);
   const [editingTextId, setEditingTextId] = useState(null);
   const [editContent, setEditContent] = useState("");
   const [editYear, setEditYear] = useState("");
   const [editLink, setEditLink] = useState("");
   const [editButtonText, setEditButtonText] = useState("");
-  const [showYearField, setShowYearField] = useState(false);
-  const [showLinkField, setShowLinkField] = useState(false);
-  const [showContentField, setShowContentField] = useState(false);
 
   const toggleText = (id) => {
     setExpandedTextIds((prev) =>
@@ -26,25 +23,17 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
     setEditYear(text.year || "");
     setEditLink(text.link || "");
     setEditButtonText(text.buttonText || "");
-
-    const isLinkOnly = !!text.link || !!text.buttonText;
-    const isStatement = !!text.content && !isLinkOnly;
-
-    setShowYearField("year" in text);
-    setShowLinkField(isLinkOnly);
-    setShowContentField(isStatement);
   };
 
   const saveEdit = async (id) => {
     try {
       const textRef = doc(db, "textUploads", id);
-      const updatedFields = { content: editContent };
-
-      if (showYearField) updatedFields.year = editYear;
-      if (showLinkField) {
-        updatedFields.link = editLink;
-        updatedFields.buttonText = editButtonText;
-      }
+      const updatedFields = {
+        content: editContent,
+        year: editYear,
+        link: editLink,
+        buttonText: editButtonText,
+      };
 
       await updateDoc(textRef, updatedFields);
 
@@ -70,34 +59,75 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   };
 
   const moveText = async (index, direction) => {
-    const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= texts.length) return;
+    const sorted = [...texts].sort((a, b) => {
+      const yearDiff = (parseInt(b.year) || 0) - (parseInt(a.year) || 0);
+      if (yearDiff !== 0) return yearDiff;
+      return (a.snippetOrder ?? 0) - (b.snippetOrder ?? 0);
+    });
 
-    const reordered = [...texts];
-    [reordered[index], reordered[newIndex]] = [reordered[newIndex], reordered[index]];
+    const movingItem = sorted[index];
+    const year = movingItem.year || "unknown";
 
-    const updated = reordered.map((item, i) => ({
+    const sameYearGroup = sorted.filter(
+      (item) => (item.year || "unknown") === year
+    );
+
+    const currentIndex = sameYearGroup.findIndex((t) => t.id === movingItem.id);
+    const newIndex = currentIndex + direction;
+
+    if (newIndex < 0 || newIndex >= sameYearGroup.length) return;
+
+    // swap
+    [sameYearGroup[currentIndex], sameYearGroup[newIndex]] = [
+      sameYearGroup[newIndex],
+      sameYearGroup[currentIndex],
+    ];
+
+    const updatedGroup = sameYearGroup.map((item, i) => ({
       ...item,
-      order: i + 1,
+      snippetOrder: i + 1,
     }));
 
-    setTexts(updated);
-    await updateTextOrder(updated);
+    const updatedTexts = texts.map((text) => {
+      const updated = updatedGroup.find((u) => u.id === text.id);
+      return updated ? updated : text;
+    });
+
+    setTexts(updatedTexts);
+    await updateTextOrder(updatedTexts);
   };
 
   const updateTextOrder = async (allTexts) => {
     try {
-      for (let i = 0; i < allTexts.length; i++) {
-        const text = allTexts[i];
-        const textRef = doc(db, "textUploads", text.id);
-        await updateDoc(textRef, { order: i + 1 });
+      const byYear = allTexts.reduce((acc, item) => {
+        const year = item.year || "unknown";
+        if (!acc[year]) acc[year] = [];
+        acc[year].push(item);
+        return acc;
+      }, {});
+
+      for (const year in byYear) {
+        const group = byYear[year];
+        for (let i = 0; i < group.length; i++) {
+          const text = group[i];
+          const textRef = doc(db, "textUploads", text.id);
+          await updateDoc(textRef, {
+            snippetOrder: i + 1,
+            order: deleteField(), // ensure no `order` field on exhibitions
+          });
+        }
       }
     } catch (error) {
-      console.error("Error updating text order:", error);
+      console.error("Error updating snippet order:", error);
     }
   };
 
-  const sortedTexts = [...texts].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const sortedTexts = [...texts].sort((a, b) => {
+    const yearA = parseInt(a.year) || 0;
+    const yearB = parseInt(b.year) || 0;
+    if (yearA !== yearB) return yearB - yearA;
+    return (a.snippetOrder ?? 0) - (b.snippetOrder ?? 0);
+  });
 
   return (
     <div className={styles.textList}>
@@ -137,40 +167,32 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
             <div className={styles.textContent}>
               {editingTextId === text.id ? (
                 <>
-                  {showContentField && (
-                    <textarea
-                      className={styles.editTextarea}
-                      value={editContent}
-                      onChange={(e) => setEditContent(e.target.value)}
-                    />
-                  )}
-                  {showLinkField && (
-                    <>
-                      <input
-                        type="text"
-                        className={styles.editInput}
-                        value={editLink}
-                        placeholder="Link"
-                        onChange={(e) => setEditLink(e.target.value)}
-                      />
-                      <input
-                        type="text"
-                        className={styles.editInput}
-                        value={editButtonText}
-                        placeholder="Button Text"
-                        onChange={(e) => setEditButtonText(e.target.value)}
-                      />
-                    </>
-                  )}
-                  {showYearField && (
-                    <input
-                      type="text"
-                      className={styles.editInput}
-                      value={editYear}
-                      placeholder="Year"
-                      onChange={(e) => setEditYear(e.target.value)}
-                    />
-                  )}
+                  <textarea
+                    className={styles.editTextarea}
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className={styles.editInput}
+                    value={editYear}
+                    placeholder="Year"
+                    onChange={(e) => setEditYear(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className={styles.editInput}
+                    value={editLink}
+                    placeholder="Link"
+                    onChange={(e) => setEditLink(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className={styles.editInput}
+                    value={editButtonText}
+                    placeholder="Button Text"
+                    onChange={(e) => setEditButtonText(e.target.value)}
+                  />
                 </>
               ) : (
                 <>
@@ -244,4 +266,4 @@ const AdminTextDisplay = ({ texts = [], setTexts, db }) => {
   );
 };
 
-export default AdminTextDisplay;
+export default ExhibitionAdminTextDisplay;

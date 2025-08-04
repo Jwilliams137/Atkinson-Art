@@ -1,0 +1,206 @@
+.adminDisplayText {
+  max-width: 100%;
+}
+
+.textList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.textItem {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.textSnippet {
+  line-height: 1.5;
+  font-size: 20px;
+}
+
+.paragraph {
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+
+.readMoreButton {
+  font-size: 18px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.year {
+  margin-bottom: 10px;
+}
+
+.moveArrows {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
+
+.moveButton {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.moveButton:hover {
+  color: var(--hover-text);
+}
+
+.textActions {
+  display: flex;
+  justify-content: right;
+}
+
+.deleteButton,
+.editButton {
+  width: 100px;
+  padding: 8px 16px;
+  background-color: var(--primary-text);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.deleteButton:hover,
+.editButton:hover {
+  background-color: var(--hover-text);
+}
+
+.editTextarea {
+  min-height: 200px;
+  font-size: 18px;
+  padding: 9px;
+  resize: vertical;
+  border-radius: 4px;
+}
+
+.editInput {
+  font-size: 18px;
+  padding: 9px;
+  resize: vertical;
+  border-radius: 4px;
+}
+
+.linkPreview {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  background-color: transparent;
+}
+
+.fakeButton {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: var(--primary-text);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.linkText {
+  color: #666;
+  font-family: monospace;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  user-select: text;
+  word-break: break-word;
+}
+
+
+.buttonPreview {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 18px;
+  background-color: var(--primary-text);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.buttonPreview:hover {
+  background-color: var(--hover-text);
+}
+
+@media only screen and (max-width: 600px) {
+
+  .deleteButton,
+  .editButton {
+    width: auto;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .textItem {
+    background-color: #2e2c2e;
+    border: none;
+  }
+
+  .deleteButton,
+  .editButton {
+    background-color: #0c0b0c;
+  }
+
+  .deleteButton:hover,
+  .editButton:hover {
+    background-color: #0c0b0c;
+  }
+
+  .editInput {
+    background-color: #cccbcc;
+    color: #2e2c2e;
+  }
+
+  .editTextarea {
+    background-color: #cccbcc;
+    color: #2e2c2e;
+  }
+
+  .buttonPreview {
+    background-color: #0c0b0c;
+    color: white;
+  }
+
+  .buttonPreview:hover {
+    background-color: #1e1d1e;
+  }
+}

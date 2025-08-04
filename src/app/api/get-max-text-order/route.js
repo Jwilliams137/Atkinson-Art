@@ -17,15 +17,35 @@ export async function GET(req) {
     try {
         const { searchParams } = new URL(req.url);
         const pageType = searchParams.get("pageType");
+        const year = searchParams.get("year");
 
         if (!pageType) {
             return NextResponse.json({ error: "PageType is required" }, { status: 400 });
         }
 
-        const textUploadsRef = db.collection("textUploads").where("pageType", "==", pageType);
-        const snapshot = await textUploadsRef.orderBy("order", "desc").limit(1).get();
-        const maxOrder = snapshot.empty ? 0 : snapshot.docs[0].data().order;
-        const nextOrder = maxOrder === 0 ? 1 : maxOrder + 1;
+        const textUploadsRef = db.collection("textUploads");
+
+        let queryRef;
+        let field;
+
+        if (pageType === "exhibitions" && year) {
+            queryRef = textUploadsRef
+                .where("pageType", "==", "exhibitions")
+                .where("year", "==", year)
+                .orderBy("snippetOrder", "desc")
+                .limit(1);
+            field = "snippetOrder";
+        } else {
+            queryRef = textUploadsRef
+                .where("pageType", "==", pageType)
+                .orderBy("order", "desc")
+                .limit(1);
+            field = "order";
+        }
+
+        const snapshot = await queryRef.get();
+        const max = snapshot.empty ? 0 : snapshot.docs[0].data()[field];
+        const nextOrder = max === 0 ? 1 : max + 1;
 
         return NextResponse.json({ nextOrder });
 

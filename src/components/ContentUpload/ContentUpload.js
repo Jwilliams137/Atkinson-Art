@@ -68,21 +68,46 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
             }
 
             if (uploadType === "text-upload" && textContent !== null && textContent !== undefined) {
-                const orderResponse = await fetch(`/api/get-max-text-order?pageType=${sectionKey}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                let nextOrder = 0;
 
-                if (!orderResponse.ok) {
-                    console.error("Failed to fetch order data:", orderResponse.status);
-                    return;
+                if (sectionKey === "exhibitions") {
+                    const response = await fetch(`/api/get-max-text-order?pageType=${sectionKey}&year=${formData.year || ""}`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!response.ok) {
+                        console.error("Failed to fetch snippetOrder:", response.status);
+                        return;
+                    }
+
+                    const data = await response.json();
+                    nextOrder = data.nextOrder;
+                } else {
+                    const response = await fetch(`/api/get-max-text-order?pageType=${sectionKey}`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!response.ok) {
+                        console.error("Failed to fetch order:", response.status);
+                        return;
+                    }
+
+                    const data = await response.json();
+                    nextOrder = data.nextOrder;
                 }
 
-                const data = await orderResponse.json();
-                const nextOrder = data.nextOrder;
+                const isExhibition = sectionKey === "exhibitions";
+                if (isExhibition) {
+                    formData.type = "exhibition";
+                }
 
                 const textData = {
                     content: textContent,
@@ -91,10 +116,10 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     title: formData.title || "Untitled",
                     type: formData.type || "general",
                     timestamp: new Date().toISOString(),
-                    order: nextOrder,
                     year: formData.year || '',
                     link: formData.link || '',
-                    buttonText: formData.buttonText || ''
+                    buttonText: formData.buttonText || '',
+                    ...(isExhibition ? { snippetOrder: nextOrder } : { order: nextOrder })
                 };
 
                 const textUploadResponse = await fetch("/api/upload-text", {

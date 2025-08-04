@@ -309,7 +309,8 @@
           { "name": "type", "type": "hidden", "value": "exhibition" },
           { "name": "pageType", "type": "hidden", "value": "exhibitions" },
           { "name": "year", "label": "year", "type": "text"},
-          { "name": "link", "label": "Add a link", "type": "text"}
+          { "name": "link", "label": "Add a link (optional)", "type": "text"},
+          { "name": "buttonText", "label": "Button Text (how link is displayed)", "type": "text" }
         ]},
         {"image-upload": [
           { "name": "file", "label": "Exhibitions Image", "type": "file" },
