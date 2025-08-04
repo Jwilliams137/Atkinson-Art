@@ -1,9 +1,10 @@
 .yearGroup {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .year {    
     font-size: 25px;
+    margin-bottom: 10px;
 }
 
 .text {
@@ -13,4 +14,24 @@
 
 .link {
     font-size: 22px;
+}
+
+.entry {
+    margin-bottom: 20px;
+}
+
+.buttonLink {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.buttonLink:hover {
+  background-color: #555;
 }

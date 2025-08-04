@@ -2,55 +2,60 @@ import Link from "next/link";
 import styles from "./ExhibitionTextSection.module.css";
 
 const ExhibitionTextSection = ({ textUploads, containerClass, sectionClass, textClass }) => {
-  if (!textUploads.length) return null;
+    if (!textUploads.length) return null;
 
-  const groupedByYear = textUploads.reduce((acc, item) => {
-    if (item.year) {
-      acc[item.year] = acc[item.year] || [];
-      acc[item.year].push(item);
-    }
-    return acc;
-  }, {});
+    const groupedByYear = textUploads.reduce((acc, item) => {
+        if (item.year) {
+            acc[item.year] = acc[item.year] || [];
+            acc[item.year].push(item);
+        }
+        return acc;
+    }, {});
 
-  return (
-    <div className={`${styles.textContainer} ${containerClass || ""}`}>
-      <div className={`${styles.textSection} ${sectionClass || ""}`}>
-        {Object.entries(groupedByYear)
-          .sort(([a], [b]) => Number(b) - Number(a))
-          .map(([year, exhibitions]) => {
-            const sortedExhibitions = [...exhibitions].sort(
-              (a, b) => (a.snippetOrder ?? 0) - (b.snippetOrder ?? 0)
-            );
+    return (
+        <div className={`${styles.textContainer} ${containerClass || ""}`}>
+            <div className={`${styles.textSection} ${sectionClass || ""}`}>
+                {Object.entries(groupedByYear)
+                    .sort(([a], [b]) => Number(b) - Number(a))
+                    .map(([year, exhibitions]) => {
+                        const sortedExhibitions = [...exhibitions].sort(
+                            (a, b) => (a.snippetOrder ?? 0) - (b.snippetOrder ?? 0)
+                        );
 
-            return (
-              <div key={year} className={styles.yearGroup}>
-                <h3 className={styles.year}>{year}</h3>
-                {sortedExhibitions.map((item, index) => (
-                  <div key={index} className={styles.entry}>
-                    {item.content && typeof item.content === "string" && item.content.trim() !== "" ? (
-                      item.content.split("\n\n").map((para, idx) => (
-                        <p key={`${index}-${idx}`} className={`${styles.text} ${textClass || ""}`}>
-                          {para.trim()}
-                        </p>
-                      ))
-                    ) : (
-                      <p className={`${styles.text} ${textClass || ""}`}>No content available</p>
-                    )}
-                    {item.link && (
-                      <p className={styles.link}>
-                        <Link href={item.link} target="_blank" rel="noopener noreferrer">
-                          {item.link}
-                        </Link>
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            );
-          })}
-      </div>
-    </div>
-  );
+                        return (
+                            <div key={year} className={styles.yearGroup}>
+                                <h3 className={styles.year}>{year}</h3>
+                                {sortedExhibitions.map((item, index) => (
+                                    <div key={index} className={styles.entry}>
+                                        {item.content && typeof item.content === "string" && item.content.trim() !== "" ? (
+                                            item.content.split("\n\n").map((para, idx) => (
+                                                <p key={`${index}-${idx}`} className={`${styles.text} ${textClass || ""}`}>
+                                                    {para.trim()}
+                                                </p>
+                                            ))
+                                        ) : (
+                                            <p className={`${styles.text} ${textClass || ""}`}>No content available</p>
+                                        )}
+                                        {item.link && (
+                                            <div className={styles.link}>
+                                                <Link
+                                                    href={item.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={styles.buttonLink}
+                                                >
+                                                    {item.buttonText || item.link}
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        );
+                    })}
+            </div>
+        </div>
+    );
 };
 
 export default ExhibitionTextSection;
