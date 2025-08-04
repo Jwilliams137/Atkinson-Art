@@ -33,7 +33,16 @@ export async function POST(req) {
 
     const body = await req.json();
     const { content, pageType, type, order, snippetOrder, year, link, buttonText } = body;
+    let numericYear = year;
 
+    if (pageType === "exhibitions") {
+      const trimmedYear = String(year ?? "").trim();
+      numericYear = parseInt(trimmedYear, 10);
+
+      if (!Number.isInteger(numericYear) || numericYear < 1000 || numericYear > 9999) {
+        return NextResponse.json({ error: "Year must be a 4-digit number (e.g. 2022)" }, { status: 400 });
+      }
+    }
     const textPageType = pageType || "general";
     const textType = type || "untitled";
     const cleanOrder = textPageType === "exhibitions" ? null : order;
@@ -50,7 +59,7 @@ export async function POST(req) {
         : cleanOrder !== null && cleanOrder !== undefined
           ? { order: cleanOrder }
           : {}),
-      ...(year ? { year } : {}),
+      ...(pageType === "exhibitions" ? { year: numericYear } : year ? { year } : {}),
       ...(link ? { link } : {}),
       ...(buttonText ? { buttonText } : {})
     };

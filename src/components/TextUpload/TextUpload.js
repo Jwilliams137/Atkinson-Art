@@ -42,7 +42,17 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
 
   const handleTextUpload = async () => {
     const includesContentField = fieldsList.some(f => f.name === "content");
+    if (sectionKey === "exhibitions") {
+      const rawYear = formData.year?.trim();
+      const cleanYear = parseInt(rawYear, 10);
 
+      if (!Number.isInteger(cleanYear) || cleanYear < 1000 || cleanYear > 9999) {
+        alert("Please enter a valid 4-digit year (e.g. 2022)");
+        return;
+      }
+
+      formData.year = cleanYear;
+    }
     const newTextData = {
       ...formData,
       ...(includesContentField ? { content: formData["content"] ?? "" } : {}),

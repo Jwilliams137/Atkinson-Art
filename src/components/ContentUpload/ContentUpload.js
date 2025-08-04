@@ -116,7 +116,7 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                     title: formData.title || "Untitled",
                     type: formData.type || "general",
                     timestamp: new Date().toISOString(),
-                    year: formData.year || '',
+                    ...(formData.year ? { year: Number(formData.year) } : {}),
                     link: formData.link || '',
                     buttonText: formData.buttonText || '',
                     ...(isExhibition ? { snippetOrder: nextOrder } : { order: nextOrder })
