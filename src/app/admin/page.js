@@ -10,6 +10,7 @@ import AdminImageDisplay from "../../components/AdminImageDisplay/AdminImageDisp
 import AdminTextDisplay from "../../components/AdminTextDisplay/AdminTextDisplay";
 import AdminNotes from '../../components/AdminNotes/AdminNotes';
 import styles from "./page.module.css";
+import ExhibitionAdminTextDisplay from "../../components/ExhibitionAdminTextDsiplay/ExhibitionAdminTextDisplay";
 
 const AdminPage = () => {
   const { user, isUserAllowed } = useAuth();
@@ -94,11 +95,12 @@ const AdminPage = () => {
                 isAdmin={isUserAllowed}
                 activeSection={activeSection}
               />
-              <AdminTextDisplay
-                texts={texts}
-                setTexts={setTexts}
-                db={db}
-              />
+              {activeSection === "exhibitions" ? (
+                <ExhibitionAdminTextDisplay texts={texts} setTexts={setTexts} db={db} />
+              ) : (
+                <AdminTextDisplay texts={texts} setTexts={setTexts} db={db} />
+              )}
+
             </div>
           </div>
         </div>
