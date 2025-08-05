@@ -3,7 +3,7 @@
 }
 
 .year {    
-    font-size: 25px;
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .entry {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .buttonLink {
@@ -25,10 +25,9 @@
   background-color: #333;
   color: #fff;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 5px 20px;
   border-radius: 4px;
   font-weight: bold;
-  margin-top: 10px;
   transition: background-color 0.3s ease;
 }
 

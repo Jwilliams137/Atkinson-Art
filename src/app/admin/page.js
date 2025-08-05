@@ -40,7 +40,16 @@ const AdminPage = () => {
     const textQuery = query(collection(db, "textUploads"), where("pageType", "==", activeSection));
     const unsubscribeTexts = onSnapshot(textQuery, (querySnapshot) => {
       const fetchedTexts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setTexts(fetchedTexts.sort((a, b) => (a.order || 0) - (b.order || 0)));
+
+      const sorted = activeSection === "exhibitions"
+        ? fetchedTexts.sort((a, b) => {
+          const yearDiff = (parseInt(b.year) || 0) - (parseInt(a.year) || 0);
+          if (yearDiff !== 0) return yearDiff;
+          return (a.snippetOrder ?? 0) - (b.snippetOrder ?? 0);
+        })
+        : fetchedTexts.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+      setTexts(sorted);
     });
 
     return () => {
