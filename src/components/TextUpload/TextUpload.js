@@ -6,6 +6,7 @@ import styles from "./TextUpload.module.css";
 const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubmit, sectionKey, setOrder }) => {
   const [initialPosition, setInitialPosition] = useState(1);
   const [formData, setFormData] = useState({});
+  const [yearError, setYearError] = useState(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -26,6 +27,11 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
   const handleChange = (e, name) => {
     const value = e.target.value;
     setFormData(prev => ({ ...prev, [name]: value }));
+
+    if (name === "year") {
+      setYearError(false);
+    }
+
     if (name === fieldsList[0]?.name) {
       handleTextChange({ target: { value } });
     }
@@ -47,7 +53,7 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
       const cleanYear = parseInt(rawYear, 10);
 
       if (!Number.isInteger(cleanYear) || cleanYear < 1000 || cleanYear > 9999) {
-        alert("Please enter a valid 4-digit year (e.g. 2022)");
+        setYearError(true);
         return;
       }
 
@@ -101,14 +107,19 @@ const TextUpload = ({ fieldsList = [], textContent, handleTextChange, handleSubm
                 onChange={(e) => handleChange(e, field.name)}
               />
             ) : (
-              <input
-                id={field.name}
-                type={field.type || "text"}
-                className={styles.input}
-                placeholder={`Enter ${field.label.toLowerCase()}`}
-                value={formData[field.name] || ""}
-                onChange={(e) => handleChange(e, field.name)}
-              />
+              <>
+                <input
+                  id={field.name}
+                  type={field.type || "text"}
+                  className={`${styles.input} ${field.name === "year" && yearError ? styles.errorInput : ""}`}
+                  placeholder={`Enter ${field.label.toLowerCase()}`}
+                  value={formData[field.name] || ""}
+                  onChange={(e) => handleChange(e, field.name)}
+                />
+                {field.name === "year" && yearError && (
+                  <p className={styles.errorText}>Year is required (e.g. 2022).</p>
+                )}
+              </>
             )}
           </div>
         );
