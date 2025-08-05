@@ -25,17 +25,17 @@ export default function NotFound() {
           const displayImage =
             data.imageUrls?.length && data.imageUrls[0]?.url
               ? {
-                imageUrl: data.imageUrls[0].url,
-                width: data.imageUrls[0].width,
-                height: data.imageUrls[0].height,
-              }
+                  imageUrl: data.imageUrls[0].url,
+                  width: data.imageUrls[0].width,
+                  height: data.imageUrls[0].height,
+                }
               : data.imageUrl && data.width && data.height
-                ? {
+              ? {
                   imageUrl: data.imageUrl,
                   width: data.width,
                   height: data.height,
                 }
-                : null;
+              : null;
 
           if (displayImage) {
             images.push(displayImage);
@@ -56,8 +56,10 @@ export default function NotFound() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>404 - Page Not Found</h2>
-      <p className={styles.text}>Oops! We couldn’t find that page.</p>
+      <div className={styles.message}>
+        <h1>Page Not Found</h1>
+        <p className={styles.text}>Sorry, we couldn’t find that page.</p>
+      </div>
 
       {randomImage && (
         <div className={styles.imageContainer}>
