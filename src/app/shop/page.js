@@ -37,6 +37,7 @@ const ShopPage = () => {
       return {
         ...item,
         displayImage,
+        imageUrls: item.imageUrls || [],
       };
     })
     .filter(Boolean);

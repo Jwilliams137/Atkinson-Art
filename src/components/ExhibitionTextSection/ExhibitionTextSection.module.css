@@ -13,7 +13,7 @@
 }
 
 .link {
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .entry {
@@ -25,7 +25,7 @@
   background-color: #333;
   color: #fff;
   text-decoration: none;
-  padding: 5px 10px;
+  padding:6px 10px;
   border-radius: 4px;
   font-weight: bold;
   transition: background-color 0.3s ease;
