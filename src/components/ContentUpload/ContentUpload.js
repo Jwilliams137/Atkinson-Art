@@ -153,6 +153,8 @@ const ContentUpload = ({ sectionData, selectedImage, setSelectedImage }) => {
                             const uploadType = Object.keys(fieldGroup)[0];
                             const fieldsList = fieldGroup[uploadType];
 
+                            if (sectionKey === "artwork" && uploadType === "image-upload") return null;
+
                             return (
                                 <div key={idx} className={styles.fieldGroup}>
                                     {uploadType === "image-upload" && (
