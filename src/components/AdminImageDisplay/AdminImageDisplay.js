@@ -157,7 +157,11 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
               );
             })()}
 
-            <p className={styles.title}>{image.title}</p>
+            <p className={styles.title}>
+              {activeSection === "artwork"
+                ? `${(image.title || "").replace(/^Click to visit the\s*/i, "").replace(/ page$/i, "").trim()} page link`
+                : image.title}
+            </p>
             {image.description && (
               <div className={styles.descriptionWrapper}>
                 <p className={styles.info}>
