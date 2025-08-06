@@ -160,7 +160,12 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
-                <h2>Edit {section}</h2>
+                <h2>
+                    Edit{" "}
+                    {section === "artwork" && item.title
+                        ? `“${item.title}”`
+                        : section}
+                </h2>
 
                 {Object.keys(formState).map((field) => (
                     <div key={field} className={styles.field}>
@@ -182,7 +187,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
 
                 {section === "artwork" && (
                     <div className={styles.colorSwatch} style={{ backgroundColor: color }} onClick={() => document.getElementById('hiddenColorInput').click()}>
-                        Flip Side Color
+                        Pick a Flip Side Color
                         <input
                             id="hiddenColorInput"
                             type="color"
