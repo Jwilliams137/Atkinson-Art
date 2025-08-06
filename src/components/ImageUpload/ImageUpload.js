@@ -11,6 +11,8 @@ const ImageUpload = ({
     sectionKey,
     currentSectionKey
 }) => {
+    if (sectionKey === "artwork") return null;
+
     const [formData, setFormData] = useState({});
     const [fileInputs, setFileInputs] = useState(() => {
         const initial = {};

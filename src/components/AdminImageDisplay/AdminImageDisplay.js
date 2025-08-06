@@ -125,7 +125,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                     }}
                   />
 
-                  {isAdmin && (
+                  {isAdmin && activeSection !== "artwork" && (
                     <button
                       className={styles.moreViewsButton}
                       onClick={() => setEditingImage({
@@ -184,19 +184,21 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
             {isAdmin && (
               <div className={styles.textActions}>
                 <button onClick={() => handleEdit(image)} className={styles.button}>Edit</button>
-                <button
-                  onClick={() => {
-                    if (window.confirm("Are you sure you want to delete this?")) {
-                      deleteImage(
-                        image.id,
-                        image.imageUrls?.map(img => img.cloudinaryId) || [image.cloudinaryId]
-                      );
-                    }
-                  }}
-                  className={styles.button}
-                >
-                  Delete
-                </button>
+                {activeSection !== "artwork" && (
+                  <button
+                    onClick={() => {
+                      if (window.confirm("Are you sure you want to delete this?")) {
+                        deleteImage(
+                          image.id,
+                          image.imageUrls?.map(img => img.cloudinaryId) || [image.cloudinaryId]
+                        );
+                      }
+                    }}
+                    className={styles.button}
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             )}
           </div>

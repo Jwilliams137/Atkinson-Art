@@ -53,7 +53,6 @@
         ]} 
       ],
       "artwork": [
-        {"notes": "These will end up being links to the Artwork Galleries and flip on mouse hover to show a solid color and the name of the Gallery they link to"},
         {"image-upload": [
           { "name": "file", "label": "New Work Image", "type": "file" },
           { "name": "title", "type": "hidden", "value": "Click to visit the New Work page" },

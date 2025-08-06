@@ -89,28 +89,55 @@ const AdminPage = () => {
                 fieldsForPage={fieldsForPage}
               />
             </div>
-            {fieldsForPage[activeSection] && (
-              <ContentUpload
-                onUpload={handleImageUpload}
-                sectionData={{ fieldsForPage: { [activeSection]: fieldsForPage[activeSection] }, sections: adminData.sections }}
-                selectedImage={selectedImage}
-                setSelectedImage={setSelectedImage}
-              />
-            )}
-            <div className={styles.adminDisplay}>
-              <AdminImageDisplay
-                images={images}
-                setImages={setImages}
-                isAdmin={isUserAllowed}
-                activeSection={activeSection}
-              />
-              {activeSection === "exhibitions" ? (
-                <ExhibitionAdminTextDisplay texts={texts} setTexts={setTexts} db={db} />
-              ) : (
+            {activeSection === "artwork" ? (
+              <>
+                <AdminImageDisplay
+                  images={images}
+                  setImages={setImages}
+                  isAdmin={isUserAllowed}
+                  activeSection={activeSection}
+                />
+                {fieldsForPage[activeSection] && (
+                  <ContentUpload
+                    onUpload={handleImageUpload}
+                    sectionData={{
+                      fieldsForPage: { [activeSection]: fieldsForPage[activeSection] },
+                      sections: adminData.sections
+                    }}
+                    selectedImage={selectedImage}
+                    setSelectedImage={setSelectedImage}
+                  />
+                )}
                 <AdminTextDisplay texts={texts} setTexts={setTexts} db={db} />
-              )}
-
-            </div>
+              </>
+            ) : (
+              <>
+                {fieldsForPage[activeSection] && (
+                  <ContentUpload
+                    onUpload={handleImageUpload}
+                    sectionData={{
+                      fieldsForPage: { [activeSection]: fieldsForPage[activeSection] },
+                      sections: adminData.sections
+                    }}
+                    selectedImage={selectedImage}
+                    setSelectedImage={setSelectedImage}
+                  />
+                )}
+                <div className={styles.adminDisplay}>
+                  <AdminImageDisplay
+                    images={images}
+                    setImages={setImages}
+                    isAdmin={isUserAllowed}
+                    activeSection={activeSection}
+                  />
+                  {activeSection === "exhibitions" ? (
+                    <ExhibitionAdminTextDisplay texts={texts} setTexts={setTexts} db={db} />
+                  ) : (
+                    <AdminTextDisplay texts={texts} setTexts={setTexts} db={db} />
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
