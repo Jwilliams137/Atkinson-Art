@@ -160,12 +160,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
-                <h2>
-                    Edit{" "}
-                    {section === "artwork" && item.title
-                        ? `“${item.title}”`
-                        : section}
-                </h2>
+
 
                 {Object.keys(formState).map((field) => (
                     <div key={field} className={styles.field}>
@@ -199,7 +194,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                 )}
 
                 <div className={styles.imageEditSection}>
-                    <h3>Images</h3>
                     {visibleImageEdits.map((slot, index) => (
                         <div key={index} className={styles.imageSlot}>
                             {slot.previewUrl && !slot.markedForDeletion ? (
