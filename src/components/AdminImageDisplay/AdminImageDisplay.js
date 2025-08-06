@@ -108,7 +108,14 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                 : null);
 
               if (!displayImage) {
-                return <div className={styles.imagePlaceholder}>No image available</div>;
+                return (
+                  <button
+                    className={styles.addImageButton}
+                    onClick={() => setEditingImage(image)}
+                  >
+                    +
+                  </button>
+                );
               }
 
               return (

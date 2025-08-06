@@ -95,15 +95,27 @@ const ArtworkPage = () => {
             <div key={image.id} className={styles.artworkItem}>
               <Link href={pageLink} className={styles.desktopView}>
                 <div className={styles.flipCard}>
-                  <div className={styles.flipCardInner}>
+                  <div
+                    className={`${styles.flipCardInner} ${!image.imageUrl ? styles.flipped : ""
+                      }`}
+                  >
                     <div className={styles.flipCardFront}>
-                      <Image
-                        src={fixCloudinaryUrl(image.imageUrl)}
-                        alt={image.title}
-                        className={styles.artworkImage}
-                        width={image.width}
-                        height={image.height}
-                      />
+                      {image.imageUrl ? (
+                        <Image
+                          src={fixCloudinaryUrl(image.imageUrl)}
+                          alt={image.title}
+                          className={styles.artworkImage}
+                          width={image.width}
+                          height={image.height}
+                        />
+                      ) : (
+                        <div
+                          className={styles.flipCardBack}
+                          style={{ backgroundColor: image.color }}
+                        >
+                          <p>{visibleTitle}</p>
+                        </div>
+                      )}
                     </div>
                     <div className={styles.flipCardBack} style={{ backgroundColor: image.color }}>
                       <p>{visibleTitle}</p>
@@ -116,14 +128,22 @@ const ArtworkPage = () => {
                 <div className={styles.mobileFlipCard}>
                   <div className={styles.mobileFlipCardInner}>
                     <div className={styles.mobileFlipCardFront}>
-                      <Image
-                         src={fixCloudinaryUrl(image.imageUrl)}
-                        alt={image.title}
-                        className={styles.mobileArtworkImage}
-                        width={image.width}
-                        height={image.height}
-                        style={{ width: "100%", height: "auto" }}
-                      />
+                      {image.imageUrl ? (
+                        <Image
+                          src={fixCloudinaryUrl(image.imageUrl)}
+                          alt={image.title}
+                          className={styles.artworkImage}
+                          width={image.width}
+                          height={image.height}
+                        />
+                      ) : (
+                        <div
+                          className={styles.flipCardBack}
+                          style={{ backgroundColor: image.color }}
+                        >
+                          <p>{visibleTitle}</p>
+                        </div>
+                      )}
                     </div>
                     <div className={styles.mobileFlipCardBack} style={{ backgroundColor: image.color }}>
                       <p>

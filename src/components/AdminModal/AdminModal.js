@@ -226,7 +226,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                                     />
                                 </label>
 
-                                {!config?.pageSettings?.[section]?.singleImageOnly && (
+                                {(section === "artwork" || !config?.pageSettings?.[section]?.singleImageOnly) && (
                                     <>
                                         <button
                                             className={styles.deleteButton}
@@ -235,10 +235,12 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                                             Delete Image
                                         </button>
 
-                                        <div className={styles.reorderButtons}>
-                                            <button onClick={() => moveImageSlot(index, -1)}>▲</button>
-                                            <button onClick={() => moveImageSlot(index, 1)}>▼</button>
-                                        </div>
+                                        {!config?.pageSettings?.[section]?.singleImageOnly && (
+                                            <div className={styles.reorderButtons}>
+                                                <button onClick={() => moveImageSlot(index, -1)}>▲</button>
+                                                <button onClick={() => moveImageSlot(index, 1)}>▼</button>
+                                            </div>
+                                        )}
                                     </>
                                 )}
                             </div>
