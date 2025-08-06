@@ -132,7 +132,7 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
                     }}
                   />
 
-                  {isAdmin && activeSection !== "artwork" && (
+                  {isAdmin && !["artwork", "about", "bio", "podcasts", "exhibitions"].includes(activeSection) && (
                     <button
                       className={styles.moreViewsButton}
                       onClick={() => setEditingImage({
