@@ -256,7 +256,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                     className={styles.deleteButton}
                     onClick={() => handleDelete(index)}
                   >
-                    Delete
+                    Remove
                   </button>
 
                   {slot.file && (
