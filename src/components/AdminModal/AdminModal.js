@@ -13,10 +13,15 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
 
         const allowedFields = ['title', 'price', 'description', 'dimensions'];
         const editableFields = {};
+
         allowedFields.forEach((field) => {
-            const shouldInclude = config?.pageSettings?.[section]?.editableFields?.includes(field);
-            if (shouldInclude) editableFields[field] = item[field] || "";
+            const editable = config?.pageSettings?.[section]?.editableFields;
+
+            if (!editable || editable.includes(field)) {
+                editableFields[field] = item[field] || "";
+            }
         });
+
         setFormState(editableFields);
 
         const hasValidImageUrls = Array.isArray(item.imageUrls) && item.imageUrls.some(img => img?.url);
@@ -173,7 +178,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                     <button className={styles.button} onClick={onClose}>Cancel</button>
                     <button className={styles.button} onClick={handleSubmit}>Save</button>
                 </div>
-
                 {Object.keys(formState).map((field) => (
                     <div key={field} className={styles.field}>
                         <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>

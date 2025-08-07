@@ -140,7 +140,6 @@ export async function POST(req) {
         };
       });
 
-    // Trim or pad to match section limit
     if (!isSingleImageOnly) {
       while (finalImages.length < 4) {
         finalImages.push({
@@ -167,7 +166,7 @@ export async function POST(req) {
       updatePayload.height = FieldValue.delete();
     }
 
-    ["price", "description", "dimensions"].forEach((field) => {
+    ["title", "price", "description", "dimensions"].forEach((field) => {
       const value = formData.get(field);
       if (value !== null) {
         updatePayload[field] = value;
