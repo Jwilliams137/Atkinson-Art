@@ -160,19 +160,23 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
-
-
+                <div className={styles.buttons}>
+                    <button className={styles.button} onClick={onClose}>Cancel</button>
+                    <button className={styles.button} onClick={handleSubmit}>Save</button>
+                </div>
                 {Object.keys(formState).map((field) => (
                     <div key={field} className={styles.field}>
                         <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                         {field === 'description' ? (
                             <textarea
+                                className={styles.editInput}
                                 value={formState[field] || ""}
                                 onChange={(e) => handleFieldChange(field, e.target.value)}
                             />
                         ) : (
                             <input
                                 type="text"
+                                className={styles.editInput}
                                 value={formState[field] || ""}
                                 onChange={(e) => handleFieldChange(field, e.target.value)}
                             />
@@ -240,11 +244,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                             </div>
                         </div>
                     ))}
-                </div>
-
-                <div className={styles.buttons}>
-                    <button className={styles.button} onClick={handleSubmit}>Save</button>
-                    <button className={styles.button} onClick={onClose}>Cancel</button>
                 </div>
             </div>
         </div>

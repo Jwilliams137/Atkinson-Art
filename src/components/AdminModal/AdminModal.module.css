@@ -185,3 +185,13 @@
   justify-content: center;
   user-select: none;
 }
+
+.editInput {
+  font-size: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background-color: #0c0b0c;
+  }
+}
