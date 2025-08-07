@@ -132,6 +132,15 @@
   overflow: hidden;
 }
 
+.imageLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  text-align: left;
+  margin-top: 10px;
+}
+
 @media (prefers-color-scheme: dark) {
   .modalBackdrop {
     background: rgba(39, 38, 38, 0.8);
