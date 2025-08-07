@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 import ImageDetails from "@/components/ImageDetails/ImageDetails";
@@ -9,39 +9,67 @@ import useTextUploads from "@/hooks/useTextUploads";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/Modal/Modal";
 
-const fixCloudinaryUrl = (url: string) =>
+// Define image types
+interface ImageData {
+  id?: string;
+  imageUrl?: string;
+  imageUrls?: {
+    url: string;
+    width: number;
+    height: number;
+    detailOrder?: number;
+  }[];
+  title?: string;
+  description?: string;
+  width?: number;
+  height?: number;
+  dimensions?: string;
+  price?: string;
+}
+
+// Fix Cloudinary URL
+const fixCloudinaryUrl = (url: string): string =>
   url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
-
 const HomePage = () => {
-  const { images, nextPage, prevPage, page, hasMore } = usePageImages("home") as {
-    images: {
-      id: string;
-      imageUrl?: string;
-      imageUrls?: {
-        url: string;
-        width: number;
-        height: number;
-        detailOrder?: number;
-      }[];
-      title?: string;
-      description?: string;
-      width?: number;
-      height?: number;
-      dimensions?: string;
-      price?: string;
-    }[];
+  const {
+    images,
+    nextPage,
+    prevPage,
+    page,
+    hasMore,
+  }: {
+    images: ImageData[];
     nextPage: () => void;
     prevPage: () => void;
     page: number;
     hasMore: boolean;
-  };
+  } = usePageImages("home");
 
   const homeTextUploads = useTextUploads("home");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
 
   const [expandedDescriptions, setExpandedDescriptions] = useState<Record<number, boolean>>({});
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [selectedMobileImages, setSelectedMobileImages] = useState<Record<number, {
+    url: string;
+    width: number;
+    height: number;
+    detailOrder?: number;
+  }>>({});
+
+  useEffect(() => {
+    const updateIsMobile = () => {
+      setIsMobile(window.innerWidth < 1000);
+    };
+
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
+  }, []);
+
   const itemsPerPage = 20;
+  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
 
   const toggleDescription = (index: number) => {
     setExpandedDescriptions((prev) => ({
@@ -50,8 +78,6 @@ const HomePage = () => {
     }));
   };
 
-  const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
-
   return (
     <div className={styles.homeContainer}>
       <h1 className={styles.visuallyHidden}>Linda Atkinson – Mixed Media Artist</h1>
@@ -59,31 +85,30 @@ const HomePage = () => {
         <div className={styles.gallery}>
           {images.map((image, index) => {
             const isExpanded = expandedDescriptions[index];
+            const imageSet = Array.isArray(image.imageUrls)
+              ? [...image.imageUrls]
+                  .filter((img) => img?.url)
+                  .sort((a, b) => (a.detailOrder ?? 999) - (b.detailOrder ?? 999))
+              : [];
 
-            const displayImage = (() => {
-              if (Array.isArray(image.imageUrls)) {
-                const fallback = image.imageUrls
-                  .slice()
-                  .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
-                  .find((img) => img?.url);
-                return fallback || null;
-              }
+            const fallbackImage =
+              imageSet[0] ||
+              (image.imageUrl
+                ? {
+                    url: image.imageUrl,
+                    width: image.width || 600,
+                    height: image.height || 400,
+                  }
+                : null);
 
-              if (image.imageUrl) {
-                return {
-                  url: image.imageUrl,
-                  width: image.width,
-                  height: image.height,
-                };
-              }
-
-              return null;
-            })();
+            const displayImage = isMobile
+              ? selectedMobileImages[index] || fallbackImage
+              : fallbackImage;
 
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
-                  {displayImage ? (
+                  {displayImage?.url ? (
                     <Image
                       className={styles.image}
                       src={fixCloudinaryUrl(displayImage.url)}
@@ -91,11 +116,32 @@ const HomePage = () => {
                       width={displayImage.width || 600}
                       height={displayImage.height || 400}
                       priority
-                      onClick={() => openModal(index)}
+                      onClick={() => !isMobile && openModal(index)}
                     />
                   ) : (
                     <div className={styles.imagePlaceholder}>No image available</div>
                   )}
+
+                  {isMobile && imageSet.length > 1 && (
+                    <div className={styles.mobileThumbnails}>
+                      {imageSet.map((thumb, thumbIndex) => (
+                        <Image
+                          key={thumb.url + thumbIndex}
+                          src={fixCloudinaryUrl(thumb.url)}
+                          alt={`Thumbnail ${thumbIndex + 1}`}
+                          width={60}
+                          height={60}
+                          className={`${styles.thumbnail} ${
+                            selectedMobileImages[index]?.url === thumb.url ? styles.activeThumbnail : ""
+                          }`}
+                          onClick={() =>
+                            setSelectedMobileImages((prev) => ({ ...prev, [index]: thumb }))
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
+
                   <div className={styles.imageDetails}>
                     <ImageDetails
                       title={image.title}
@@ -141,11 +187,7 @@ const HomePage = () => {
         )}
 
         {isModalOpen && shouldRenderModal && (
-          <Modal
-            images={images}
-            currentImageIndex={currentImageIndex}
-            closeModal={closeModal}
-          />
+          <Modal images={images} currentImageIndex={currentImageIndex} closeModal={closeModal} />
         )}
       </div>
 
