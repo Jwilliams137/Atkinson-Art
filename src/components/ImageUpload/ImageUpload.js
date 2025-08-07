@@ -91,8 +91,7 @@ const ImageUpload = ({
                     form.append(`height_${fileKey}`, null);
                     form.append(`detailOrder_${fileKey}`, index);
                 }
-            }
-            else if (field.type !== "hidden") {
+            } else if (field.type !== "hidden") {
                 form.append(name, formData[name] || "");
             } else {
                 form.append(name, field.value || "");
@@ -102,7 +101,6 @@ const ImageUpload = ({
         try {
             form.append("formReady", "true");
             await handleSubmit("image-upload", sectionKey, form, currentSectionKey);
-
             handleCancel();
         } catch (err) {
             console.error("Upload failed:", err);
@@ -111,71 +109,86 @@ const ImageUpload = ({
 
     return (
         <div className={styles.imageUpload}>
-            {fieldsList.map((field, index) => {
-                if (field.type === "color") {
-                    return (
-                        <div key={index} className={styles.colorField}>
-                            <input
-                                type="color"
-                                name={field.name}
-                                value={formData[field.name] || field.value || "#ffffff"}
-                                onChange={handleInputChange}
-                                className={styles.colorPreview}
-                            />
-                            <span className={styles.colorLabel}>{field.label}</span>
-                        </div>
-                    );
-                }
+            {fieldsList
+                .filter((field, index, arr) => {
+                    if (field.type === "file") {
+                        return arr.findIndex(f => f.type === "file") === index;
+                    }
+                    return true;
+                })
+                .map((field, index) => {
+                    if (field.type === "color") {
+                        return (
+                            <div key={index} className={styles.colorField}>
+                                <input
+                                    type="color"
+                                    name={field.name}
+                                    value={formData[field.name] || field.value || "#2e2c2e"}
+                                    onChange={handleInputChange}
+                                    className={styles.colorPreview}
+                                />
+                                <span className={styles.colorLabel}>{field.label}</span>
+                            </div>
+                        );
+                    }
 
-                if (field.type === "file") {
+                    if (field.type === "file") {
+                        return (
+                            <div key={index} className={styles.field}>
+                                <div className={styles.customFileWrapper}>
+                                    <input
+                                        type="file"
+                                        id={field.name}
+                                        name={field.name}
+                                        key={`file-${field.name}`}
+                                        onChange={(e) => handleFileChange(e, field.name)}
+                                        className={styles.hiddenFileInput}
+                                    />
+                                    <label htmlFor={field.name} className={styles.customFileLabel}>
+                                        Choose File
+                                    </label>
+                                    {fileInputs[field.name]?.name && (
+                                        <span className={styles.fileName}>{fileInputs[field.name].name}</span>
+                                    )}
+                                </div>
+                                {fileInputs[field.name] && (
+                                    <div className={styles.imagePreview}>
+                                        <Image
+                                            src={
+                                                fileInputs[field.name] instanceof File
+                                                    ? URL.createObjectURL(fileInputs[field.name])
+                                                    : fileInputs[field.name]
+                                            }
+                                            alt={`Preview ${field.name}`}
+                                            width={imageDimensions[field.name]?.width || 150}
+                                            height={imageDimensions[field.name]?.height || 100}
+                                            className={styles.previewImage}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    }
+
                     return (
                         <div key={index} className={styles.field}>
-                            <label htmlFor={field.name} className={styles.label}>{field.label}</label>
+                            {field.type !== "hidden" && (
+                                <label htmlFor={field.name} className={styles.label}>{field.label}</label>
+                            )}
                             <input
-                                type="file"
+                                type={field.type}
                                 id={field.name}
                                 name={field.name}
-                                key={`file-${field.name}`}
-                                onChange={(e) => handleFileChange(e, field.name)}
+                                value={formData[field.name] || ""}
+                                onChange={handleInputChange}
+                                className={`${styles.inputField} ${field.name === "title" && titleError ? styles.errorInput : ""}`}
                             />
-                            {fileInputs[field.name] && (
-                                <div className={styles.imagePreview}>
-                                    <Image
-                                        src={
-                                            fileInputs[field.name] instanceof File
-                                                ? URL.createObjectURL(fileInputs[field.name])
-                                                : fileInputs[field.name]
-                                        }
-                                        alt={`Preview ${field.name}`}
-                                        width={imageDimensions[field.name]?.width || 150}
-                                        height={imageDimensions[field.name]?.height || 100}
-                                        className={styles.previewImage}
-                                    />
-                                </div>
+                            {field.name === "title" && titleError && (
+                                <p className={styles.errorText}>Title is required.</p>
                             )}
                         </div>
                     );
-                }
-
-                return (
-                    <div key={index} className={styles.field}>
-                        {field.type !== "hidden" && (
-                            <label htmlFor={field.name} className={styles.label}>{field.label}</label>
-                        )}
-                        <input
-                            type={field.type}
-                            id={field.name}
-                            name={field.name}
-                            value={formData[field.name] || ""}
-                            onChange={handleInputChange}
-                            className={`${styles.inputField} ${field.name === "title" && titleError ? styles.errorInput : ""}`}
-                        />
-                        {field.name === "title" && titleError && (
-                            <p className={styles.errorText}>Title is required.</p>
-                        )}
-                    </div>
-                );
-            })}
+                })}
 
             <div className={styles.buttons}>
                 <button onClick={handleCancel} className={styles.button}>Cancel</button>
