@@ -20,7 +20,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         setFormState(editableFields);
 
         const hasValidImageUrls = Array.isArray(item.imageUrls) && item.imageUrls.some(img => img?.url);
-
         const imageArray = hasValidImageUrls
             ? item.imageUrls
             : item.imageUrl
@@ -63,6 +62,17 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
     };
 
     const handleFileChange = (index, file) => {
+        if (!file) {
+            setImageEdits(prev =>
+                prev.map((slot, i) =>
+                    i === index
+                        ? { ...slot, file: null, previewUrl: null, markedForDeletion: false }
+                        : slot
+                )
+            );
+            return;
+        }
+
         const objectUrl = URL.createObjectURL(file);
         setImageEdits(prev =>
             prev.map((slot, i) =>
@@ -111,7 +121,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
 
         visibleImageEdits.forEach((slot, index) => {
             const fileKey = `file${index}`;
-
             const entry = {
                 fileKey,
                 oldCloudinaryId: slot.existingData?.cloudinaryId || "",
@@ -164,6 +173,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                     <button className={styles.button} onClick={onClose}>Cancel</button>
                     <button className={styles.button} onClick={handleSubmit}>Save</button>
                 </div>
+
                 {Object.keys(formState).map((field) => (
                     <div key={field} className={styles.field}>
                         <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
@@ -215,32 +225,38 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                             )}
 
                             <div className={styles.imageControls}>
-                                <label className={styles.customFileInput}>
-                                    Choose File
-                                    <input
-                                        type="file"
-                                        onChange={(e) => handleFileChange(index, e.target.files[0])}
-                                        disabled={slot.markedForDeletion}
-                                    />
-                                </label>
+                                <div className={styles.imageActions}>
+                                    <label className={styles.customFileInput}>
+                                        Choose File
+                                        <input
+                                            type="file"
+                                            onClick={(e) => { e.target.value = null; }}
+                                            onChange={(e) => handleFileChange(index, e.target.files[0])}
+                                            disabled={slot.markedForDeletion}
+                                        />
+                                    </label>
 
-                                {(section === "artwork" || !config?.pageSettings?.[section]?.singleImageOnly) && (
-                                    <>
-                                        <button
-                                            className={styles.deleteButton}
-                                            onClick={() => handleDelete(index)}
-                                        >
-                                            Delete Image
-                                        </button>
+                                    <button
+                                        className={styles.deleteButton}
+                                        onClick={() => handleDelete(index)}
+                                    >
+                                        Delete
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={styles.cancelButton}
+                                        onClick={() => handleFileChange(index, null)}
+                                    >
+                                        Cancel
+                                    </button>
 
-                                        {!config?.pageSettings?.[section]?.singleImageOnly && (
-                                            <div className={styles.reorderButtons}>
-                                                <button onClick={() => moveImageSlot(index, -1)}>▲</button>
-                                                <button onClick={() => moveImageSlot(index, 1)}>▼</button>
-                                            </div>
-                                        )}
-                                    </>
-                                )}
+                                    {!config?.pageSettings?.[section]?.singleImageOnly && (
+                                        <div className={styles.reorderButtons}>
+                                            <button onClick={() => moveImageSlot(index, -1)}>▲</button>
+                                            <button onClick={() => moveImageSlot(index, 1)}>▼</button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     ))}
