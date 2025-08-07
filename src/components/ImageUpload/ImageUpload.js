@@ -25,7 +25,6 @@ const ImageUpload = ({
     const fileInputRef = useRef(null);
     const [titleError, setTitleError] = useState(false);
 
-    // ✅ moved here (after hooks)
     if (sectionKey === "artwork") return null;
 
     const handleFileChange = (e, fieldName) => {
