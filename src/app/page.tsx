@@ -9,7 +9,6 @@ import useTextUploads from "@/hooks/useTextUploads";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/Modal/Modal";
 
-// Define image types
 interface ImageData {
   id?: string;
   imageUrl?: string;
@@ -27,7 +26,6 @@ interface ImageData {
   price?: string;
 }
 
-// Fix Cloudinary URL
 const fixCloudinaryUrl = (url: string): string =>
   url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 

@@ -11,8 +11,6 @@ const ImageUpload = ({
     sectionKey,
     currentSectionKey
 }) => {
-    if (sectionKey === "artwork") return null;
-
     const [formData, setFormData] = useState({});
     const [fileInputs, setFileInputs] = useState(() => {
         const initial = {};
@@ -26,6 +24,9 @@ const ImageUpload = ({
     const [imageDimensions, setImageDimensions] = useState({});
     const fileInputRef = useRef(null);
     const [titleError, setTitleError] = useState(false);
+
+    // ✅ moved here (after hooks)
+    if (sectionKey === "artwork") return null;
 
     const handleFileChange = (e, fieldName) => {
         const file = e.target.files[0];
