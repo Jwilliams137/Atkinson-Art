@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import useAuth from "../../hooks/useAuth";
 import styles from "./Nav.module.css";
 import navData from "../../data/navData.json";
@@ -8,6 +9,7 @@ import navData from "../../data/navData.json";
 export default function Nav() {
   const { user, isUserAllowed } = useAuth();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+  const pathname = usePathname(); // <-- get current path
   const { title, pages } = navData;
 
   useEffect(() => {
@@ -16,7 +18,6 @@ export default function Nav() {
         setIsBurgerMenuOpen(false);
       }
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -37,6 +38,11 @@ export default function Nav() {
     ));
   };
 
+  const isActive = (href) => {
+    // exact match or starts with for subpages
+    return pathname === href || pathname.startsWith(href + "/");
+  };
+
   return (
     <nav>
       <div className={styles.nav}>
@@ -52,9 +58,15 @@ export default function Nav() {
                   return null;
                 }
 
+                const href = page.href || `/${key}`;
                 return (
                   <li key={key}>
-                    <Link href={page.href || `/${key}`} className={styles.link}>
+                    <Link
+                      href={href}
+                      className={`${styles.link} ${
+                        isActive(href) ? styles.active : ""
+                      }`}
+                    >
                       {page.label.toUpperCase()}
                     </Link>
                   </li>
@@ -76,10 +88,15 @@ export default function Nav() {
 
       {isBurgerMenuOpen && (
         <div
-          className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""
-            }`}
+          className={`${styles.burgerMenu} ${
+            isBurgerMenuOpen ? styles.open : ""
+          }`}
         >
-          <Link href="/" className={styles.mobileTitle} onClick={closeBurgerMenu}>
+          <Link
+            href="/"
+            className={styles.mobileTitle}
+            onClick={closeBurgerMenu}
+          >
             {splitTitle(title)}
           </Link>
           <ul className={styles.burgerLinkList}>
@@ -89,12 +106,15 @@ export default function Nav() {
                 return null;
               }
 
+              const href = page.href || `/${key}`;
               return (
                 <div key={`${key}-wrapper`} className={styles.burgerList}>
                   <li key={key} className={styles.burgerMainItem}>
                     <Link
-                      href={page.href || `/${key}`}
-                      className={styles.burgerMainLink}
+                      href={href}
+                      className={`${styles.burgerMainLink} ${
+                        isActive(href) ? styles.active : ""
+                      }`}
                       onClick={closeBurgerMenu}
                     >
                       {page.label}
@@ -102,10 +122,15 @@ export default function Nav() {
                     {page.subPages && (
                       <ul className={styles.burgerSubList}>
                         {page.subPages.map((subPage, subIndex) => (
-                          <li key={subPage.href || subIndex} className={styles.burgerSubItem}>
+                          <li
+                            key={subPage.href || subIndex}
+                            className={styles.burgerSubItem}
+                          >
                             <Link
                               href={subPage.href}
-                              className={styles.burgerSubLink}
+                              className={`${styles.burgerSubLink} ${
+                                isActive(subPage.href) ? styles.active : ""
+                              }`}
                               onClick={closeBurgerMenu}
                             >
                               {subPage.label}

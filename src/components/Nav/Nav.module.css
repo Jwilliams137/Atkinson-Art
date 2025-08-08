@@ -91,6 +91,10 @@
   transform: scale(1.05);
 }
 
+.active {
+  color: var(--hover-text);
+}
+
 .hamburgerIcon {
   display: none;
   flex-direction: column;
