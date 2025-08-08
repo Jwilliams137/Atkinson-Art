@@ -193,7 +193,6 @@
   color: var(--hover-text);
 }
 
-
 @media only screen and (max-width: 1000px) {
   .nav {
     padding: 8px 20px;
@@ -209,7 +208,7 @@
     font-weight: 600;
     font-size: 50px;
     letter-spacing: 4px;
-    color: var(--primary-text);
+    color: var(--hover-text);
     display: inline-block;
     overflow: hidden;
     position: sticky;
@@ -344,5 +343,8 @@
 @media (prefers-color-scheme: dark) {
   .burgerMenu {
     background-color: #2e2c2e;
+  }
+  .mobileTitle {
+    color: var(--primary-text);
   }
 }
