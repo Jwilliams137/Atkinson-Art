@@ -209,13 +209,17 @@
     font-weight: 600;
     font-size: 50px;
     letter-spacing: 4px;
-    color: var(--hover-text);
+    color: var(--primary-text);
     display: inline-block;
     overflow: hidden;
+    position: sticky;
+    top: 0;
+    background: inherit;
+    padding: 4px 0 8px;
+    z-index: 1001;
   }
 
   .mobileTitle span {
-    display: inline-block;
     opacity: 0;
     animation: chunkedFadeIn 1s ease-out forwards;
   }
