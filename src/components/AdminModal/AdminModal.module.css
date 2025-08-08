@@ -173,8 +173,8 @@
   background-color: var(--primary-text);
   color: white;
   border: none;
-  padding: 4px 10px;
-  font-size: 13px;
+  padding: 5px 10px;
+  font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
 }

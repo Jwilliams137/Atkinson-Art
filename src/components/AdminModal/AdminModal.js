@@ -65,19 +65,14 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         setFormState((prev) => ({ ...prev, [key]: value }));
     };
 
-    // IMPORTANT: keep file input enabled even when slot is markedForDeletion.
-    // Picking a file will auto-unset markedForDeletion for that slot.
     const handleFileChange = (index, file) => {
         if (!file) {
-            // Clearing a picked file: do NOT auto-unset deletion.
-            // If the user had clicked Delete earlier, keep it deleted.
             setImageEdits(prev =>
                 prev.map((slot, i) =>
                     i === index
                         ? {
                             ...slot,
                             file: null,
-                            // if still marked for deletion, no preview; else restore original
                             previewUrl: slot.markedForDeletion ? null : (slot.existingData?.url || null),
                         }
                         : slot
@@ -127,7 +122,6 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         }
 
         const imageData = [];
-
         const visibleImageEdits = config?.pageSettings?.[section]?.singleImageOnly
             ? imageEdits.slice(0, 1)
             : imageEdits;
@@ -180,8 +174,14 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         : imageEdits;
 
     return (
-        <div className={styles.modalOverlay}>
-            <div className={styles.modal}>
+        <div
+            className={styles.modalOverlay}
+            onClick={onClose}
+        >
+            <div
+                className={styles.modal}
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className={styles.buttons}>
                     <button className={styles.button} onClick={onClose}>Cancel</button>
                     <button className={styles.button} onClick={handleSubmit}>Save</button>
