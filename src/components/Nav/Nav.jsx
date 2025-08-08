@@ -9,7 +9,7 @@ import navData from "../../data/navData.json";
 export default function Nav() {
   const { user, isUserAllowed } = useAuth();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
-  const pathname = usePathname(); // <-- get current path
+  const pathname = usePathname();
   const { title, pages } = navData;
 
   useEffect(() => {
@@ -38,8 +38,12 @@ export default function Nav() {
     ));
   };
 
-  const isActive = (href) => {
-    // exact match or starts with for subpages
+  const isActive = (href, isParent = false) => {
+    if (isBurgerMenuOpen && isParent) {
+      // Mobile menu: only highlight parent if exactly on that page
+      return pathname === href;
+    }
+    // Desktop or subpage: highlight parent on subpages too
     return pathname === href || pathname.startsWith(href + "/");
   };
 
@@ -63,9 +67,8 @@ export default function Nav() {
                   <li key={key}>
                     <Link
                       href={href}
-                      className={`${styles.link} ${
-                        isActive(href) ? styles.active : ""
-                      }`}
+                      className={`${styles.link} ${isActive(href, true) ? styles.active : ""
+                        }`}
                     >
                       {page.label.toUpperCase()}
                     </Link>
@@ -88,9 +91,8 @@ export default function Nav() {
 
       {isBurgerMenuOpen && (
         <div
-          className={`${styles.burgerMenu} ${
-            isBurgerMenuOpen ? styles.open : ""
-          }`}
+          className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""
+            }`}
         >
           <Link
             href="/"
@@ -112,9 +114,8 @@ export default function Nav() {
                   <li key={key} className={styles.burgerMainItem}>
                     <Link
                       href={href}
-                      className={`${styles.burgerMainLink} ${
-                        isActive(href) ? styles.active : ""
-                      }`}
+                      className={`${styles.burgerMainLink} ${isActive(href, true) ? styles.active : ""
+                        }`}
                       onClick={closeBurgerMenu}
                     >
                       {page.label}
@@ -128,9 +129,8 @@ export default function Nav() {
                           >
                             <Link
                               href={subPage.href}
-                              className={`${styles.burgerSubLink} ${
-                                isActive(subPage.href) ? styles.active : ""
-                              }`}
+                              className={`${styles.burgerSubLink} ${isActive(subPage.href) ? styles.active : ""
+                                }`}
                               onClick={closeBurgerMenu}
                             >
                               {subPage.label}
