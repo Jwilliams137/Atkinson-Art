@@ -21,6 +21,10 @@
     color: var(--hover-text);
 }
 
+.active {
+  color: var(--hover-text);
+}
+
 .showDesktop {
     display: block;
 }

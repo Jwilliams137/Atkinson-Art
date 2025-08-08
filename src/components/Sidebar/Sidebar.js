@@ -1,40 +1,51 @@
 "use client";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import styles from "./Sidebar.module.css";
 import navData from "../../data/navData.json";
 
 const Sidebar = ({ pageKey }) => {
-    const [isMobile, setIsMobile] = useState(false);
-    const subpages = navData.pages[pageKey]?.subPages || [];
+  const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname();
+  const subpages = navData.pages[pageKey]?.subPages || [];
 
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 1000);
-        };
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 1000);
+    };
 
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-    return (
-        <>
-            <div className={`${styles.sidebar} ${isMobile ? styles.hideDesktop : styles.showDesktop}`}>
-                <nav>
-                    <ul className={styles.navList}>
-                        {subpages.map((page) => (
-                            <li key={page.href} className={styles.navItem}>
-                                <Link href={page.href} className={styles.navLink}>
-                                    {page.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
-        </>
-    );
+  const isActive = (href) => pathname === href;
+
+  return (
+    <div
+      className={`${styles.sidebar} ${
+        isMobile ? styles.hideDesktop : styles.showDesktop
+      }`}
+    >
+      <nav>
+        <ul className={styles.navList}>
+          {subpages.map((page) => (
+            <li key={page.href} className={styles.navItem}>
+              <Link
+                href={page.href}
+                className={`${styles.navLink} ${
+                  isActive(page.href) ? styles.active : ""
+                }`}
+              >
+                {page.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
 };
 
 export default Sidebar;
