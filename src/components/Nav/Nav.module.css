@@ -344,7 +344,40 @@
   .burgerMenu {
     background-color: #2e2c2e;
   }
+
   .mobileTitle {
     color: var(--primary-text);
   }
+
+  .active {
+    color: var(--active-text);
+  }
+}
+
+.link,
+.burgerMainLink,
+.burgerSubLink {
+  color: var(--primary-text);
+}
+
+.link:hover,
+.burgerMainLink:hover,
+.burgerSubLink:hover {
+  color: var(--dark-hover);
+}
+
+.link.active,
+.burgerMainLink.active,
+.burgerSubLink.active,
+.link.active:hover,
+.burgerMainLink.active:hover,
+.burgerSubLink.active:hover,
+.link.active:visited,
+.burgerMainLink.active:visited,
+.burgerSubLink.active:visited {
+  color: var(--active-text) !important;
+}
+
+.nav :where(.link.active, .burgerMainLink.active, .burgerSubLink.active) {
+  color: var(--active-text) !important;
 }

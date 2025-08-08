@@ -157,4 +157,15 @@
   .imageLabel {
     color: var(--primary-text);
   }
+
+  .arrowLeft,
+  .arrowRight {
+    background: #0c0b0c;
+    color:  var(--primary-text);
+  }
+
+  .arrowLeft:hover,
+  .arrowRight:hover {
+    background: #0c0b0c;
+  }
 }

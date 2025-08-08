@@ -105,3 +105,13 @@
     font-size: 18px;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .buttonLink {
+    background-color: #0c0b0c;
+  }
+
+  .buttonLink:hover {
+    background-color: black;
+  }
+}

@@ -26,7 +26,8 @@
 }
 
 .field {
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
+  font-size: 18px;
 }
 
 .field label {
@@ -200,14 +201,35 @@
 
 .editInput {
   font-size: 20px;
+  border-radius: 8px;
 }
 
 @media (prefers-color-scheme: dark) {
+
+  .modal {
+    background-color: var(--background);
+  }
   .button {
     background-color: #0c0b0c;
   }
 
   .cancelButton {
     background-color: #0c0b0c;
+  }
+
+  .customFileInput {
+    background-color: #0c0b0c;
+  }
+
+  .customFileInput:hover {
+    background-color: #0c0b0c;
+  }
+
+  .editInput {
+    background-color: #2e2d2e;
+  }
+
+  .imageSlot {
+    background-color: #2e2d2e;
   }
 }

@@ -34,3 +34,14 @@
 .buttonLink:hover {
   background-color: #555;
 }
+
+@media (prefers-color-scheme: dark) {
+  .buttonLink {
+    background-color: #0c0b0c;
+    color: #cccbcc;
+  }
+
+  .buttonLink:hover {
+  background-color: black;
+}
+}

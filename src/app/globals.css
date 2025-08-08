@@ -3,7 +3,7 @@
   --primary-text: #2e2c2e;
   --hover-text: #680a80;
   --accent: #ca220c;
-  --active-text: #680a80;
+  --active-text: #680a80;  
 }
 
 html,
@@ -44,7 +44,8 @@ a {
     --primary-text: #cccbcc;
     --hover-text: #cccbcc;
     --accent: #cccbcc;
-    --active-text: #680a80;
+    --active-text: #f3e298;
+    --dark-hover: #f3ebc9;
   }
 
   html {

@@ -45,3 +45,16 @@
         margin-left: 0;
     }
 }
+
+.navLink { color: var(--primary-text); }
+.navLink:hover { color: var(--dark-hover); }
+
+.navLink.active,
+.navLink.active:hover,
+.navLink.active:visited {
+  color: var(--active-text) !important;
+}
+
+.sidebar :where(.navLink.active) {
+  color: var(--active-text) !important;
+}
