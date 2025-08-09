@@ -1,4 +1,5 @@
 'use client';
+import { cld } from "@/utils/cdn";
 import { useState, useEffect, useMemo } from 'react';
 import { db } from '../../utils/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -7,9 +8,6 @@ import Image from 'next/image';
 import useTextUploads from "../../hooks/useTextUploads";
 import TextSection from "../../components/TextSection/TextSection";
 import styles from './page.module.css';
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 const sortImagesByPageLinks = (images, pageLinks) => {
   const pageLinkTitles = Object.keys(pageLinks);
@@ -102,11 +100,12 @@ const ArtworkPage = () => {
                     <div className={styles.flipCardFront}>
                       {image.imageUrl ? (
                         <Image
-                          src={fixCloudinaryUrl(image.imageUrl)}
+                          src={cld(image.imageUrl, { width: 600 })}
                           alt={image.title}
                           className={styles.artworkImage}
                           width={image.width}
                           height={image.height}
+                          unoptimized
                         />
                       ) : (
                         <div
@@ -130,11 +129,12 @@ const ArtworkPage = () => {
                     <div className={styles.mobileFlipCardFront}>
                       {image.imageUrl ? (
                         <Image
-                          src={fixCloudinaryUrl(image.imageUrl)}
+                          src={cld(image.imageUrl, { width: 600 })}
                           alt={image.title}
                           className={styles.artworkImage}
                           width={image.width}
                           height={image.height}
+                          unoptimized
                         />
                       ) : (
                         <div

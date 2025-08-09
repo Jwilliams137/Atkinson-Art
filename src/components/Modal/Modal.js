@@ -1,11 +1,9 @@
 "use client";
+import { cld } from "@/utils/cdn";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import styles from "./Modal.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 const Modal = ({ images, currentImageIndex, closeModal }) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
@@ -87,7 +85,8 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
           <div className={styles.imageWrapper}>
             {mainImage?.url && (
               <Image
-                src={fixCloudinaryUrl(mainImage.url)}
+                src={cld(mainImage.url, { width: 1800 })}
+                unoptimized
                 alt={selectedDocument.title || "Artwork Image"}
                 width={mainImage.width}
                 height={mainImage.height}
@@ -108,7 +107,8 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
                   aria-selected={index === mainImageIndex}
                 >
                   <Image
-                    src={fixCloudinaryUrl(img.url)}
+                    src={cld(img.url, { width: 120 })}
+                    unoptimized
                     alt={`Thumbnail ${index + 1}`}
                     width={80}
                     height={80}
