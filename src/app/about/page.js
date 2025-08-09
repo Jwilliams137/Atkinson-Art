@@ -1,4 +1,5 @@
 "use client";
+import { cld } from "../../utils/cdn";
 import usePageImages from "../../hooks/usePageImages";
 import useTextUploads from "../../hooks/useTextUploads";
 import Image from "next/image";

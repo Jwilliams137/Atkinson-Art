@@ -114,7 +114,6 @@ const HomePage = () => {
                   {src ? (
                     <Image
                       className={styles.image}
-                      // ✅ Cloudinary transformations with width targeting
                       src={cld(src, { width: isHero ? 1200 : 600 })}
                       alt={image.title || "Gallery Image"}
                       width={width}
@@ -123,7 +122,7 @@ const HomePage = () => {
                       fetchPriority={isHero ? "high" : "auto"}
                       loading={isHero ? undefined : "lazy"}
                       decoding={isHero ? "sync" : "async"}
-                      // ✅ Let browser choose a smaller resource on narrow screens
+                      unoptimized
                       sizes="(max-width: 1000px) 100vw, 600px"
                       onClick={() => !isMobile && openModal(index)}
                     />
@@ -136,7 +135,6 @@ const HomePage = () => {
                       {imageSet.map((thumb, thumbIndex) => (
                         <Image
                           key={thumb.url + thumbIndex}
-                          // ✅ Smaller Cloudinary resource for thumbs
                           src={cld(thumb.url, { width: 120 })}
                           alt={`Thumbnail ${thumbIndex + 1}`}
                           width={60}
@@ -147,6 +145,7 @@ const HomePage = () => {
                           loading="lazy"
                           fetchPriority="low"
                           decoding="async"
+                          unoptimized
                           onClick={() =>
                             setSelectedMobileImages((prev) => ({ ...prev, [index]: thumb }))
                           }
