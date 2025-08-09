@@ -14,36 +14,24 @@ export default function Nav() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 1000) {
-        setIsBurgerMenuOpen(false);
-      }
+      if (window.innerWidth > 1000) setIsBurgerMenuOpen(false);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleBurgerMenu = () => {
-    setIsBurgerMenuOpen((prevState) => !prevState);
-  };
+  const toggleBurgerMenu = () => setIsBurgerMenuOpen((s) => !s);
+  const closeBurgerMenu = () => setIsBurgerMenuOpen(false);
 
-  const closeBurgerMenu = () => {
-    setIsBurgerMenuOpen(false);
-  };
-
-  const splitTitle = (text) => {
-    return text.split("").map((letter, index) => (
+  const splitTitle = (text) =>
+    text.split("").map((letter, index) => (
       <span key={index} className={styles.chunkedLetter}>
         {letter}
       </span>
     ));
-  };
 
   const isActive = (href, isParent = false) => {
-    if (isBurgerMenuOpen && isParent) {
-      // Mobile menu: only highlight parent if exactly on that page
-      return pathname === href;
-    }
-    // Desktop or subpage: highlight parent on subpages too
+    if (isBurgerMenuOpen && isParent) return pathname === href;
     return pathname === href || pathname.startsWith(href + "/");
   };
 
@@ -54,21 +42,18 @@ export default function Nav() {
           <Link href="/" className={styles.title}>
             {splitTitle(title)}
           </Link>
+
           <div className={styles.linkContainer}>
             <ul className={styles.linkList}>
               {Object.keys(pages).map((key) => {
                 const page = pages[key];
-                if (page.restricted && !isUserAllowed && key === "admin") {
-                  return null;
-                }
-
+                if (page.restricted && !isUserAllowed && key === "admin") return null;
                 const href = page.href || `/${key}`;
                 return (
                   <li key={key}>
                     <Link
                       href={href}
-                      className={`${styles.link} ${isActive(href, true) ? styles.active : ""
-                        }`}
+                      className={`${styles.link} ${isActive(href, true) ? styles.active : ""}`}
                     >
                       {page.label.toUpperCase()}
                     </Link>
@@ -90,32 +75,27 @@ export default function Nav() {
       </div>
 
       {isBurgerMenuOpen && (
-        <div
-          className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""
-            }`}
-        >
+        <div className={`${styles.burgerMenu} ${isBurgerMenuOpen ? styles.open : ""}`}>
           <Link
             href="/"
             className={styles.mobileTitle}
             onClick={closeBurgerMenu}
+            key={isBurgerMenuOpen ? "menu-open" : "menu-closed"}
           >
             {splitTitle(title)}
           </Link>
+
           <ul className={styles.burgerLinkList}>
             {Object.keys(pages).map((key) => {
               const page = pages[key];
-              if (page.restricted && !isUserAllowed && key === "admin") {
-                return null;
-              }
-
+              if (page.restricted && !isUserAllowed && key === "admin") return null;
               const href = page.href || `/${key}`;
               return (
                 <div key={`${key}-wrapper`} className={styles.burgerList}>
                   <li key={key} className={styles.burgerMainItem}>
                     <Link
                       href={href}
-                      className={`${styles.burgerMainLink} ${isActive(href, true) ? styles.active : ""
-                        }`}
+                      className={`${styles.burgerMainLink} ${isActive(href, true) ? styles.active : ""}`}
                       onClick={closeBurgerMenu}
                     >
                       {page.label}
@@ -123,14 +103,10 @@ export default function Nav() {
                     {page.subPages && (
                       <ul className={styles.burgerSubList}>
                         {page.subPages.map((subPage, subIndex) => (
-                          <li
-                            key={subPage.href || subIndex}
-                            className={styles.burgerSubItem}
-                          >
+                          <li key={subPage.href || subIndex} className={styles.burgerSubItem}>
                             <Link
                               href={subPage.href}
-                              className={`${styles.burgerSubLink} ${isActive(subPage.href) ? styles.active : ""
-                                }`}
+                              className={`${styles.burgerSubLink} ${isActive(subPage.href) ? styles.active : ""}`}
                               onClick={closeBurgerMenu}
                             >
                               {subPage.label}
