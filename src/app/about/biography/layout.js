@@ -5,4 +5,4 @@ export const metadata = {
 
 export default function BioLayout({ children }) {
     return <>{children}</>;
-} 
+}

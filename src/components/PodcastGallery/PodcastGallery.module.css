@@ -47,7 +47,7 @@
 }
 
 @media (max-width: 1250px) {
-   .imageCard {
+  .imageCard {
     max-width: 95%;
   }
 
@@ -69,4 +69,8 @@
   .imageDescription {
     font-size: 14px;
   }
+}
+
+.imageDescription {
+  color: var(--primary-text);
 }

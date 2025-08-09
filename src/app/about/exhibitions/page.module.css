@@ -55,3 +55,9 @@
     width: 90%;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .imageDescription {
+    color: var(--primary-text);
+  }
+}

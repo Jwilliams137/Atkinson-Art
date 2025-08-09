@@ -116,4 +116,8 @@
     background-color: black;
     color: var(--primary-text);
   }
+
+  .imageDescription {
+    color: var(--primary-text);
+  }
 }
