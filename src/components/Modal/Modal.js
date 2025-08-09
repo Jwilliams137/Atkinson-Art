@@ -85,7 +85,7 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
           <div className={styles.imageWrapper}>
             {mainImage?.url && (
               <Image
-                src={cld(mainImage.url, { width: 1800 })}
+                src={cld(mainImage.url, { width: 1400 })}
                 unoptimized
                 alt={selectedDocument.title || "Artwork Image"}
                 width={mainImage.width}
