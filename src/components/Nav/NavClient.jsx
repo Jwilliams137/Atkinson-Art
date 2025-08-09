@@ -6,14 +6,12 @@ import useAuth from "../../hooks/useAuth";
 import styles from "./Nav.module.css";
 
 export default function NavClient({ pages, titleMarkup, fontClass }) {
-  const { user, isUserAllowed } = useAuth();
+  const { isUserAllowed } = useAuth();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 1000) setIsBurgerMenuOpen(false);
-    };
+    const onResize = () => { if (window.innerWidth > 1000) setIsBurgerMenuOpen(false); };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -21,13 +19,12 @@ export default function NavClient({ pages, titleMarkup, fontClass }) {
   const toggleBurgerMenu = () => setIsBurgerMenuOpen((s) => !s);
   const closeBurgerMenu = () => setIsBurgerMenuOpen(false);
 
-  const isActive = (href, isParent = false) => {
-    if (isBurgerMenuOpen && isParent) return pathname === href;
-    return pathname === href || pathname.startsWith(href + "/");
-  };
+  const isActive = (href, isParent = false) =>
+    (isBurgerMenuOpen && isParent ? pathname === href : pathname === href || pathname.startsWith(href + "/"));
 
   return (
     <>
+      {/* stays absolutely/fixed positioned the same because it's still within the same stacking context */}
       <div
         className={`${styles.hamburgerIcon} ${isBurgerMenuOpen && styles.open}`}
         onClick={toggleBurgerMenu}
@@ -39,6 +36,7 @@ export default function NavClient({ pages, titleMarkup, fontClass }) {
         <span></span><span></span><span></span>
       </div>
 
+      {/* 👇 this is back inside .leftNav now, matching your original layout */}
       <div className={styles.linkContainer}>
         <ul className={styles.linkList}>
           {Object.keys(pages).map((key) => {

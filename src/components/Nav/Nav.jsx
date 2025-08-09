@@ -4,11 +4,7 @@ import navData from "../../data/navData.json";
 import ClientNav from "./NavClient";
 import { Oswald } from "next/font/google";
 
-const oswald = Oswald({
-  subsets: ["latin"],
-  weight: ["600"],
-  display: "swap",
-});
+const oswald = Oswald({ subsets: ["latin"], weight: ["600"], display: "swap" });
 
 export default function Nav() {
   const { title, pages } = navData;
@@ -29,10 +25,13 @@ export default function Nav() {
           <Link href="/" className={`${styles.title} ${oswald.className}`}>
             {titleMarkup}
           </Link>
+          <ClientNav
+            pages={pages}
+            titleMarkup={titleMarkup}
+            fontClass={oswald.className}
+          />
         </div>
       </div>
-
-      <ClientNav pages={pages} titleMarkup={titleMarkup} fontClass={oswald.className} />
     </nav>
   );
 }

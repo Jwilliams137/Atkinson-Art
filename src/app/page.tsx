@@ -1,4 +1,5 @@
 "use client";
+import { cld } from "@/utils/cdn";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -30,21 +31,6 @@ interface ImageData {
   price?: string;
 }
 
-const fixCloudinaryUrl = (url: string): string => {
-  if (!url) return url;
-  if (!url.includes("/upload/")) return url;
-  const parts = url.split("/upload/");
-  const transforms = parts[1].startsWith("a_") || parts[1].match(/^[a-z]/i)
-    ? parts[1]
-    : `a_exif,f_auto,q_auto/${parts[1]}`;
-
-  const ensured = transforms.includes("a_exif") || transforms.includes("f_auto") || transforms.includes("q_auto")
-    ? `a_exif,f_auto,q_auto/${transforms.replace(/^([^/])/, "$1")}`
-    : `a_exif,f_auto,q_auto/${transforms}`;
-
-  return `${parts[0]}/upload/${ensured}`;
-};
-
 const HomePage = () => {
   const {
     images,
@@ -65,12 +51,17 @@ const HomePage = () => {
 
   const [expandedDescriptions, setExpandedDescriptions] = useState<Record<number, boolean>>({});
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [selectedMobileImages, setSelectedMobileImages] = useState<Record<number, {
-    url: string;
-    width: number;
-    height: number;
-    detailOrder?: number;
-  }>>({});
+  const [selectedMobileImages, setSelectedMobileImages] = useState<
+    Record<
+      number,
+      {
+        url: string;
+        width: number;
+        height: number;
+        detailOrder?: number;
+      }
+    >
+  >({});
 
   useEffect(() => {
     const updateIsMobile = () => setIsMobile(window.innerWidth < 1000);
@@ -83,7 +74,7 @@ const HomePage = () => {
   const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
 
   const toggleDescription = (index: number) => {
-    setExpandedDescriptions(prev => ({ ...prev, [index]: !prev[index] }));
+    setExpandedDescriptions((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   return (
@@ -110,11 +101,9 @@ const HomePage = () => {
                   }
                 : null);
 
-            const displayImage = isMobile
-              ? selectedMobileImages[index] || fallbackImage
-              : fallbackImage;
+            const displayImage = isMobile ? selectedMobileImages[index] || fallbackImage : fallbackImage;
 
-            const src = displayImage?.url ? fixCloudinaryUrl(displayImage.url) : undefined;
+            const src = displayImage?.url;
             const width = displayImage?.width || 600;
             const height = displayImage?.height || 400;
             const isHero = index === 0;
@@ -125,7 +114,8 @@ const HomePage = () => {
                   {src ? (
                     <Image
                       className={styles.image}
-                      src={src}
+                      // ✅ Cloudinary transformations with width targeting
+                      src={cld(src, { width: isHero ? 1200 : 600 })}
                       alt={image.title || "Gallery Image"}
                       width={width}
                       height={height}
@@ -133,6 +123,7 @@ const HomePage = () => {
                       fetchPriority={isHero ? "high" : "auto"}
                       loading={isHero ? undefined : "lazy"}
                       decoding={isHero ? "sync" : "async"}
+                      // ✅ Let browser choose a smaller resource on narrow screens
                       sizes="(max-width: 1000px) 100vw, 600px"
                       onClick={() => !isMobile && openModal(index)}
                     />
@@ -145,7 +136,8 @@ const HomePage = () => {
                       {imageSet.map((thumb, thumbIndex) => (
                         <Image
                           key={thumb.url + thumbIndex}
-                          src={fixCloudinaryUrl(thumb.url)}
+                          // ✅ Smaller Cloudinary resource for thumbs
+                          src={cld(thumb.url, { width: 120 })}
                           alt={`Thumbnail ${thumbIndex + 1}`}
                           width={60}
                           height={60}
@@ -183,11 +175,7 @@ const HomePage = () => {
           <div className={styles.paginationControls}>
             <div className={styles.buttonContainer}>
               {page > 1 && (
-                <button
-                  onClick={prevPage}
-                  className={styles.arrowButton}
-                  aria-label="Previous Page"
-                >
+                <button onClick={prevPage} className={styles.arrowButton} aria-label="Previous Page">
                   &#8592;
                 </button>
               )}
@@ -195,11 +183,7 @@ const HomePage = () => {
             <span className={styles.pageNumber}>Page {page}</span>
             <div className={styles.buttonContainer}>
               {hasMore && (
-                <button
-                  onClick={nextPage}
-                  className={styles.arrowButton}
-                  aria-label="Next Page"
-                >
+                <button onClick={nextPage} className={styles.arrowButton} aria-label="Next Page">
                   &#8594;
                 </button>
               )}
