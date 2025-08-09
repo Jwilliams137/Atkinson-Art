@@ -1,13 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import styles from "./page.module.css";
 import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import TextSection from "@/components/TextSection/TextSection";
 import usePageImages from "@/hooks/usePageImages";
 import useTextUploads from "@/hooks/useTextUploads";
 import useModal from "@/hooks/useModal";
-import Modal from "@/components/Modal/Modal";
+
+const Modal = dynamic(() => import("@/components/Modal/Modal"), {
+  loading: () => null,
+});
 
 interface ImageData {
   id?: string;
@@ -26,8 +30,20 @@ interface ImageData {
   price?: string;
 }
 
-const fixCloudinaryUrl = (url: string): string =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
+const fixCloudinaryUrl = (url: string): string => {
+  if (!url) return url;
+  if (!url.includes("/upload/")) return url;
+  const parts = url.split("/upload/");
+  const transforms = parts[1].startsWith("a_") || parts[1].match(/^[a-z]/i)
+    ? parts[1]
+    : `a_exif,f_auto,q_auto/${parts[1]}`;
+
+  const ensured = transforms.includes("a_exif") || transforms.includes("f_auto") || transforms.includes("q_auto")
+    ? `a_exif,f_auto,q_auto/${transforms.replace(/^([^/])/, "$1")}`
+    : `a_exif,f_auto,q_auto/${transforms}`;
+
+  return `${parts[0]}/upload/${ensured}`;
+};
 
 const HomePage = () => {
   const {
@@ -57,10 +73,7 @@ const HomePage = () => {
   }>>({});
 
   useEffect(() => {
-    const updateIsMobile = () => {
-      setIsMobile(window.innerWidth < 1000);
-    };
-
+    const updateIsMobile = () => setIsMobile(window.innerWidth < 1000);
     updateIsMobile();
     window.addEventListener("resize", updateIsMobile);
     return () => window.removeEventListener("resize", updateIsMobile);
@@ -70,15 +83,13 @@ const HomePage = () => {
   const showPagination = page > 1 || (hasMore && images.length === itemsPerPage);
 
   const toggleDescription = (index: number) => {
-    setExpandedDescriptions((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+    setExpandedDescriptions(prev => ({ ...prev, [index]: !prev[index] }));
   };
 
   return (
     <div className={styles.homeContainer}>
       <h1 className={styles.visuallyHidden}>Linda Atkinson – Mixed Media Artist</h1>
+
       <div className={styles.galleryContainer}>
         <div className={styles.gallery}>
           {images.map((image, index) => {
@@ -103,17 +114,26 @@ const HomePage = () => {
               ? selectedMobileImages[index] || fallbackImage
               : fallbackImage;
 
+            const src = displayImage?.url ? fixCloudinaryUrl(displayImage.url) : undefined;
+            const width = displayImage?.width || 600;
+            const height = displayImage?.height || 400;
+            const isHero = index === 0;
+
             return (
               <div key={image.id || index} className={styles.galleryCard}>
                 <div className={styles.imageWrapper}>
-                  {displayImage?.url ? (
+                  {src ? (
                     <Image
                       className={styles.image}
-                      src={fixCloudinaryUrl(displayImage.url)}
+                      src={src}
                       alt={image.title || "Gallery Image"}
-                      width={displayImage.width || 600}
-                      height={displayImage.height || 400}
-                      priority
+                      width={width}
+                      height={height}
+                      priority={isHero}
+                      fetchPriority={isHero ? "high" : "auto"}
+                      loading={isHero ? undefined : "lazy"}
+                      decoding={isHero ? "sync" : "async"}
+                      sizes="(max-width: 1000px) 100vw, 600px"
                       onClick={() => !isMobile && openModal(index)}
                     />
                   ) : (
@@ -132,6 +152,9 @@ const HomePage = () => {
                           className={`${styles.thumbnail} ${
                             selectedMobileImages[index]?.url === thumb.url ? styles.activeThumbnail : ""
                           }`}
+                          loading="lazy"
+                          fetchPriority="low"
+                          decoding="async"
                           onClick={() =>
                             setSelectedMobileImages((prev) => ({ ...prev, [index]: thumb }))
                           }
