@@ -1,13 +1,11 @@
 'use client';
+import { cld } from "@/utils/cdn";
 import { useState } from "react";
 import Image from "next/image";
 import { getFirestore, doc, writeBatch, updateDoc } from "firebase/firestore";
 import styles from "./AdminImageDisplay.module.css";
 import AdminModal from "../AdminModal/AdminModal";
 import config from "../../data/admin.json";
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
   const db = getFirestore();
@@ -121,7 +119,8 @@ const AdminImageDisplay = ({ images, setImages, isAdmin, activeSection }) => {
               return (
                 <>
                   <Image
-                    src={fixCloudinaryUrl(displayImage.url)}
+                    src={cld(displayImage.url, { width: 600 })}
+                    unoptimized
                     alt={`${image.title || "Uploaded Image"} - Main View`}
                     width={displayImage.width || 300}
                     height={displayImage.height || 200}

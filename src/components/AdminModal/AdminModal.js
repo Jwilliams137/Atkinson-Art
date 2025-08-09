@@ -1,4 +1,5 @@
 'use client';
+import { cld } from "@/utils/cdn";
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './AdminModal.module.css';
@@ -230,7 +231,8 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                             {slot.previewUrl && !slot.markedForDeletion ? (
                                 <div className={styles.previewWrapper}>
                                     <Image
-                                        src={slot.previewUrl}
+                                        src={cld(slot.previewUrl, { width: 600 })}
+                                        unoptimized
                                         alt={`Image ${index}`}
                                         width={slot.existingData?.width || 300}
                                         height={slot.existingData?.height || 200}
