@@ -1,12 +1,10 @@
 'use client'
+import { cld } from "@/utils/cdn";
 import { useEffect, useState } from 'react';
 import { db } from '../../utils/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Image from 'next/image';
 import styles from './page.module.css';
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 function ThankYouPage() {
   const [randomImage, setRandomImage] = useState(null);
@@ -68,7 +66,8 @@ function ThankYouPage() {
       {randomImage && (
         <div className={styles.imageContainer}>
           <Image
-            src={fixCloudinaryUrl(randomImage.imageUrl)}
+            src={cld(randomImage.imageUrl, { width: 600 })}
+            unoptimized
             alt="Artwork by Linda Atkinson"
             className={styles.randomImage}
             width={randomImage.width}

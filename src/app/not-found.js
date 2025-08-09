@@ -1,13 +1,10 @@
 'use client';
-
+import { cld } from "@/utils/cdn";
 import { useEffect, useState } from 'react';
 import { db } from '../utils/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Image from 'next/image';
 import styles from './not-found.module.css';
-
-const fixCloudinaryUrl = (url) =>
-  url.includes('/upload/') ? url.replace('/upload/', '/upload/a_exif/') : url;
 
 export default function NotFound() {
   const [randomImage, setRandomImage] = useState(null);
@@ -25,17 +22,17 @@ export default function NotFound() {
           const displayImage =
             data.imageUrls?.length && data.imageUrls[0]?.url
               ? {
-                  imageUrl: data.imageUrls[0].url,
-                  width: data.imageUrls[0].width,
-                  height: data.imageUrls[0].height,
-                }
+                imageUrl: data.imageUrls[0].url,
+                width: data.imageUrls[0].width,
+                height: data.imageUrls[0].height,
+              }
               : data.imageUrl && data.width && data.height
-              ? {
+                ? {
                   imageUrl: data.imageUrl,
                   width: data.width,
                   height: data.height,
                 }
-              : null;
+                : null;
 
           if (displayImage) {
             images.push(displayImage);
@@ -64,7 +61,8 @@ export default function NotFound() {
       {randomImage && (
         <div className={styles.imageContainer}>
           <Image
-            src={fixCloudinaryUrl(randomImage.imageUrl)}
+            src={cld(randomImage.imageUrl, { width: 600 })}
+            unoptimized
             alt="Artwork by Linda Atkinson"
             className={styles.randomImage}
             width={randomImage.width}
