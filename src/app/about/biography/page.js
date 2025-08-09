@@ -1,12 +1,10 @@
 "use client";
+import { cld } from "@/utils/cdn";
 import Image from 'next/image';
 import useTextUploads from '../../../hooks/useTextUploads';
 import TextSection from '../../../components/TextSection/TextSection';
 import usePageImages from "../../../hooks/usePageImages";
 import styles from "./page.module.css";
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 const BiographyPage = () => {
   const textUploads = useTextUploads('bio');
@@ -34,7 +32,8 @@ const BiographyPage = () => {
               <div className={styles.imageWrapper} key={index}>
                 {displayImage ? (
                   <Image
-                    src={fixCloudinaryUrl(displayImage.url)}
+                    src={cld(displayImage.url, { width: 600 })}
+                    unoptimized
                     alt={image.title || image.type || `Image ${index + 1}`}
                     width={displayImage.width || 400}
                     height={displayImage.height || 300}

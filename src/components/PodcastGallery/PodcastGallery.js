@@ -1,9 +1,7 @@
 "use client";
+import { cld } from "@/utils/cdn";
 import Image from "next/image";
 import styles from "./PodcastGallery.module.css";
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 const PodcastGallery = ({ content, expandedDescriptions, toggleDescription }) => {
   const podcastImages = content.filter(item => item.type === "podcast-image" && item.imageUrl);
@@ -16,7 +14,8 @@ const PodcastGallery = ({ content, expandedDescriptions, toggleDescription }) =>
         {podcastImages.map((item, index) => (
           <div key={index} className={styles.imageCard}>
             <Image
-              src={fixCloudinaryUrl(item.imageUrl)}
+              src={cld(item.imageUrl, { width: 800 })}
+              unoptimized
               alt={item.title || item.type}
               width={item.width || 600}
               height={item.height || 400}

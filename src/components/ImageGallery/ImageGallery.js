@@ -1,11 +1,9 @@
 "use client";
+import { cld } from "@/utils/cdn";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./ImageGallery.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
-
-const fixCloudinaryUrl = (url) =>
-  url.includes("/upload/") ? url.replace("/upload/", "/upload/a_exif/") : url;
 
 const ImageGallery = ({
   images,
@@ -71,7 +69,8 @@ const ImageGallery = ({
                   {currentImage?.url ? (
                     <Image
                       className={styles.image}
-                      src={fixCloudinaryUrl(currentImage.url)}
+                      src={cld(currentImage.url, { width: 1000 })}
+                      unoptimized
                       alt={image.title || "Gallery Image"}
                       width={currentImage.width || 300}
                       height={currentImage.height || 200}
@@ -87,7 +86,8 @@ const ImageGallery = ({
                     {imageSet.map((thumb, thumbIndex) => (
                       <Image
                         key={thumb.url + thumbIndex}
-                        src={fixCloudinaryUrl(thumb.url)}
+                        src={cld(thumb.url, { width: 120 })}
+                        unoptimized
                         alt={`Thumbnail ${thumbIndex + 1}`}
                         width={60}
                         height={60}
