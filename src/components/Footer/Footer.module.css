@@ -36,9 +36,3 @@
         font-size: 14px;
     }
 }
-
-@media (prefers-color-scheme: dark) {
-    .navlink:hover .socialLink {
-        color: var(--dark-hover);
-    }
-}

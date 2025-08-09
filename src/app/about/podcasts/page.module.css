@@ -63,10 +63,12 @@
 
 @media (prefers-color-scheme: dark) {
   .buttonLink {
-    background-color: #0c0b0c;
+    background-color: var(--primary-text);
+    color: var(--background);
   }
 
   .buttonLink:hover {
     background-color: black;
+    color: var(--primary-text);
   }
 }
