@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import cloudinary from "cloudinary";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { revalidatePath } from "next/cache";
 
 if (!getApps().length) {
   initializeApp({
@@ -21,7 +22,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const singleImageSections = ["artwork", "about", "biography", "podcasts", "exhibitions"];
+const singleImageSections = ["artwork", "about", "bio", "podcasts", "exhibitions"];
 
 export async function POST(req) {
   try {
@@ -179,12 +180,57 @@ export async function POST(req) {
 
     await docRef.update(updatePayload);
 
+    const paths = sectionToPaths(pageType);
+    for (const p of paths) {
+      revalidatePath(p);
+    }
+
     return NextResponse.json({
       message: "Images updated successfully",
       imageUrls: finalImages,
+      revalidated: paths,
     });
   } catch (error) {
     console.error("Error editing images:", error);
     return NextResponse.json({ error: "Failed to edit images" }, { status: 500 });
+  }
+}
+
+function sectionToPaths(section) {
+  switch (section) {
+    case "home":
+      return ["/"];
+    case "artwork":
+      return ["/artwork"];
+    case "new-work":
+      return ["/artwork/new-work"];
+    case "houses":
+      return ["/artwork/houses"];
+    case "tiny-houses":
+      return ["/artwork/tiny-houses"];
+    case "constructions":
+      return ["/artwork/constructions"];
+    case "commissions":
+      return ["/artwork/commissions"];
+    case "collage":
+      return ["/artwork/collage"];
+    case "earlier-work":
+      return ["/artwork/earlier-work"];
+    case "about":
+      return ["/about"];
+    case "bio":
+      return ["/about/biography"];
+    case "exhibitions":
+      return ["/about/exhibitions"];
+    case "podcasts":
+      return ["/about/podcasts"];
+    case "shop":
+      return ["/shop"];
+    case "contact":
+      return ["/contact"];
+    case "admin":
+      return ["/admin"];
+    default:
+      return [];
   }
 }
