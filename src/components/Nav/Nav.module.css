@@ -327,6 +327,11 @@
   .active {
     color: var(--active-text);
   }
+
+  .title span:nth-child(2),
+  .mobileTitle span:nth-child(2) {
+    color: var(--active-text);
+  }
 }
 
 .link,

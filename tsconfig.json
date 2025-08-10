@@ -37,7 +37,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/artwork/page.js"
-, "src/components/Nav/NavClient.jsx"  ],
+, "src/components/Nav/NavClient.jsx", "src/app/HomeClient.tsx"  ],
   "exclude": [
     "node_modules"
   ]
