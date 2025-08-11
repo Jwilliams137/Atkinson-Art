@@ -214,7 +214,7 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
                         style={{ backgroundColor: color }}
                         onClick={() => document.getElementById('hiddenColorInput').click()}
                     >
-                        Pick a Flip Side Color
+                        Pick an accent color
                         <input
                             id="hiddenColorInput"
                             type="color"
