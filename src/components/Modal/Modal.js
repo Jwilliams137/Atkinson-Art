@@ -1,6 +1,6 @@
 "use client";
 import { cld } from "@/utils/cdn";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import styles from "./Modal.module.css";
 import ImageDetails from "../ImageDetails/ImageDetails";
@@ -9,6 +9,8 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [activeDocIndex, setActiveDocIndex] = useState(currentImageIndex);
   const [isExpanded, setIsExpanded] = useState(false);
+  const imgRef = useRef(null);
+  const [renderWidth, setRenderWidth] = useState(null);
 
   const selectedDocument = images[activeDocIndex];
 
@@ -55,15 +57,22 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
     setIsExpanded(false);
   }, [activeDocIndex, images.length]);
 
+  const measureWidth = useCallback(() => {
+    if (imgRef.current) {
+      setRenderWidth(Math.round(imgRef.current.clientWidth));
+    }
+  }, []);
+
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "ArrowLeft") goToPreviousDocument();
-      if (e.key === "ArrowRight") goToNextDocument();
-      if (e.key === "Escape") closeModal();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [goToPreviousDocument, goToNextDocument, closeModal]);
+    measureWidth();
+    window.addEventListener("resize", measureWidth);
+    return () => window.removeEventListener("resize", measureWidth);
+  }, [measureWidth]);
+
+  useEffect(() => {
+    const t = setTimeout(measureWidth, 0);
+    return () => clearTimeout(t);
+  }, [mainImageIndex, activeDocIndex, isExpanded, measureWidth]);
 
   return (
     <div className={styles.modalBackdrop} onClick={closeModal}>
@@ -85,18 +94,29 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
           <div className={styles.imageWrapper}>
             {mainImage?.url && (
               <Image
+                ref={imgRef}
                 src={cld(mainImage.url, { width: 1400 })}
                 unoptimized
                 alt={selectedDocument.title || "Artwork Image"}
                 width={mainImage.width}
                 height={mainImage.height}
                 className={`${styles.fullSizeImage} ${imageArray.length > 1 ? styles.withThumbnails : ""}`}
+                onLoad={measureWidth}
+                onLoadingComplete={measureWidth}
               />
             )}
           </div>
 
           {imageArray.length > 1 && (
-            <div className={styles.thumbnailRow} role="tablist" aria-label="Other views of this item">
+            <div
+              className={styles.thumbnailRow}
+              role="tablist"
+              aria-label="Other views of this item"
+              style={{
+                width: renderWidth ? `${renderWidth}px` : "auto",
+                margin: "5px auto 0",
+              }}
+            >
               {imageArray.map((img, index) => (
                 <button
                   key={index}
@@ -119,7 +139,10 @@ const Modal = ({ images, currentImageIndex, closeModal }) => {
             </div>
           )}
 
-          <div className={styles.imageLabel}>
+          <div
+            className={styles.imageLabel}
+            style={{ width: renderWidth ? `${renderWidth}px` : "auto", margin: "10px auto 0" }}
+          >
             <h2 id="modal-title" className={styles.visuallyHidden}>
               {selectedDocument.title}
             </h2>

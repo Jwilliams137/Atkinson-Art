@@ -17,6 +17,7 @@
   padding: 20px;
   border-radius: 8px;
   max-height: 90vh;
+  width: 900px;
   margin: 5vh auto;
   display: flex;
   flex-direction: column;
@@ -45,17 +46,23 @@
 }
 
 .arrowLeft {
-  left: 5px;
+  left: 10px;
 }
 
 .arrowRight {
-  right: 5px;
+  right: 10px;
 }
 
 .arrowLeft:hover,
 .arrowRight:hover {
   background: #f0f0f0;
   transform: translateY(-50%) scale(1.1);
+}
+
+.imageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .imageWrapper {
@@ -83,6 +90,10 @@
 
 .thumbnailRow {
   margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .thumbnailImage {
@@ -95,6 +106,7 @@
   padding: 0;
   background: none;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .imageTitle {
@@ -107,10 +119,10 @@
 .imageLabel {
   font-size: 20px;
   max-width: 100%;
-  width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
+  text-align: left;
 }
 
 .readMoreLessButton {
@@ -130,15 +142,6 @@
   width: 1px;
   height: 1px;
   overflow: hidden;
-}
-
-.imageLabel {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 20px;
-  text-align: left;
-  margin-top: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -161,7 +164,7 @@
   .arrowLeft,
   .arrowRight {
     background: #0c0b0c;
-    color:  var(--primary-text);
+    color: var(--primary-text);
   }
 
   .arrowLeft:hover,
