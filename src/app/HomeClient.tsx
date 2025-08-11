@@ -10,7 +10,6 @@ import usePageImages from "@/hooks/usePageImages";
 import useTextUploads from "@/hooks/useTextUploads";
 import useModal from "@/hooks/useModal";
 
-// ---- Minimal inline types so TS is happy ----
 type ImageVariant = {
   url: string;
   width: number;
@@ -45,7 +44,6 @@ type Props = {
 const Modal = dynamic(() => import("@/components/Modal/Modal"), { loading: () => null });
 
 export default function HomeClient({ initialImages = [] }: Props) {
-  // Your hook is JS, so TS can’t infer it — give it a shape with a cast:
   const {
     images,
     nextPage,
@@ -70,7 +68,7 @@ export default function HomeClient({ initialImages = [] }: Props) {
     return () => window.removeEventListener("resize", updateIsMobile);
   }, []);
 
-  const itemsPerPage = 12; // keep this in sync with getInitialHomeImages()
+  const itemsPerPage = 8;
   const imagesToRender: ImageData[] = images.length ? images : initialImages;
   const showPagination = page > 1 || (hasMore && imagesToRender.length === itemsPerPage);
 

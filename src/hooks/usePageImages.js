@@ -41,23 +41,34 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       const fetchedImages = querySnapshot.docs.map((doc) => {
         const data = doc.data();
 
-        const normalizedImageUrls = Array.isArray(data.imageUrls)
+        const normalizedImageUrls = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
           ? data.imageUrls
+              .filter(img => img?.url)
+              .map(img => ({
+                url: img.url,
+                cloudinaryId: img.cloudinaryId ?? null,
+                width: img.width ?? null,
+                height: img.height ?? null,
+                detailOrder: typeof img.detailOrder === "number" ? img.detailOrder : 0,
+              }))
+              .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
           : [
-            {
-              url: data.imageUrl || null,
-              cloudinaryId: data.cloudinaryId || null,
-              width: data.width || null,
-              height: data.height || null,
-              detailOrder: 0,
-            },
-          ];
+              {
+                url: data.imageUrl || null,
+                cloudinaryId: data.cloudinaryId || null,
+                width: data.width || null,
+                height: data.height || null,
+                detailOrder: 0,
+              },
+            ];
+
+        const displayUrl = normalizedImageUrls.find(img => img?.url)?.url || null;
 
         return {
           id: doc.id,
           ...data,
           imageUrls: normalizedImageUrls,
-          displayUrl: normalizedImageUrls.find(img => img?.url)?.url || null,
+          displayUrl,
         };
       });
 
@@ -92,7 +103,7 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
 
   useEffect(() => {
     fetchImages(true);
-  }, [pageType]);
+  }, [pageType, fetchImages]);
 
   const nextPage = () => {
     if (hasMore) {

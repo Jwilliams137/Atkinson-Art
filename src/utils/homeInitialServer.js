@@ -1,48 +1,57 @@
-// src/utils/homeInitialServer.js
-import { collection, query, where, getDocs, limit } from "firebase/firestore";
+import { collection, query, where, getDocs, limit, orderBy } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
-// Fetch the first N "home" images on the server.
-// Mirrors your client shape so we can render the same UI.
-export async function getInitialHomeImages(count = 20) {
-  // NOTE: If you have an order (e.g., createdAt), add orderBy(...) here.
-  const q = query(
-    collection(db, "uploads"),
-    where("pageType", "==", "home"),
-    limit(count)
-  );
+export async function getInitialHomeImages(count = 8) {
+    const q = query(
+        collection(db, "uploads"),
+        where("pageType", "==", "home"),
+        orderBy("order"),
+        limit(count)
+    );
 
-  const snap = await getDocs(q);
-  const items = [];
+    const snap = await getDocs(q);
+    const items = [];
 
-  snap.forEach((doc) => {
-    const d = doc.data();
-    // Pick first image variant, falling back to single imageUrl
-    let url, w, h, imageUrls = [];
-    if (Array.isArray(d.imageUrls) && d.imageUrls.length > 0) {
-      const first = d.imageUrls[0];
-      url = first?.url;
-      w = first?.width;
-      h = first?.height;
-      imageUrls = d.imageUrls.filter(x => !!x?.url);
-    } else if (d.imageUrl && d.width && d.height) {
-      url = d.imageUrl; w = d.width; h = d.height;
-    }
+    snap.forEach((doc) => {
+        const d = doc.data();
 
-    if (!url) return; // skip invalid rows
+        let imageUrls = [];
+        if (Array.isArray(d.imageUrls) && d.imageUrls.length > 0) {
+            imageUrls = d.imageUrls
+                .filter(x => !!x?.url)
+                .map(x => ({
+                    url: x.url,
+                    width: x.width ?? null,
+                    height: x.height ?? null,
+                    cloudinaryId: x.cloudinaryId ?? null,
+                    detailOrder: typeof x.detailOrder === "number" ? x.detailOrder : 0,
+                }))
+                .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0));
+        } else if (d.imageUrl) {
+            imageUrls = [{
+                url: d.imageUrl,
+                width: d.width ?? null,
+                height: d.height ?? null,
+                cloudinaryId: d.cloudinaryId ?? null,
+                detailOrder: 0,
+            }];
+        }
 
-    items.push({
-      id: doc.id,
-      title: d.title || "",
-      description: d.description || "",
-      dimensions: d.dimensions || "",
-      price: d.price || "",
-      imageUrl: url,
-      width: w || 600,
-      height: h || 400,
-      imageUrls, // keep extra views if present
+        const top = imageUrls[0];
+        if (!top?.url) return;
+
+        items.push({
+            id: doc.id,
+            title: d.title || "",
+            description: d.description || "",
+            dimensions: d.dimensions || "",
+            price: d.price || "",
+            imageUrls,
+            imageUrl: top.url,
+            width: top.width || 600,
+            height: top.height || 400,
+        });
     });
-  });
 
-  return items;
+    return items;
 }
