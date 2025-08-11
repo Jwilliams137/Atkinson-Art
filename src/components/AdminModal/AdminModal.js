@@ -62,6 +62,24 @@ const AdminModal = ({ item, onClose, onSave, section, excludedFields = [], confi
         }
     }, [item, config, section]);
 
+    useEffect(() => {
+        const body = document.body;
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        body.style.position = "fixed";
+        body.style.top = `-${scrollY}px`;
+        body.style.width = "100%";
+        body.style.overflow = "hidden";
+
+        return () => {
+            body.style.position = "";
+            body.style.top = "";
+            body.style.width = "";
+            body.style.overflow = "";
+            window.scrollTo(0, scrollY);
+        };
+    }, []);
+
     const handleFieldChange = (key, value) => {
         setFormState((prev) => ({ ...prev, [key]: value }));
     };
