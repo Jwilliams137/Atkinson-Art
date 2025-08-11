@@ -10,13 +10,7 @@ import usePageImages from "@/hooks/usePageImages";
 import useTextUploads from "@/hooks/useTextUploads";
 import useModal from "@/hooks/useModal";
 
-type ImageVariant = {
-  url: string;
-  width: number;
-  height: number;
-  detailOrder?: number;
-};
-
+type ImageVariant = { url: string; width: number; height: number; detailOrder?: number };
 type ImageData = {
   id?: string;
   imageUrl?: string;
@@ -37,20 +31,13 @@ type UsePageImagesResult = {
   hasMore: boolean;
 };
 
-type Props = {
-  initialImages?: ImageData[];
-};
+type Props = { initialImages?: ImageData[] };
 
 const Modal = dynamic(() => import("@/components/Modal/Modal"), { loading: () => null });
 
 export default function HomeClient({ initialImages = [] }: Props) {
-  const {
-    images,
-    nextPage,
-    prevPage,
-    page,
-    hasMore,
-  } = (usePageImages("home") as unknown) as UsePageImagesResult;
+  const { images, nextPage, prevPage, page, hasMore } =
+    (usePageImages("home") as unknown) as UsePageImagesResult;
 
   const homeTextUploads = useTextUploads("home");
   const { isModalOpen, currentImageIndex, openModal, closeModal, shouldRenderModal } = useModal();
@@ -70,6 +57,7 @@ export default function HomeClient({ initialImages = [] }: Props) {
 
   const itemsPerPage = 8;
   const imagesToRender: ImageData[] = images.length ? images : initialImages;
+
   const showPagination = page > 1 || (hasMore && imagesToRender.length === itemsPerPage);
 
   const toggleDescription = (index: number) => {
@@ -85,7 +73,9 @@ export default function HomeClient({ initialImages = [] }: Props) {
           {imagesToRender.map((image, index) => {
             const isExpanded = !!expandedDescriptions[index];
             const imageSet: ImageVariant[] = Array.isArray(image.imageUrls)
-              ? [...image.imageUrls].filter((img) => !!img?.url)
+              ? [...image.imageUrls]
+                .filter((img) => !!img?.url)
+                .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
               : [];
 
             const fallbackImage =
