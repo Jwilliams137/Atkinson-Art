@@ -41,32 +41,33 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
       const fetchedImages = querySnapshot.docs.map((doc) => {
         const data = doc.data();
 
-        const normalizedImageUrls = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
-          ? data.imageUrls
-              .filter(img => img?.url)
-              .map(img => ({
-                url: img.url,
-                cloudinaryId: img.cloudinaryId ?? null,
-                width: img.width ?? null,
-                height: img.height ?? null,
-                detailOrder: typeof img.detailOrder === "number" ? img.detailOrder : 0,
-              }))
-              .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
-          : [
-              {
-                url: data.imageUrl || null,
-                cloudinaryId: data.cloudinaryId || null,
-                width: data.width || null,
-                height: data.height || null,
-                detailOrder: 0,
-              },
-            ];
+        const normalizedImageUrls =
+          Array.isArray(data.imageUrls) && data.imageUrls.length > 0
+            ? data.imageUrls
+                .filter((img) => img?.url)
+                .map((img) => ({
+                  url: img.url,
+                  cloudinaryId: img.cloudinaryId ?? null,
+                  width: img.width ?? null,
+                  height: img.height ?? null,
+                  detailOrder: typeof img.detailOrder === "number" ? img.detailOrder : 0,
+                }))
+                .sort((a, b) => (a.detailOrder ?? 0) - (b.detailOrder ?? 0))
+            : [
+                {
+                  url: data.imageUrl || null,
+                  cloudinaryId: data.cloudinaryId || null,
+                  width: data.width || null,
+                  height: data.height || null,
+                  detailOrder: 0,
+                },
+              ];
 
-        const displayUrl = normalizedImageUrls.find(img => img?.url)?.url || null;
+        const displayUrl = normalizedImageUrls.find((img) => img?.url)?.url || null;
 
         return {
           id: doc.id,
-          ...data,
+          ...data,            // <- fixed here
           imageUrls: normalizedImageUrls,
           displayUrl,
         };
@@ -94,7 +95,6 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
           setHasMore(true);
         }
       }
-
     } catch (error) {
       console.error(`Error fetching ${pageType} images:`, error);
     }
@@ -107,14 +107,14 @@ const usePageImages = (pageType, itemsPerPage = 20) => {
 
   const nextPage = () => {
     if (hasMore) {
-      setPage(prev => prev + 1);
+      setPage((prev) => prev + 1);
       fetchImages();
     }
   };
 
   const prevPage = () => {
     if (page > 1) {
-      setPage(prev => prev - 1);
+      setPage((prev) => prev - 1);
       fetchImages(true);
     }
   };

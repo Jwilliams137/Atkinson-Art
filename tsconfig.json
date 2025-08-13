@@ -32,12 +32,10 @@
     }
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/artwork/page.js"
-, "src/components/Nav/NavClient.jsx", "src/app/HomeClient.tsx"  ],
+  "next-env.d.ts",
+  "**/*.{ts,tsx,js,jsx}",
+  ".next/types/**/*.ts"
+],
   "exclude": [
     "node_modules"
   ]
