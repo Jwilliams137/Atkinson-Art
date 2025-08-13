@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { cld } from "@/utils/cdn";
-import usePageImages from "@/hooks/usePageImages";
+import { cld } from "../../utils/cdn";
+import usePageImages from "../../hooks/usePageImages";
 
 type Variant = { url: string; width?: number; height?: number; detailOrder?: number };
 type Item = {
@@ -80,8 +80,8 @@ export default function ArtworkClient({ initialImages = [] }: Props) {
           // Speed: ONLY first card is high priority; others explicitly low
           const prioritize = index === 0;
 
-          // Your link field (use whichever your docs have)
-          const href = (item as any).href || (item as any).link || undefined;
+          // Link field (no `any` casts)
+          const href: string | undefined = item.href ?? item.link;
 
           // Inner card with front/back faces (keeps your flip structure/classes)
           const CardInner = (
