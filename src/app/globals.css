@@ -3,12 +3,19 @@
   --primary-text: #2e2c2e;
   --hover-text: #680a80;
   --accent: #ca220c;
-  --active-text: #680a80;  
+  --active-text: #680a80;
 }
 
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scrollbar-gutter: stable both-edges;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  html {
+    overflow-y: scroll;
+  }
 }
 
 html,
